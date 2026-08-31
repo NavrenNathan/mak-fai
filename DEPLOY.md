@@ -39,9 +39,16 @@ Leaving publish empty matters. Netlify reads `<base>/netlify.toml`, which says
 `publish = "."` — resolved relative to the base directory, so it publishes the
 folder itself and the security headers in that file get applied.
 
-> **If the first deploy log says it published the repo root** (you'll see the
-> other variant folders in the file list), the base directory didn't take. Set
-> **Publish directory** to the same folder name explicitly and redeploy.
+Netlify renamed things in a recent UI pass. Current labels:
+
+| Older label | What you'll see now |
+|---|---|
+| Site configuration | **Project configuration** |
+| Clear cache and deploy site | **Deploy project without cache** |
+| Deploy site | **Deploy project** |
+
+After changing build settings, redeploy with **Deploys → Trigger deploy →
+Deploy project without cache** so the new settings are read fresh.
 
 Repeat for all three sites. They share a repo; a push rebuilds all three, but
 each only ever publishes its own folder.
@@ -51,6 +58,35 @@ each only ever publishes its own folder.
 All three `.org` domains currently return **401** — Netlify pre-launch password
 protection. To go live: **Site configuration → Access & security → Visitor
 access → Password protection → Remove.**
+
+---
+
+## Troubleshooting: "Page not found"
+
+This is the failure mode to expect, and it bit once already.
+
+**Symptom:** the domain resolves and HTTPS works, but Netlify serves its own
+white "Page not found" page. None of your CSS loads, so it looks like the theme
+vanished — it hasn't; you're simply not looking at your site at all.
+
+**Cause:** the **Base directory** field is blank, so Netlify publishes the repo
+root. The root holds only folders and markdown — there is no `index.html` there
+— so there is nothing to serve at `/`.
+
+**Fix:** set **Base directory** to the site's folder, save, redeploy without
+cache.
+
+**Confirm it in the deploy log:**
+
+```
+Publishing directory: /opt/build/repo/portal-hybrid    ← correct
+Publishing directory: /opt/build/repo                  ← base directory not applied
+```
+
+Distinguish it from **"Site not found"**, which is a different failure: that one
+means the hostname isn't mapped to any Netlify site at all (domain detached, or
+you're on a different site's URL). "Page not found" is the healthier of the two
+— the site is found and serving, it just has no file at that path.
 
 ---
 
@@ -98,8 +134,8 @@ because each site only publishes its own base directory:
 `site-neon-red/` `mockups/` `portal-makfai-org/` `.bak-site/`
 
 `portal-makfai-org/` is the superseded 4.9 KB placeholder, kept for reference.
-The three `*.zip` files at the repo root are stale drag-and-drop artifacts from
-the old deploy method — safe to delete once git deploys are confirmed working.
+The old drag-and-drop `*.zip` artifacts have been deleted and `*.zip` is
+gitignored.
 
 ---
 
