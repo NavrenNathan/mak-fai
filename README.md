@@ -1,23 +1,20 @@
-# Mak Fai — placeholder sites
+# Mak Fai
 
-Three standalone, zero-dependency static sites. Each folder is a complete Netlify
-deploy: drag the **folder itself** onto https://app.netlify.com/drop.
+Three standalone, zero-dependency static sites in one repo.
 
-| Folder | Domain to buy | Role |
+> **Deploying is `git push`.** See [DEPLOY.md](DEPLOY.md) for the per-site
+> Netlify settings. The drag-and-drop flow this file used to describe has been
+> replaced by git-based continuous deployment.
+
+| Deploy folder | Domain | Role |
 |---|---|---|
-| `portal-makfai-org/` | makfai.org | Main portal, bridges the two schools |
+| `portal-hybrid/` | makfai.org | Main portal, bridges the two schools |
 | `lion-dance-makfailiondance-org/` | makfailiondance.org | Lion dance team |
 | `kung-fu-makfaikungfu-org/` | makfaikungfu.org | Kung fu school |
 
-## Deploy + buy order
-
-1. Drag folder → Netlify Drop. You get a `random-name.netlify.app` project.
-2. Rename the project (Site configuration → Change site name) to something sane,
-   e.g. `makfai-portal`.
-3. In that project: **Domain management → Add a domain → Buy a new domain**.
-   Buy the matching `.org`. Netlify becomes the registrar and wires DNS + HTTPS
-   automatically.
-4. Repeat for the other two.
+All three domains are registered at Netlify with DNS and HTTPS wired, and all
+three currently sit behind pre-launch password protection (they return 401).
+Remove it per site under **Access & security → Visitor access** to go live.
 
 ## Before the real build
 

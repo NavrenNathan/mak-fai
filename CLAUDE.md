@@ -155,14 +155,31 @@ scrolled), button ripple/sheen/press, video lightbox, Ken Burns hero, and the
 staggered timers, never a constant buzz). Contact forms compose a `mailto:`
 (static-honest — the old Wix form posted to Wix's backend).
 
+### Deploying
+
+**`git push` deploys.** See `mak-fai/DEPLOY.md` for the per-site Netlify
+settings. One GitHub repo, three Netlify sites, each with a different **base
+directory** so it only ever publishes its own folder:
+
+| Domain | Base directory |
+|---|---|
+| `makfai.org` | `portal-hybrid` |
+| `makfailiondance.org` | `lion-dance-makfailiondance-org` |
+| `makfaikungfu.org` | `kung-fu-makfaikungfu-org` |
+
+No build command — these are static files. Do **not** use the Netlify CLI: this
+machine has no Node, and a stale root-level `.netlify/` cache once pointed
+`publish` at the repo root, which would have shipped every mockup and variant
+folder to the live domain. It has been deleted.
+
 ### Folder map (`mak-fai/`)
 
 | Folder | Role | State |
 |---|---|---|
-| `portal-hybrid/` | **makfai.org portal in the hybrid design** | **Current build.** Hero with both-school CTAs → About the association → Our Schools (two equal cards) → Achievements (honors grid + Golden 50 featured, films open in lightbox) → quotes → contact → footer family row. The kung fu card uses the 麥館 ink calligraphy (`assets/mak-kwoon.jpg`) because no kung fu photo exists yet — swap when Nathan supplies one. |
+| `portal-hybrid/` | **makfai.org portal — the live deploy directory** | **Current build, and what Netlify publishes to makfai.org.** Self-contained deploy: also holds `_redirects`, `netlify.toml`, `robots.txt`, `sitemap.xml`. What you preview on :8115 is byte-for-byte what ships. Hero with both-school CTAs → About the association → Our Schools (two equal cards) → Achievements (honors grid + Golden 50 featured, films open in lightbox) → quotes → contact → footer family row. The kung fu card uses the 麥館 ink calligraphy (`assets/mak-kwoon.jpg`) because no kung fu photo exists yet — swap when Nathan supplies one. |
 | `liondance-com-hybrid/` | Template for the **future lion dance site** | Nathan: how this looks "is how the lion dance page should be." Full one-pager with all 8 YouTube films. Don't touch until the lion dance site is up next. |
 | `liondance-com-modern/` | All-dark first pass of the .com redesign | Superseded exploration; kept for comparison. |
-| `portal-makfai-org/` | Deployed placeholder for makfai.org | Live-ready landing page; the reference implementation for cross-site link rules. Eventually replaced by `portal-hybrid/`. |
+| `portal-makfai-org/` | Superseded placeholder for makfai.org | The old 4.9 KB landing page. Kept as the reference implementation for cross-site link rules; **no longer deployed** — `portal-hybrid/` replaced it. |
 | `lion-dance-makfailiondance-org/`, `kung-fu-makfaikungfu-org/` | Deploy folders for the school sites | Placeholder landing pages + netlify config. |
 | `site/`, `site-light/`, `site-neon-red/` | The three original theme variants (four pages each) | Predate the hybrid. `site-neon-red/` documents the C-ID red-neon art direction; `site-light/` documents the daylight token derivation. Both informed the hybrid. `site/` is the superseded green-led dark. |
 | `mockups/` | 17 early exploration pages | Untouched. |
