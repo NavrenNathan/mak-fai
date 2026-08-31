@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I — Silk Scroll · Mak Fai portal concept</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Archivo:wght@400;500;600&display=swap">
+<style>
+  *{box-sizing:border-box} html,body{margin:0;font-family:'Archivo',sans-serif;color:#f4efe4;background:#111}
+  a{color:#e0b64c;text-decoration:none}
+  .topbar{position:fixed;top:0;left:0;right:0;background:#000;font-size:13px;padding:10px 18px;display:flex;gap:18px;z-index:99;font-family:-apple-system,sans-serif}
+  /* pinned left panel + scrolling right = the scroll unrolls */
+  .split{display:grid;grid-template-columns:44% 56%}
+  .pin{position:sticky;top:0;height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:26px;transition:background 1s ease;background:var(--bg,#8e1118)}
+  .pin img.logo{width:150px;filter:drop-shadow(0 12px 40px rgba(0,0,0,.5));transition:transform .9s cubic-bezier(.2,1.3,.4,1)}
+  .pin img.cal{width:260px}
+  .pin .word{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:26px;color:rgba(255,255,255,.85);transition:opacity .5s}
+  .pin .glyph{position:absolute;font-size:44vh;line-height:1;color:rgba(0,0,0,.14);font-family:'Cormorant Garamond',serif;pointer-events:none;transition:opacity .8s}
+  .panels section{min-height:100vh;padding:16vh 7vw;display:flex;flex-direction:column;justify-content:center;gap:26px}
+  .panels .k{font-size:12px;letter-spacing:.3em;color:#e0b64c}
+  .panels h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(44px,4.6vw,72px);line-height:1.05;margin:0}
+  .panels p{font-size:16.5px;line-height:1.8;color:#c9c0ad;max-width:52ch;margin:0}
+  .panels .cta{align-self:flex-start;background:#e0b64c;color:#241503;padding:16px 32px;font-weight:600;font-size:13px;letter-spacing:.12em}
+  .panels .ghost{align-self:flex-start;border:1.5px solid rgba(244,239,228,.55);padding:16px 32px;font-size:13px;letter-spacing:.12em}
+  .panels img.ph{width:100%;max-width:560px;height:320px;object-fit:cover;border:1px solid rgba(224,182,76,.4)}
+  .p1{background:#171310}.p2{background:#1a0d0f}.p3{background:#0d1f18}.p4{background:#171310}
+  footer{background:#0c0a08;padding:40px 7vw;display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#9a907e;border-top:1px solid rgba(224,182,76,.25)}
+</style>
+</head>
+<body>
+<div class="topbar"><a href="index.html">&larr; All directions</a><span>I — Silk Scroll (pinned panel changes as you scroll)</span></div>
+<div class="split">
+  <div class="pin" id="pin">
+    <div class="glyph" id="glyph">獅</div>
+    <img class="logo" id="plogo" src="logo.png" alt="Mak Fai lion">
+    <img class="cal" src="calligraphy.png" alt="麥顯輝龍獅團">
+    <div class="word" id="word">The story unrolls.</div>
+  </div>
+  <div class="panels">
+    <section class="p1" data-bg="#8e1118" data-word="The story unrolls." data-glyph="獅">
+      <div class="k">MAK FAI &middot; SEATTLE &middot; EST. 1974</div>
+      <h2>A house with two doors and one drum.</h2>
+      <p>Founded by Grandmaster Mak Hin Fai in 1974, Mak Fai carries two traditions through Seattle&#39;s Chinatown-International District: the lion dance that fills the streets, and the kung fu that fills the hall.</p>
+      <div class="ghost">SCROLL TO UNROLL &darr;</div>
+    </section>
+    <section class="p2" data-bg="#a4161a" data-word="Follow the drum." data-glyph="舞">
+      <div class="k">THE TEAM</div>
+      <h2>Lion &amp; dragon dance, hundreds of shows a year.</h2>
+      <img class="ph" src="hero.jpg" alt="Lion dance performance">
+      <p>Lunar New Year, grand openings, weddings, festivals — and the competition floors where Mak Fai represents Seattle nationally and internationally.</p>
+      <div class="cta">BOOK THE TEAM</div>
+    </section>
+    <section class="p3" data-bg="#155c43" data-word="Honor the form." data-glyph="武">
+      <div class="k">THE SCHOOL</div>
+      <h2>Hung Sing Choy Lay Fut, for every generation.</h2>
+      <img class="ph" src="perf.jpg" alt="Mak Fai on stage">
+      <p>Traditional Chinese martial arts for all ages and levels — forms, weapons, and the discipline that lives inside the lion.</p>
+      <div class="cta">JOIN A CLASS</div>
+    </section>
+    <section class="p4" data-bg="#7a5c14" data-word="Pass it on." data-glyph="傳">
+      <div class="k">THE MISSION</div>
+      <h2>Keeping the tradition alive in the next generation.</h2>
+      <p>&ldquo;Pillar of our International District community. Support our culture and uplifting our youth.&rdquo; Mak Fai is a Seattle nonprofit — your support funds youth programs, training space, and competition travel.</p>
+      <div class="cta">SUPPORT MAK FAI</div>
+    </section>
+  </div>
+</div>
+<footer>
+  <div>606 Maynard Ave S, Ste 107, Seattle, WA 98104 &middot; (206) 437-8131 &middot; seattleliondance@gmail.com</div>
+  <div style="color:#e0b64c;letter-spacing:.14em">麥顯輝龍獅團</div>
+</footer>
+<script>
+  const pin=document.getElementById('pin'),word=document.getElementById('word'),glyph=document.getElementById('glyph'),plogo=document.getElementById('plogo');
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){
+    pin.style.setProperty('--bg',e.target.dataset.bg);
+    word.textContent=e.target.dataset.word; glyph.textContent=e.target.dataset.glyph;
+    plogo.style.transform='scale(1.06)'; setTimeout(()=>plogo.style.transform='',450);
+  }})},{threshold:.55});
+  document.querySelectorAll('.panels section').forEach(s=>io.observe(s));
+</script>
+</body>
+</html>

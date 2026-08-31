@@ -1,0 +1,183 @@
+/* ============================================================
+   Mak Fai — DAYLIGHT
+   The light counterpart to style.css.
+
+   Not an inversion. The dark theme is "neon Chinatown after dark":
+   its personality is glow — text-shadow halos, a flickering tube, a
+   coloured haze over black. None of that survives a light ground;
+   glow on paper just reads as blur. So this theme moves to the other
+   half of the same tradition: daylight festival paper. Rice-paper
+   ground, calligraphy ink, lion red, jade, gold leaf. Flat colour and
+   scale carry the emphasis that glow carried at night.
+
+   Swap one line to use it:
+     <link rel="stylesheet" href="style-light.css">
+   ============================================================ */
+*{box-sizing:border-box}
+:root{
+  --bg:#F2EEE4;        /* rice paper, warm */
+  --panel:#FFFFFF;     /* a pasted poster on the wall */
+  --line:#DCD5C4;
+  --ink:#17140F;       /* calligraphy black, warm not pure */
+  --muted:#6A6154;
+
+  /* Daylight forms of the three brand colours. The neon values
+     (#3fe07c, #ffc73d, #ff2e4d) sit at 1.6-3.4:1 on paper and are
+     unreadable; these clear 4.8:1 while staying the same hues. */
+  --green:#0E6B4C;     /* jade            5.5:1 on --bg */
+  --gold:#8A5E0C;      /* antique bronze  4.9:1 on --bg */
+  --red:#C8102E;       /* lion red        5.0:1 on --bg */
+
+  /* Gold cannot be both bright and legible as text. Bright gold is a
+     FILL only, and always carries ink on top (9.5:1). */
+  --gold-leaf:#E9B23C;
+  --jade-wash:rgba(14,107,76,.07);
+  --red-wash:rgba(200,16,46,.06);
+}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Space Grotesk',Helvetica,Arial,sans-serif}
+a{text-decoration:none;color:inherit}
+img{max-width:100%}
+.wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+
+/* ---- where the neon used to be ----
+   Flat, saturated, no halo. At 110px Bebas the colour alone carries it. */
+.n-green{color:var(--green)}
+.n-gold{color:var(--gold)}
+.n-red{color:var(--red)}
+
+/* The tube flicker is a night-time artefact. A painted sign does not
+   buzz, so daylight holds still. Kept as a no-op class so the same
+   markup serves both stylesheets. */
+.buzz,.buzz.d2{animation:none}
+
+/* Paper tone rather than coloured haze: a warm wash that keeps the
+   page from going flat white, at a fraction of the neon's intensity. */
+.grain{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse at 50% 0%,rgba(200,16,46,.045),transparent 55%),
+             radial-gradient(ellipse at 12% 88%,rgba(233,178,60,.07),transparent 48%),
+             radial-gradient(ellipse at 88% 82%,rgba(14,107,76,.05),transparent 48%)}
+main,header,footer{position:relative;z-index:1}
+
+/* nav */
+nav{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:30px 0;gap:30px}
+nav .side{display:flex;gap:36px;font-size:12.5px;letter-spacing:.16em;color:var(--muted);align-items:center}
+nav .side.l{justify-content:flex-end}
+nav .side.r{justify-content:flex-start}
+nav .side a{transition:color .25s}
+nav .side a:hover{color:var(--red)}
+nav .side a.active{color:var(--green);font-weight:600}
+nav .brand{display:flex;flex-direction:column;align-items:center;gap:6px}
+/* the logo is dark olive and gold artwork, so it reads on paper as-is;
+   only its night-time green halo comes off */
+nav .brand img{width:56px;filter:none}
+nav .brand .t{font-family:'Bebas Neue','Arial Narrow',sans-serif;font-size:21px;letter-spacing:.22em}
+
+/* buttons — screen-printed, not lit. Fills instead of glows. */
+.btn{display:inline-block;padding:16px 34px;font-weight:600;font-size:13px;letter-spacing:.12em;
+  cursor:pointer;transition:transform .2s,background .3s,border-color .3s,color .3s}
+.btn:hover{transform:translateY(-2px)}
+.btn-green{background:var(--green);color:#F4FBF7}
+.btn-green:hover{background:#0A5439}
+.btn-gold{background:var(--gold-leaf);color:#241905}   /* ink on gold leaf, 9.5:1 */
+.btn-gold:hover{background:#DDA22B}
+.btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--red);color:var(--red)}
+
+/* type */
+h1,h2{font-family:'Bebas Neue','Arial Narrow',sans-serif;font-weight:400;margin:0}
+.k{font-size:12px;letter-spacing:.3em;color:var(--muted)}
+.lede{font-size:16.5px;line-height:1.8;color:var(--muted)}
+
+/* section header — same gradient rules, no bloom */
+.sec-head{display:flex;align-items:center;gap:24px;justify-content:center;text-align:center;padding:0 0 44px}
+.sec-head::before,.sec-head::after{content:"";height:1.5px;flex:1;max-width:220px}
+.sec-head::before{background:linear-gradient(90deg,transparent,var(--green))}
+.sec-head::after{background:linear-gradient(90deg,var(--gold),transparent)}
+.sec-head h2{font-size:44px}
+
+/* cards — the tilt is structure, not lighting, so it stays.
+   Glowing rims become solid rules plus an honest paper shadow. */
+.duo{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+.card{background:var(--panel);border:1.5px solid;padding:16px 16px 30px;text-align:center;display:block;
+  transition:transform .45s cubic-bezier(.2,1.3,.4,1),box-shadow .45s,border-color .45s}
+.card.gr{border-color:var(--green);box-shadow:0 10px 26px -16px rgba(14,107,76,.5);transform:rotate(-1.2deg)}
+.card.gd{border-color:var(--gold);box-shadow:0 10px 26px -16px rgba(138,94,12,.5);transform:rotate(1.2deg)}
+.card:hover{transform:rotate(0) translateY(-6px)}
+.card.gr:hover{box-shadow:0 20px 40px -20px rgba(14,107,76,.6)}
+.card.gd:hover{box-shadow:0 20px 40px -20px rgba(138,94,12,.6)}
+.card img{width:100%;height:300px;object-fit:cover;display:block}
+.card h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:40px;margin:24px 0 8px}
+.card p{margin:0 auto 20px;font-size:14.5px;line-height:1.7;color:var(--muted);max-width:40ch}
+
+/* stats strip */
+.strip{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  display:grid;grid-template-columns:repeat(4,1fr);text-align:center;background:var(--panel)}
+.strip>div{padding:38px 20px;border-right:1px solid var(--line)}
+.strip>div:last-child{border-right:0}
+.strip .n{font-family:'Bebas Neue',sans-serif;font-size:40px}
+.strip .t{font-size:11.5px;letter-spacing:.2em;color:var(--muted);margin-top:6px}
+
+/* hero */
+.page-hero{position:relative;text-align:center;padding:12vh 0 9vh}
+.page-hero h1{font-size:clamp(56px,8vw,110px);line-height:.95}
+.page-hero .k{margin-bottom:22px}
+.page-hero .lede{max-width:60ch;margin:26px auto 0}
+.cta-row{display:flex;gap:16px;justify-content:center;margin-top:38px;flex-wrap:wrap}
+
+/* photo band — solid rules top and bottom, no bloom */
+.band{position:relative;margin:9vh 0 0}
+.band img{width:100%;height:46vh;object-fit:cover;display:block}
+.band .rule{position:absolute;left:0;right:0;height:3px}
+.band .rule.top{top:0;background:var(--green)}
+.band .rule.bot{bottom:0;background:var(--gold-leaf)}
+
+/* quote */
+.quote{text-align:center;padding:11vh 0;max-width:800px;margin:0 auto}
+.quote .q{font-size:24px;line-height:1.6;font-weight:400;color:var(--ink)}
+.quote .who{font-size:12px;letter-spacing:.26em;color:var(--muted);margin-top:20px}
+
+/* contact */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:26px;text-align:center}
+.cbox{background:var(--panel);border:1px solid var(--line);padding:40px 28px;transition:border-color .3s,box-shadow .3s}
+.cbox:hover{border-color:var(--green);box-shadow:0 14px 30px -20px rgba(14,107,76,.55)}
+.cbox .zh{font-size:28px;margin-bottom:14px}
+.cbox h3{font-family:'Bebas Neue',sans-serif;font-weight:400;font-size:26px;margin:0 0 8px}
+.cbox p{font-size:14px;color:var(--muted);line-height:1.7;margin:0 0 16px}
+.cbox .lnk{font-size:12.5px;letter-spacing:.14em;font-weight:600}
+
+/* footer */
+footer{border-top:1px solid var(--line);margin-top:11vh;padding:48px 0 64px;text-align:center}
+/* calligraphy.png is white artwork drawn for a black ground — 74% of its
+   opaque pixels are near-white, so on paper it would all but vanish.
+   brightness(0) flattens every opaque pixel to black and leaves the alpha
+   channel alone, turning the mark back into ink. */
+footer .cal{width:230px;margin-bottom:18px;filter:brightness(0);opacity:.82}
+footer .addr{font-size:13px;color:var(--muted);line-height:1.9}
+/* the one flourish daylight gets that night does not: a red seal, the way
+   a chop is stamped on a paper document */
+footer .sig{display:inline-block;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:.14em;
+  margin-top:18px;color:#FFF6F1;background:var(--red);padding:7px 16px 6px;border-radius:2px}
+footer .links{display:flex;gap:28px;justify-content:center;font-size:12px;letter-spacing:.16em;color:var(--muted);margin-top:22px}
+footer .links a:hover{color:var(--red)}
+
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.001ms !important}}
+
+@media (max-width:900px){
+  .wrap{padding:0 22px}
+  nav{grid-template-columns:1fr;gap:14px}
+  nav .side{justify-content:center !important;flex-wrap:wrap;gap:20px}
+  .duo,.contact-grid{grid-template-columns:1fr}
+  .strip{grid-template-columns:1fr 1fr}
+  .strip>div:nth-child(2){border-right:0}
+  .card.gr,.card.gd{transform:none}
+}
+
+/* ---- preview-only, delete before shipping ---- */
+.themepeek{position:fixed;right:16px;bottom:16px;z-index:99;display:flex;gap:6px;align-items:center;
+  background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 8px;
+  box-shadow:0 14px 30px -18px rgba(23,20,15,.5);font-size:10px;letter-spacing:.14em}
+.themepeek b{color:var(--muted);font-weight:500;padding-left:6px}
+.themepeek a{padding:6px 12px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.themepeek a.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}

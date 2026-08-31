@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mak Fai — Kung Fu Dragon &amp; Lion Dance Association | Seattle</title>
+<meta name="description" content="Seattle's premier lion dance team and traditional kung fu school, in the Chinatown-International District since 1974.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="logo.png">
+</head>
+<body data-page="home">
+<div class="grain"></div>
+<header>
+  <nav class="wrap">
+    <div class="side l"><a href="index.html" data-p="home">HOME</a><a href="lion-dance.html" data-p="lion">LION DANCE</a></div>
+    <a class="brand" href="index.html"><img src="logo.png" alt="Mak Fai lion head logo"><span class="t">MAK FAI</span></a>
+    <div class="side r"><a href="kung-fu.html" data-p="kungfu">KUNG FU</a><a href="contact.html" data-p="contact">BOOK &amp; CONTACT</a></div>
+  </nav>
+
+</header>
+<main>
+  <section class="page-hero wrap">
+    <div class="k">SEATTLE &middot; CHINATOWN-INTERNATIONAL DISTRICT &middot; 麥顯輝龍獅團</div>
+    <h1><span class="n-green buzz">OPEN LATE</span><br><span class="n-gold buzz d2">SINCE 1974.</span></h1>
+    <div class="lede">Seattle&#39;s premier lion dance team and traditional Hung Sing Choy Lay Fut kung fu school —<br>founded by Grandmaster Mak Hin Fai, still waking the city every Lunar New Year.</div>
+    <div class="cta-row">
+      <a class="btn btn-green" href="contact.html">BOOK A PERFORMANCE</a>
+      <a class="btn btn-ghost" href="kung-fu.html">JOIN A CLASS</a>
+    </div>
+  </section>
+
+  <section class="wrap" id="paths">
+    <div class="sec-head"><h2>TWO TRADITIONS, ONE HOUSE</h2></div>
+    <div class="duo">
+      <a class="card gr" href="lion-dance.html">
+        <img src="hero.jpg" alt="Mak Fai lion dance at a wedding">
+        <h3 class="n-green">THE LION DANCE TEAM</h3>
+        <p>Hundreds of shows a year — Lunar New Year, grand openings, weddings, festivals, and international competition.</p>
+        <span class="btn btn-green">ENTER &rarr;</span>
+      </a>
+      <a class="card gd" href="kung-fu.html">
+        <img src="perf.jpg" alt="Mak Fai stage performance">
+        <h3 class="n-gold">THE KUNG FU SCHOOL</h3>
+        <p>Traditional Hung Sing Choy Lay Fut for all ages and levels — forms, weapons, and discipline since 1974.</p>
+        <span class="btn btn-gold">ENTER &rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="wrap" style="padding-top:10vh">
+    <div class="strip">
+      <div><div class="n n-green">EST. 1974</div><div class="t">GM MAK HIN FAI</div></div>
+      <div><div class="n n-gold">100s / YR</div><div class="t">PERFORMANCES</div></div>
+      <div><div class="n n-green">NAT&#39;L + INTL</div><div class="t">COMPETITION TEAM</div></div>
+      <div><div class="n n-gold">ALL AGES</div><div class="t">CLASSES OPEN</div></div>
+    </div>
+  </section>
+
+  <div class="band"><div class="rule top"></div><img src="hero.jpg" alt="Lion dance performance"><div class="rule bot"></div></div>
+
+  <section class="quote wrap">
+    <div class="q">&ldquo;Pillar of our International District community. Support our culture and uplifting our youth.&rdquo;</div>
+    <div class="who">COMMUNITY MEMBER &middot; SEATTLE C-ID</div>
+    <div class="cta-row"><a class="btn btn-gold" href="contact.html">SUPPORT THE NONPROFIT</a></div>
+  </section>
+</main>
+  <footer>
+    <div class="wrap">
+      <img class="cal" src="calligraphy.png" alt="麥顯輝龍獅團 calligraphy">
+      <div class="addr">Mak Fai Kung Fu Dragon &amp; Lion Dance Association<br>606 Maynard Ave S, Ste 107, Seattle, WA 98104<br><a href="tel:+12064378131" class="n-gold">(206) 437-8131</a> &middot; <a href="mailto:seattleliondance@gmail.com" class="n-green">seattleliondance@gmail.com</a></div>
+      <div class="sig n-red buzz d2">EST. 1974 &middot; SEATTLE C-ID</div>
+      <div class="links"><a href="index.html">HOME</a><a href="lion-dance.html">LION DANCE</a><a href="kung-fu.html">KUNG FU</a><a href="contact.html">CONTACT</a><a href="https://www.makfailiondance.com" target="_blank" rel="noopener">CURRENT SITE &nearr;</a></div>
+    </div>
+  </footer>
+  <script>
+    const p=document.body.dataset.page;
+    document.querySelectorAll('[data-p]').forEach(a=>{if(a.dataset.p===p)a.classList.add('active')});
+  </script>
+
+</body>
+</html>
