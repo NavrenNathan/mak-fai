@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lion Dance — Mak Fai | Seattle</title>
+<meta name="description" content="Book Mak Fai — Seattle's premier lion and dragon dance team for Lunar New Year, grand openings, weddings, and festivals.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<link rel="icon" href="logo.png">
+</head>
+<body data-page="lion">
+<div class="grain"></div>
+<!-- Cross-site links: Kung Fu and Lion Dance are separate properties, not
+     pages of this site. Every KUNG FU / LION DANCE link below leaves for its
+     own domain, matching portal-makfai-org/.
+     TODO: repoint the Lion Dance links to https://makfailiondance.org once the
+     domain is live and the 301 from the .com is in place. -->
+<header>
+  <nav class="wrap">
+    <div class="side l"><a href="index.html" data-p="home">HOME</a><a href="https://makfailiondance.com" data-p="lion">LION DANCE</a></div>
+    <a class="brand" href="index.html"><img src="logo.png" alt="Mak Fai lion head logo"><span class="t">MAK FAI</span></a>
+    <div class="side r"><a href="https://makfaikungfu.org" data-p="kungfu">KUNG FU</a><a href="contact.html" data-p="contact">BOOK &amp; CONTACT</a></div>
+  </nav>
+
+</header>
+<main>
+  <section class="page-hero wrap">
+    <div class="k">獅 &middot; THE TEAM</div>
+    <h1><span class="n-green buzz">HEAR THE DRUM?</span><br>THAT&#39;S US.</h1>
+    <div class="lede">Southern-style lion and dragon dance, performed hundreds of times a year across the Greater Seattle area — and on national and international competition floors, representing Seattle and Washington.</div>
+    <div class="cta-row">
+      <a class="btn btn-green" href="mailto:seattleliondance@gmail.com?subject=Lion%20Dance%20Booking%20Inquiry">EMAIL A BOOKING INQUIRY</a>
+      <a class="btn btn-ghost" href="tel:+12064378131">CALL (206) 437-8131</a>
+    </div>
+  </section>
+
+  <div class="band" style="margin-top:2vh"><div class="rule top"></div><img src="hero.jpg" alt="Mak Fai lions performing at a wedding"><div class="rule bot"></div></div>
+
+  <section class="wrap" style="padding-top:10vh">
+    <div class="sec-head"><h2>WHAT WE PERFORM FOR</h2></div>
+    <div class="contact-grid">
+      <div class="cbox"><div class="zh n-red">新</div><h3>LUNAR NEW YEAR</h3><p>The season that fills the C-ID with drums — book early, dates go fast.</p><span class="lnk n-green">MOST POPULAR</span></div>
+      <div class="cbox"><div class="zh n-gold">開</div><h3>GRAND OPENINGS</h3><p>Bless a new business with luck, noise, and a crowd on the sidewalk.</p><span class="lnk n-green">YEAR-ROUND</span></div>
+      <div class="cbox"><div class="zh n-green">囍</div><h3>WEDDINGS &amp; EVENTS</h3><p>Weddings, festivals, corporate and community events of every size.</p><span class="lnk n-green">YEAR-ROUND</span></div>
+    </div>
+  </section>
+
+  <section class="quote wrap">
+    <div class="q">&ldquo;Best team in Seattle, no doubt.&rdquo;</div>
+    <div class="who">COMMUNITY REVIEW</div>
+    <div class="cta-row">
+      <a class="btn btn-green" href="contact.html">BOOK THE TEAM</a>
+      <a class="btn btn-ghost" href="https://www.makfailiondance.com" target="_blank" rel="noopener">WATCH OUR FILMS &nearr;</a>
+    </div>
+  </section>
+</main>
+  <footer>
+    <div class="wrap">
+      <img class="cal" src="calligraphy.png" alt="麥顯輝龍獅團 calligraphy">
+      <div class="addr">Mak Fai Kung Fu Dragon &amp; Lion Dance Association<br>606 Maynard Ave S, Ste 107, Seattle, WA 98104<br><a href="tel:+12064378131" class="n-gold">(206) 437-8131</a> &middot; <a href="mailto:seattleliondance@gmail.com" class="n-green">seattleliondance@gmail.com</a></div>
+      <div class="sig n-red buzz d2">EST. 1974 &middot; SEATTLE C-ID</div>
+      <div class="links"><a href="index.html">HOME</a><a href="https://makfailiondance.com">LION DANCE</a><a href="https://makfaikungfu.org">KUNG FU</a><a href="contact.html">CONTACT</a><a href="https://www.makfailiondance.com" target="_blank" rel="noopener">CURRENT SITE &nearr;</a></div>
+    </div>
+  </footer>
+  <script>
+    const p=document.body.dataset.page;
+    document.querySelectorAll('[data-p]').forEach(a=>{if(a.dataset.p===p)a.classList.add('active')});
+  </script>
+
+</body>
+</html>

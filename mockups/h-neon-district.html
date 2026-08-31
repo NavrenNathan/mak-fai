@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>H — Neon District · Mak Fai portal concept</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;700&display=swap">
+<style>
+  *{box-sizing:border-box} html,body{margin:0;background:#07060c;color:#f2ecff;font-family:'Space Grotesk',sans-serif}
+  a{color:#ff3d81;text-decoration:none}
+  .topbar{position:fixed;top:0;left:0;right:0;background:#000;font-size:13px;padding:10px 18px;display:flex;gap:18px;z-index:99;font-family:-apple-system,sans-serif}
+  .wrap{max-width:1280px;margin:0 auto;padding:80px 40px 0}
+  /* neon sign hero */
+  .hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;position:relative}
+  .hero .grain{position:fixed;inset:0;pointer-events:none;opacity:.5;background:radial-gradient(ellipse at 20% 10%,rgba(255,61,129,.14),transparent 45%),radial-gradient(ellipse at 85% 80%,rgba(61,255,199,.1),transparent 45%),radial-gradient(ellipse at 60% 30%,rgba(255,199,61,.08),transparent 50%)}
+  .sign{font-family:'Bebas Neue','Arial Narrow',sans-serif;font-size:clamp(80px,13vw,190px);line-height:.92;letter-spacing:.02em}
+  .neon-pink{color:#ff3d81;text-shadow:0 0 8px rgba(255,61,129,.9),0 0 32px rgba(255,61,129,.65),0 0 90px rgba(255,61,129,.4);animation:buzz 4s infinite}
+  .neon-gold{color:#ffc73d;text-shadow:0 0 8px rgba(255,199,61,.9),0 0 32px rgba(255,199,61,.6),0 0 90px rgba(255,199,61,.35)}
+  .neon-teal{color:#3dffc7;text-shadow:0 0 8px rgba(61,255,199,.9),0 0 32px rgba(61,255,199,.55),0 0 80px rgba(61,255,199,.35)}
+  @keyframes buzz{0%,86%,92%,100%{opacity:1}88%,90%{opacity:.55}}
+  .hero .zh{position:absolute;right:0;top:16vh;writing-mode:vertical-rl;font-size:clamp(40px,6vh,64px);color:#3dffc7;text-shadow:0 0 10px rgba(61,255,199,.8),0 0 40px rgba(61,255,199,.4);letter-spacing:.35em;border:2px solid rgba(61,255,199,.6);border-radius:8px;padding:24px 10px;box-shadow:0 0 24px rgba(61,255,199,.25),inset 0 0 24px rgba(61,255,199,.15)}
+  .hero .tag{margin-top:34px;font-size:15px;letter-spacing:.28em;color:#b7a8c9}
+  .hero .row{display:flex;gap:16px;margin-top:36px}
+  .btn{padding:16px 32px;font-weight:700;font-size:13px;letter-spacing:.14em}
+  .btn.p{background:#ff3d81;color:#1c0410;box-shadow:0 0 26px rgba(255,61,129,.55)}
+  .btn.g{border:2px solid #ffc73d;color:#ffc73d;box-shadow:inset 0 0 16px rgba(255,199,61,.15)}
+  /* tilted cards */
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:44px;padding:10vh 0}
+  .card{position:relative;transition:transform .5s cubic-bezier(.2,1.4,.4,1)}
+  .card:hover{transform:rotate(0deg) scale(1.02) !important}
+  .card.a{transform:rotate(-2.4deg)}
+  .card.b{transform:rotate(2deg);margin-top:70px}
+  .card img{width:100%;height:380px;object-fit:cover;display:block}
+  .card .frame{border:2px solid;padding:14px;background:#0d0b14}
+  .card.a .frame{border-color:#ff3d81;box-shadow:0 0 34px rgba(255,61,129,.3)}
+  .card.b .frame{border-color:#3dffc7;box-shadow:0 0 34px rgba(61,255,199,.28)}
+  .card h2{font-family:'Bebas Neue',sans-serif;font-size:56px;margin:18px 0 6px;line-height:1}
+  .card.a h2{color:#ff3d81}.card.b h2{color:#3dffc7}
+  .card p{margin:0 0 16px;color:#b7a8c9;font-size:15.5px;line-height:1.65}
+  .card .go{font-weight:700;font-size:13px;letter-spacing:.16em}
+  .card.a .go{color:#ffc73d}.card.b .go{color:#ffc73d}
+  /* ticket strip */
+  .strip{border-top:2px dashed #4a3b5c;border-bottom:2px dashed #4a3b5c;padding:44px 0;display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}
+  .strip .cell .n{font-family:'Bebas Neue',sans-serif;font-size:52px;color:#ffc73d;text-shadow:0 0 20px rgba(255,199,61,.5)}
+  .strip .cell .t{font-size:12px;letter-spacing:.2em;color:#8f7fa3}
+  footer{padding:56px 0 64px;display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:#8f7fa3}
+  footer .neon-sm{font-family:'Bebas Neue',sans-serif;font-size:24px;color:#ff3d81;text-shadow:0 0 12px rgba(255,61,129,.7)}
+</style>
+</head>
+<body>
+<div class="topbar"><a href="index.html">&larr; All directions</a><span>H — Neon District (C-ID at night)</span></div>
+<div class="grain"></div>
+<div class="wrap">
+  <section class="hero">
+    <div class="zh">麥顯輝龍獅團</div>
+    <div class="sign"><span class="neon-pink">OPEN LATE</span><br><span class="neon-gold">SINCE 1974.</span></div>
+    <div class="sign" style="font-size:clamp(30px,4vw,56px);margin-top:18px"><span class="neon-teal">SEATTLE&#39;S LION DANCE &amp; KUNG FU HALL</span></div>
+    <div class="tag">606 MAYNARD AVE S &middot; CHINATOWN-INTERNATIONAL DISTRICT</div>
+    <div class="row"><div class="btn p">BOOK A SHOW</div><div class="btn g">TRAIN WITH US</div></div>
+  </section>
+  <section class="cards">
+    <div class="card a"><div class="frame"><img src="hero.jpg" alt="Lion dance"><h2>THE LION DANCE TEAM</h2><p>Hundreds of nights a year — drums in the street, lions on the poles, from Lunar New Year to your grand opening.</p><div class="go">ENTER THE TEAM SITE &rarr;</div></div></div>
+    <div class="card b"><div class="frame"><img src="perf.jpg" alt="Kung fu"><h2>THE KUNG FU SCHOOL</h2><p>Hung Sing Choy Lay Fut — traditional forms and weapons under the neon, for every age and level.</p><div class="go">ENTER THE SCHOOL SITE &rarr;</div></div></div>
+  </section>
+  <section class="strip">
+    <div class="cell"><div class="n">EST. 1974</div><div class="t">GRANDMASTER MAK HIN FAI</div></div>
+    <div class="cell"><div class="n">100s / YR</div><div class="t">PERFORMANCES BOOKED</div></div>
+    <div class="cell"><div class="n">INTL</div><div class="t">COMPETITION TEAM</div></div>
+    <div class="cell"><div class="n">ALL AGES</div><div class="t">CLASSES OPEN</div></div>
+  </section>
+  <footer>
+    <div>606 Maynard Ave S, Ste 107, Seattle, WA 98104<br>(206) 437-8131 &middot; seattleliondance@gmail.com</div>
+    <div class="neon-sm">MAK FAI &middot; NO VACANCY FOR SECOND PLACE</div>
+  </footer>
+</div>
+</body>
+</html>
