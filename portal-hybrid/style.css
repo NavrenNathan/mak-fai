@@ -426,6 +426,35 @@ section{padding:clamp(84px,11vw,132px) 0;scroll-margin-top:72px}
   cursor:pointer;display:flex;align-items:center;gap:8px;padding:8px}
 .lb-close:hover{color:var(--red)}
 
+/* password gate — soft client-side lock for pre-launch preview access.
+   Not real security: the password lives in this file's source. It only
+   keeps casual visitors out before the site is ready to announce.
+   TODO: remove this block (and the matching markup/script in index.html)
+   once makfai.org is ready to launch publicly. */
+.pw-gate{position:fixed;inset:0;z-index:999;display:flex;align-items:center;
+  justify-content:center;padding:24px;background:var(--bg);
+  background-image:radial-gradient(60% 60% at 50% 30%,rgba(230,59,82,.16),transparent 70%)}
+.pw-gate-card{width:min(380px,100%);text-align:center;padding:44px 36px;
+  border-radius:var(--radius);border:1px solid var(--line);
+  background:linear-gradient(160deg,var(--panel),var(--panel-2));
+  box-shadow:0 40px 120px rgba(0,0,0,.6)}
+.pw-gate-title{font-size:22px;line-height:1.3;margin:0 0 22px;color:var(--ink)}
+.pw-gate-input{width:100%;padding:13px 16px;margin-bottom:16px;font-size:15px;
+  font-family:inherit;color:var(--ink);background:rgba(255,255,255,.04);
+  border:1px solid var(--line);border-radius:10px;outline:none;
+  transition:border-color .25s var(--ease)}
+.pw-gate-input:focus{border-color:var(--gold)}
+.pw-gate-btn{width:100%;justify-content:center}
+.pw-gate-error{color:var(--red);font-size:13px;margin:14px 0 0}
+.pw-gate.shake .pw-gate-card{animation:pw-shake .4s var(--ease)}
+@keyframes pw-shake{
+  0%,100%{transform:translateX(0)}
+  20%{transform:translateX(-8px)}
+  40%{transform:translateX(8px)}
+  60%{transform:translateX(-5px)}
+  80%{transform:translateX(5px)}
+}
+
 /* ---------------- quotes ---------------- */
 .quotes{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .quote{background:linear-gradient(160deg,var(--panel),var(--panel-2));

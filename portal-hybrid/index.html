@@ -37,6 +37,52 @@
 </head>
 <body>
 
+<!-- Password gate: soft client-side lock for pre-launch preview access.
+     Not real security — the password lives in this file's source, so anyone
+     using View Source can read it. It only keeps casual visitors out while
+     the site isn't ready to announce; treat it the same as the Netlify
+     dashboard password protection it's meant to sit alongside.
+     TODO: remove this block (and the matching CSS in style.css) once
+     makfai.org is ready to launch publicly. -->
+<div id="pw-gate" class="pw-gate">
+  <form id="pw-gate-form" class="pw-gate-card" autocomplete="off">
+    <p class="eyebrow">Mak Fai · Preview</p>
+    <h1 class="pw-gate-title">Enter password to continue</h1>
+    <input id="pw-gate-input" class="pw-gate-input" type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
+    <button type="submit" class="btn btn-red pw-gate-btn">Enter</button>
+    <p id="pw-gate-error" class="pw-gate-error" hidden>Incorrect password — try again.</p>
+  </form>
+</div>
+<script>
+(function(){
+  var KEY = 'makfaiPortalUnlocked', PASSWORD = 'makfai123';
+  var gate = document.getElementById('pw-gate');
+  var unlocked = false;
+  try { unlocked = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
+  if (unlocked) {
+    gate.style.display = 'none';
+    return;
+  }
+  document.documentElement.style.overflow = 'hidden';
+  document.getElementById('pw-gate-form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var input = document.getElementById('pw-gate-input');
+    if (input.value === PASSWORD) {
+      try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      document.documentElement.style.overflow = '';
+      gate.style.display = 'none';
+    } else {
+      document.getElementById('pw-gate-error').hidden = false;
+      gate.classList.remove('shake');
+      void gate.offsetWidth;
+      gate.classList.add('shake');
+      input.value = '';
+      input.focus();
+    }
+  });
+})();
+</script>
+
 <div class="glow" aria-hidden="true"></div>
 
 <!-- TODO: repoint every makfailiondance.com link to https://makfailiondance.org
