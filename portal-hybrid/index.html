@@ -142,30 +142,35 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="home">
-    <div class="hero-bg" aria-hidden="true">
-      <img src="assets/hero.jpg" alt="" fetchpriority="high">
-    </div>
-    <div class="wrap hero-in">
-      <img class="calli" data-stagger="1" src="assets/calligraphy.png"
-           alt="Mak Fai Dragon and Lion Dance Team in Chinese calligraphy">
-      <h1 data-stagger="2">MAK <span class="flick">FAI</span></h1>
-      <p class="sub" data-stagger="3">Kung Fu Dragon &amp; Lion Dance Assn.</p>
-      <p class="lede" data-stagger="4">A Seattle Chinatown-International
-        District institution — traditional kung fu and lion dance under one
-        roof since 1974.</p>
-      <div class="hero-cta" data-stagger="5">
-        <a class="btn btn-red" href="https://www.makfailiondance.com" target="_blank" rel="noopener">Lion Dance Team</a>
-        <a class="btn btn-red" href="https://makfaikungfu.org" target="_blank" rel="noopener">Kung Fu School</a>
+    <!-- Split hero: left wedge is a real lion dance photo, right wedge is a
+         flat color/pattern treatment standing in for the kung fu school --
+         there's no kung fu action photo in this project yet. Swap
+         .hero-split-kungfu for a photo the same way .hero-split-lion works
+         once Nathan supplies one. -->
+    <div class="hero-split" aria-hidden="true">
+      <div class="hero-split-panel hero-split-lion">
+        <img src="assets/hero.jpg" alt="" fetchpriority="high">
       </div>
-      <div class="stats" data-stagger="5">
-        <div class="stat"><b>1974</b><i>Established</i></div>
-        <div class="stat"><b>50+</b><i>Years of tradition</i></div>
-        <div class="stat"><b>National</b><i>&amp; int'l stage</i></div>
-      </div>
+      <div class="hero-split-panel hero-split-kungfu"></div>
     </div>
-    <a class="scrollhint" href="#about" aria-label="Scroll to About">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
-    </a>
+    <!-- Hero copy (calligraphy, MAK FAI wordmark, tagline, lede, stat strip,
+         scroll hint) is temporarily stripped back to just the two school
+         buttons while the split/hover treatment is worked out. All of it is
+         one `git revert` away in history, and its CSS is left in place.
+         The two buttons sit in a half-and-half grid so each one lands dead
+         centre of the panel it belongs to. -->
+    <div class="hero-cta" data-stagger="1">
+      <a class="btn btn-red cta-lion" href="https://www.makfailiondance.com" target="_blank" rel="noopener">Lion Dance Team</a>
+      <a class="btn btn-red cta-kungfu" href="https://makfaikungfu.org" target="_blank" rel="noopener">Kung Fu School</a>
+    </div>
+    <button type="button" class="hero-peek hero-peek-lion" data-peek="lion" aria-expanded="false">
+      Lion Dance
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+    <button type="button" class="hero-peek hero-peek-kungfu" data-peek="kungfu" aria-expanded="false">
+      Kung Fu
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
   </section>
 
   <!-- ============ ABOUT ============ -->
@@ -418,6 +423,62 @@
   document.getElementById('navlinks').addEventListener('click', function(e){
     if (e.target.closest('a')) { nav.classList.remove('open'); burger.setAttribute('aria-expanded','false'); }
   });
+
+  /* hero split: the .hero-peek pills expand their half to full-bleed.
+     Mouse gets a short hover-intent delay so a cursor crossing the hero
+     doesn't trigger it, and releases as soon as you leave. Touch has no
+     hover at all, so there a tap toggles the same state. Keyboard focus
+     expands too, which is why the triggers are real buttons. */
+  /* State lives on .hero, not .hero-split, so the peek pills and the CTA
+     buttons -- which are siblings of the split, not children -- can fade
+     with the half they belong to. */
+  var hero = document.querySelector('.hero');
+  var peeks = [].slice.call(document.querySelectorAll('.hero-peek'));
+  if (hero && peeks.length) {
+    var HOVER_INTENT = 300, peekTimer = null, lastPointer = '';
+
+    var setExpanded = function (which) {
+      hero.classList.toggle('expand-lion', which === 'lion');
+      hero.classList.toggle('expand-kungfu', which === 'kungfu');
+      peeks.forEach(function (p) {
+        p.setAttribute('aria-expanded', String(p.dataset.peek === which));
+      });
+    };
+
+    peeks.forEach(function (peek) {
+      var which = peek.dataset.peek;
+
+      /* Branch on the actual pointer that's being used, not on a
+         "(hover: hover)" media query -- hybrid machines and some phones
+         report hover support they don't really have, which left touch
+         users with no working trigger at all. */
+      peek.addEventListener('pointerdown', function (ev) { lastPointer = ev.pointerType; });
+
+      peek.addEventListener('pointerenter', function (ev) {
+        if (ev.pointerType !== 'mouse') return;
+        clearTimeout(peekTimer);
+        peekTimer = setTimeout(function () { setExpanded(which); }, HOVER_INTENT);
+      });
+      peek.addEventListener('pointerleave', function (ev) {
+        if (ev.pointerType !== 'mouse') return;
+        clearTimeout(peekTimer);
+        setExpanded(null);
+      });
+
+      /* Touch and keyboard both land here. A real mouse click is ignored,
+         since hover already has it covered. */
+      peek.addEventListener('click', function () {
+        if (lastPointer === 'mouse') return;
+        setExpanded(hero.classList.contains('expand-' + which) ? null : which);
+        lastPointer = '';
+      });
+
+      peek.addEventListener('focus', function () {
+        if (peek.matches(':focus-visible')) setExpanded(which);
+      });
+      peek.addEventListener('blur', function () { setExpanded(null); });
+    });
+  }
 
   /* reveal on scroll */
   var toReveal = [].slice.call(document.querySelectorAll('.reveal'));

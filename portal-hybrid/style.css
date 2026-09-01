@@ -72,20 +72,33 @@ header{position:relative;z-index:60} /* above main, so the fixed nav is never pa
   border-bottom:1px solid transparent;
 }
 /* Scrolled, the nav becomes paper glass — it reads as the light
-   theme's chrome even while passing over the dark portfolio band. */
-.nav.scrolled{
+   theme's chrome even while passing over the dark portfolio band.
+   The open mobile menu gets the identical treatment: its dropdown panel
+   is paper, so without this the header strip above it stayed transparent
+   and the two read as separate, disconnected pieces. */
+.nav.scrolled,.nav.open{
   background:rgba(250,246,239,.9);
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   border-bottom-color:var(--line-l-soft);
   box-shadow:0 10px 30px rgba(24,16,10,.12);
 }
 .nav.scrolled .brand b,.nav.scrolled .nav-links a:not(.btn):hover,
-.nav.scrolled .nav-links a:not(.btn).active{color:var(--ink-l)}
-.nav.scrolled .brand small{color:var(--muted-l)}
-.nav.scrolled .nav-links a:not(.btn){color:var(--muted-l)}
-.nav.scrolled .nav-links a:not(.btn)::after{background:var(--red-l)}
-.nav.scrolled .burger span{background:var(--ink-l)}
+.nav.scrolled .nav-links a:not(.btn).active,
+.nav.open .brand b,.nav.open .nav-links a:not(.btn):hover,
+.nav.open .nav-links a:not(.btn).active{color:var(--ink-l)}
+.nav.scrolled .brand small,.nav.open .brand small{color:var(--muted-l)}
+.nav.scrolled .nav-links a:not(.btn),
+.nav.open .nav-links a:not(.btn){color:var(--muted-l)}
+.nav.scrolled .nav-links a:not(.btn)::after,
+.nav.open .nav-links a:not(.btn)::after{background:var(--red-l)}
+.nav.scrolled .burger span,.nav.open .burger span{background:var(--ink-l)}
 .nav-in{display:flex;align-items:center;gap:28px;height:72px}
+/* Nav uses a wider, shorter-padding box than the rest of the page's .wrap
+   columns, so the brand sits closer to the left edge and the links closer
+   to the right edge instead of lining up with the narrower content column.
+   (.nav ancestor + .wrap.nav-in on the element = 3 classes, so this beats
+   both the base .wrap padding and the 720px-breakpoint .wrap override.) */
+.nav .wrap.nav-in{max-width:1400px;padding:0 24px}
 .brand{display:flex;align-items:center;gap:12px;margin-right:auto}
 .brand img{width:42px;height:auto}
 .brand b{font-size:17px;letter-spacing:.14em}
@@ -143,12 +156,77 @@ header{position:relative;z-index:60} /* above main, so the fixed nav is never pa
 /* ---------------- hero ---------------- */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;
   justify-content:center;overflow:hidden}
-.hero-bg{position:absolute;inset:0;z-index:-2}
-.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%;
-  animation:kenburns 26s var(--ease) both}
-@keyframes kenburns{from{transform:scale(1.12)}to{transform:scale(1)}}
-.hero::after{ /* readability scrim */
-  content:"";position:absolute;inset:0;z-index:-1;
+/* Split hero background: a straight 50/50 vertical split, lion dance left,
+   kung fu right. Below 720px it becomes a straight horizontal 50/50 split
+   instead (top/bottom) -- see the 720px breakpoint.
+   Layering, and why it matters: the panels have to be the topmost thing
+   under the cursor or the triggers never work, so the split sits at
+   z-index 0 (not behind the section) and everything stacked above it --
+   the scrim, the buttons row -- is pointer-events:none, with only the
+   buttons and peek pills themselves opting back in. */
+.hero-split{position:absolute;inset:0;z-index:0}
+.hero-split-panel{position:absolute;inset:0;z-index:1;
+  transition:clip-path .6s var(--ease),z-index 0s .6s}
+.hero-split-lion{clip-path:polygon(0 0, 50% 0, 50% 100%, 0 100%)}
+.hero-split-lion img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+.hero-split-kungfu{clip-path:polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+  background:
+    repeating-linear-gradient(135deg,rgba(242,180,65,.06) 0 2px,transparent 2px 26px),
+    linear-gradient(150deg,#1C0D10 0%,var(--red-deep) 55%,#2A0D10 100%);
+}
+/* Expanded state. Driven entirely by JS toggling these classes from the
+   .hero-peek triggers -- hovering a whole half was far too twitchy, so the
+   hot zone is now a small labeled pill instead. z-index switches to 3 with
+   no delay going in, but the base .hero-split-panel rule holds it there for
+   the .6s clip-path transition on the way out, so the panel that's moving
+   is always the one painted on top. */
+.hero.expand-lion .hero-split-lion,
+.hero.expand-kungfu .hero-split-kungfu{
+  clip-path:polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  z-index:3;transition:clip-path .6s var(--ease),z-index 0s}
+
+/* The half being covered takes its own controls with it -- otherwise a
+   "Kung Fu School" button is left floating over a lion dance photo. */
+.hero.expand-lion .hero-peek-kungfu,
+.hero.expand-lion .cta-kungfu,
+.hero.expand-kungfu .hero-peek-lion,
+.hero.expand-kungfu .cta-lion{opacity:0;pointer-events:none}
+
+/* Buttons sit in a half-and-half grid over the hero, each one bottom-centre
+   of its own panel. The grid itself ignores the cursor so it never blocks
+   the panels underneath. */
+.hero-cta{position:absolute;inset:0;z-index:2;pointer-events:none;
+  display:grid;grid-template-columns:1fr 1fr;place-items:end center;
+  gap:0;margin:0;padding-bottom:clamp(38px,8vh,88px)}
+.hero-cta .btn{pointer-events:auto;
+  transition:opacity .45s var(--ease),transform .25s var(--ease),
+             box-shadow .25s var(--ease),background .25s var(--ease),
+             border-color .25s var(--ease)}
+
+/* Peek triggers -- the labeled hot zones that expand each half. Sized as
+   small targets on purpose: you have to mean it. The JS adds a ~300ms
+   hover-intent delay on top so a cursor crossing the hero doesn't fire
+   them, and falls back to tap on touch, where hover doesn't exist. */
+.hero-peek{position:absolute;z-index:3;
+  display:inline-flex;align-items:center;gap:9px;
+  padding:11px 20px;border-radius:999px;cursor:pointer;
+  font-family:inherit;font-size:11.5px;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink);
+  background:rgba(11,7,8,.5);border:1px solid var(--line);
+  -webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);
+  transform:translate(-50%,-50%);
+  transition:color .25s var(--ease),border-color .25s var(--ease),
+             background .25s var(--ease),box-shadow .25s var(--ease),
+             opacity .45s var(--ease)}
+.hero-peek:hover,.hero-peek:focus-visible{
+  color:var(--gold);border-color:var(--gold);background:rgba(11,7,8,.72);
+  box-shadow:0 8px 30px rgba(242,180,65,.22)}
+.hero-peek svg{opacity:.7;transition:transform .25s var(--ease)}
+.hero-peek:hover svg,.hero-peek:focus-visible svg{opacity:1;transform:translateX(3px)}
+.hero-peek-lion{left:25%;top:34%}
+.hero-peek-kungfu{left:75%;top:34%}
+.hero::after{ /* readability scrim -- sits over the panels, never blocks the cursor */
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
     linear-gradient(180deg,rgba(11,7,8,.62) 0%,rgba(11,7,8,.30) 34%,
                     rgba(11,7,8,.55) 72%,var(--bg) 100%),
@@ -182,7 +260,8 @@ header{position:relative;z-index:60} /* above main, so the fixed nav is never pa
 }
 .hero .lede{max-width:56ch;margin:22px auto 0;color:#E5DAD2;
   font-size:clamp(16px,2vw,19px)}
-.hero-cta{display:flex;gap:16px;justify-content:center;margin-top:38px;flex-wrap:wrap}
+/* (.hero-cta's layout lives up with the split rules -- it's positioned over
+   the panels now, one button centred per half, rather than a centred row.) */
 
 /* staggered entrance */
 .hero [data-stagger]{opacity:0;transform:translateY(26px);
@@ -556,6 +635,27 @@ footer{border-top:1px solid var(--line-soft);padding:44px 0 52px;
 }
 @media (max-width:720px){
   .wrap{padding:0 22px}
+  /* Hero split stacks top/bottom on narrow screens -- same straight 50/50
+     line, just horizontal, since a vertical split into two tall thin
+     columns is unreadable on a phone. Expanding (the JS-driven .expand-*
+     classes) uses the same full-rect clip-path either way. */
+  .hero-split-lion{clip-path:polygon(0 0, 100% 0, 100% 50%, 0 50%)}
+  .hero-split-kungfu{clip-path:polygon(0 50%, 100% 50%, 100% 100%, 0 100%)}
+  /* one button per half means stacked rows, not side-by-side columns.
+     Everything in the hero shrinks here -- at desktop sizing the pills and
+     CTAs ate most of a phone screen. Kept around ~30px tall rather than
+     going smaller still, so they stay comfortably tappable. */
+  .hero-cta{grid-template-columns:1fr;grid-template-rows:1fr 1fr;
+    padding-bottom:0}
+  /* One offset for both, so each sits the same distance above the bottom of
+     its own half -- the kung fu one used to float noticeably higher. */
+  .hero-cta .btn{padding:9px 15px;font-size:9.5px;letter-spacing:.08em;
+    border-radius:8px;margin-bottom:clamp(18px,4vh,34px)}
+  .hero-peek{padding:8px 13px;font-size:9.5px;letter-spacing:.13em;gap:6px}
+  .hero-peek svg{width:11px;height:11px}
+  /* triggers stack too, sitting above the button in each half */
+  .hero-peek-lion{left:50%;top:14%}
+  .hero-peek-kungfu{left:50%;top:64%}
   .nav-links{
     position:fixed;top:72px;left:0;right:0;flex-direction:column;gap:0;
     background:rgba(250,246,239,.97);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
