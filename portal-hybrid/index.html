@@ -46,9 +46,16 @@
      makfai.org is ready to launch publicly. -->
 <div id="pw-gate" class="pw-gate">
   <form id="pw-gate-form" class="pw-gate-card" autocomplete="off">
+    <img class="pw-gate-logo" src="assets/logo.png" alt="Mak Fai lion head logo">
+    <img class="pw-gate-calli" src="assets/calligraphy.png" alt="Mak Fai in Chinese calligraphy">
     <p class="eyebrow">Mak Fai · Preview</p>
     <h1 class="pw-gate-title">Enter password to continue</h1>
-    <input id="pw-gate-input" class="pw-gate-input" type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
+    <div class="pw-gate-field">
+      <input id="pw-gate-input" class="pw-gate-input" type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
+      <button type="button" id="pw-gate-toggle" class="pw-gate-toggle" aria-label="Show password" aria-pressed="false">
+        <svg id="pw-gate-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
     <button type="submit" class="btn btn-red pw-gate-btn">Enter</button>
     <p id="pw-gate-error" class="pw-gate-error" hidden>Incorrect password — try again.</p>
   </form>
@@ -57,6 +64,7 @@
 (function(){
   var KEY = 'makfaiPortalUnlocked', PASSWORD = 'makfai123';
   var gate = document.getElementById('pw-gate');
+  var card = document.getElementById('pw-gate-form');
   var unlocked = false;
   try { unlocked = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
   if (unlocked) {
@@ -64,13 +72,35 @@
     return;
   }
   document.documentElement.style.overflow = 'hidden';
+
+  // Lock the intro animation off once it has played, so a later wrong-password
+  // shake doesn't replay the whole card fade/scale-in (see the matching
+  // .pw-gate-card.intro-done rule in style.css).
+  card.addEventListener('animationend', function (ev) {
+    if (ev.animationName === 'pw-gate-in') card.classList.add('intro-done');
+  });
+
+  var input = document.getElementById('pw-gate-input');
+  var toggle = document.getElementById('pw-gate-toggle');
+  var eye = document.getElementById('pw-gate-eye');
+  var EYE = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/>';
+  var EYE_OFF = '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a20.3 20.3 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a20.28 20.28 0 0 1-3.22 4.44M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/>';
+
+  toggle.addEventListener('click', function () {
+    var showing = input.type === 'text';
+    input.type = showing ? 'password' : 'text';
+    eye.innerHTML = showing ? EYE : EYE_OFF;
+    toggle.setAttribute('aria-pressed', String(!showing));
+    toggle.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+    input.focus();
+  });
+
   document.getElementById('pw-gate-form').addEventListener('submit', function (ev) {
     ev.preventDefault();
-    var input = document.getElementById('pw-gate-input');
     if (input.value === PASSWORD) {
       try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
       document.documentElement.style.overflow = '';
-      gate.style.display = 'none';
+      gate.classList.add('pw-gate-hide');
     } else {
       document.getElementById('pw-gate-error').hidden = false;
       gate.classList.remove('shake');

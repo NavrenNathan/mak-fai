@@ -433,17 +433,37 @@ section{padding:clamp(84px,11vw,132px) 0;scroll-margin-top:72px}
    once makfai.org is ready to launch publicly. */
 .pw-gate{position:fixed;inset:0;z-index:999;display:flex;align-items:center;
   justify-content:center;padding:24px;background:var(--bg);
-  background-image:radial-gradient(60% 60% at 50% 30%,rgba(230,59,82,.16),transparent 70%)}
+  background-image:radial-gradient(60% 60% at 50% 30%,rgba(230,59,82,.16),transparent 70%);
+  transition:opacity .4s var(--ease),visibility .4s var(--ease)}
+.pw-gate.pw-gate-hide{opacity:0;visibility:hidden;pointer-events:none}
 .pw-gate-card{width:min(380px,100%);text-align:center;padding:44px 36px;
   border-radius:var(--radius);border:1px solid var(--line);
   background:linear-gradient(160deg,var(--panel),var(--panel-2));
-  box-shadow:0 40px 120px rgba(0,0,0,.6)}
+  box-shadow:0 40px 120px rgba(0,0,0,.6);
+  animation:pw-gate-in .55s var(--ease) both}
+/* Locks the intro off after it plays once the JS adds this class on
+   animationend — otherwise a later wrong-password shake would restart the
+   whole fade/scale-in along with it. Two classes beats the base rule above,
+   and loses on purpose to the (three-class) shake rule below when both are
+   present, so shaking still works after the intro has finished. */
+.pw-gate-card.intro-done{animation:none}
+@keyframes pw-gate-in{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
+.pw-gate-logo{display:block;width:64px;height:64px;object-fit:contain;
+  margin:0 auto 14px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.55))}
+.pw-gate-calli{display:block;width:min(210px,80%);margin:0 auto 22px;
+  filter:drop-shadow(0 0 16px rgba(242,180,65,.4))}
 .pw-gate-title{font-size:22px;line-height:1.3;margin:0 0 22px;color:var(--ink)}
-.pw-gate-input{width:100%;padding:13px 16px;margin-bottom:16px;font-size:15px;
+.pw-gate-field{position:relative;margin-bottom:16px}
+.pw-gate-input{width:100%;padding:13px 44px 13px 16px;font-size:15px;
   font-family:inherit;color:var(--ink);background:rgba(255,255,255,.04);
   border:1px solid var(--line);border-radius:10px;outline:none;
   transition:border-color .25s var(--ease)}
 .pw-gate-input:focus{border-color:var(--gold)}
+.pw-gate-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);
+  display:flex;align-items:center;justify-content:center;width:32px;height:32px;
+  background:none;border:0;border-radius:8px;color:var(--muted);cursor:pointer;
+  transition:color .2s var(--ease),background .2s var(--ease)}
+.pw-gate-toggle:hover{color:var(--gold);background:rgba(255,255,255,.06)}
 .pw-gate-btn{width:100%;justify-content:center}
 .pw-gate-error{color:var(--red);font-size:13px;margin:14px 0 0}
 .pw-gate.shake .pw-gate-card{animation:pw-shake .4s var(--ease)}
