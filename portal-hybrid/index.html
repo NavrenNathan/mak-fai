@@ -9,7 +9,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
+     copy (same cache-buster convention used on the other Navren sites). -->
+<link rel="stylesheet" href="style.css?v=3">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
@@ -128,11 +130,11 @@
         <span></span><span></span><span></span>
       </button>
       <div class="nav-links" id="navlinks">
+        <a href="#home">Home</a>
         <a href="#about">About</a>
-        <a href="#schools">Our Schools</a>
-        <a href="#achievements">Achievements</a>
+        <a href="#achievements">Portfolio</a>
         <a href="#contact">Contact</a>
-        <a class="btn btn-red btn-sm" href="#contact">Get in Touch</a>
+        <a href="#bookform">Book Online</a>
       </div>
     </div>
   </nav>
@@ -142,35 +144,39 @@
 
   <!-- ============ HERO ============ -->
   <section class="hero" id="home">
-    <!-- Split hero: left wedge is a real lion dance photo, right wedge is a
-         flat color/pattern treatment standing in for the kung fu school --
-         there's no kung fu action photo in this project yet. Swap
-         .hero-split-kungfu for a photo the same way .hero-split-lion works
-         once Nathan supplies one. -->
+    <!-- Both halves are flat colour placeholders for now, holding the space
+         until real video lands: green (lion dance) and gold (kung fu),
+         taken off the association logo. To drop footage or a photo in,
+         put it inside the panel div -- the old markup was
+         <img src="assets/hero.jpg" alt="" fetchpriority="high"> -- and
+         remove that side's background rule in style.css. -->
     <div class="hero-split" aria-hidden="true">
-      <div class="hero-split-panel hero-split-lion">
-        <img src="assets/hero.jpg" alt="" fetchpriority="high">
-      </div>
+      <div class="hero-split-panel hero-split-lion"></div>
       <div class="hero-split-panel hero-split-kungfu"></div>
     </div>
     <!-- Hero copy (calligraphy, MAK FAI wordmark, tagline, lede, stat strip,
-         scroll hint) is temporarily stripped back to just the two school
-         buttons while the split/hover treatment is worked out. All of it is
-         one `git revert` away in history, and its CSS is left in place.
-         The two buttons sit in a half-and-half grid so each one lands dead
-         centre of the panel it belongs to. -->
-    <div class="hero-cta" data-stagger="1">
-      <a class="btn btn-red cta-lion" href="https://www.makfailiondance.com" target="_blank" rel="noopener">Lion Dance Team</a>
-      <a class="btn btn-red cta-kungfu" href="https://makfaikungfu.org" target="_blank" rel="noopener">Kung Fu School</a>
+         scroll hint) and the two school buttons are stripped out for now
+         while the split treatment is worked out -- the hero is just the two
+         panels and the divider. All of it is in git history to restore. -->
+    <!-- Drag handle sitting on the (invisible) split line. Drag it left/right
+         -- up/down on mobile, where the split is horizontal -- to give either
+         school more of the screen, all the way to full-bleed. It's a real
+         slider: focusable, arrow-key operable, and reports its position. -->
+    <div class="hero-handle" id="herohandle" role="slider" tabindex="0"
+         aria-label="Drag to reveal lion dance or kung fu"
+         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
+      <svg class="hero-handle-arrows" width="34" height="16" viewBox="0 0 34 16" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M7 3 2 8l5 5"/><path d="M27 3l5 5-5 5"/>
+      </svg>
     </div>
-    <button type="button" class="hero-peek hero-peek-lion" data-peek="lion" aria-expanded="false">
-      Lion Dance
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
-    <button type="button" class="hero-peek hero-peek-kungfu" data-peek="kungfu" aria-expanded="false">
-      Kung Fu
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
+    <!-- Fades in bottom-right once the divider is pushed far enough that one
+         school has the screen to itself. Its target follows whichever side
+         you're looking at -- the JS swaps the href.
+         TODO: repoint lion dance to https://makfailiondance.org once that
+         domain is live with a 301 from the .com. -->
+    <a class="hero-more" id="heromore" href="https://www.makfailiondance.com"
+       target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">Learn More</a>
   </section>
 
   <!-- ============ ABOUT ============ -->
@@ -424,60 +430,104 @@
     if (e.target.closest('a')) { nav.classList.remove('open'); burger.setAttribute('aria-expanded','false'); }
   });
 
-  /* hero split: the .hero-peek pills expand their half to full-bleed.
-     Mouse gets a short hover-intent delay so a cursor crossing the hero
-     doesn't trigger it, and releases as soon as you leave. Touch has no
-     hover at all, so there a tap toggles the same state. Keyboard focus
-     expands too, which is why the triggers are real buttons. */
-  /* State lives on .hero, not .hero-split, so the peek pills and the CTA
-     buttons -- which are siblings of the split, not children -- can fade
-     with the half they belong to. */
+  /* Hero split divider. The whole thing is one number -- --split, a
+     percentage on .hero -- that the CSS clips both panels against and
+     positions the handle and buttons from. Drag it (or arrow-key it) to
+     give either school more of the screen, up to the whole thing.
+     Horizontal on desktop, vertical on mobile; the axis is read per
+     gesture so a rotate or resize mid-session can't get it stuck. */
   var hero = document.querySelector('.hero');
-  var peeks = [].slice.call(document.querySelectorAll('.hero-peek'));
-  if (hero && peeks.length) {
-    var HOVER_INTENT = 300, peekTimer = null, lastPointer = '';
+  var handle = document.getElementById('herohandle');
+  if (hero && handle) {
+    var SNAP = 6;                  // % window either side of centre where the pull is felt
+    var SETTLE = 5;                // % within which letting go eases to an exact 50/50
+    var REVEAL = 90;               // % past which one school owns the screen and the CTA appears
+    var isVertical = function () { return matchMedia('(max-width: 720px)').matches; };
 
-    var setExpanded = function (which) {
-      hero.classList.toggle('expand-lion', which === 'lion');
-      hero.classList.toggle('expand-kungfu', which === 'kungfu');
-      peeks.forEach(function (p) {
-        p.setAttribute('aria-expanded', String(p.dataset.peek === which));
-      });
+    /* --split is the boundary, so 100% means the lion dance panel has taken
+       the whole hero and 0% means kung fu has. The CTA follows whichever
+       one you're actually looking at. */
+    var more = document.getElementById('heromore');
+    var SIDES = {
+      lion:   { href: 'https://www.makfailiondance.com', label: 'Learn more about the lion dance team' },
+      kungfu: { href: 'https://makfaikungfu.org',        label: 'Learn more about the kung fu school' }
+    };
+    var updateMore = function (pct) {
+      if (!more) return;
+      var side = pct >= REVEAL ? 'lion' : (pct <= 100 - REVEAL ? 'kungfu' : null);
+      hero.classList.toggle('at-edge', !!side);
+      if (side) {
+        more.href = SIDES[side].href;
+        more.setAttribute('aria-label', SIDES[side].label);
+      }
+      more.setAttribute('aria-hidden', side ? 'false' : 'true');
+      more.tabIndex = side ? 0 : -1;
     };
 
-    peeks.forEach(function (peek) {
-      var which = peek.dataset.peek;
+    /* `magnetise` is only passed while dragging. Keyboard steps skip it, or
+       the first arrow press off centre would just get pulled back.
+       It's a soft well rather than a hard snap: displacement is zero at the
+       edge of the window and grows smoothly toward the middle, so the
+       divider is never yanked -- it just gets heavier near 50/50. */
+    var setSplit = function (pct, magnetise) {
+      pct = Math.max(0, Math.min(100, pct));
+      if (magnetise) {
+        var d = pct - 50, a = Math.abs(d);
+        if (a <= SNAP) pct = 50 + d * (a / SNAP);
+      }
+      hero.style.setProperty('--split', pct + '%');
+      handle.setAttribute('aria-valuenow', Math.round(pct));
+      updateMore(pct);
+    };
 
-      /* Branch on the actual pointer that's being used, not on a
-         "(hover: hover)" media query -- hybrid machines and some phones
-         report hover support they don't really have, which left touch
-         users with no working trigger at all. */
-      peek.addEventListener('pointerdown', function (ev) { lastPointer = ev.pointerType; });
+    var pctFromEvent = function (ev) {
+      var r = hero.getBoundingClientRect();
+      return isVertical()
+        ? ((ev.clientY - r.top) / r.height) * 100
+        : ((ev.clientX - r.left) / r.width) * 100;
+    };
 
-      peek.addEventListener('pointerenter', function (ev) {
-        if (ev.pointerType !== 'mouse') return;
-        clearTimeout(peekTimer);
-        peekTimer = setTimeout(function () { setExpanded(which); }, HOVER_INTENT);
-      });
-      peek.addEventListener('pointerleave', function (ev) {
-        if (ev.pointerType !== 'mouse') return;
-        clearTimeout(peekTimer);
-        setExpanded(null);
-      });
-
-      /* Touch and keyboard both land here. A real mouse click is ignored,
-         since hover already has it covered. */
-      peek.addEventListener('click', function () {
-        if (lastPointer === 'mouse') return;
-        setExpanded(hero.classList.contains('expand-' + which) ? null : which);
-        lastPointer = '';
-      });
-
-      peek.addEventListener('focus', function () {
-        if (peek.matches(':focus-visible')) setExpanded(which);
-      });
-      peek.addEventListener('blur', function () { setExpanded(null); });
+    /* Move/up are bound on window, not the handle: with a mouse you can
+       easily outrun a 60px target, and if the drag only listened on the
+       handle it would drop the moment the cursor left it. Pointer capture
+       is still requested where supported, but nothing depends on it. */
+    var onMove = function (ev) { setSplit(pctFromEvent(ev), true); };
+    var endDrag = function () {
+      /* Dropping .dragging first puts the panels' transition back, so the
+         final settle to a clean 50/50 glides instead of jumping. */
+      hero.classList.remove('dragging');
+      var cur = parseFloat(hero.style.getPropertyValue('--split'));
+      if (!isNaN(cur) && Math.abs(cur - 50) <= SETTLE) setSplit(50);
+      removeEventListener('pointermove', onMove);
+      removeEventListener('pointerup', endDrag);
+      removeEventListener('pointercancel', endDrag);
+    };
+    handle.addEventListener('pointerdown', function (ev) {
+      ev.preventDefault();
+      handle.focus();
+      try { handle.setPointerCapture(ev.pointerId); } catch (e) {}
+      hero.classList.add('dragging');
+      addEventListener('pointermove', onMove);
+      addEventListener('pointerup', endDrag);
+      addEventListener('pointercancel', endDrag);
     });
+
+    handle.addEventListener('keydown', function (ev) {
+      /* NB: not `|| 50` -- a legitimate 0 is falsy, which made the first
+         arrow press after Home jump to 54% instead of 4%. */
+      var raw = parseFloat(handle.getAttribute('aria-valuenow'));
+      var now = isNaN(raw) ? 50 : raw, step = ev.shiftKey ? 10 : 4;
+      var back = isVertical() ? 'ArrowUp' : 'ArrowLeft';
+      var fwd  = isVertical() ? 'ArrowDown' : 'ArrowRight';
+      if (ev.key === back) setSplit(now - step);
+      else if (ev.key === fwd) setSplit(now + step);
+      else if (ev.key === 'Home') setSplit(0);
+      else if (ev.key === 'End') setSplit(100);
+      else return;
+      ev.preventDefault();
+    });
+
+    setSplit(50);
   }
 
   /* reveal on scroll */

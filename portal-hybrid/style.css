@@ -105,16 +105,26 @@ header{position:relative;z-index:60} /* above main, so the fixed nav is never pa
 .brand small{display:block;font-size:10px;letter-spacing:.18em;color:var(--muted);
   text-transform:uppercase;margin-top:1px}
 .nav-links{display:flex;gap:26px;align-items:center}
+/* Every nav item reads the same -- plain white type, white underline on
+   hover. (The scrolled/open states below swap to dark ink, since white on
+   the paper-glass background would be invisible.) */
 .nav-links a:not(.btn){
-  position:relative;font-size:13.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--muted);padding:6px 2px;transition:color .25s var(--ease);
+  position:relative;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
+  color:#fff;padding:6px 2px;transition:color .25s var(--ease);
 }
+/* Hairline rather than a bar, and it draws itself slowly -- the underline
+   should feel like it's being traced, not snapped on. */
 .nav-links a:not(.btn)::after{
-  content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;
-  background:var(--red);border-radius:2px;transition:right .3s var(--ease);
+  content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;
+  background:rgba(255,255,255,.5);border-radius:2px;
+  transition:right .6s var(--ease);
 }
-.nav-links a:not(.btn):hover,.nav-links a:not(.btn).active{color:var(--ink)}
-.nav-links a:not(.btn):hover::after,.nav-links a:not(.btn).active::after{right:0}
+.nav-links a:not(.btn):hover,.nav-links a:not(.btn).active{color:#fff}
+/* Hover (and keyboard focus) only -- deliberately NOT .active. The
+   scrollspy marks whichever section is in view, which had the About link
+   sitting there underlined before anyone touched it. */
+.nav-links a:not(.btn):hover::after,
+.nav-links a:not(.btn):focus-visible::after{right:0}
 
 .burger{display:none;background:none;border:0;cursor:pointer;padding:10px;margin:-10px}
 .burger span{display:block;width:24px;height:2px;background:var(--ink);margin:6px 0;
@@ -164,72 +174,81 @@ header{position:relative;z-index:60} /* above main, so the fixed nav is never pa
    z-index 0 (not behind the section) and everything stacked above it --
    the scrim, the buttons row -- is pointer-events:none, with only the
    buttons and peek pills themselves opting back in. */
+.hero{--split:50%}
 .hero-split{position:absolute;inset:0;z-index:0}
+/* Both panels are full-bleed and simply clipped against --split, so the
+   divider is just a number the handle writes to. Vertical line on desktop,
+   horizontal on mobile (the axis swap lives in the 720px breakpoint). */
 .hero-split-panel{position:absolute;inset:0;z-index:1;
-  transition:clip-path .6s var(--ease),z-index 0s .6s}
-.hero-split-lion{clip-path:polygon(0 0, 50% 0, 50% 100%, 0 100%)}
-.hero-split-lion img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
-.hero-split-kungfu{clip-path:polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+  transition:clip-path .45s var(--ease)}
+/* Placeholder fills, holding the space until real video exists. Green and
+   gold are lifted off the association logo. Both stay deep enough to sit
+   under the hero scrim and keep the white arrows readable. The hairline
+   diagonal texture is what stops them reading as a broken/empty box.
+   Replacing either with footage: drop the media inside the panel and
+   delete that side's `background` here. */
+.hero-split-lion{clip-path:inset(0 calc(100% - var(--split)) 0 0);
   background:
-    repeating-linear-gradient(135deg,rgba(242,180,65,.06) 0 2px,transparent 2px 26px),
-    linear-gradient(150deg,#1C0D10 0%,var(--red-deep) 55%,#2A0D10 100%);
+    repeating-linear-gradient(135deg,rgba(255,255,255,.045) 0 2px,transparent 2px 26px),
+    linear-gradient(155deg,#0B2417 0%,#1C6B41 52%,#0A1F14 100%);
 }
-/* Expanded state. Driven entirely by JS toggling these classes from the
-   .hero-peek triggers -- hovering a whole half was far too twitchy, so the
-   hot zone is now a small labeled pill instead. z-index switches to 3 with
-   no delay going in, but the base .hero-split-panel rule holds it there for
-   the .6s clip-path transition on the way out, so the panel that's moving
-   is always the one painted on top. */
-.hero.expand-lion .hero-split-lion,
-.hero.expand-kungfu .hero-split-kungfu{
-  clip-path:polygon(0 0, 100% 0, 100% 100%, 0 100%);
-  z-index:3;transition:clip-path .6s var(--ease),z-index 0s}
+.hero-split-kungfu{clip-path:inset(0 0 0 var(--split));
+  background:
+    repeating-linear-gradient(135deg,rgba(255,255,255,.045) 0 2px,transparent 2px 26px),
+    linear-gradient(150deg,#241804 0%,#8A5E0C 55%,#1B1204 100%);
+}
+/* While dragging, follow the finger exactly -- easing here reads as lag. */
+.hero.dragging .hero-split-panel{transition:none}
+/* Drag handle. Deliberately quiet -- bare arrows, no chrome, so it hints at
+   the split without competing with the photography. The 60px box stays for
+   the touch target; only the arrows inside are visible, and they brighten
+   when you go for them. */
+.hero-handle{position:absolute;z-index:4;
+  left:var(--split);top:50%;transform:translate(-50%,-50%);
+  display:flex;align-items:center;justify-content:center;
+  width:48px;height:48px;border-radius:50%;
+  cursor:ew-resize;touch-action:none;color:var(--ink);
+  background:none;border:0;
+  transition:transform .25s var(--ease)}
+.hero.dragging .hero-handle{transition:none}
+/* Barely-there focus ring. Kept rather than removed outright because it's
+   the keyboard indicator -- but the arrows brightening to 90% (below) is
+   the louder cue, so this can afford to be almost invisible. */
+.hero-handle:focus-visible{outline:1px solid rgba(255,255,255,.1);outline-offset:3px}
+.hero-handle:active{transform:translate(-50%,-50%) scale(.94)}
+/* A soft shadow keeps them readable over both the photo and the red panel
+   without needing a plate behind them. */
+/* "Learn more" CTA -- appears bottom-right only once one school has the
+   screen to itself. Plain uppercase type over a hairline rule; the rule is
+   a border rather than the nav's animated pseudo-element, so it's simply
+   present rather than drawing itself in. */
+.hero-more{position:absolute;z-index:5;
+  right:clamp(20px,3.5vw,46px);bottom:clamp(30px,7vh,68px);
+  display:inline-block;padding-bottom:6px;
+  font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:#fff;border-bottom:1px solid rgba(255,255,255,.85);
+  text-shadow:0 1px 10px rgba(0,0,0,.5);
+  /* Pure dissolve -- no slide. The movement was what made it read as
+     something arriving; without it, it just quietly becomes present.
+     Long and ease-in-out so both ends are imperceptible. */
+  opacity:0;pointer-events:none;
+  transition:opacity 1s ease-in-out,
+             border-color .25s var(--ease),color .25s var(--ease)}
+.hero.at-edge .hero-more{opacity:1;pointer-events:auto}
+.hero-more:hover{color:var(--gold);border-bottom-color:var(--gold)}
+.hero-more:focus-visible{outline:2px solid rgba(255,255,255,.6);outline-offset:6px}
 
-/* The half being covered takes its own controls with it -- otherwise a
-   "Kung Fu School" button is left floating over a lion dance photo. */
-.hero.expand-lion .hero-peek-kungfu,
-.hero.expand-lion .cta-kungfu,
-.hero.expand-kungfu .hero-peek-lion,
-.hero.expand-kungfu .cta-lion{opacity:0;pointer-events:none}
-
-/* Buttons sit in a half-and-half grid over the hero, each one bottom-centre
-   of its own panel. The grid itself ignores the cursor so it never blocks
-   the panels underneath. */
-.hero-cta{position:absolute;inset:0;z-index:2;pointer-events:none;
-  display:grid;grid-template-columns:1fr 1fr;place-items:end center;
-  gap:0;margin:0;padding-bottom:clamp(38px,8vh,88px)}
-.hero-cta .btn{pointer-events:auto;
-  transition:opacity .45s var(--ease),transform .25s var(--ease),
-             box-shadow .25s var(--ease),background .25s var(--ease),
-             border-color .25s var(--ease)}
-
-/* Peek triggers -- the labeled hot zones that expand each half. Sized as
-   small targets on purpose: you have to mean it. The JS adds a ~300ms
-   hover-intent delay on top so a cursor crossing the hero doesn't fire
-   them, and falls back to tap on touch, where hover doesn't exist. */
-.hero-peek{position:absolute;z-index:3;
-  display:inline-flex;align-items:center;gap:9px;
-  padding:11px 20px;border-radius:999px;cursor:pointer;
-  font-family:inherit;font-size:11.5px;font-weight:600;
-  letter-spacing:.18em;text-transform:uppercase;color:var(--ink);
-  background:rgba(11,7,8,.5);border:1px solid var(--line);
-  -webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);
-  transform:translate(-50%,-50%);
-  transition:color .25s var(--ease),border-color .25s var(--ease),
-             background .25s var(--ease),box-shadow .25s var(--ease),
-             opacity .45s var(--ease)}
-.hero-peek:hover,.hero-peek:focus-visible{
-  color:var(--gold);border-color:var(--gold);background:rgba(11,7,8,.72);
-  box-shadow:0 8px 30px rgba(242,180,65,.22)}
-.hero-peek svg{opacity:.7;transition:transform .25s var(--ease)}
-.hero-peek:hover svg,.hero-peek:focus-visible svg{opacity:1;transform:translateX(3px)}
-.hero-peek-lion{left:25%;top:34%}
-.hero-peek-kungfu{left:75%;top:34%}
+.hero-handle-arrows{width:28px;height:13px;opacity:.4;pointer-events:none;
+  filter:drop-shadow(0 1px 4px rgba(0,0,0,.7));
+  transition:opacity .25s var(--ease)}
+.hero-handle:hover .hero-handle-arrows,
+.hero-handle:focus-visible .hero-handle-arrows,
+.hero.dragging .hero-handle-arrows{opacity:.9}
 .hero::after{ /* readability scrim -- sits over the panels, never blocks the cursor */
   content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
     linear-gradient(180deg,rgba(11,7,8,.62) 0%,rgba(11,7,8,.30) 34%,
-                    rgba(11,7,8,.55) 72%,var(--bg) 100%),
+                    rgba(11,7,8,.55) 72%,rgba(11,7,8,.86) 100%),
     radial-gradient(ellipse 70% 55% at 50% 62%,rgba(11,7,8,.42),transparent 70%);
 }
 .hero-in{text-align:center;padding-top:112px;padding-bottom:40px}
@@ -260,9 +279,6 @@ header{position:relative;z-index:60} /* above main, so the fixed nav is never pa
 }
 .hero .lede{max-width:56ch;margin:22px auto 0;color:#E5DAD2;
   font-size:clamp(16px,2vw,19px)}
-/* (.hero-cta's layout lives up with the split rules -- it's positioned over
-   the panels now, one button centred per half, rather than a centred row.) */
-
 /* staggered entrance */
 .hero [data-stagger]{opacity:0;transform:translateY(26px);
   animation:rise .9s var(--ease) forwards}
@@ -288,6 +304,9 @@ header{position:relative;z-index:60} /* above main, so the fixed nav is never pa
 
 /* ---------------- sections ---------------- */
 section{padding:clamp(84px,11vw,132px) 0;scroll-margin-top:72px}
+/* Book Online jumps straight to the form, not the top of Contact, so it
+   needs the same clearance under the fixed nav. */
+#bookform{scroll-margin-top:96px}
 .eyebrow{font-size:12px;letter-spacing:.3em;text-transform:uppercase;
   color:var(--red);font-weight:600;margin:0 0 14px}
 .h2{font-size:clamp(32px,4.6vw,52px);line-height:1.08;margin:0 0 18px;
@@ -635,27 +654,17 @@ footer{border-top:1px solid var(--line-soft);padding:44px 0 52px;
 }
 @media (max-width:720px){
   .wrap{padding:0 22px}
-  /* Hero split stacks top/bottom on narrow screens -- same straight 50/50
-     line, just horizontal, since a vertical split into two tall thin
-     columns is unreadable on a phone. Expanding (the JS-driven .expand-*
-     classes) uses the same full-rect clip-path either way. */
-  .hero-split-lion{clip-path:polygon(0 0, 100% 0, 100% 50%, 0 50%)}
-  .hero-split-kungfu{clip-path:polygon(0 50%, 100% 50%, 100% 100%, 0 100%)}
-  /* one button per half means stacked rows, not side-by-side columns.
-     Everything in the hero shrinks here -- at desktop sizing the pills and
-     CTAs ate most of a phone screen. Kept around ~30px tall rather than
-     going smaller still, so they stay comfortably tappable. */
-  .hero-cta{grid-template-columns:1fr;grid-template-rows:1fr 1fr;
-    padding-bottom:0}
-  /* One offset for both, so each sits the same distance above the bottom of
-     its own half -- the kung fu one used to float noticeably higher. */
-  .hero-cta .btn{padding:9px 15px;font-size:9.5px;letter-spacing:.08em;
-    border-radius:8px;margin-bottom:clamp(18px,4vh,34px)}
-  .hero-peek{padding:8px 13px;font-size:9.5px;letter-spacing:.13em;gap:6px}
-  .hero-peek svg{width:11px;height:11px}
-  /* triggers stack too, sitting above the button in each half */
-  .hero-peek-lion{left:50%;top:14%}
-  .hero-peek-kungfu{left:50%;top:64%}
+  /* The whole split turns 90 degrees on a phone -- lion on top, kung fu
+     below, and the handle drags up/down instead. A vertical split into two
+     tall thin columns is unreadable at this width. Same --split number
+     drives it, just applied to the other axis. */
+  .hero-split-lion{clip-path:inset(0 0 calc(100% - var(--split)) 0)}
+  .hero-split-kungfu{clip-path:inset(var(--split) 0 0 0)}
+  /* Smaller again on a phone so it stays proportional to the screen -- but
+     the box holds at 44px, the minimum comfortable thumb target, and only
+     the visible arrows scale down. */
+  .hero-handle{left:50%;top:var(--split);cursor:ns-resize;width:44px;height:44px}
+  .hero-handle-arrows{width:23px;height:11px;transform:rotate(90deg)}
   .nav-links{
     position:fixed;top:72px;left:0;right:0;flex-direction:column;gap:0;
     background:rgba(250,246,239,.97);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
