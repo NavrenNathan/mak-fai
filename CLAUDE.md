@@ -130,6 +130,26 @@ Nathan set this when a redesign came out reading as a lion dance page:
 
 **Build order: portal first, then lion dance, then kung fu.**
 
+### Rule 3 — preview on localhost before every deploy
+
+**Nathan's standing rule: no design change is pushed to Netlify until he has
+seen it on a localhost preview and approved it.** Never go straight from editing
+a file to `git push`.
+
+This matters because `portal-hybrid/` is both the preview folder and the folder
+Netlify publishes to `makfai.org`. There is no build step and no staging copy,
+so a push is live immediately. The localhost preview is the only review gate
+between a change and the public site.
+
+1. Make the edit.
+2. Serve the folder (`python3 -m http.server 8115 --bind 127.0.0.1 --directory
+   portal-hybrid`) — the servers do not survive a reboot.
+3. Give Nathan the URL; `open -a "Google Chrome" <url>` if he asks.
+4. **Wait for his approval.**
+5. Then commit and push.
+
+Committing locally while waiting is fine — nothing deploys until the push.
+
 ### The hybrid design (current direction)
 
 Nathan's balance requirement: all-dark reads less clear/professional, all-white

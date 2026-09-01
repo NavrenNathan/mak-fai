@@ -92,6 +92,20 @@ you're on a different site's URL). "Page not found" is the healthier of the two
 
 ## Deploying
 
+> **Preview first, always.** No design change is pushed until Nathan has seen it
+> on a localhost preview and approved it. `portal-hybrid/` is both the preview
+> folder and what Netlify publishes, with no build step and no staging copy — so
+> a push is live immediately, and the preview is the only review gate.
+>
+> ```bash
+> python3 -m http.server 8115 --bind 127.0.0.1 --directory portal-hybrid
+> ```
+>
+> Committing locally while waiting for approval is fine. Nothing deploys until
+> the push.
+
+Once approved:
+
 ```bash
 git add -A
 git commit -m "what changed"
