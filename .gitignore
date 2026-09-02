@@ -2,3 +2,9 @@
 .netlify/
 node_modules/
 *.zip
+
+# Camera originals kept on disk beside the exports so photos can be
+# re-cropped without asking for the file again. They're 13-15MB each and
+# nothing references them -- the site ships the optimised JPEGs -- so they
+# stay out of git, which would otherwise carry the blobs forever.
+*Hero.png

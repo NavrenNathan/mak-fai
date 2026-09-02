@@ -65,33 +65,22 @@ main,footer{position:relative;z-index:1}
 header{position:relative;z-index:60} /* above main, so the fixed nav is never painted over */
 
 /* ---------------- nav ---------------- */
+/* Paper header, always -- it used to start transparent over the hero and
+   only turn to glass once scrolled. Now it's a solid white bar from the
+   top, so everything in it is dark ink rather than white. The .scrolled
+   and .open classes still get toggled by the JS; they simply no longer
+   need to change the look. */
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:50;
-  transition:background .35s var(--ease),box-shadow .35s var(--ease),
-             border-color .35s var(--ease);
-  border-bottom:1px solid transparent;
-}
-/* Scrolled, the nav becomes paper glass — it reads as the light
-   theme's chrome even while passing over the dark portfolio band.
-   The open mobile menu gets the identical treatment: its dropdown panel
-   is paper, so without this the header strip above it stayed transparent
-   and the two read as separate, disconnected pieces. */
-.nav.scrolled,.nav.open{
-  background:rgba(250,246,239,.9);
+  background:rgba(250,246,239,.94);
   -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  border-bottom-color:var(--line-l-soft);
-  box-shadow:0 10px 30px rgba(24,16,10,.12);
+  border-bottom:1px solid var(--line-l-soft);
+  box-shadow:0 10px 30px rgba(24,16,10,.10);
+  transition:box-shadow .35s var(--ease);
 }
-.nav.scrolled .brand b,.nav.scrolled .nav-links a:not(.btn):hover,
-.nav.scrolled .nav-links a:not(.btn).active,
-.nav.open .brand b,.nav.open .nav-links a:not(.btn):hover,
-.nav.open .nav-links a:not(.btn).active{color:var(--ink-l)}
-.nav.scrolled .brand small,.nav.open .brand small{color:var(--muted-l)}
-.nav.scrolled .nav-links a:not(.btn),
-.nav.open .nav-links a:not(.btn){color:var(--muted-l)}
-.nav.scrolled .nav-links a:not(.btn)::after,
-.nav.open .nav-links a:not(.btn)::after{background:var(--red-l)}
-.nav.scrolled .burger span,.nav.open .burger span{background:var(--ink-l)}
+.nav.scrolled{box-shadow:0 10px 30px rgba(24,16,10,.16)}
+.brand b{color:var(--ink-l)}
+.burger span{background:var(--ink-l)}
 .nav-in{display:flex;align-items:center;gap:28px;height:72px}
 /* Nav uses a wider, shorter-padding box than the rest of the page's .wrap
    columns, so the brand sits closer to the left edge and the links closer
@@ -102,29 +91,51 @@ header{position:relative;z-index:60} /* above main, so the fixed nav is never pa
 .brand{display:flex;align-items:center;gap:12px;margin-right:auto}
 .brand img{width:42px;height:auto}
 .brand b{font-size:17px;letter-spacing:.14em}
-.brand small{display:block;font-size:10px;letter-spacing:.18em;color:var(--muted);
+.brand small{display:block;font-size:10px;letter-spacing:.18em;color:var(--ink-l);
   text-transform:uppercase;margin-top:1px}
 .nav-links{display:flex;gap:26px;align-items:center}
-/* Every nav item reads the same -- plain white type, white underline on
-   hover. (The scrolled/open states below swap to dark ink, since white on
-   the paper-glass background would be invisible.) */
+/* Dark ink on the paper header. */
 .nav-links a:not(.btn){
   position:relative;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
-  color:#fff;padding:6px 2px;transition:color .25s var(--ease);
+  color:var(--ink-l);padding:6px 2px;transition:color .25s var(--ease);
 }
 /* Hairline rather than a bar, and it draws itself slowly -- the underline
    should feel like it's being traced, not snapped on. */
 .nav-links a:not(.btn)::after{
   content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;
-  background:rgba(255,255,255,.5);border-radius:2px;
+  background:var(--ink-l);border-radius:2px;
   transition:right .6s var(--ease);
 }
-.nav-links a:not(.btn):hover,.nav-links a:not(.btn).active{color:#fff}
+.nav-links a:not(.btn):hover,.nav-links a:not(.btn).active{color:var(--ink-l)}
 /* Hover (and keyboard focus) only -- deliberately NOT .active. The
    scrollspy marks whichever section is in view, which had the About link
    sitting there underlined before anyone touched it. */
 .nav-links a:not(.btn):hover::after,
 .nav-links a:not(.btn):focus-visible::after{right:0}
+
+/* Social icons -- glass discs on the paper header. These are anchors inside
+   .nav-links, so the text-link rules above would otherwise give them
+   uppercase sizing and the hover underline (same trap as the .btn one),
+   hence the resets. Now that the header is white in every state, there's
+   one treatment: smoked glass with dark ink, no light/dark swap. */
+.nav-social{display:flex;align-items:center;gap:10px;margin-left:14px}
+.nav-links .nav-social a{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  width:36px;height:36px;border-radius:50%;padding:0;
+  font-size:0;letter-spacing:normal;color:var(--ink-l);
+  background:#fff;
+  border:1px solid rgba(34,26,21,.2);
+  box-shadow:0 2px 7px rgba(24,16,10,.09);
+  transition:background .3s var(--ease),border-color .3s var(--ease),
+             color .3s var(--ease),transform .3s var(--ease),
+             box-shadow .3s var(--ease)}
+.nav-links .nav-social a::after{display:none}
+/* Hover inverts: black disc, white glyph. */
+.nav-links .nav-social a:hover{
+  background:var(--ink-l);border-color:var(--ink-l);color:#fff;
+  transform:translateY(-2px);box-shadow:0 7px 18px rgba(24,16,10,.22)}
+.nav-links .nav-social a:active{transform:translateY(0) scale(.95)}
+.nav-social svg{width:16px;height:16px;position:relative;z-index:1}
 
 .burger{display:none;background:none;border:0;cursor:pointer;padding:10px;margin:-10px}
 .burger span{display:block;width:24px;height:2px;background:var(--ink);margin:6px 0;
@@ -166,90 +177,84 @@ header{position:relative;z-index:60} /* above main, so the fixed nav is never pa
 /* ---------------- hero ---------------- */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;
   justify-content:center;overflow:hidden}
-/* Split hero background: a straight 50/50 vertical split, lion dance left,
-   kung fu right. Below 720px it becomes a straight horizontal 50/50 split
-   instead (top/bottom) -- see the 720px breakpoint.
-   Layering, and why it matters: the panels have to be the topmost thing
-   under the cursor or the triggers never work, so the split sits at
-   z-index 0 (not behind the section) and everything stacked above it --
-   the scrim, the buttons row -- is pointer-events:none, with only the
-   buttons and peek pills themselves opting back in. */
-.hero{--split:50%}
+/* Split hero background: a fixed 50/50 split, lion dance left, kung fu
+   right. Below 720px it turns 90 degrees into a 50/50 top/bottom split --
+   see the 720px breakpoint. Static: the draggable divider and its
+   "Learn More" link were removed, so nothing changes these at runtime.
+   Both halves are exactly half the hero -- to move the line, change the
+   50% in both clip-paths together. */
 .hero-split{position:absolute;inset:0;z-index:0}
-/* Both panels are full-bleed and simply clipped against --split, so the
-   divider is just a number the handle writes to. Vertical line on desktop,
-   horizontal on mobile (the axis swap lives in the 720px breakpoint). */
-.hero-split-panel{position:absolute;inset:0;z-index:1;
-  transition:clip-path .45s var(--ease)}
-/* Placeholder fills, holding the space until real video exists. Green and
-   gold are lifted off the association logo. Both stay deep enough to sit
-   under the hero scrim and keep the white arrows readable. The hairline
-   diagonal texture is what stops them reading as a broken/empty box.
-   Replacing either with footage: drop the media inside the panel and
-   delete that side's `background` here. */
-.hero-split-lion{clip-path:inset(0 calc(100% - var(--split)) 0 0);
-  background:
-    repeating-linear-gradient(135deg,rgba(255,255,255,.045) 0 2px,transparent 2px 26px),
-    linear-gradient(155deg,#0B2417 0%,#1C6B41 52%,#0A1F14 100%);
-}
-.hero-split-kungfu{clip-path:inset(0 0 0 var(--split));
-  background:
-    repeating-linear-gradient(135deg,rgba(255,255,255,.045) 0 2px,transparent 2px 26px),
-    linear-gradient(150deg,#241804 0%,#8A5E0C 55%,#1B1204 100%);
-}
-/* While dragging, follow the finger exactly -- easing here reads as lag. */
-.hero.dragging .hero-split-panel{transition:none}
-/* Drag handle. Deliberately quiet -- bare arrows, no chrome, so it hints at
-   the split without competing with the photography. The 60px box stays for
-   the touch target; only the arrows inside are visible, and they brighten
-   when you go for them. */
-.hero-handle{position:absolute;z-index:4;
-  left:var(--split);top:50%;transform:translate(-50%,-50%);
-  display:flex;align-items:center;justify-content:center;
-  width:48px;height:48px;border-radius:50%;
-  cursor:ew-resize;touch-action:none;color:var(--ink);
-  background:none;border:0;
-  transition:transform .25s var(--ease)}
-.hero.dragging .hero-handle{transition:none}
-/* Barely-there focus ring. Kept rather than removed outright because it's
-   the keyboard indicator -- but the arrows brightening to 90% (below) is
-   the louder cue, so this can afford to be almost invisible. */
-.hero-handle:focus-visible{outline:1px solid rgba(255,255,255,.1);outline-offset:3px}
-.hero-handle:active{transform:translate(-50%,-50%) scale(.94)}
-/* A soft shadow keeps them readable over both the photo and the red panel
-   without needing a plate behind them. */
-/* "Learn more" CTA -- appears bottom-right only once one school has the
-   screen to itself. Plain uppercase type over a hairline rule; the rule is
-   a border rather than the nav's animated pseudo-element, so it's simply
-   present rather than drawing itself in. */
-.hero-more{position:absolute;z-index:5;
-  right:clamp(20px,3.5vw,46px);bottom:clamp(30px,7vh,68px);
-  display:inline-block;padding-bottom:6px;
-  font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
-  color:#fff;border-bottom:1px solid rgba(255,255,255,.85);
-  text-shadow:0 1px 10px rgba(0,0,0,.5);
-  /* Pure dissolve -- no slide. The movement was what made it read as
-     something arriving; without it, it just quietly becomes present.
-     Long and ease-in-out so both ends are imperceptible. */
-  opacity:0;pointer-events:none;
-  transition:opacity 1s ease-in-out,
-             border-color .25s var(--ease),color .25s var(--ease)}
-.hero.at-edge .hero-more{opacity:1;pointer-events:auto}
-.hero-more:hover{color:var(--gold);border-bottom-color:var(--gold)}
-.hero-more:focus-visible{outline:2px solid rgba(255,255,255,.6);outline-offset:6px}
+.hero-split-panel{position:absolute;inset:0;z-index:1}
+/* Background colours show only until the photos paint. */
+.hero-split-lion{clip-path:inset(0 50% 0 0);background:#0A1F14}
+.hero-split-kungfu{clip-path:inset(0 0 0 50%);background:#241804}
+/* Each panel spans the WHOLE hero and is only clipped to its half, so its
+   image has to be sized AND pinned to match the visible half -- at
+   width:100% the image gets fitted to the full-width box and `cover` crops
+   the wrong part of the frame entirely. Hence half-width, pinned left for
+   the lion and right for the kung fu. Both photos are pre-cropped 4:5 with
+   the subject already placed, so object-position just stays centred. */
+.hero-split-panel img{position:absolute;top:0;width:50%;height:100%;
+  object-fit:cover;object-position:center}
+.hero-split-lion img{left:0}
+.hero-split-kungfu img{right:0}
+/* The kung fu shot is daylight and the lion dance one is a dark indoor
+   stage, so the right half reads much brighter. A flat tint over just that
+   panel evens the two sides without touching the photo itself. Clipped
+   along with the panel, so it never bleeds across the seam. */
+.hero-split-kungfu::after{content:"";position:absolute;inset:0;
+  background:rgba(11,7,8,.22);pointer-events:none}
+/* Logo centred on the split line. Above the scrim (z-index 1) so it keeps
+   its own colour rather than being dimmed with the panels; the drop shadow
+   lifts it off the green and gold, which are close to it in tone. */
+/* Sits on the seam but above centre -- the two school names hold the middle
+   band, so the emblem rides higher rather than competing with them. */
+.hero-logo{position:absolute;z-index:2;
+  left:50%;top:36%;transform:translate(-50%,-50%);
+  width:clamp(150px,17.5vw,270px);height:auto;
+  filter:drop-shadow(0 14px 40px rgba(0,0,0,.55))}
 
-.hero-handle-arrows{width:28px;height:13px;opacity:.4;pointer-events:none;
-  filter:drop-shadow(0 1px 4px rgba(0,0,0,.7));
-  transition:opacity .25s var(--ease)}
-.hero-handle:hover .hero-handle-arrows,
-.hero-handle:focus-visible .hero-handle-arrows,
-.hero.dragging .hero-handle-arrows{opacity:.9}
-.hero::after{ /* readability scrim -- sits over the panels, never blocks the cursor */
+/* The two school names, one centred in each half, sharing the emblem's
+   horizontal band. Stacked on two lines and tightly leaded so they read as
+   a mark rather than a sentence -- and so they stay clear of the logo. */
+/* Inter at 900 -- a neo-grotesque in the Helvetica line, which is what the
+   reference actually is: broad, round bowls and even heavy strokes rather
+   than anything condensed. Inter has no width axis, so the packed feel
+   comes from negative tracking and tight leading instead. It needs more
+   horizontal room than a condensed face, hence the smaller max size. */
+.hero-word{position:absolute;z-index:2;top:50%;
+  transform:translateY(-50%);margin:0;
+  color:#fff;text-transform:uppercase;
+  font-family:'Inter','Space Grotesk',Helvetica,Arial,sans-serif;
+  font-weight:900;
+  font-size:clamp(42px,8.7vw,128px);line-height:.82;letter-spacing:-.035em;
+  white-space:nowrap;pointer-events:none;
+  text-shadow:0 6px 34px rgba(0,0,0,.45)}
+.hero-word span{display:block}
+/* Anchored to the outer edges rather than centred in each half, so each
+   name hugs its own side. Inset roughly matches the nav's gutter, so they
+   line up with the brand and the Book Online link above them. */
+/* Inter has no width axis, so the narrow/tall look comes from a horizontal
+   squeeze. At 0.86 the distortion isn't perceptible, and it's how poster
+   type is routinely condensed. Origin is pinned to each word's own outer
+   edge so squeezing doesn't drag it away from the margin it's aligned to. */
+.hero-word-lion{left:clamp(24px,2.6vw,38px);text-align:left;
+  transform:translateY(-50%) scaleX(.78);transform-origin:left center}
+.hero-word-kungfu{right:clamp(24px,2.6vw,38px);text-align:right;
+  transform:translateY(-50%) scaleX(.78);transform-origin:right center}
+/* Readability scrim. Deliberately minimal: it used to be a heavy all-over
+   wash (plus a centre radial) from when the hero carried paragraphs of
+   copy, which just muted the photography. Now it only darkens where
+   something actually sits on top -- the two outer edges hold the LION
+   DANCE / KUNG FU type, the top strip holds the nav -- and the centre of
+   the frame, where the lion is, is left at full brightness. */
+.hero::after{
   content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
-    linear-gradient(180deg,rgba(11,7,8,.62) 0%,rgba(11,7,8,.30) 34%,
-                    rgba(11,7,8,.55) 72%,rgba(11,7,8,.86) 100%),
-    radial-gradient(ellipse 70% 55% at 50% 62%,rgba(11,7,8,.42),transparent 70%);
+    linear-gradient(90deg,rgba(11,7,8,.55) 0%,rgba(11,7,8,.14) 24%,transparent 40%),
+    linear-gradient(270deg,rgba(11,7,8,.55) 0%,rgba(11,7,8,.14) 24%,transparent 40%),
+    linear-gradient(180deg,rgba(11,7,8,.45) 0%,transparent 20%,
+                    transparent 70%,rgba(11,7,8,.7) 100%);
 }
 .hero-in{text-align:center;padding-top:112px;padding-bottom:40px}
 .hero .calli{width:min(430px,72vw);margin:0 auto 26px;
@@ -655,16 +660,27 @@ footer{border-top:1px solid var(--line-soft);padding:44px 0 52px;
 @media (max-width:720px){
   .wrap{padding:0 22px}
   /* The whole split turns 90 degrees on a phone -- lion on top, kung fu
-     below, and the handle drags up/down instead. A vertical split into two
-     tall thin columns is unreadable at this width. Same --split number
-     drives it, just applied to the other axis. */
-  .hero-split-lion{clip-path:inset(0 0 calc(100% - var(--split)) 0)}
-  .hero-split-kungfu{clip-path:inset(var(--split) 0 0 0)}
-  /* Smaller again on a phone so it stays proportional to the screen -- but
-     the box holds at 44px, the minimum comfortable thumb target, and only
-     the visible arrows scale down. */
-  .hero-handle{left:50%;top:var(--split);cursor:ns-resize;width:44px;height:44px}
-  .hero-handle-arrows{width:23px;height:11px;transform:rotate(90deg)}
+     below. A vertical split into two tall thin columns is unreadable at
+     this width. Still an exact half each. */
+  .hero-split-lion{clip-path:inset(0 0 50% 0)}
+  .hero-split-kungfu{clip-path:inset(50% 0 0 0)}
+  /* visible half is the full width but only the top half here */
+  /* halves are top/bottom here, so the images pin that way instead */
+  .hero-split-panel img{width:100%;height:50%}
+  .hero-split-lion img{left:0;top:0}
+  .hero-split-kungfu img{right:0;top:auto;bottom:0}
+  /* Split is horizontal here, so the names stack above and below the logo,
+     each centred in its own half rather than flanking it. */
+  /* Back to the seam here -- the split is horizontal on a phone, so the
+     emblem straddling it is the whole point. Just smaller. */
+  .hero-logo{width:min(40vw,180px);top:50%}
+  /* Stacked halves here, so hugging left/right makes no sense -- both go
+     back to centred, one per half. */
+  /* keeps the same horizontal squeeze, just centred rather than edge-pinned */
+  .hero-word{font-size:clamp(32px,10vw,48px);text-align:center;
+    transform:translate(-50%,-50%) scaleX(.78);transform-origin:center}
+  .hero-word-lion{left:50%;right:auto;top:25%}
+  .hero-word-kungfu{left:50%;right:auto;top:75%}
   .nav-links{
     position:fixed;top:72px;left:0;right:0;flex-direction:column;gap:0;
     background:rgba(250,246,239,.97);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
@@ -680,6 +696,11 @@ footer{border-top:1px solid var(--line-soft);padding:44px 0 52px;
   .nav-links a:not(.btn):hover{color:var(--ink-l)}
   .nav-links a:not(.btn)::after{display:none}
   .nav-links .btn{margin-top:16px;justify-content:center}
+  /* In the dropdown the links stack, so the icon row centres itself under
+     them instead of stretching. Slightly larger discs for thumbs. */
+  .nav-social{justify-content:center;gap:14px;margin:20px 0 4px}
+  .nav-links .nav-social a{width:44px;height:44px}
+  .nav-social svg{width:19px;height:19px}
   .burger{display:block}
   .vgrid{grid-template-columns:1fr}
   .vcard.feature{grid-column:auto}

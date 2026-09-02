@@ -8,10 +8,10 @@
 <link rel="icon" href="assets/logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=3">
+<link rel="stylesheet" href="style.css?v=44">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
@@ -130,11 +130,17 @@
         <span></span><span></span><span></span>
       </button>
       <div class="nav-links" id="navlinks">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <a href="#achievements">Portfolio</a>
-        <a href="#contact">Contact</a>
         <a href="#bookform">Book Online</a>
+        <span class="nav-social">
+          <a href="https://www.instagram.com/makfaikungfu/" target="_blank" rel="noopener" aria-label="Mak Fai on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.facebook.com/makfaikungfuliondance" target="_blank" rel="noopener" aria-label="Mak Fai on Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <!-- Channel, not the single video that was sent -- a social icon is
+               expected to land on the profile. -->
+          <a href="https://www.youtube.com/@makfaikungfu" target="_blank" rel="noopener" aria-label="Mak Fai on YouTube">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.5 6.4a3 3 0 0 0-2.1-2.1C18.6 3.8 12 3.8 12 3.8s-6.6 0-8.4.5A3 3 0 0 0 1.5 6.4 31 31 0 0 0 1 12a31 31 0 0 0 .5 5.6 3 3 0 0 0 2.1 2.1c1.8.5 8.4.5 8.4.5s6.6 0 8.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23 12a31 31 0 0 0-.5-5.6z"/><path d="m9.8 15.1 5.4-3.1-5.4-3.1z" fill="currentColor" stroke="none"/></svg></a>
+        </span>
       </div>
     </div>
   </nav>
@@ -151,32 +157,25 @@
          <img src="assets/hero.jpg" alt="" fetchpriority="high"> -- and
          remove that side's background rule in style.css. -->
     <div class="hero-split" aria-hidden="true">
-      <div class="hero-split-panel hero-split-lion"></div>
-      <div class="hero-split-panel hero-split-kungfu"></div>
+      <div class="hero-split-panel hero-split-lion">
+        <img src="assets/lion-dance-hero.jpg" alt="" fetchpriority="high">
+      </div>
+      <div class="hero-split-panel hero-split-kungfu">
+        <img src="assets/kung-fu-hero.jpg" alt="" fetchpriority="high">
+      </div>
     </div>
+    <!-- Composition: the two names flank the emblem on one horizontal band,
+         each centred in its own half. Two lines apiece so the type can run
+         large without crowding the logo on the seam. On mobile the split is
+         horizontal, so they stack above and below it instead. -->
+    <div class="hero-word hero-word-lion"><span>Lion</span><span>Dance</span></div>
+    <img class="hero-logo" src="assets/logo.png" fetchpriority="high"
+         alt="Mak Fai Kung Fu Dragon &amp; Lion Dance Association">
+    <div class="hero-word hero-word-kungfu"><span>Kung</span><span>Fu</span></div>
     <!-- Hero copy (calligraphy, MAK FAI wordmark, tagline, lede, stat strip,
-         scroll hint) and the two school buttons are stripped out for now
-         while the split treatment is worked out -- the hero is just the two
-         panels and the divider. All of it is in git history to restore. -->
-    <!-- Drag handle sitting on the (invisible) split line. Drag it left/right
-         -- up/down on mobile, where the split is horizontal -- to give either
-         school more of the screen, all the way to full-bleed. It's a real
-         slider: focusable, arrow-key operable, and reports its position. -->
-    <div class="hero-handle" id="herohandle" role="slider" tabindex="0"
-         aria-label="Drag to reveal lion dance or kung fu"
-         aria-valuemin="0" aria-valuemax="100" aria-valuenow="50">
-      <svg class="hero-handle-arrows" width="34" height="16" viewBox="0 0 34 16" fill="none"
-           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M7 3 2 8l5 5"/><path d="M27 3l5 5-5 5"/>
-      </svg>
-    </div>
-    <!-- Fades in bottom-right once the divider is pushed far enough that one
-         school has the screen to itself. Its target follows whichever side
-         you're looking at -- the JS swaps the href.
-         TODO: repoint lion dance to https://makfailiondance.org once that
-         domain is live with a 301 from the .com. -->
-    <a class="hero-more" id="heromore" href="https://www.makfailiondance.com"
-       target="_blank" rel="noopener" aria-hidden="true" tabindex="-1">Learn More</a>
+         scroll hint), the two school buttons, the draggable divider and its
+         "Learn More" link have all been stripped out -- the hero is just the
+         two static halves. All of it is in git history to restore. -->
   </section>
 
   <!-- ============ ABOUT ============ -->
@@ -429,106 +428,6 @@
   document.getElementById('navlinks').addEventListener('click', function(e){
     if (e.target.closest('a')) { nav.classList.remove('open'); burger.setAttribute('aria-expanded','false'); }
   });
-
-  /* Hero split divider. The whole thing is one number -- --split, a
-     percentage on .hero -- that the CSS clips both panels against and
-     positions the handle and buttons from. Drag it (or arrow-key it) to
-     give either school more of the screen, up to the whole thing.
-     Horizontal on desktop, vertical on mobile; the axis is read per
-     gesture so a rotate or resize mid-session can't get it stuck. */
-  var hero = document.querySelector('.hero');
-  var handle = document.getElementById('herohandle');
-  if (hero && handle) {
-    var SNAP = 6;                  // % window either side of centre where the pull is felt
-    var SETTLE = 5;                // % within which letting go eases to an exact 50/50
-    var REVEAL = 90;               // % past which one school owns the screen and the CTA appears
-    var isVertical = function () { return matchMedia('(max-width: 720px)').matches; };
-
-    /* --split is the boundary, so 100% means the lion dance panel has taken
-       the whole hero and 0% means kung fu has. The CTA follows whichever
-       one you're actually looking at. */
-    var more = document.getElementById('heromore');
-    var SIDES = {
-      lion:   { href: 'https://www.makfailiondance.com', label: 'Learn more about the lion dance team' },
-      kungfu: { href: 'https://makfaikungfu.org',        label: 'Learn more about the kung fu school' }
-    };
-    var updateMore = function (pct) {
-      if (!more) return;
-      var side = pct >= REVEAL ? 'lion' : (pct <= 100 - REVEAL ? 'kungfu' : null);
-      hero.classList.toggle('at-edge', !!side);
-      if (side) {
-        more.href = SIDES[side].href;
-        more.setAttribute('aria-label', SIDES[side].label);
-      }
-      more.setAttribute('aria-hidden', side ? 'false' : 'true');
-      more.tabIndex = side ? 0 : -1;
-    };
-
-    /* `magnetise` is only passed while dragging. Keyboard steps skip it, or
-       the first arrow press off centre would just get pulled back.
-       It's a soft well rather than a hard snap: displacement is zero at the
-       edge of the window and grows smoothly toward the middle, so the
-       divider is never yanked -- it just gets heavier near 50/50. */
-    var setSplit = function (pct, magnetise) {
-      pct = Math.max(0, Math.min(100, pct));
-      if (magnetise) {
-        var d = pct - 50, a = Math.abs(d);
-        if (a <= SNAP) pct = 50 + d * (a / SNAP);
-      }
-      hero.style.setProperty('--split', pct + '%');
-      handle.setAttribute('aria-valuenow', Math.round(pct));
-      updateMore(pct);
-    };
-
-    var pctFromEvent = function (ev) {
-      var r = hero.getBoundingClientRect();
-      return isVertical()
-        ? ((ev.clientY - r.top) / r.height) * 100
-        : ((ev.clientX - r.left) / r.width) * 100;
-    };
-
-    /* Move/up are bound on window, not the handle: with a mouse you can
-       easily outrun a 60px target, and if the drag only listened on the
-       handle it would drop the moment the cursor left it. Pointer capture
-       is still requested where supported, but nothing depends on it. */
-    var onMove = function (ev) { setSplit(pctFromEvent(ev), true); };
-    var endDrag = function () {
-      /* Dropping .dragging first puts the panels' transition back, so the
-         final settle to a clean 50/50 glides instead of jumping. */
-      hero.classList.remove('dragging');
-      var cur = parseFloat(hero.style.getPropertyValue('--split'));
-      if (!isNaN(cur) && Math.abs(cur - 50) <= SETTLE) setSplit(50);
-      removeEventListener('pointermove', onMove);
-      removeEventListener('pointerup', endDrag);
-      removeEventListener('pointercancel', endDrag);
-    };
-    handle.addEventListener('pointerdown', function (ev) {
-      ev.preventDefault();
-      handle.focus();
-      try { handle.setPointerCapture(ev.pointerId); } catch (e) {}
-      hero.classList.add('dragging');
-      addEventListener('pointermove', onMove);
-      addEventListener('pointerup', endDrag);
-      addEventListener('pointercancel', endDrag);
-    });
-
-    handle.addEventListener('keydown', function (ev) {
-      /* NB: not `|| 50` -- a legitimate 0 is falsy, which made the first
-         arrow press after Home jump to 54% instead of 4%. */
-      var raw = parseFloat(handle.getAttribute('aria-valuenow'));
-      var now = isNaN(raw) ? 50 : raw, step = ev.shiftKey ? 10 : 4;
-      var back = isVertical() ? 'ArrowUp' : 'ArrowLeft';
-      var fwd  = isVertical() ? 'ArrowDown' : 'ArrowRight';
-      if (ev.key === back) setSplit(now - step);
-      else if (ev.key === fwd) setSplit(now + step);
-      else if (ev.key === 'Home') setSplit(0);
-      else if (ev.key === 'End') setSplit(100);
-      else return;
-      ev.preventDefault();
-    });
-
-    setSplit(50);
-  }
 
   /* reveal on scroll */
   var toReveal = [].slice.call(document.querySelectorAll('.reveal'));
