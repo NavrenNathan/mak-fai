@@ -124,6 +124,7 @@ header{position:relative;z-index:60}
 .brand img{width:auto;height:70px}
 .brand-t b{display:block;color:#fff;font-size:24px;font-weight:700;
   letter-spacing:.2em;text-transform:uppercase;line-height:1.2;
+  white-space:nowrap;
   transition:color .4s var(--ease)}
 .brand-t small{display:block;color:#fff;opacity:.72;font-size:9.5px;
   letter-spacing:.24em;text-transform:uppercase;margin-top:2px;
@@ -153,6 +154,26 @@ header{position:relative;z-index:60}
    but a flat row of icons next to the taller brand block (crest + two lines
    of type) reads as sitting low regardless -- optical centring needs a
    small nudge up that mathematical centring doesn't. */
+/* Donate CTA -- the LION DANCE green from the hero. Ink text rather than
+   white on it: #39B44A only carries ~2.4:1 against white, but ~8.9:1
+   against --ink-l. Ordered so it lands far right on desktop (after the
+   social icons) and just left of the burger on mobile. Positioned + z-56
+   for the same reason .brand and .burger are -- the mobile menu goes
+   position:fixed at z-55 and would otherwise paint straight over it. */
+.nav-donate{order:2;position:relative;z-index:56;
+  display:inline-flex;align-items:center;flex-shrink:0;
+  padding:11px 20px;border-radius:8px;
+  background:#39B44A;color:var(--ink-l);
+  font-family:var(--sans);font-size:12px;font-weight:700;
+  letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
+  transition:background .25s var(--ease),transform .25s var(--ease),
+             box-shadow .25s var(--ease)}
+.nav-donate:hover,.nav-donate:focus-visible{background:#45c957;
+  transform:translateY(-2px);box-shadow:0 10px 24px rgba(57,180,74,.3)}
+.nav-donate:active{transform:translateY(0) scale(.98)}
+.brand{order:0}
+.nav-links{order:1}
+.burger{order:3}
 .nav-social{display:flex;align-items:center;gap:5px;transform:translateY(-5px)}
 /* No circle, no fill by default -- just the skinny glyph. .ico-ring is a
    decorative ring that draws itself on hover/focus (an SVG circle whose
@@ -875,6 +896,14 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 
   /* full-screen ivory menu — part of the brand, not an afterthought */
   .burger{display:block}
+  /* the bar is brand + donate + burger here, so tighten both the gap and
+     the pill to keep it off the brand at 390px */
+  .nav-in{gap:12px;height:88px}
+  .nav-donate{padding:9px 13px;font-size:10px;letter-spacing:.1em}
+  .brand{gap:9px}
+  .brand img{height:52px}
+  .brand-t b{font-size:17px;letter-spacing:.16em}
+  .brand .brand-calli{height:16px;margin-top:4px}
   .nav-links{
     /* Must beat main (z-index:1) or the hero paints over the open menu --
        this was accidentally -1, which put the whole panel behind the page. */
