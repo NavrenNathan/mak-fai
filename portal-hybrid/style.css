@@ -818,16 +818,21 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .way-link:hover{border-color:var(--gold)}
 
 /* --- closing question band --------------------------------------------- */
-.sec-dask{padding-top:calc(var(--sec) * .5);padding-bottom:calc(var(--sec) * .5)}
+/* Dark, like the band above it -- the gold hairline keeps the two from
+   reading as one slab, same trick as .sec-awards and .sec-ways. The heading
+   rule needs no rule of its own: .disp-rule already defaults to --gold and
+   only turns jade under .band-light, which this section no longer carries. */
+.sec-dask{border-top:1px solid rgba(242,180,65,.16);
+  padding-top:calc(var(--sec) * .5);padding-bottom:calc(var(--sec) * .5)}
 .dask{display:flex;justify-content:space-between;align-items:flex-end;
   gap:clamp(24px,4vw,60px);flex-wrap:wrap}
 .dask .lede{margin-top:0}
 .dask-links{display:flex;flex-direction:column;gap:10px;text-align:right}
 .dask-links a{font-family:var(--sans);font-weight:700;
-  font-size:clamp(17px,1.7vw,21px);color:var(--jade);text-decoration:none;
-  border-bottom:1px solid rgba(30,90,68,.3);
+  font-size:clamp(17px,1.7vw,21px);color:var(--gold);text-decoration:none;
+  border-bottom:1px solid rgba(242,180,65,.34);
   transition:border-color .25s var(--ease)}
-.dask-links a:hover{border-color:var(--jade)}
+.dask-links a:hover{border-color:var(--gold)}
 /* ---------- AWARDS / trophy case ----------------------------------------
    Sits between two dark sections, so without help it would read as one
    endless dark slab. A hairline gold top border plus a single pool of warm
