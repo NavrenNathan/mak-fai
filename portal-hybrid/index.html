@@ -5,13 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Mak Fai Kung Fu Dragon &amp; Lion Dance Assn. — Seattle</title>
 <meta name="description" content="Mak Fai Kung Fu Dragon & Lion Dance Association — a Seattle Chinatown-International District institution since 1974. Home of the Mak Fai kung fu school and lion dance team.">
-<link rel="icon" href="assets/logo.png">
+<link rel="canonical" href="https://makfai.org/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://makfai.org/">
+<meta property="og:title" content="Mak Fai Kung Fu Dragon & Lion Dance Association">
+<meta property="og:description" content="Lion dance, dragon dance, and traditional Hung Sing Choy Lay Fut kung fu in Seattle's Chinatown-International District — since 1974.">
+<meta property="og:image" content="https://makfai.org/assets/lion-dance-hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/mk-logo.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=44">
+<link rel="stylesheet" href="style.css?v=115">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
@@ -21,7 +28,7 @@
   "url":"https://makfai.org",
   "foundingDate":"1974",
   "telephone":"(206) 437-8131",
-  "email":"seattleliondance@gmail.com",
+  "email":"hello@makfai.org",
   "address":{
     "@type":"PostalAddress",
     "streetAddress":"606 Maynard Ave S, Ste 107",
@@ -48,10 +55,10 @@
      makfai.org is ready to launch publicly. -->
 <div id="pw-gate" class="pw-gate">
   <form id="pw-gate-form" class="pw-gate-card" autocomplete="off">
-    <img class="pw-gate-logo" src="assets/logo.png" alt="Mak Fai lion head logo">
+    <img class="pw-gate-logo" src="assets/mk-logo.png" alt="Mak Fai lion head crest">
     <img class="pw-gate-calli" src="assets/calligraphy.png" alt="Mak Fai in Chinese calligraphy">
     <p class="eyebrow">Mak Fai · Preview</p>
-    <h1 class="pw-gate-title">Enter password to continue</h1>
+    <p class="pw-gate-title">Enter password to continue</p>
     <div class="pw-gate-field">
       <input id="pw-gate-input" class="pw-gate-input" type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
       <button type="button" id="pw-gate-toggle" class="pw-gate-toggle" aria-label="Show password" aria-pressed="false">
@@ -115,31 +122,40 @@
 })();
 </script>
 
-<div class="glow" aria-hidden="true"></div>
+<a class="skip" href="#about">Skip to content</a>
 
 <!-- TODO: repoint every makfailiondance.com link to https://makfailiondance.org
      once the domain is live and the 301 from the .com is in place -->
 <header>
   <nav class="nav" id="nav" aria-label="Main">
-    <div class="wrap nav-in">
+    <div class="nav-in">
       <a class="brand" href="#top">
-        <img src="assets/logo.png" alt="Mak Fai lion head logo">
-        <span><b>MAK FAI</b><small>Dragon &amp; Lion Dance Assn.</small></span>
+        <img src="assets/mk-logo.png" alt="" width="44" height="44">
+        <span class="brand-t"><b>Mak Fai</b>
+          <img class="brand-calli" src="assets/calligraphy.png" alt="麥翹輝龍獅團" width="180" height="44">
+        </span>
       </a>
-      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false">
-        <span></span><span></span><span></span>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+        <span></span><span></span>
       </button>
+      <!-- Nav links (About / Lion Dance / Kung Fu / Gallery / Community /
+           Book us) removed at Vincent's request -- brand + social icons
+           only for now. The sections themselves are untouched and still
+           reachable by scrolling; only the header's shortcuts are gone. -->
       <div class="nav-links" id="navlinks">
-        <a href="#bookform">Book Online</a>
         <span class="nav-social">
+          <!-- .ico-ring is a decorative circle that draws itself in on
+               hover/focus (stroke-dashoffset animating to 0) -- the icon
+               itself carries no circle or fill by default. -->
           <a href="https://www.instagram.com/makfaikungfu/" target="_blank" rel="noopener" aria-label="Mak Fai on Instagram">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+            <span class="ico-ring" aria-hidden="true"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/></svg></span>
+            <svg class="ico-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
           <a href="https://www.facebook.com/makfaikungfuliondance" target="_blank" rel="noopener" aria-label="Mak Fai on Facebook">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
-          <!-- Channel, not the single video that was sent -- a social icon is
-               expected to land on the profile. -->
+            <span class="ico-ring" aria-hidden="true"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/></svg></span>
+            <svg class="ico-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
           <a href="https://www.youtube.com/@makfaikungfu" target="_blank" rel="noopener" aria-label="Mak Fai on YouTube">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.5 6.4a3 3 0 0 0-2.1-2.1C18.6 3.8 12 3.8 12 3.8s-6.6 0-8.4.5A3 3 0 0 0 1.5 6.4 31 31 0 0 0 1 12a31 31 0 0 0 .5 5.6 3 3 0 0 0 2.1 2.1c1.8.5 8.4.5 8.4.5s6.6 0 8.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23 12a31 31 0 0 0-.5-5.6z"/><path d="m9.8 15.1 5.4-3.1-5.4-3.1z" fill="currentColor" stroke="none"/></svg></a>
+            <span class="ico-ring" aria-hidden="true"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/></svg></span>
+            <svg class="ico-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M22.5 6.4a3 3 0 0 0-2.1-2.1C18.6 3.8 12 3.8 12 3.8s-6.6 0-8.4.5A3 3 0 0 0 1.5 6.4 31 31 0 0 0 1 12a31 31 0 0 0 .5 5.6 3 3 0 0 0 2.1 2.1c1.8.5 8.4.5 8.4.5s6.6 0 8.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23 12a31 31 0 0 0-.5-5.6z"/><path d="m9.8 15.1 5.4-3.1-5.4-3.1z" fill="currentColor" stroke="none"/></svg></a>
         </span>
       </div>
     </div>
@@ -148,120 +164,225 @@
 
 <main id="top">
 
-  <!-- ============ HERO ============ -->
-  <section class="hero" id="home">
-    <!-- Both halves are flat colour placeholders for now, holding the space
-         until real video lands: green (lion dance) and gold (kung fu),
-         taken off the association logo. To drop footage or a photo in,
-         put it inside the panel div -- the old markup was
-         <img src="assets/hero.jpg" alt="" fetchpriority="high"> -- and
-         remove that side's background rule in style.css. -->
-    <div class="hero-split" aria-hidden="true">
-      <div class="hero-split-panel hero-split-lion">
-        <img src="assets/lion-dance-hero.jpg" alt="" fetchpriority="high">
+  <!-- ============ HERO — the split is the identity: lion dance left,
+       the association crest on the seam, kung fu right. ============ -->
+  <section class="hero" id="home" aria-label="Mak Fai — lion dance and kung fu">
+    <h1 class="sr-only">Mak Fai Kung Fu Dragon &amp; Lion Dance Association — Seattle</h1>
+    <!-- .hero-visual is the split-photo identity moment -- fixed to its own
+         100svh on mobile (Concept 2) so .hero-cta below can sit in a plain
+         solid band instead of fighting for space on top of the photo. On
+         desktop .hero-visual just fills .hero exactly as it always did. -->
+    <div class="hero-visual">
+      <div class="hero-split" aria-hidden="true">
+        <div class="hero-split-panel hero-split-lion">
+          <img src="assets/lion-dance-hero.jpg" alt="" fetchpriority="high">
+        </div>
+        <div class="hero-split-panel hero-split-kungfu">
+          <img src="assets/kung-fu-hero.jpg" alt="" fetchpriority="high">
+        </div>
       </div>
-      <div class="hero-split-panel hero-split-kungfu">
-        <img src="assets/kung-fu-hero.jpg" alt="" fetchpriority="high">
-      </div>
+      <!-- Watermark characters, sat behind the LION/DANCE and KUNG/FU type --
+           same idea as the calligraphy under the header wordmark, just big,
+           black and quiet here instead of loud. -->
+      <div class="hero-cjk hero-cjk-lion" aria-hidden="true">舞<br>狮</div>
+      <div class="hero-word hero-word-lion" data-stagger="2" aria-hidden="true"><span>Lion</span><span class="hw-green">Dance</span></div>
+      <img class="hero-logo" src="assets/mk-logo.png" fetchpriority="high" data-stagger="1"
+           alt="Mak Fai crest — two lion heads, green and gold" width="900" height="900">
+      <div class="hero-cjk hero-cjk-kungfu" aria-hidden="true">功<br>夫</div>
+      <div class="hero-word hero-word-kungfu" data-stagger="3" aria-hidden="true"><span class="hw-gold">Kung</span><span>Fu</span></div>
+      <!-- Desktop only -- no room for these in the mobile hero. -->
+      <!-- TODO: repoint to https://makfailiondance.org once live + 301 -->
+      <a class="hero-learn hero-learn-lion" href="https://www.makfailiondance.com" target="_blank" rel="noopener">Learn more</a>
+      <a class="hero-learn hero-learn-kungfu" href="https://makfaikungfu.org" target="_blank" rel="noopener">Learn more</a>
     </div>
-    <!-- Composition: the two names flank the emblem on one horizontal band,
-         each centred in its own half. Two lines apiece so the type can run
-         large without crowding the logo on the seam. On mobile the split is
-         horizontal, so they stack above and below it instead. -->
-    <div class="hero-word hero-word-lion"><span>Lion</span><span>Dance</span></div>
-    <img class="hero-logo" src="assets/logo.png" fetchpriority="high"
-         alt="Mak Fai Kung Fu Dragon &amp; Lion Dance Association">
-    <div class="hero-word hero-word-kungfu"><span>Kung</span><span>Fu</span></div>
-    <!-- Hero copy (calligraphy, MAK FAI wordmark, tagline, lede, stat strip,
-         scroll hint), the two school buttons, the draggable divider and its
-         "Learn More" link have all been stripped out -- the hero is just the
-         two static halves. All of it is in git history to restore. -->
+    <!-- .hero-cta: absolute overlay on desktop (unchanged), a plain solid
+         band in normal flow below .hero-visual on mobile (Concept 2). -->
+    <div class="hero-cta">
+      <p class="hero-status" data-stagger="7">Training the next generation of<br><span class="hero-status-big">leaders</span></p>
+      <!-- No donation platform exists yet -- this opens the contact form
+           rather than pointing at a payment flow that isn't real. -->
+      <a class="btn btn-paper hero-support" href="#contact" data-stagger="5">Support us</a>
+      <p class="hero-nonprofit" data-stagger="8">We are a 501(c)(3) nonprofit.</p>
+      <!-- Straight off the crest artwork (assets/mk-logo.png), not invented copy.
+           Carries the old "Preserving tradition..." tagline's uppercase/tracked
+           voice now that that line is gone -- same design, different words. -->
+      <p class="hero-motto" data-stagger="6">Community · Culture · Courage</p>
+    </div>
   </section>
 
-  <!-- ============ ABOUT ============ -->
-  <section id="about" class="band-light">
+  <!-- ============ INTRODUCTION (About) ============ -->
+  <section id="about" class="band-light sec-intro">
     <div class="wrap">
-      <div class="about-grid">
-        <div class="about-photo reveal">
-          <img src="assets/assoc.jpg" alt="Mak Fai lions, banners, and guests at the association's 50th anniversary celebration">
-          <span class="tag">Chinatown-International District</span>
-        </div>
-        <div class="about-copy">
-          <p class="eyebrow reveal">The Association</p>
-          <h2 class="h2 reveal d1">One roof,<br>two <span class="gold">traditions</span></h2>
+      <div class="intro-grid">
+        <div class="intro-copy">
+          <div class="intro-title-row reveal">
+            <h2 class="intro-title">Who we are</h2>
+            <img class="intro-calli" src="assets/mak-kwoon.png" alt="" aria-hidden="true">
+          </div>
+          <span class="intro-rule reveal d1" aria-hidden="true"></span>
           <p class="reveal d2">Mak Fai was established by Grandmaster Mak Hin
             Fai in 1974. For over fifty years the association has carried two
             traditions side by side: the Hung Sing Choy Lay Fut style of kung
             fu, and Southern style lion dancing.</p>
-          <p class="reveal d2">A nonprofit rooted in Seattle's
+          <p class="reveal d3">A nonprofit rooted in Seattle's
             Chinatown-International District, we aim to enrich and promote
             these arts in the Greater Seattle area and keep the tradition
             alive by teaching the younger generations in the community —
             representing the city of Seattle and the state of Washington on
             national and international stages.</p>
-          <ul class="chips reveal d3">
-            <li>Community events</li>
-            <li>Youth programs</li>
-            <li>Cultural education</li>
-            <li>Performances</li>
-            <li>Competitions</li>
-          </ul>
+        </div>
+        <figure class="intro-photo reveal d1">
+          <img src="assets/assoc.jpg" loading="lazy"
+               alt="Mak Fai lions, banners, and guests at the association's 50th anniversary celebration">
+          <figcaption>
+            <svg class="pin" width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true">
+              <path d="M5 15S1.4 9.2 1.4 5.6a3.6 3.6 0 1 1 7.2 0C8.6 9.2 5 15 5 15Z" fill="currentColor"/>
+              <circle cx="5" cy="5.6" r="1.3" fill="#fff"/>
+            </svg>
+            Chinatown-International District, Seattle</figcaption>
+        </figure>
+        <a class="cta intro-cta reveal d3" href="#community">Learn more
+          <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+      </div>
+
+      <div class="statline reveal">
+        <div class="stat"><b>1974</b><i>Established</i></div>
+        <div class="stat"><b>50+</b><i>Years of tradition</i></div>
+        <div class="stat"><b>National</b><i>&amp; international stage</i></div>
+      </div>
+
+      <ul class="fields reveal d1" aria-label="What we do">
+        <li>Community events</li>
+        <li>Youth programs</li>
+        <li>Cultural education</li>
+        <li>Performances</li>
+        <li>Competitions</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ OUR TRADITIONS (the two schools) ============ -->
+  <section id="traditions" class="band-light sec-trad">
+    <i id="schools" class="anchor" aria-hidden="true"></i>
+    <div class="wrap trad-intro">
+      <p class="eyebrow reveal">Our traditions</p>
+      <h2 class="disp reveal d1">One roof,<br>two traditions.</h2>
+    </div>
+
+    <!-- 01 · Lion dance -->
+    <article class="trad">
+      <div class="wrap trad-grid">
+        <figure class="trad-photo reveal">
+          <img src="assets/hero.jpg" loading="lazy"
+               alt="Mak Fai lion dancers performing with yellow lions under red lanterns">
+        </figure>
+        <div class="trad-copy reveal d1">
+          <p class="trad-kicker">Performance team</p>
+          <h3 class="trad-title">Lion Dance</h3>
+          <p class="trad-line">Movement. Energy. Celebration.</p>
+          <p>Seattle's premier lion dance troupe — hundreds of shows a year,
+            from Lunar New Year to grand openings, weddings, and festivals.</p>
+          <!-- TODO: repoint to https://makfailiondance.org once live + 301 -->
+          <a class="cta" href="https://www.makfailiondance.com" target="_blank" rel="noopener">Explore lion dance
+            <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+          <p class="trad-domain">makfailiondance.com</p>
+        </div>
+      </div>
+    </article>
+
+    <!-- 02 · Kung fu -->
+    <article class="trad trad-rev">
+      <div class="wrap trad-grid">
+        <figure class="trad-photo reveal">
+          <img src="assets/trad-kungfu.jpg" loading="lazy"
+               alt="A Mak Fai student performing a guandao form in front of the school's musicians">
+        </figure>
+        <div class="trad-copy reveal d1">
+          <p class="trad-kicker">Martial arts school</p>
+          <h3 class="trad-title">Kung Fu</h3>
+          <p class="trad-line">Discipline. Strength. Tradition.</p>
+          <p>Traditional Hung Sing Choy Lay Fut kung fu and self-defense,
+            taught to all ages — forms, weapons, and the discipline
+            underneath the lion.</p>
+          <a class="cta" href="https://makfaikungfu.org" target="_blank" rel="noopener">Explore kung fu
+            <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+          <p class="trad-domain">makfaikungfu.org</p>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ VALUES ============ -->
+  <section id="values" class="band-light sec-values">
+    <div class="wrap">
+      <p class="eyebrow reveal">What we stand for</p>
+      <h2 class="disp reveal d1">Our values.</h2>
+      <div class="values">
+        <div class="value reveal">
+          <div class="value-row">
+            <svg class="value-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <h3>Community</h3>
+          <p>We honor and give back to our communities.</p>
+        </div>
+        <div class="value reveal d1">
+          <div class="value-row">
+            <svg class="value-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2v2.2M8.5 4.2h7"/><path d="M7.2 6.4c0 6 .9 7.8.9 7.8h7.8s.9-1.8.9-7.8"/><path d="M9.3 10h5.4M9.3 13.6h5.4"/><path d="M10.4 18h3.2M12 18v3"/></svg>
+          </div>
+          <h3>Culture</h3>
+          <p>We respect our traditions while looking towards the future.</p>
+        </div>
+        <div class="value reveal d2">
+          <div class="value-row">
+            <svg class="value-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+          </div>
+          <h3>Courage</h3>
+          <p>We train the next generation of courageous leaders.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ============ SCHOOLS ============ -->
-  <section id="schools" class="band-light" style="padding-top:0">
-    <div class="wrap">
-      <p class="eyebrow reveal">Our schools</p>
-      <h2 class="h2 reveal d1">Two schools, <span class="gold">one family</span></h2>
-      <p class="lede reveal d2">Each school has its own home. Visit them for
-        bookings, classes, rosters, and everything specific — this is the
-        front door.</p>
-
-      <div class="schools">
-        <!-- TODO: repoint to https://makfailiondance.org once live + 301 -->
-        <a class="school reveal" href="https://www.makfailiondance.com" target="_blank" rel="noopener">
-          <span class="school-photo">
-            <img src="assets/about.jpg" alt="Two red Mak Fai lions flanking a couple at a wedding performance" loading="lazy">
-          </span>
-          <span class="school-body">
-            <span class="school-kicker rd">Performance team</span>
-            <h3>Mak Fai Lion Dance</h3>
-            <p>Seattle's premier lion dance troupe — hundreds of shows a year,
-              from Lunar New Year to grand openings, weddings, and festivals.</p>
-            <span class="go">Visit makfailiondance.com
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </span>
-        </a>
-
-        <a class="school gd reveal d1" href="https://makfaikungfu.org" target="_blank" rel="noopener">
-          <span class="school-photo paperart">
-            <img src="assets/mak-kwoon.jpg" alt="Mak Kwoon — the Mak school — in brush calligraphy" loading="lazy">
-          </span>
-          <span class="school-body">
-            <span class="school-kicker gd">Martial arts school</span>
-            <h3>Mak Fai Kung Fu</h3>
-            <p>Traditional Hung Sing Choy Lay Fut kung fu, taught to all ages —
-              forms, weapons, and the discipline underneath the lion.</p>
-            <span class="go">Visit makfaikungfu.org
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-          </span>
-        </a>
+  <!-- ============ COMMUNITY STORY ============ -->
+  <section id="community" class="sec-story">
+    <i id="voices" class="anchor" aria-hidden="true"></i>
+    <figure class="story-photo reveal">
+      <img src="assets/about.jpg" loading="lazy"
+           alt="Two red Mak Fai lions flanking a couple at a wedding performance">
+    </figure>
+    <div class="wrap story-body">
+      <p class="eyebrow reveal">Community</p>
+      <h2 class="disp reveal d1">Keeping tradition<br>in motion.</h2>
+      <p class="story-copy reveal d2">Every student becomes part of a
+        tradition larger than themselves. We honor the generations that
+        came before us and give the next generation a place to carry the
+        culture and values forward.</p>
+      <div class="story-quotes">
+        <blockquote class="squote reveal d2">
+          <p>Mayor Bruce Harrell honors Mak Fai's 50 years of community
+            service and cultural leadership in Seattle.</p>
+          <cite>— City of Seattle Mayoral Proclamation, August 2024</cite>
+        </blockquote>
+        <blockquote class="squote reveal d3">
+          <p>Best team in Seattle, no doubt.</p>
+          <cite>— Community member</cite>
+        </blockquote>
       </div>
     </div>
   </section>
 
-  <!-- ============ ACHIEVEMENTS ============ -->
-  <section id="achievements">
+  <!-- ============ GALLERY / FILM ============ -->
+  <section id="gallery" class="sec-gallery">
+    <i id="achievements" class="anchor" aria-hidden="true"></i>
     <div class="wrap">
-      <div class="grid-head">
+      <div class="g-head">
         <div>
-          <p class="eyebrow reveal">Achievements</p>
-          <h2 class="h2 reveal d1">Fifty years, <span class="n-gold flick d2">still shining</span></h2>
+          <p class="eyebrow reveal">Gallery &amp; film</p>
+          <h2 class="disp reveal d1">Moments in motion.</h2>
+          <p class="lede reveal d2">Fifty years, <span class="n-gold flick d2">still shining</span>.</p>
         </div>
-        <a class="btn btn-ghost btn-sm reveal d2" href="https://www.youtube.com/@makfaikungfu" target="_blank" rel="noopener">More on YouTube</a>
+        <a class="cta cta-light reveal d2" href="https://www.youtube.com/@makfaikungfu" target="_blank" rel="noopener">More on YouTube
+          <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
       </div>
 
       <div class="honors reveal">
@@ -271,61 +392,64 @@
         <div class="honor"><b>Official selections</b><i>Asian film festivals — LA, Houston, Seattle, Toronto</i></div>
       </div>
 
-      <div class="vgrid">
-        <button class="vcard feature reveal" data-yt="yUPD6fRlr1A" type="button">
+      <!-- Editorial mosaic: the three films (lightbox). Used to also carry
+           two still photos alongside them; removed at Vincent's request --
+           just the videos now. -->
+      <div class="mosaic">
+        <button class="vcard m-feature reveal" data-yt="yUPD6fRlr1A" type="button">
           <span class="vthumb"><img src="assets/yt_yUPD6fRlr1A.jpg" alt="" loading="lazy">
             <span class="play"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
           </span>
           <span class="vmeta">
             <span class="badge">★ Award-winning documentary</span>
-            <h3>The Golden 50: A Mak Fai Anniversary</h3>
+            <span class="vtitle">The Golden 50: A Mak Fai Anniversary</span>
             <i>50 years of the association, on film</i>
           </span>
         </button>
 
-        <button class="vcard reveal d1" data-yt="T9ix1H7Rz0Y" type="button">
+        <button class="vcard m-half reveal d1" data-yt="T9ix1H7Rz0Y" type="button">
           <span class="vthumb"><img src="assets/yt_T9ix1H7Rz0Y.jpg" alt="" loading="lazy">
             <span class="play"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
           </span>
-          <span class="vmeta"><h3>Wholehearted: Behind Mak Fai's Lunar New Year Day</h3><i>Behind the scenes</i></span>
+          <span class="vmeta"><span class="vtitle">Wholehearted: Behind Mak Fai's Lunar New Year Day</span><i>Behind the scenes</i></span>
         </button>
 
-        <button class="vcard reveal d2" data-yt="8decypS9A00" type="button">
+        <button class="vcard m-half reveal d2" data-yt="8decypS9A00" type="button">
           <span class="vthumb"><img src="assets/yt_8decypS9A00.jpg" alt="" loading="lazy">
             <span class="play"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
           </span>
-          <span class="vmeta"><h3>Hong Kong Lion Dance Tour</h3><i>Representing Seattle abroad</i></span>
+          <span class="vmeta"><span class="vtitle">Hong Kong Lion Dance Tour</span><i>Representing Seattle abroad</i></span>
         </button>
       </div>
     </div>
   </section>
 
-  <!-- ============ QUOTES ============ -->
-  <section id="voices" class="band-light">
-    <div class="wrap">
-      <div class="quotes">
-        <blockquote class="quote reveal">
-          <p>Pillar of our International District community. Supporting our
-            culture and uplifting our youth.</p>
-          <i>— Community member</i>
-        </blockquote>
-        <blockquote class="quote reveal d1">
-          <p>Best team in Seattle, no doubt.</p>
-          <i>— Community member</i>
-        </blockquote>
+  <!-- ============ BOOKING CTA ============ -->
+  <section id="book" class="sec-book" aria-label="Book Mak Fai">
+    <img class="book-bg" src="assets/book-cta.jpg" loading="lazy" alt="" aria-hidden="true">
+    <div class="wrap book-in">
+      <p class="eyebrow reveal">Bookings</p>
+      <h2 class="disp disp-xl reveal d1">Bring Mak Fai to<br>your next event.</h2>
+      <p class="book-kinds reveal d2">Lion dance · Dragon dance · Kung fu · Cultural performances</p>
+      <p class="book-copy reveal d2">From Lunar New Year to grand openings,
+        weddings, and festivals — reach the association below, or book the
+        performance team directly on the lion dance site.</p>
+      <div class="book-ctas reveal d3">
+        <a class="btn btn-paper" href="#bookform">Request a booking
+          <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+        <a class="cta cta-light" href="tel:+12064378131">or text or call (206) 437-8131</a>
       </div>
     </div>
   </section>
 
   <!-- ============ CONTACT ============ -->
-  <section id="contact" class="band-light" style="padding-top:0">
+  <section id="contact" class="band-light sec-contact">
     <div class="wrap">
       <div class="contact-grid">
         <div>
           <p class="eyebrow reveal">Contact</p>
-          <h2 class="h2 reveal d1">Reach the<br><span class="gold">association</span></h2>
-          <p class="lede reveal d2">General questions, community events, press,
-            and anything that spans both schools. For bookings, visit the
+          <h2 class="disp reveal d1">Reach the<br>association.</h2>
+          <p class="lede reveal d2">For bookings, visit the
             lion dance site; for classes, the kung fu school.</p>
 
           <div class="info-rows reveal d3">
@@ -339,7 +463,7 @@
             </div>
             <div class="info-row">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
-              <div><b>Email</b><a href="mailto:seattleliondance@gmail.com">seattleliondance@gmail.com</a></div>
+              <div><b>Email</b><a href="mailto:hello@makfai.org">hello@makfai.org</a></div>
             </div>
           </div>
 
@@ -365,17 +489,18 @@
             </div>
           </div>
           <div class="field">
-            <label for="f-date">Topic <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
+            <label for="f-date">Topic <span class="opt">(optional)</span></label>
             <input id="f-date" name="date" type="text" placeholder="e.g. community event, press, partnership">
           </div>
           <div class="field">
             <label for="f-msg">Message</label>
             <textarea id="f-msg" name="message" required placeholder="Tell us what you're reaching out about…"></textarea>
           </div>
-          <button class="btn btn-red" type="submit">Send Message</button>
+          <button class="btn btn-ink" type="submit">Send message
+            <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
           <p class="form-note">This opens your email app with the message ready
             to send — or write us directly at
-            <a href="mailto:seattleliondance@gmail.com">seattleliondance@gmail.com</a>.</p>
+            <a href="mailto:hello@makfai.org">hello@makfai.org</a>.</p>
         </form>
       </div>
     </div>
@@ -393,20 +518,55 @@
 </div>
 
 <footer>
-  <!-- Cross-site links stay absolute (three separate sites).
-       TODO: repoint lion dance to the .org once live + 301. -->
-  <div class="wrap portal">
-    <b>The Mak Fai family</b>
-    <a class="here" href="#top" aria-current="page">makfai.org — you are here</a>
-    <a href="https://www.makfailiondance.com" target="_blank" rel="noopener">Lion Dance Team <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a>
-    <a href="https://makfaikungfu.org" target="_blank" rel="noopener">Kung Fu School <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14 21 3"/></svg></a>
+  <div class="wrap f-top">
+    <div class="f-brand">
+      <img class="f-logo" src="assets/mk-logo.png" alt="" width="58" height="58" loading="lazy">
+      <p class="f-name"><b>Mak Fai</b>
+        <img class="f-calli" src="assets/calligraphy.png" alt="麥翹輝龍獅團" loading="lazy">
+      </p>
+    </div>
+    <a class="cta cta-light f-book" href="#book">Request a performance
+      <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
   </div>
-  <div class="wrap foot">
-    <img src="assets/logo.png" alt="">
-    <p>©2026 Mak Fai Kung Fu Dragon &amp; Lion Dance Assn.<br>
-       606 Maynard Ave S, Ste 107 · Seattle, WA 98104</p>
+
+  <div class="wrap f-cols">
+    <nav class="f-col" aria-label="Explore">
+      <p class="f-h">Explore</p>
+      <a href="#about">About</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#community">Community</a>
+      <a href="#book">Bookings</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <!-- Cross-site links stay absolute (three separate sites).
+         TODO: repoint lion dance to the .org once live + 301. -->
+    <nav class="f-col" aria-label="The Mak Fai family">
+      <p class="f-h">The Mak Fai family</p>
+      <span class="f-here">Main Portal — you are here</span>
+      <a href="https://www.makfailiondance.com" target="_blank" rel="noopener">Lion Dance Portal <sup>↗</sup></a>
+      <a href="https://makfaikungfu.org" target="_blank" rel="noopener">Kung Fu Portal <sup>↗</sup></a>
+    </nav>
+    <nav class="f-col" aria-label="Connect">
+      <p class="f-h">Connect</p>
+      <a href="https://www.instagram.com/makfaikungfu/" target="_blank" rel="noopener">Instagram <sup>↗</sup></a>
+      <a href="https://www.facebook.com/makfaikungfuliondance" target="_blank" rel="noopener">Facebook <sup>↗</sup></a>
+      <a href="https://www.youtube.com/@makfaikungfu" target="_blank" rel="noopener">YouTube <sup>↗</sup></a>
+    </nav>
+    <div class="f-col">
+      <p class="f-h">Visit</p>
+      <p class="f-addr">606 Maynard Ave S, Ste 107<br>Seattle, WA 98104</p>
+      <a href="tel:+12064378131">(206) 437-8131</a>
+      <a href="mailto:hello@makfai.org">hello@makfai.org</a>
+    </div>
+  </div>
+
+  <div class="wrap f-bottom">
+    <p>© 2026 Mak Fai Kung Fu Dragon &amp; Lion Dance Assn.
+      <!-- TODO: no privacy policy page exists yet -- this is a placeholder
+           link until real policy content is written. -->
+      <a class="f-legal" href="#">Privacy Policy</a></p>
     <a class="top" href="#top">Back to top
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
   </div>
 </footer>
 
@@ -414,7 +574,7 @@
 (function(){
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* nav: glass on scroll */
+  /* nav: transparent over the hero, paper once scrolled */
   var nav = document.getElementById('nav');
   var onScroll = function(){ nav.classList.toggle('scrolled', scrollY > 24); };
   addEventListener('scroll', onScroll, {passive:true}); onScroll();
@@ -424,9 +584,14 @@
   burger.addEventListener('click', function(){
     var open = nav.classList.toggle('open');
     burger.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('menu-open', open);
   });
   document.getElementById('navlinks').addEventListener('click', function(e){
-    if (e.target.closest('a')) { nav.classList.remove('open'); burger.setAttribute('aria-expanded','false'); }
+    if (e.target.closest('a')) {
+      nav.classList.remove('open');
+      burger.setAttribute('aria-expanded','false');
+      document.body.classList.remove('menu-open');
+    }
   });
 
   /* reveal on scroll */
@@ -442,17 +607,8 @@
     toReveal.forEach(function(el){ io.observe(el); });
   }
 
-  /* scrollspy */
-  var links = [].slice.call(document.querySelectorAll('.nav-links a[href^="#"]:not(.btn)'));
-  var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
-  var spy = new IntersectionObserver(function(entries){
-    entries.forEach(function(en){
-      if (en.isIntersecting) {
-        links.forEach(function(a){ a.classList.toggle('active', a.getAttribute('href') === '#'+en.target.id); });
-      }
-    });
-  }, {rootMargin:'-38% 0px -55% 0px'});
-  secs.forEach(function(s){ if (s) spy.observe(s); });
+  /* scrollspy removed along with .nav-menu -- there's nothing left in the
+     header for it to highlight. Re-add if the nav links come back. */
 
   /* button ripple */
   document.addEventListener('click', function(e){
@@ -503,7 +659,7 @@
     var body = 'Name: ' + f.name.value + '\nEmail: ' + f.email.value +
       (f.date.value ? '\nTopic: ' + f.date.value : '') +
       '\n\n' + f.message.value;
-    location.href = 'mailto:seattleliondance@gmail.com?subject=' +
+    location.href = 'mailto:hello@makfai.org?subject=' +
       encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
   });
 })();

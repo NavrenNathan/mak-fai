@@ -1,275 +1,409 @@
 /* ============================================================
-   Mak Fai — makfai.org PORTAL, hybrid bands
-   The association's front door: general content, achievements,
-   and equal-weight bridges to the two school sites. Specifics
-   (bookings, classes, rosters) live on the school sites.
-   Dark where the atmosphere lives, light where people read.
+   Mak Fai — makfai.org PORTAL
+   Modern editorial redesign over the original hybrid-band site.
 
-   Band rhythm: dark night hero → warm paper About → dark
-   Portfolio band (video thumbnails want a dark ground) → paper
-   quotes + Contact → dark footer. The red festival photography
-   and lion red / bronze accents carry the personality through
-   the light bands, so nothing reads bleached.
+   System: warm ivory + near-black carry the interface; deep jade,
+   muted gold and a restrained red appear only as accents; the
+   photography supplies the colour. Fraunces (editorial serif)
+   carries display headings, Inter carries everything else —
+   including the split-hero LION DANCE / KUNG FU poster type,
+   which is the site's identity and is preserved as-is.
 
-   Neon appears only in the dark bands, and flickers the way a
-   real sign does: two brief dips every several seconds, not a
-   constant buzz. Light bands use daylight forms of the same
-   hues — the neon values fail contrast on paper.
+   Band rhythm kept from the original: dark hero → ivory intro /
+   traditions / values → dark community story + gallery (video
+   thumbnails want a dark ground) → dark booking band → ivory
+   contact → near-black footer. The neon flicker on "still
+   shining" is the one surviving piece of C-ID sign language.
    ============================================================ */
 *{box-sizing:border-box}
 :root{
+  /* dark ground */
   --bg:#0B0708;
   --panel:#171013;
   --panel-2:#1E1418;
   --ink:#F6EFE8;
   --muted:#B3A69E;
   --line:rgba(242,180,65,.16);
-  --line-soft:rgba(246,239,232,.08);
+  --line-soft:rgba(246,239,232,.09);
 
-  --red:#E63B52;       /* action + identity   4.7:1 on --bg */
-  --red-deep:#A4161A;  /* structure, rims */
-  --gold:#F2B441;      /* lantern light      10.4:1 */
-  --green:#3FCF7C;     /* status only         9.8:1 */
+  /* accents — used sparingly */
+  --red:#E63B52;        /* dark-ground action        4.7:1 on --bg  */
+  --red-deep:#A4161A;
+  --gold:#F2B441;       /* dark-ground highlight    10.4:1          */
 
-  /* daylight band — same hues, print-strength values */
+  /* ivory ground */
   --paper:#FAF6EF;
   --card:#FFFFFF;
-  --ink-l:#221A15;     /* 14.9:1 on paper */
-  --muted-l:#6B5E55;   /*  5.6:1 */
-  --red-l:#C8102E;     /*  5.0:1 */
-  --bronze:#8A5E0C;    /*  4.9:1 */
-  --line-l:rgba(34,26,21,.14);
-  --line-l-soft:rgba(34,26,21,.08);
+  --ink-l:#221A15;      /* 14.9:1 on paper */
+  --muted-l:#6B5E55;    /*  5.6:1          */
+  --jade:#1E5A44;       /*  7.3:1 on paper — the editorial accent   */
+  --red-l:#C8102E;      /*  5.0:1          */
+  --bronze:#8A5E0C;     /*  4.9:1          */
+  --line-l:rgba(34,26,21,.16);
+  --line-l-soft:rgba(34,26,21,.09);
 
-  --radius:14px;
+  --serif:'Fraunces',Georgia,'Times New Roman',serif;
+  --sans:'Inter',Helvetica,Arial,sans-serif;
   --ease:cubic-bezier(.22,.61,.24,1);
+  --sec:clamp(96px,11vw,150px);   /* section rhythm */
 }
 html{scroll-behavior:smooth}
 body{
   margin:0;background:var(--bg);color:var(--ink);
-  font-family:'Space Grotesk',Helvetica,Arial,sans-serif;
-  line-height:1.65;-webkit-font-smoothing:antialiased;
+  font-family:var(--sans);font-size:16.5px;
+  line-height:1.7;-webkit-font-smoothing:antialiased;
   overflow-x:clip;
 }
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
-.wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+sup{font-size:.62em;margin-left:2px}
+.wrap{max-width:1220px;margin:0 auto;padding:0 clamp(22px,4vw,48px)}
+a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:2px solid currentColor;outline-offset:3px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:fixed;left:16px;top:-60px;z-index:200;background:var(--ink-l);
+  color:#fff;padding:10px 18px;font-size:13px;letter-spacing:.08em;
+  transition:top .25s var(--ease)}
+.skip:focus-visible{top:16px}
+/* invisible landing pads for the pre-redesign section ids */
+.anchor{display:block;position:relative;top:-96px;visibility:hidden;height:0}
 
-/* Ambient light field — red pours from above, gold pools low. */
+/* Ambient light field on the dark bands — kept from the original. */
 .glow{position:fixed;inset:0;pointer-events:none;z-index:0;
   background:
-    radial-gradient(ellipse 85% 50% at 50% -10%,rgba(230,59,82,.16),transparent 62%),
-    radial-gradient(ellipse 55% 40% at 10% 68%,rgba(242,180,65,.07),transparent 60%),
-    radial-gradient(ellipse 60% 45% at 92% 90%,rgba(230,59,82,.08),transparent 58%)}
+    radial-gradient(ellipse 85% 50% at 50% -10%,rgba(230,59,82,.13),transparent 62%),
+    radial-gradient(ellipse 55% 40% at 10% 68%,rgba(242,180,65,.06),transparent 60%)}
 main,footer{position:relative;z-index:1}
-header{position:relative;z-index:60} /* above main, so the fixed nav is never painted over */
+header{position:relative;z-index:60}
 
-/* ---------------- nav ---------------- */
-/* Paper header, always -- it used to start transparent over the hero and
-   only turn to glass once scrolled. Now it's a solid white bar from the
-   top, so everything in it is dark ink rather than white. The .scrolled
-   and .open classes still get toggled by the JS; they simply no longer
-   need to change the look. */
+/* ============================ NAV ============================
+   Transparent over the hero, ivory once scrolled (or when the mobile
+   menu is open). Every element that needs to swap colour gets an
+   explicit `.nav.scrolled X,.nav.open X{...}` rule -- this used to be
+   driven by two custom properties (--nav-ink/--nav-line) read via
+   var(), which is the more elegant version of this, but it could not
+   be made to reliably repaint in testing here, so it's written out
+   the plain way instead: verbose, but every value is traceable to an
+   exact selector instead of an inherited variable. */
 .nav{
   position:fixed;top:0;left:0;right:0;z-index:50;
-  background:rgba(250,246,239,.94);
-  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line-l-soft);
-  box-shadow:0 10px 30px rgba(24,16,10,.10);
-  transition:box-shadow .35s var(--ease);
+  background:transparent;border-bottom:1px solid transparent;
+  transition:background .4s var(--ease),border-color .4s var(--ease),
+             box-shadow .4s var(--ease);
 }
-.nav.scrolled{box-shadow:0 10px 30px rgba(24,16,10,.16)}
-.brand b{color:var(--ink-l)}
-.burger span{background:var(--ink-l)}
-.nav-in{display:flex;align-items:center;gap:28px;height:72px}
-/* Nav uses a wider, shorter-padding box than the rest of the page's .wrap
-   columns, so the brand sits closer to the left edge and the links closer
-   to the right edge instead of lining up with the narrower content column.
-   (.nav ancestor + .wrap.nav-in on the element = 3 classes, so this beats
-   both the base .wrap padding and the 720px-breakpoint .wrap override.) */
-.nav .wrap.nav-in{max-width:1400px;padding:0 24px}
-.brand{display:flex;align-items:center;gap:12px;margin-right:auto}
-.brand img{width:42px;height:auto}
-.brand b{font-size:17px;letter-spacing:.14em}
-.brand small{display:block;font-size:10px;letter-spacing:.18em;color:var(--ink-l);
-  text-transform:uppercase;margin-top:1px}
-.nav-links{display:flex;gap:26px;align-items:center}
-/* Dark ink on the paper header. */
-.nav-links a:not(.btn){
-  position:relative;font-size:12px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--ink-l);padding:6px 2px;transition:color .25s var(--ease);
+/* backdrop-filter is .scrolled-only, deliberately not .open: it becomes
+   the containing block for a position:fixed descendant in Chromium, and
+   .nav.open's own fixed full-screen menu is exactly such a descendant --
+   having the filter fire here collapsed that menu down to the header
+   bar's own height instead of the full viewport. */
+.nav.scrolled{
+  background:rgba(250,246,239,.92);
+  -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+  border-bottom-color:var(--line-l-soft);
+  box-shadow:0 8px 30px rgba(24,16,10,.08);
 }
-/* Hairline rather than a bar, and it draws itself slowly -- the underline
-   should feel like it's being traced, not snapped on. */
-.nav-links a:not(.btn)::after{
+.nav-in{display:flex;align-items:center;gap:30px;height:104px;
+  max-width:1400px;margin:0 auto;padding:0 clamp(20px,2.4vw,36px)}
+/* .nav-links (id=navlinks) is a CHILD of .nav-in, not a sibling -- it sits
+   inside .nav-in alongside .brand and .burger so it can be a normal flex
+   item in the desktop layout, then breaks out to position:fixed;inset:0
+   for the full-screen mobile menu. That fixed positioning is what matters
+   here: a positioned element always paints above an unpositioned sibling
+   regardless of z-index value, so once .nav-links goes fixed (z-index:55),
+   it painted over .brand/.burger (both unpositioned) no matter what
+   z-index the ANCESTOR .nav or .header had -- that only governs stacking
+   against OTHER top-level elements like main, not paint order between
+   these three siblings. Making brand/burger positioned too, at a higher
+   z-index, is what actually wins that specific comparison. */
+.brand{position:relative;z-index:56;
+  display:flex;align-items:center;gap:13px;margin-right:auto}
+/* height-locked, width auto -- the new mark (assets/mk-logo.png) isn't a
+   perfect circle/square like the old crest, so a fixed square box would
+   squash it. */
+.brand img{width:auto;height:70px}
+.brand-t b{display:block;color:#fff;font-size:24px;font-weight:700;
+  letter-spacing:.2em;text-transform:uppercase;line-height:1.2;
+  transition:color .4s var(--ease)}
+.brand-t small{display:block;color:#fff;opacity:.72;font-size:9.5px;
+  letter-spacing:.24em;text-transform:uppercase;margin-top:2px;
+  transition:color .4s var(--ease)}
+.nav.scrolled .brand-t b,.nav.open .brand-t b,
+.nav.scrolled .brand-t small,.nav.open .brand-t small{color:var(--ink-l)}
+/* calligraphy.png is white artwork on transparency (same file the password
+   gate uses) -- correct as-is against the dark hero nav, but the light
+   .nav.scrolled/.nav.open ivory bar needs it flattened dark instead, same
+   fix used elsewhere in this project for the same asset. */
+.brand .brand-calli{display:block;width:auto;height:23px;margin-top:5px;
+  transition:filter .4s var(--ease)}
+.nav.scrolled .brand-calli,.nav.open .brand-calli{filter:brightness(0)}
+.nav-links{display:flex;align-items:center;gap:30px}
+.nav-menu{display:flex;align-items:center;gap:26px}
+.nav-menu a{
+  position:relative;font-size:12px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:#fff;padding:6px 1px;
+  transition:color .4s var(--ease),opacity .25s var(--ease)}
+.nav.scrolled .nav-menu a,.nav.open .nav-menu a{color:var(--ink-l)}
+.nav-menu a sup{opacity:.55}
+.nav-menu a::after{
   content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;
-  background:var(--ink-l);border-radius:2px;
-  transition:right .6s var(--ease);
-}
-.nav-links a:not(.btn):hover,.nav-links a:not(.btn).active{color:var(--ink-l)}
-/* Hover (and keyboard focus) only -- deliberately NOT .active. The
-   scrollspy marks whichever section is in view, which had the About link
-   sitting there underlined before anyone touched it. */
-.nav-links a:not(.btn):hover::after,
-.nav-links a:not(.btn):focus-visible::after{right:0}
-
-/* Social icons -- glass discs on the paper header. These are anchors inside
-   .nav-links, so the text-link rules above would otherwise give them
-   uppercase sizing and the hover underline (same trap as the .btn one),
-   hence the resets. Now that the header is white in every state, there's
-   one treatment: smoked glass with dark ink, no light/dark swap. */
-.nav-social{display:flex;align-items:center;gap:10px;margin-left:14px}
-.nav-links .nav-social a{
+  background:currentColor;transition:right .5s var(--ease)}
+.nav-menu a:hover::after,.nav-menu a:focus-visible::after{right:0}
+/* Measured dead-centre on .nav-in (both at the exact same y as the crest),
+   but a flat row of icons next to the taller brand block (crest + two lines
+   of type) reads as sitting low regardless -- optical centring needs a
+   small nudge up that mathematical centring doesn't. */
+.nav-social{display:flex;align-items:center;gap:5px;transform:translateY(-5px)}
+/* No circle, no fill by default -- just the skinny glyph. .ico-ring is a
+   decorative ring that draws itself on hover/focus (an SVG circle whose
+   stroke-dasharray equals its own circumference, animating dashoffset from
+   full to 0), with a soft frosted "glass" disc blooming in behind it. */
+.nav-social a{
   position:relative;display:flex;align-items:center;justify-content:center;
-  width:36px;height:36px;border-radius:50%;padding:0;
-  font-size:0;letter-spacing:normal;color:var(--ink-l);
-  background:#fff;
-  border:1px solid rgba(34,26,21,.2);
-  box-shadow:0 2px 7px rgba(24,16,10,.09);
-  transition:background .3s var(--ease),border-color .3s var(--ease),
-             color .3s var(--ease),transform .3s var(--ease),
-             box-shadow .3s var(--ease)}
-.nav-links .nav-social a::after{display:none}
-/* Hover inverts: black disc, white glyph. */
-.nav-links .nav-social a:hover{
-  background:var(--ink-l);border-color:var(--ink-l);color:#fff;
-  transform:translateY(-2px);box-shadow:0 7px 18px rgba(24,16,10,.22)}
-.nav-links .nav-social a:active{transform:translateY(0) scale(.95)}
-.nav-social svg{width:16px;height:16px;position:relative;z-index:1}
+  width:46px;height:46px;color:#fff;
+  transition:color .4s var(--ease),transform .3s var(--ease)}
+.nav-social a:hover,.nav-social a:focus-visible{transform:translateY(-2px)}
+.nav.scrolled .nav-social a,.nav.open .nav-social a{color:var(--ink-l)}
+.ico-ring{position:absolute;inset:0;pointer-events:none}
+.ico-ring::before{content:"";position:absolute;inset:4px;border-radius:50%;
+  background:rgba(255,255,255,.12);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  opacity:0;transform:scale(.5);
+  transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.nav.scrolled .ico-ring::before,.nav.open .ico-ring::before{
+  background:rgba(34,26,21,.08)}
+.ico-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ico-ring circle{fill:none;stroke:currentColor;stroke-width:1.1;opacity:.9;
+  stroke-dasharray:119.4;stroke-dashoffset:119.4;
+  transition:stroke-dashoffset .6s var(--ease)}
+.nav-social a:hover .ico-ring::before,.nav-social a:focus-visible .ico-ring::before{
+  opacity:1;transform:scale(1)}
+.nav-social a:hover .ico-ring circle,.nav-social a:focus-visible .ico-ring circle{
+  stroke-dashoffset:0}
+/* Rendered a good bit larger than the old 17px + shape-rendering:geometricPrecision
+   so the thin (1.1 stroke) glyphs anti-alias cleanly instead of looking soft --
+   a skinny line at a tiny pixel size is exactly what reads as "blurry". */
+.ico-glyph{position:relative;width:21px;height:21px;shape-rendering:geometricPrecision}
+/* Same reasoning as .brand above -- and this one had a second bug: z-index
+   only applies to positioned elements, so the z-index:5 it already had was
+   being silently ignored with no `position` set alongside it. */
+.burger{position:relative;z-index:56;
+  display:none;background:none;border:0;cursor:pointer;
+  padding:12px 6px;margin:-6px 0}
+.burger span{display:block;width:26px;height:2px;background:#fff;
+  margin:7px 0;transition:transform .35s var(--ease),background .4s var(--ease)}
+.nav.scrolled .burger span,.nav.open .burger span{background:var(--ink-l)}
+.nav.open .burger span:nth-child(1){transform:translateY(4.5px) rotate(45deg)}
+.nav.open .burger span:nth-child(2){transform:translateY(-4.5px) rotate(-45deg)}
 
-.burger{display:none;background:none;border:0;cursor:pointer;padding:10px;margin:-10px}
-.burger span{display:block;width:24px;height:2px;background:var(--ink);margin:6px 0;
-  border-radius:2px;transition:transform .3s var(--ease),opacity .3s var(--ease)}
-.nav.open .burger span:nth-child(1){transform:translateY(8px) rotate(45deg)}
-.nav.open .burger span:nth-child(2){opacity:0}
-.nav.open .burger span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
-
-/* ---------------- buttons ---------------- */
+/* ========================= BUTTONS / CTAS =========================
+   Two voices: .btn — filled, squared, uppercase; .cta — a bare text
+   link over a hairline. Both share the arrow that turns ↗ on hover. */
 .btn{
+  position:relative;display:inline-flex;align-items:center;gap:12px;
+  padding:16px 28px;border-radius:2px;font-family:var(--sans);
+  font-size:13px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  cursor:pointer;overflow:hidden;border:1px solid transparent;
+  transition:background .3s var(--ease),color .3s var(--ease),
+             border-color .3s var(--ease),transform .25s var(--ease),
+             box-shadow .3s var(--ease);
+}
+.btn:active{transform:scale(.98)}
+.btn-ink{background:var(--ink-l);color:var(--paper)}
+.btn-ink:hover{background:#000;transform:translateY(-2px);
+  box-shadow:0 14px 30px rgba(24,16,10,.22)}
+.btn-paper{background:var(--paper);color:var(--ink-l)}
+.btn-paper:hover{background:#fff;transform:translateY(-2px);
+  box-shadow:0 14px 34px rgba(0,0,0,.4)}
+.btn-red{background:var(--red-deep);color:#fff;border-color:rgba(242,180,65,.35);
+  border-radius:8px}
+.btn-red:hover{background:#C01D26}
+.cta{
   position:relative;display:inline-flex;align-items:center;gap:10px;
-  padding:15px 30px;border-radius:10px;font-size:13.5px;font-weight:600;
-  letter-spacing:.11em;text-transform:uppercase;cursor:pointer;overflow:hidden;
-  border:1px solid transparent;
-  transition:transform .25s var(--ease),box-shadow .25s var(--ease),
-             background .25s var(--ease),border-color .25s var(--ease);
-}
-.btn:active{transform:scale(.97)}
-.btn-red{background:var(--red-deep);color:#fff;border-color:rgba(242,180,65,.35)}
-.btn-red:hover{background:#C01D26;transform:translateY(-2px);
-  box-shadow:0 12px 34px rgba(230,59,82,.35)}
-.btn-ghost{border-color:var(--line);color:var(--ink);background:rgba(255,255,255,.02)}
-.btn-ghost:hover{border-color:var(--gold);transform:translateY(-2px);
-  box-shadow:0 10px 28px rgba(242,180,65,.14)}
-.btn-sm{padding:10px 20px;font-size:12px}
-/* sheen sweep on hover */
-.btn::before{
-  content:"";position:absolute;top:0;bottom:0;left:-70%;width:45%;
-  background:linear-gradient(105deg,transparent,rgba(255,255,255,.16),transparent);
-  transform:skewX(-18deg);transition:left .55s var(--ease);pointer-events:none;
-}
-.btn:hover::before{left:130%}
+  padding:4px 0 10px;font-size:13px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-l);border-bottom:1px solid var(--line-l);
+  transition:border-color .3s var(--ease),color .3s var(--ease)}
+.cta:hover{border-bottom-color:currentColor}
+.cta-light{color:var(--ink);border-bottom-color:var(--line-soft)}
+/* arrow that swaps → for ↗ */
+.arr{position:relative;width:15px;height:15px;overflow:hidden;flex:none}
+.arr svg{position:absolute;inset:0;width:15px;height:15px;
+  transition:transform .32s var(--ease),opacity .32s var(--ease)}
+.arr .a2{transform:translate(-10px,10px);opacity:0}
+.btn:hover .arr .a1,.cta:hover .arr .a1{transform:translate(10px,-10px);opacity:0}
+.btn:hover .arr .a2,.cta:hover .arr .a2{transform:none;opacity:1}
 /* click ripple (span injected by JS) */
 .ripple{position:absolute;border-radius:50%;pointer-events:none;
-  background:rgba(255,255,255,.35);transform:scale(0);opacity:.7;
+  background:rgba(255,255,255,.3);transform:scale(0);opacity:.7;
   animation:rip .6s var(--ease) forwards}
 @keyframes rip{to{transform:scale(3.2);opacity:0}}
 
-/* ---------------- hero ---------------- */
-.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;
-  justify-content:center;overflow:hidden}
-/* Split hero background: a fixed 50/50 split, lion dance left, kung fu
-   right. Below 720px it turns 90 degrees into a 50/50 top/bottom split --
-   see the 720px breakpoint. Static: the draggable divider and its
-   "Learn More" link were removed, so nothing changes these at runtime.
-   Both halves are exactly half the hero -- to move the line, change the
-   50% in both clip-paths together. */
+/* ============================ HERO ============================
+   The identity: lion dance left, crest on the seam, kung fu right.
+   Split system unchanged — each panel spans the whole hero and is
+   clipped to its half, so each image is sized to the VISIBLE half
+   and pinned to its own side (at width:100% `cover` would crop
+   against the full-width box and frame the wrong part entirely). */
+.hero{position:relative;min-height:100svh;overflow:hidden;background:var(--bg)}
+/* Container for the split-photo identity moment (photos, crest, both
+   wordmarks, the hanzi watermarks). On desktop this just fills .hero exactly
+   like its contents always did; on mobile (Concept 2) it gets pinned to its
+   own 100svh so .hero-cta can sit below it in a plain solid band instead of
+   overlaying the photo. */
+.hero-visual{position:absolute;inset:0}
 .hero-split{position:absolute;inset:0;z-index:0}
 .hero-split-panel{position:absolute;inset:0;z-index:1}
-/* Background colours show only until the photos paint. */
 .hero-split-lion{clip-path:inset(0 50% 0 0);background:#0A1F14}
 .hero-split-kungfu{clip-path:inset(0 0 0 50%);background:#241804}
-/* Each panel spans the WHOLE hero and is only clipped to its half, so its
-   image has to be sized AND pinned to match the visible half -- at
-   width:100% the image gets fitted to the full-width box and `cover` crops
-   the wrong part of the frame entirely. Hence half-width, pinned left for
-   the lion and right for the kung fu. Both photos are pre-cropped 4:5 with
-   the subject already placed, so object-position just stays centred. */
 .hero-split-panel img{position:absolute;top:0;width:50%;height:100%;
   object-fit:cover;object-position:center}
 .hero-split-lion img{left:0}
 .hero-split-kungfu img{right:0}
-/* The kung fu shot is daylight and the lion dance one is a dark indoor
-   stage, so the right half reads much brighter. A flat tint over just that
-   panel evens the two sides without touching the photo itself. Clipped
-   along with the panel, so it never bleeds across the seam. */
+/* evens the daylight kung fu shot against the dark indoor lion stage */
 .hero-split-kungfu::after{content:"";position:absolute;inset:0;
-  background:rgba(11,7,8,.22);pointer-events:none}
-/* Logo centred on the split line. Above the scrim (z-index 1) so it keeps
-   its own colour rather than being dimmed with the panels; the drop shadow
-   lifts it off the green and gold, which are close to it in tone. */
-/* Sits on the seam but above centre -- the two school names hold the middle
-   band, so the emblem rides higher rather than competing with them. */
-.hero-logo{position:absolute;z-index:2;
-  left:50%;top:36%;transform:translate(-50%,-50%);
-  width:clamp(150px,17.5vw,270px);height:auto;
-  filter:drop-shadow(0 14px 40px rgba(0,0,0,.55))}
-
-/* The two school names, one centred in each half, sharing the emblem's
-   horizontal band. Stacked on two lines and tightly leaded so they read as
-   a mark rather than a sentence -- and so they stay clear of the logo. */
-/* Inter at 900 -- a neo-grotesque in the Helvetica line, which is what the
-   reference actually is: broad, round bowls and even heavy strokes rather
-   than anything condensed. Inter has no width axis, so the packed feel
-   comes from negative tracking and tight leading instead. It needs more
-   horizontal room than a condensed face, hence the smaller max size. */
-.hero-word{position:absolute;z-index:2;top:50%;
-  transform:translateY(-50%);margin:0;
-  color:#fff;text-transform:uppercase;
-  font-family:'Inter','Space Grotesk',Helvetica,Arial,sans-serif;
-  font-weight:900;
-  font-size:clamp(42px,8.7vw,128px);line-height:.82;letter-spacing:-.035em;
-  white-space:nowrap;pointer-events:none;
-  text-shadow:0 6px 34px rgba(0,0,0,.45)}
-.hero-word span{display:block}
-/* Anchored to the outer edges rather than centred in each half, so each
-   name hugs its own side. Inset roughly matches the nav's gutter, so they
-   line up with the brand and the Book Online link above them. */
-/* Inter has no width axis, so the narrow/tall look comes from a horizontal
-   squeeze. At 0.86 the distortion isn't perceptible, and it's how poster
-   type is routinely condensed. Origin is pinned to each word's own outer
-   edge so squeezing doesn't drag it away from the margin it's aligned to. */
-.hero-word-lion{left:clamp(24px,2.6vw,38px);text-align:left;
-  transform:translateY(-50%) scaleX(.78);transform-origin:left center}
-.hero-word-kungfu{right:clamp(24px,2.6vw,38px);text-align:right;
-  transform:translateY(-50%) scaleX(.78);transform-origin:right center}
-/* Readability scrim. Deliberately minimal: it used to be a heavy all-over
-   wash (plus a centre radial) from when the hero carried paragraphs of
-   copy, which just muted the photography. Now it only darkens where
-   something actually sits on top -- the two outer edges hold the LION
-   DANCE / KUNG FU type, the top strip holds the nav -- and the centre of
-   the frame, where the lion is, is left at full brightness. */
+  background:rgba(11,7,8,.24);pointer-events:none}
+/* scrim: only where something sits on top — the outer edges hold the
+   type, the top strip holds the nav, the bottom holds tag + scroll hint */
 .hero::after{
   content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
   background:
     linear-gradient(90deg,rgba(11,7,8,.55) 0%,rgba(11,7,8,.14) 24%,transparent 40%),
     linear-gradient(270deg,rgba(11,7,8,.55) 0%,rgba(11,7,8,.14) 24%,transparent 40%),
-    linear-gradient(180deg,rgba(11,7,8,.45) 0%,transparent 20%,
-                    transparent 70%,rgba(11,7,8,.7) 100%);
+    linear-gradient(180deg,rgba(11,7,8,.5) 0%,transparent 22%,
+                    transparent 64%,rgba(11,7,8,.74) 100%);
 }
-.hero-in{text-align:center;padding-top:112px;padding-bottom:40px}
-.hero .calli{width:min(430px,72vw);margin:0 auto 26px;
-  filter:drop-shadow(0 0 22px rgba(242,180,65,.45))}
-.hero h1{
-  margin:0;font-size:clamp(52px,9vw,108px);line-height:.98;font-weight:700;
-  letter-spacing:.06em;
-  text-shadow:0 4px 40px rgba(0,0,0,.6);
-}
-.hero h1 span{color:var(--red);
-  text-shadow:0 0 14px rgba(230,59,82,.55),0 0 44px rgba(230,59,82,.3),
-              0 4px 40px rgba(0,0,0,.6)}
+/* crest on the seam, above the type band */
+.hero-logo{position:absolute;z-index:2;
+  left:50%;top:35%;transform:translate(-50%,-50%);
+  width:clamp(136px,15vw,230px);height:auto;
+  filter:drop-shadow(0 14px 40px rgba(0,0,0,.55))}
+/* the poster type — Inter 900, squeezed for the tall narrow cut */
+.hero-word{position:absolute;z-index:2;top:50%;margin:0;
+  color:#fff;text-transform:uppercase;
+  font-family:var(--sans);font-weight:900;
+  font-size:clamp(42px,8.7vw,128px);line-height:.82;letter-spacing:-.035em;
+  white-space:nowrap;pointer-events:none;
+  text-shadow:0 6px 34px rgba(0,0,0,.45)}
+.hero-word span{display:block}
+.hw-green{color:#39B44A}
+.hw-gold{color:#FAAF3B}
+.hero-word-lion{left:clamp(24px,2.6vw,38px);text-align:left;
+  transform:translateY(-50%) scaleX(.78);transform-origin:left center}
+.hero-word-kungfu{right:clamp(24px,2.6vw,38px);text-align:right;
+  transform:translateY(-50%) scaleX(.78);transform-origin:right center}
+/* Corner "Learn more" links -- desktop only (see the media query below),
+   underlined by default; hover draws in a second line just under the
+   first rather than just changing colour. */
+/* One line, not two: no persistent text-decoration underline -- just the
+   ::after line, which draws in on hover/focus and draws back out when you
+   leave, so it "reappears" each time rather than stacking a second line
+   under an always-on one. */
+.hero-learn{position:absolute;z-index:2;bottom:36px;
+  font-family:var(--sans);font-weight:600;font-size:11px;
+  letter-spacing:.16em;text-transform:uppercase;color:#fff;
+  padding-bottom:6px}
+.hero-learn-lion{left:clamp(24px,2.6vw,38px)}
+.hero-learn-kungfu{right:clamp(24px,2.6vw,38px)}
+.hero-learn::after{content:"";position:absolute;left:0;right:100%;
+  bottom:0;height:1px;background:currentColor;
+  transition:right .4s var(--ease)}
+.hero-learn:hover::after,.hero-learn:focus-visible::after{right:0}
+/* Watermark hanzi -- sits behind the LION/DANCE and KUNG/FU type (z-index:1,
+   same layer as the split photos, painted after them so it's above the
+   photo but under the word), big and black but low-opacity so it reads as
+   a quiet texture, not a competing headline. */
+.hero-cjk{position:absolute;z-index:1;top:50%;transform:translateY(-50%);
+  margin:0;color:#000;opacity:.63;font-weight:700;line-height:.88;
+  font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",var(--sans);
+  font-size:clamp(120px,16.5vw,290px);pointer-events:none;user-select:none}
+.hero-cjk-lion{left:clamp(20px,4vw,64px);text-align:left}
+.hero-cjk-kungfu{right:clamp(20px,4vw,64px);text-align:right}
+/* Deliberately NOT the uppercase/tracked-label voice used everywhere else
+   in the hero -- this one reads as an actual small paragraph (sentence
+   case, regular weight, its own two lines) so it sits apart from .hero-tag
+   and .hero-motto instead of repeating either. */
+/* This is the donor-facing line -- it needs to actually stick out, not read
+   as fine print. Bold geometric-sans, uppercase, white -- the reference was
+   the TED "ideas worth spreading" wordmark; Poppins is the closest match
+   available on Google Fonts (true geometric circles on the O/C, wide-set). */
+.hero-status{position:absolute;z-index:2;left:50%;bottom:220px;
+  transform:translateX(-50%);margin:0;width:min(92vw,560px);
+  font-family:'Poppins',var(--sans);font-weight:700;text-transform:uppercase;
+  letter-spacing:.01em;font-size:clamp(20px,2.3vw,26px);
+  line-height:1.5;text-align:center;color:#fff;
+  text-shadow:0 2px 3px rgba(0,0,0,.85),0 8px 26px rgba(0,0,0,.7)}
+/* "leaders." gets its own line and reads noticeably bigger than the rest of
+   the statement, so it's the one word that really lands. */
+.hero-status-big{display:inline-block;margin-top:2px;font-style:italic;
+  font-size:2em;letter-spacing:.02em}
+/* centred bottom of the hero -- .btn-paper (ivory) reads clearly against
+   both the dark lion stage and the kung fu half. Shorter/squarer than the
+   shared .btn default, lighter weight, and softly rounded rather than the
+   site-wide near-sharp 2px corner. */
+.hero-support{position:absolute;z-index:2;left:50%;bottom:90px;
+  transform:translateX(-50%);
+  padding:14px 22px;border-radius:8px;font-weight:400}
+/* .btn-paper:hover adds a drop shadow site-wide -- kill it just here, the
+   lift (translateY) still happens via .hero-support's own transform below. */
+.btn-paper.hero-support:hover{box-shadow:none}
+/* Demoted to a quiet caption under the button now that "Training the next
+   generation of leaders" carries the headline on its own. */
+.hero-nonprofit{position:absolute;z-index:2;left:50%;bottom:58px;
+  transform:translateX(-50%);margin:0;white-space:nowrap;
+  font-family:'Poppins',var(--sans);font-weight:600;
+  font-size:clamp(9px,.88vw,10.5px);letter-spacing:.04em;
+  color:rgba(246,239,232,.75)}
+/* Below that. Carries the old .hero-tag treatment (uppercase, tracked
+   sans) now that that line's been dropped -- same design, this text instead. */
+.hero-motto{position:absolute;z-index:2;left:50%;bottom:32px;
+  transform:translateX(-50%);margin:0;white-space:nowrap;
+  color:rgba(246,239,232,.78);font-size:clamp(10.5px,.98vw,11.5px);
+  font-weight:600;letter-spacing:.28em;text-transform:uppercase}
+/* staggered entrance */
+.hero [data-stagger]{opacity:0;animation:rise .9s var(--ease) forwards}
+.hero .hero-word[data-stagger]{animation-name:rise-word}
+@keyframes rise{from{opacity:0;transform:translate(-50%,-44%)}
+  to{opacity:1;transform:translate(-50%,-50%)}}
+.hero .hero-status,.hero .hero-support,.hero .hero-nonprofit,.hero .hero-motto{animation-name:rise-tag}
+@keyframes rise-tag{from{opacity:0;transform:translate(-50%,10px)}
+  to{opacity:1;transform:translate(-50%,0)}}
+@keyframes rise-word{from{opacity:0}to{opacity:1}}
+[data-stagger="1"]{animation-delay:.15s}
+[data-stagger="2"]{animation-delay:.35s}
+[data-stagger="3"]{animation-delay:.5s}
+[data-stagger="7"]{animation-delay:.62s}
+[data-stagger="4"]{animation-delay:.75s}
+[data-stagger="5"]{animation-delay:.95s}
+[data-stagger="6"]{animation-delay:1.15s}
+[data-stagger="8"]{animation-delay:1.05s}
+/* the words keep their own transforms, so they only fade */
+.hero-word[data-stagger]{animation-duration:1.1s}
 
-/* Neon flicker — a real sign holds steady, then stutters twice and
-   recovers. Long period, shallow dips; opacity dims the glow with it. */
+/* ========================= SECTION PRIMITIVES ========================= */
+section{padding:var(--sec) 0;scroll-margin-top:104px}
+#bookform{scroll-margin-top:128px}
+.eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;margin:0 0 20px}
+.band-light .eyebrow{color:var(--jade)}
+.disp{font-family:var(--serif);font-weight:560;
+  font-size:clamp(34px,4.8vw,60px);line-height:1.02;letter-spacing:-.01em;
+  margin:0 0 26px;color:var(--ink)}
+.band-light .disp{color:var(--ink-l)}
+.disp-xl{font-size:clamp(40px,6.2vw,80px)}
+.lede{color:var(--muted);font-size:18px;max-width:56ch;margin:0}
+.band-light .lede{color:var(--muted-l)}
+.band-light{background:var(--paper);color:var(--ink-l)}
+.band-light p{color:#453B33}
+.band-light .lede{color:var(--muted-l)}
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(26px);
+  transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.reveal.d1{transition-delay:.1s}.reveal.d2{transition-delay:.2s}
+.reveal.d3{transition-delay:.3s}.reveal.d4{transition-delay:.4s}
+/* the one surviving neon: flickers like a real C-ID sign */
+.n-gold{color:var(--gold);
+  text-shadow:0 0 10px rgba(242,180,65,.7),0 0 34px rgba(242,180,65,.32)}
 @keyframes flicker{
   0%,56.8%,58.2%,58.9%,60.4%,100%{opacity:1}
   57.2%{opacity:.55}
@@ -278,260 +412,288 @@ header{position:relative;z-index:60} /* above main, so the fixed nav is never pa
 }
 .flick{animation:flicker 9s linear infinite}
 .flick.d2{animation-duration:12s;animation-delay:3.4s}
-.hero .sub{
-  margin:16px 0 0;font-size:clamp(13px,1.8vw,16px);letter-spacing:.34em;
-  text-transform:uppercase;color:var(--gold);font-weight:500;
-}
-.hero .lede{max-width:56ch;margin:22px auto 0;color:#E5DAD2;
-  font-size:clamp(16px,2vw,19px)}
-/* staggered entrance */
-.hero [data-stagger]{opacity:0;transform:translateY(26px);
-  animation:rise .9s var(--ease) forwards}
-@keyframes rise{to{opacity:1;transform:none}}
-[data-stagger="1"]{animation-delay:.05s}
-[data-stagger="2"]{animation-delay:.18s}
-[data-stagger="3"]{animation-delay:.31s}
-[data-stagger="4"]{animation-delay:.44s}
-[data-stagger="5"]{animation-delay:.57s}
 
-/* stat strip on the hero's lower edge */
-.stats{display:flex;justify-content:center;gap:clamp(28px,6vw,84px);
-  flex-wrap:wrap;margin-top:clamp(44px,7vh,84px)}
-.stat{text-align:center}
-.stat b{display:block;font-size:clamp(26px,3.4vw,38px);letter-spacing:.02em;
-  color:var(--gold)}
-.stat i{font-style:normal;font-size:11.5px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--muted)}
+/* ============================ INTRO ============================ */
+.sec-intro{padding-bottom:calc(var(--sec) * .3)}
+/* Named areas so mobile can restack copy/photo/cta in a different order
+   than desktop without fighting grid auto-placement or DOM order. */
+.intro-grid{display:grid;grid-template-columns:1fr .92fr;
+  grid-template-areas:"copy photo" "cta photo";
+  column-gap:clamp(40px,6vw,96px);row-gap:14px;align-items:start}
+.intro-copy{grid-area:copy}
+.intro-photo{grid-area:photo}
+.intro-cta{grid-area:cta;align-self:start}
+.intro-sub{font-family:var(--serif);font-style:italic;font-weight:450;
+  font-size:clamp(18px,2vw,22px);color:var(--jade)!important;margin:0 0 26px}
+/* Bold uppercase grotesque instead of the section's usual serif .disp --
+   a plainer, more graphic heading voice for this one intro, closer to a
+   wordmark than a headline. The short rule underneath stands in for the
+   eyebrow label that used to sit above it. */
+.intro-title-row{display:flex;align-items:center;gap:22px;margin:0}
+.intro-title{font-family:var(--sans);font-weight:700;text-transform:uppercase;
+  font-size:clamp(38px,5.2vw,64px);line-height:1;letter-spacing:-.01em;
+  margin:0;color:var(--ink-l)}
+/* mak-kwoon.png is a real alpha-transparent cutout of mak-kwoon.jpg's ink
+   strokes (the JPG has no alpha; a mix-blend-mode:multiply was tried
+   instead but flashed white during the .reveal fade-in -- an ancestor's
+   animated opacity isolates blend compositing per spec, so the multiply
+   blended against transparent instead of the page background mid-transition.
+   A real cutout sidesteps the whole class of bug.) */
+.intro-calli{height:clamp(88px,11vw,132px);width:auto;flex-shrink:0}
+.intro-rule{display:block;width:36px;height:2px;margin:30px 0 34px;
+  background:var(--ink-l);border-radius:1px}
+.intro-copy p{margin:0 0 20px;max-width:58ch}
+/* the photo rides lower than the text — deliberate asymmetry -- and nudged
+   right within its own column so it doesn't read flush/off-centre against
+   the wider text column beside it. */
+.intro-photo{margin:clamp(24px,4vw,72px) 0 0 clamp(16px,3vw,40px)}
+.intro-photo img{width:100%;aspect-ratio:4/3.1;object-fit:cover}
+.intro-photo figcaption{margin-top:14px;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--muted-l);
+  display:flex;align-items:center;gap:8px}
+.intro-photo figcaption .pin{flex-shrink:0;color:var(--red-l)}
+.statline{display:flex;justify-content:center;text-align:center;
+  gap:clamp(30px,6vw,90px);flex-wrap:wrap;
+  border-top:1px solid var(--line-l);margin-top:clamp(48px,6vw,84px);
+  padding-top:clamp(28px,3.5vw,44px)}
+.stat b{display:block;font-family:var(--serif);font-weight:520;
+  font-size:clamp(30px,3.4vw,44px);line-height:1;color:var(--ink-l);
+  letter-spacing:-.01em}
+.stat i{font-style:normal;display:block;margin-top:8px;font-size:11px;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--muted-l)}
+.fields{display:flex;justify-content:center;flex-wrap:wrap;
+  gap:0 clamp(26px,3.4vw,48px);
+  list-style:none;margin:clamp(30px,4vw,44px) 0 0;padding:20px 0 0;
+  border-top:1px solid var(--line-l-soft)}
+.fields li{font-size:12px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--muted-l);padding:6px 0}
 
-.scrollhint{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);
-  color:var(--muted);animation:bob 2.4s ease-in-out infinite}
-@keyframes bob{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,8px)}}
+/* ========================= TRADITIONS ========================= */
+.sec-trad{padding-top:calc(var(--sec) * .5);padding-bottom:0}
+/* Separates this section from About above it now that the gap between
+   them has been tightened up. */
+.trad-intro{border-top:1px solid var(--line-l);padding-top:clamp(40px,5vw,64px)}
+.trad{padding:clamp(56px,7vw,104px) 0}
+.trad:last-child{padding-bottom:var(--sec)}
+.trad-grid{display:grid;grid-template-columns:7fr 4fr;
+  gap:clamp(36px,5.5vw,88px);align-items:center}
+.trad-rev .trad-grid{grid-template-columns:4fr 7fr}
+.trad-rev .trad-photo{order:2}
+.trad-rev .trad-copy{order:1}
+.trad-photo{position:relative;margin:0;overflow:hidden}
+.trad-photo > img{width:100%;aspect-ratio:16/10.5;object-fit:cover}
+.trad-copy{position:relative}
+.trad-no{display:block;font-family:var(--serif);font-weight:400;
+  font-size:clamp(52px,5.4vw,76px);line-height:1;color:transparent;
+  -webkit-text-stroke:1px rgba(34,26,21,.3);margin-bottom:18px}
+.trad-kicker{font-size:11px;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--jade);font-weight:600;margin:0 0 10px}
+.trad-title{font-family:var(--serif);font-weight:560;
+  font-size:clamp(30px,3.6vw,46px);line-height:1;letter-spacing:-.01em;
+  margin:0 0 14px;color:var(--ink-l)}
+.trad-line{font-family:var(--serif);font-style:italic;font-weight:450;
+  font-size:17.5px;color:var(--bronze)!important;margin:0 0 16px}
+.trad-copy > p:not(.trad-kicker):not(.trad-line):not(.trad-domain){
+  margin:0 0 24px;max-width:44ch}
+.trad-domain{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--muted-l)!important;margin:14px 0 0}
 
-/* ---------------- sections ---------------- */
-section{padding:clamp(84px,11vw,132px) 0;scroll-margin-top:72px}
-/* Book Online jumps straight to the form, not the top of Contact, so it
-   needs the same clearance under the fixed nav. */
-#bookform{scroll-margin-top:96px}
-.eyebrow{font-size:12px;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--red);font-weight:600;margin:0 0 14px}
-.h2{font-size:clamp(32px,4.6vw,52px);line-height:1.08;margin:0 0 18px;
-  letter-spacing:.01em}
-.h2 .gold{color:var(--gold)}
-.lede{color:var(--muted);font-size:17.5px;max-width:62ch}
+/* ========================== VALUES ========================== */
+.sec-values{padding-top:calc(var(--sec) * .35);border-top:1px solid var(--line-l-soft)}
+.values{display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(28px,3.4vw,52px);margin-top:clamp(40px,5vw,64px)}
+.value{border-top:1px solid var(--line-l);padding-top:24px}
+.value-row{display:flex;align-items:center;justify-content:flex-end;
+  margin-bottom:34px}
+.value-icon{color:var(--jade)}
+.value h3{font-family:var(--serif);font-weight:560;font-size:23px;
+  letter-spacing:0;margin:0 0 12px;color:var(--ink-l)}
+.value p{margin:0;font-size:15px;line-height:1.65;color:var(--muted-l)!important}
 
-/* reveal on scroll */
-.reveal{opacity:0;transform:translateY(28px);
-  transition:opacity .8s var(--ease),transform .8s var(--ease)}
-.reveal.in{opacity:1;transform:none}
-.reveal.d1{transition-delay:.08s}.reveal.d2{transition-delay:.16s}
-.reveal.d3{transition-delay:.24s}.reveal.d4{transition-delay:.32s}
+/* ====================== COMMUNITY STORY ====================== */
+.sec-story{padding:0;background:var(--bg)}
+.story-photo{margin:0;position:relative;height:clamp(340px,58vh,560px);
+  overflow:hidden}
+.story-photo img{width:100%;height:100%;object-fit:cover;
+  object-position:center 30%}
+/* Fades all the way to fully solid var(--bg) right at the bottom edge
+   (not just .82 opacity) so the photo dissolves into .story-body's solid
+   background with no visible seam between them. */
+.story-photo::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(11,7,8,.22) 0%,transparent 32%,
+             var(--bg) 100%)}
+.story-body{padding:clamp(56px,7vw,96px) clamp(22px,4vw,48px) var(--sec)}
+.story-copy{max-width:62ch;font-size:clamp(17px,1.6vw,19.5px);
+  line-height:1.75;color:#E5DAD2;margin:0}
+.story-quotes{display:grid;grid-template-columns:1.35fr 1fr;
+  gap:clamp(28px,4vw,64px);margin-top:clamp(48px,6vw,80px)}
+.squote{margin:0;padding:6px 0 6px clamp(20px,2.4vw,32px);
+  border-left:1px solid rgba(242,180,65,.5)}
+.squote p{margin:0;font-family:var(--serif);font-weight:450;
+  font-size:clamp(19px,2.1vw,25px);line-height:1.45;color:var(--ink)}
+.squote cite{font-style:normal;display:block;margin-top:16px;font-size:11px;
+  letter-spacing:.26em;text-transform:uppercase;color:var(--muted)}
 
-/* neon accent word in dark-band headings */
-.n-gold{color:var(--gold);
-  text-shadow:0 0 10px rgba(242,180,65,.7),0 0 34px rgba(242,180,65,.32)}
-
-/* ---------------- daylight band ----------------
-   Opaque paper ground (it also masks the fixed .glow field),
-   ink text, daylight accents. Everything that sits on a panel
-   moves to a white card with a soft warm shadow. */
-.band-light{background:var(--paper);color:var(--ink-l)}
-.band-light .eyebrow{color:var(--red-l)}
-.band-light .h2{color:var(--ink-l)}
-.band-light .h2 .gold{color:var(--bronze);text-shadow:none}
-.band-light .lede{color:var(--muted-l)}
-.band-light .about-copy p{color:#4A3F37}
-.band-light .about-photo::after{border-color:var(--line-l)}
-.band-light .chips li{border-color:var(--line-l);color:#4A3F37;
-  background:var(--card)}
-.band-light .chips li:hover{border-color:var(--red-l)}
-.band-light .card{background:var(--card);border-color:var(--line-l-soft);
-  box-shadow:0 2px 10px rgba(24,16,10,.05)}
-.band-light .card:hover{border-color:var(--line-l);
-  box-shadow:0 18px 40px rgba(24,16,10,.13)}
-.band-light .card::before{background:var(--red-l)}
-.band-light .card.gd::before{background:#E9B23C}
-.band-light .card h3{color:var(--ink-l)}
-.band-light .card p{color:var(--muted-l)}
-.band-light .card .go{color:var(--red-l)}
-.band-light .card.gd .go{color:var(--bronze)}
-.band-light .btn-red{border-color:rgba(200,16,46,.25)}
-.band-light .btn-ghost{border-color:var(--line-l);color:var(--ink-l);
-  background:var(--card)}
-.band-light .btn-ghost:hover{border-color:var(--red-l);
-  box-shadow:0 10px 28px rgba(200,16,46,.12)}
-.band-light .quote{background:var(--card);border-color:var(--line-l-soft);
-  box-shadow:0 2px 10px rgba(24,16,10,.05)}
-.band-light .quote::before{color:var(--red-l);opacity:.35}
-.band-light .quote p{color:#3B322B}
-.band-light .quote i{color:var(--muted-l)}
-.band-light .info-row{border-bottom-color:var(--line-l-soft)}
-.band-light .info-row svg{color:var(--bronze)}
-.band-light .info-row b{color:var(--muted-l)}
-.band-light .info-row a:hover{color:var(--red-l)}
-.band-light .socials a{border-color:var(--line-l);color:var(--muted-l)}
-.band-light .socials a:hover{color:var(--red-l);border-color:var(--red-l);
-  box-shadow:0 8px 22px rgba(200,16,46,.14)}
-.band-light .form{background:var(--card);border-color:var(--line-l-soft);
-  box-shadow:0 2px 14px rgba(24,16,10,.06)}
-.band-light .field label{color:var(--muted-l)}
-.band-light .field input,.band-light .field textarea{
-  background:var(--paper);border-color:var(--line-l);color:var(--ink-l)}
-.band-light .field input:focus,.band-light .field textarea:focus{
-  border-color:var(--red-l);box-shadow:0 0 0 3px rgba(200,16,46,.13)}
-.band-light .form-note{color:var(--muted-l)}
-.band-light .form-note a{color:var(--bronze)}
-
-/* ---------------- about ---------------- */
-.about-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(36px,5vw,72px);
-  align-items:center}
-.about-photo{position:relative;border-radius:var(--radius);overflow:hidden}
-.about-photo::after{content:"";position:absolute;inset:0;border-radius:var(--radius);
-  border:1px solid var(--line);pointer-events:none}
-.about-photo img{aspect-ratio:16/10;object-fit:cover;width:100%;
-  transition:transform 1.2s var(--ease)}
-.about-photo:hover img{transform:scale(1.035)}
-.about-photo .tag{position:absolute;left:16px;bottom:16px;
-  background:rgba(11,7,8,.78);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
-  border:1px solid var(--line-soft);border-radius:999px;
-  padding:7px 16px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--gold)}
-.about-copy p{color:#D9CEC6;margin:0 0 18px}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin:26px 0 0;padding:0;list-style:none}
-.chips li{border:1px solid var(--line);border-radius:999px;padding:8px 18px;
-  font-size:13px;color:#DCD0C8;background:rgba(255,255,255,.02);
-  transition:border-color .25s var(--ease),transform .25s var(--ease)}
-.chips li:hover{border-color:var(--gold);transform:translateY(-2px)}
-
-.offer{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:clamp(48px,6vw,72px)}
-.card{
-  background:linear-gradient(160deg,var(--panel),var(--panel-2));
-  border:1px solid var(--line-soft);border-radius:var(--radius);
-  padding:32px 30px;position:relative;overflow:hidden;
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease),
-             border-color .35s var(--ease);
-}
-.card:hover{transform:translateY(-5px);border-color:var(--line);
-  box-shadow:0 22px 48px rgba(0,0,0,.42)}
-.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
-  background:var(--red);opacity:.85}
-.card.gd::before{background:var(--gold)}
-.card h3{margin:0 0 10px;font-size:20px;letter-spacing:.02em}
-.card p{margin:0;color:var(--muted);font-size:15.5px}
-.card .go{display:inline-flex;align-items:center;gap:8px;margin-top:18px;
-  font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--red);
-  font-weight:600}
-.card.gd .go{color:var(--gold)}
-.card .go svg{transition:transform .3s var(--ease)}
-.card:hover .go svg{transform:translateX(5px)}
-
-/* ---------------- schools (portal bridges) ---------------- */
-.schools{display:grid;grid-template-columns:1fr 1fr;gap:26px;
-  margin-top:clamp(36px,5vw,56px)}
-.school{display:flex;flex-direction:column;border-radius:var(--radius);
-  overflow:hidden;background:var(--card);border:1px solid var(--line-l-soft);
-  box-shadow:0 2px 10px rgba(24,16,10,.05);
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease),
-             border-color .35s var(--ease)}
-.school:hover{transform:translateY(-6px);border-color:var(--line-l);
-  box-shadow:0 24px 52px rgba(24,16,10,.16)}
-.school-photo{display:block;aspect-ratio:16/9;overflow:hidden;
-  border-bottom:3px solid var(--red-l)}
-.school.gd .school-photo{border-bottom-color:#E9B23C}
-.school-photo img{width:100%;height:100%;object-fit:cover;
-  transition:transform .8s var(--ease)}
-.school:hover .school-photo img{transform:scale(1.045)}
-/* the ink-on-white calligraphy sits as art, not a photo */
-.school-photo.paperart{background:#FFFDF8;display:flex;align-items:center;
-  justify-content:center}
-.school-photo.paperart img{width:auto;height:88%;object-fit:contain;
-  filter:sepia(.12)}
-.school-body{display:block;padding:26px 28px 30px}
-.school-kicker{display:inline-block;font-size:11px;letter-spacing:.22em;
-  text-transform:uppercase;font-weight:600;margin-bottom:10px}
-.school-kicker.rd{color:var(--red-l)}
-.school-kicker.gd{color:var(--bronze)}
-.school h3{margin:0 0 10px;font-size:22px;color:var(--ink-l)}
-.school p{margin:0 0 18px;color:var(--muted-l);font-size:15.5px}
-.school .go{display:inline-flex;align-items:center;gap:8px;
-  font-size:13px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--red-l);font-weight:600}
-.school.gd .go{color:var(--bronze)}
-.school .go svg{transition:transform .3s var(--ease)}
-.school:hover .go svg{transform:translateX(5px)}
-
-/* ---------------- honors (dark band) ---------------- */
-.honors{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;
-  margin:0 0 40px}
-.honor{border:1px solid var(--line);border-radius:12px;padding:18px 20px;
-  background:rgba(242,180,65,.05)}
+/* ========================== GALLERY ========================== */
+.sec-gallery{border-top:1px solid var(--line-soft)}
+.g-head{display:flex;align-items:flex-end;justify-content:space-between;
+  gap:24px;flex-wrap:wrap;margin-bottom:clamp(36px,4.5vw,56px)}
+.g-head .lede{margin-top:4px}
+.honors{display:grid;grid-template-columns:repeat(4,1fr);
+  gap:clamp(20px,2.6vw,40px);margin:0 0 clamp(44px,5.5vw,72px)}
+.honor{border-top:1px solid var(--line);padding-top:18px}
 .honor b{display:block;font-size:15px;color:var(--gold);letter-spacing:.01em;
-  margin-bottom:5px}
-.honor i{font-style:normal;font-size:12.5px;color:var(--muted);
-  letter-spacing:.04em}
-
-/* ---------------- portfolio ---------------- */
-.grid-head{display:flex;align-items:flex-end;justify-content:space-between;
-  gap:24px;flex-wrap:wrap;margin-bottom:44px}
-.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
-.vcard{position:relative;border-radius:var(--radius);overflow:hidden;cursor:pointer;
-  border:1px solid var(--line-soft);background:var(--panel);padding:0;text-align:left;
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease),
-             border-color .35s var(--ease)}
-.vcard:hover{transform:translateY(-5px);border-color:var(--line);
-  box-shadow:0 22px 48px rgba(0,0,0,.45)}
-.vcard.feature{grid-column:span 2;grid-row:span 2}
-.vthumb{position:relative;overflow:hidden;aspect-ratio:16/9}
-.vcard.feature .vthumb{height:100%;}
-.vthumb img{width:100%;height:100%;object-fit:cover;
-  transition:transform .8s var(--ease)}
-.vcard:hover .vthumb img{transform:scale(1.05)}
+  margin-bottom:6px;font-weight:600;line-height:1.4}
+.honor i{font-style:normal;font-size:12px;color:var(--muted);
+  letter-spacing:.06em}
+/* editorial mosaic — films (lightbox) + stills, uneven on purpose */
+.mosaic{display:grid;grid-template-columns:repeat(12,1fr);
+  grid-auto-rows:minmax(120px,auto);gap:clamp(14px,1.6vw,22px)}
+.m-feature{grid-column:1/9;grid-row:span 2}
+.m-tall{grid-column:9/13;grid-row:span 2}
+.m-half{grid-column:span 4}
+.m-wide{grid-column:span 4}
+.mimg{margin:0;overflow:hidden;position:relative}
+.mimg img{width:100%;height:100%;object-fit:cover}
+.m-tall img{object-position:center 30%}
+.vcard{position:relative;overflow:hidden;cursor:pointer;
+  border:0;background:var(--panel);padding:0;text-align:left;display:block;
+  width:100%}
+.vcard .vthumb{position:relative;overflow:hidden;height:100%;min-height:200px}
+.vthumb img{width:100%;height:100%;object-fit:cover}
 .vthumb::after{content:"";position:absolute;inset:0;
-  background:linear-gradient(180deg,transparent 40%,rgba(11,7,8,.88) 100%)}
-.play{
-  position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  width:60px;height:60px;border-radius:50%;z-index:2;
-  background:rgba(164,22,26,.88);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  background:linear-gradient(180deg,transparent 42%,rgba(11,7,8,.9) 100%)}
+.play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  width:58px;height:58px;border-radius:50%;z-index:2;
+  background:rgba(164,22,26,.9);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   border:1px solid rgba(242,180,65,.5);
   display:flex;align-items:center;justify-content:center;
-  transition:transform .35s var(--ease),box-shadow .35s var(--ease),
-             background .35s var(--ease);
-}
+  transition:transform .35s var(--ease),background .35s var(--ease),
+             box-shadow .35s var(--ease)}
 .play svg{margin-left:3px}
-.vcard:hover .play{transform:translate(-50%,-50%) scale(1.12);
-  background:var(--red);box-shadow:0 0 0 10px rgba(230,59,82,.16),
-  0 0 40px rgba(230,59,82,.5)}
-.vmeta{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:18px 20px}
-.vmeta h3{margin:0;font-size:16px;line-height:1.35;letter-spacing:.01em;
+.vcard:hover .play{transform:translate(-50%,-50%) scale(1.1);
+  background:var(--red);box-shadow:0 0 0 10px rgba(230,59,82,.15)}
+.vmeta{position:absolute;left:0;right:0;bottom:0;z-index:2;
+  padding:clamp(16px,2vw,26px)}
+.vtitle{display:block;margin:0;font-size:16px;font-weight:600;line-height:1.35;
   color:var(--ink)}
-.vcard.feature .vmeta h3{font-size:clamp(19px,2.2vw,26px)}
-.vmeta i{font-style:normal;display:block;margin-top:5px;font-size:11.5px;
-  letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.badge{display:inline-flex;align-items:center;gap:7px;margin-bottom:10px;
-  background:rgba(242,180,65,.14);border:1px solid rgba(242,180,65,.4);
-  color:var(--gold);border-radius:999px;padding:5px 14px;font-size:11px;
-  letter-spacing:.14em;text-transform:uppercase;font-weight:600}
+.m-feature .vtitle{font-size:clamp(19px,2.1vw,26px)}
+.vmeta i{font-style:normal;display:block;margin-top:6px;font-size:11px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.badge{display:inline-flex;align-items:center;gap:7px;margin-bottom:12px;
+  border:1px solid rgba(242,180,65,.45);color:var(--gold);
+  padding:5px 12px;font-size:10.5px;letter-spacing:.16em;
+  text-transform:uppercase;font-weight:600}
 
-/* lightbox */
+/* ========================= BOOKING BAND ========================= */
+.sec-book{position:relative;overflow:hidden;padding:calc(var(--sec) * 1.1) 0}
+.book-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  object-position:center 38%;filter:brightness(.42) saturate(.92)}
+.sec-book::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(11,7,8,.82) 0%,rgba(11,7,8,.5) 46%,
+             rgba(11,7,8,.14) 100%)}
+.book-in{position:relative;z-index:2}
+.book-kinds{font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;
+  color:var(--gold);font-weight:600;margin:0 0 18px}
+.book-copy{max-width:52ch;color:#E5DAD2;font-size:17.5px;margin:0 0 36px}
+.book-ctas{display:flex;align-items:center;gap:clamp(20px,3vw,36px);
+  flex-wrap:wrap}
+
+/* ========================== CONTACT ========================== */
+.contact-grid{display:grid;grid-template-columns:1fr 1.12fr;
+  gap:clamp(40px,5.5vw,88px);align-items:start}
+.info-rows{margin-top:34px;display:grid;gap:2px}
+.info-row{display:flex;gap:16px;align-items:flex-start;padding:18px 2px;
+  border-bottom:1px solid var(--line-l-soft)}
+.info-row svg{flex:none;margin-top:3px;color:var(--jade)}
+.info-row b{display:block;font-size:11px;letter-spacing:.24em;
+  text-transform:uppercase;color:var(--muted-l);font-weight:600;margin-bottom:3px}
+.info-row a:hover{color:var(--jade)}
+.socials{display:flex;gap:12px;margin-top:30px}
+.socials a{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-l);
+  display:flex;align-items:center;justify-content:center;color:var(--muted-l);
+  transition:color .25s var(--ease),border-color .25s var(--ease),
+             background .25s var(--ease),transform .25s var(--ease)}
+.socials a:hover{color:var(--paper);border-color:var(--ink-l);
+  background:var(--ink-l);transform:translateY(-3px)}
+.form{background:var(--card);border:1px solid var(--line-l-soft);
+  padding:clamp(28px,3.4vw,44px);box-shadow:0 2px 20px rgba(24,16,10,.05)}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.field{margin-bottom:18px}
+.field label{display:block;font-size:11px;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--muted-l);margin-bottom:8px;font-weight:600}
+.field .opt{text-transform:none;letter-spacing:0}
+.field input,.field textarea{
+  width:100%;background:var(--paper);border:1px solid var(--line-l);
+  border-radius:2px;padding:14px 16px;color:var(--ink-l);font:inherit;
+  font-size:15px;transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
+.field input:focus,.field textarea:focus{outline:none;border-color:var(--jade);
+  box-shadow:0 0 0 3px rgba(30,90,68,.14)}
+.field textarea{min-height:132px;resize:vertical}
+.form-note{font-size:13px;color:var(--muted-l);margin:16px 0 0}
+.form-note a{color:var(--jade);text-decoration:underline;
+  text-underline-offset:3px}
+
+/* =========================== FOOTER =========================== */
+footer{background:#080506;border-top:1px solid var(--line-soft);
+  padding:clamp(56px,7vw,88px) 0 36px}
+.f-top{display:flex;align-items:center;justify-content:space-between;
+  gap:26px;flex-wrap:wrap;padding-bottom:clamp(32px,4vw,52px);
+  border-bottom:1px solid var(--line-soft);margin-bottom:clamp(32px,4vw,52px)}
+.f-brand{display:flex;align-items:center;gap:18px}
+/* Was ".f-brand img", which also caught .f-calli below it and squashed the
+   wide calligraphy banner into a distorted 58x58 square. Scoped to the
+   crest specifically so .f-calli's own sizing rule actually wins. */
+.f-logo{width:58px;height:58px}
+/* Matches the header wordmark treatment (bold tracked-out uppercase sans +
+   the calligraphy underneath) instead of the old serif name + text subtitle. */
+.f-name{margin:0}
+.f-name b{display:block;font-family:var(--sans);font-weight:700;
+  font-size:22px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--ink);line-height:1.2}
+.f-calli{display:block;height:30px;width:auto;margin-top:8px}
+.f-cols{display:grid;grid-template-columns:repeat(4,1fr);
+  gap:clamp(26px,4vw,56px);padding-bottom:clamp(36px,5vw,60px)}
+.f-h{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--muted);font-weight:600;margin:0 0 18px}
+.f-col a,.f-here,.f-addr{display:block;font-size:14.5px;color:#D9CEC6;
+  padding:5px 0;margin:0}
+.f-col a{transition:color .25s var(--ease)}
+.f-col a:hover{color:var(--gold)}
+.f-col a sup{opacity:.5}
+.f-here{color:var(--red)}
+.f-addr{line-height:1.6}
+.f-bottom{display:flex;align-items:center;justify-content:space-between;
+  gap:18px;flex-wrap:wrap;border-top:1px solid var(--line-soft);
+  padding-top:26px}
+.f-bottom p{margin:0;color:var(--muted);font-size:12.5px}
+.f-legal{color:var(--muted);margin-left:14px;text-decoration:underline;
+  text-underline-offset:2px;transition:color .25s var(--ease)}
+.f-legal:hover{color:var(--gold)}
+.f-bottom .top{font-size:11px;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--muted);display:inline-flex;align-items:center;gap:8px;
+  transition:color .25s var(--ease)}
+.f-bottom .top:hover{color:var(--gold)}
+
+/* ========================= LIGHTBOX ========================= */
 .lb{position:fixed;inset:0;z-index:90;display:flex;align-items:center;
-  justify-content:center;padding:5vw;background:rgba(6,3,4,.9);
+  justify-content:center;padding:5vw;background:rgba(6,3,4,.92);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   opacity:0;visibility:hidden;
   transition:opacity .35s var(--ease),visibility .35s var(--ease)}
 .lb.on{opacity:1;visibility:visible}
 .lb-frame{position:relative;width:min(1060px,100%);aspect-ratio:16/9;
-  border-radius:var(--radius);overflow:hidden;background:#000;
+  overflow:hidden;background:#000;
   border:1px solid var(--line);box-shadow:0 40px 120px rgba(0,0,0,.7);
-  transform:scale(.94) translateY(14px);transition:transform .35s var(--ease)}
+  transform:scale(.96) translateY(12px);transition:transform .35s var(--ease)}
 .lb.on .lb-frame{transform:none}
 .lb-frame iframe{width:100%;height:100%;border:0;display:block}
 .lb-close{position:absolute;top:-52px;right:0;background:none;border:0;
-  color:var(--ink);font-size:14px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--ink);font-size:13px;letter-spacing:.18em;text-transform:uppercase;
   cursor:pointer;display:flex;align-items:center;gap:8px;padding:8px}
 .lb-close:hover{color:var(--red)}
 
-/* password gate — soft client-side lock for pre-launch preview access.
-   Not real security: the password lives in this file's source. It only
-   keeps casual visitors out before the site is ready to announce.
+/* ================= PASSWORD GATE (pre-launch only) =================
    TODO: remove this block (and the matching markup/script in index.html)
    once makfai.org is ready to launch publicly. */
 .pw-gate{position:fixed;inset:0;z-index:999;display:flex;align-items:center;
@@ -540,31 +702,28 @@ section{padding:clamp(84px,11vw,132px) 0;scroll-margin-top:72px}
   transition:opacity .4s var(--ease),visibility .4s var(--ease)}
 .pw-gate.pw-gate-hide{opacity:0;visibility:hidden;pointer-events:none}
 .pw-gate-card{width:min(380px,100%);text-align:center;padding:44px 36px;
-  border-radius:var(--radius);border:1px solid var(--line);
+  border-radius:8px;border:1px solid var(--line);
   background:linear-gradient(160deg,var(--panel),var(--panel-2));
   box-shadow:0 40px 120px rgba(0,0,0,.6);
   animation:pw-gate-in .55s var(--ease) both}
-/* Locks the intro off after it plays once the JS adds this class on
-   animationend — otherwise a later wrong-password shake would restart the
-   whole fade/scale-in along with it. Two classes beats the base rule above,
-   and loses on purpose to the (three-class) shake rule below when both are
-   present, so shaking still works after the intro has finished. */
 .pw-gate-card.intro-done{animation:none}
 @keyframes pw-gate-in{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
-.pw-gate-logo{display:block;width:64px;height:64px;object-fit:contain;
+.pw-gate-logo{display:block;width:76px;height:76px;object-fit:contain;
   margin:0 auto 14px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.55))}
 .pw-gate-calli{display:block;width:min(210px,80%);margin:0 auto 22px;
   filter:drop-shadow(0 0 16px rgba(242,180,65,.4))}
-.pw-gate-title{font-size:22px;line-height:1.3;margin:0 0 22px;color:var(--ink)}
+.pw-gate .eyebrow{color:var(--gold)}
+.pw-gate-title{font-size:21px;line-height:1.3;margin:0 0 22px;color:var(--ink);
+  font-weight:600}
 .pw-gate-field{position:relative;margin-bottom:16px}
 .pw-gate-input{width:100%;padding:13px 44px 13px 16px;font-size:15px;
   font-family:inherit;color:var(--ink);background:rgba(255,255,255,.04);
-  border:1px solid var(--line);border-radius:10px;outline:none;
+  border:1px solid var(--line);border-radius:6px;outline:none;
   transition:border-color .25s var(--ease)}
 .pw-gate-input:focus{border-color:var(--gold)}
 .pw-gate-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);
   display:flex;align-items:center;justify-content:center;width:32px;height:32px;
-  background:none;border:0;border-radius:8px;color:var(--muted);cursor:pointer;
+  background:none;border:0;border-radius:6px;color:var(--muted);cursor:pointer;
   transition:color .2s var(--ease),background .2s var(--ease)}
 .pw-gate-toggle:hover{color:var(--gold);background:rgba(255,255,255,.06)}
 .pw-gate-btn{width:100%;justify-content:center}
@@ -578,141 +737,109 @@ section{padding:clamp(84px,11vw,132px) 0;scroll-margin-top:72px}
   80%{transform:translateX(5px)}
 }
 
-/* ---------------- quotes ---------------- */
-.quotes{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.quote{background:linear-gradient(160deg,var(--panel),var(--panel-2));
-  border:1px solid var(--line-soft);border-radius:var(--radius);padding:38px 36px;
-  position:relative}
-.quote::before{content:"\201C";position:absolute;top:6px;left:24px;
-  font-size:88px;line-height:1;color:var(--red);opacity:.5;font-family:Georgia,serif}
-.quote p{margin:0;font-size:clamp(18px,2.2vw,22px);line-height:1.5;
-  color:#E9DED6;position:relative}
-.quote i{font-style:normal;display:block;margin-top:18px;font-size:12px;
-  letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
-
-/* ---------------- contact ---------------- */
-.contact-grid{display:grid;grid-template-columns:1fr 1.15fr;
-  gap:clamp(36px,5vw,72px);align-items:start}
-.info-rows{margin-top:30px;display:grid;gap:6px}
-.info-row{display:flex;gap:16px;align-items:flex-start;padding:16px 4px;
-  border-bottom:1px solid var(--line-soft)}
-.info-row svg{flex:none;margin-top:3px;color:var(--gold)}
-.info-row b{display:block;font-size:11.5px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:3px}
-.info-row a:hover{color:var(--gold)}
-.socials{display:flex;gap:12px;margin-top:28px}
-.socials a{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);
-  display:flex;align-items:center;justify-content:center;color:var(--muted);
-  transition:color .25s var(--ease),border-color .25s var(--ease),
-             transform .25s var(--ease),box-shadow .25s var(--ease)}
-.socials a:hover{color:var(--gold);border-color:var(--gold);
-  transform:translateY(-3px);box-shadow:0 8px 22px rgba(242,180,65,.16)}
-
-.form{background:linear-gradient(160deg,var(--panel),var(--panel-2));
-  border:1px solid var(--line-soft);border-radius:var(--radius);
-  padding:clamp(26px,3.4vw,40px)}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.field{margin-bottom:16px}
-.field label{display:block;font-size:11.5px;letter-spacing:.18em;
-  text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:600}
-.field input,.field textarea{
-  width:100%;background:rgba(11,7,8,.55);border:1px solid var(--line-soft);
-  border-radius:10px;padding:14px 16px;color:var(--ink);font:inherit;
-  font-size:15px;transition:border-color .25s var(--ease),box-shadow .25s var(--ease)}
-.field input:focus,.field textarea:focus{outline:none;border-color:var(--red);
-  box-shadow:0 0 0 3px rgba(230,59,82,.16)}
-.field textarea{min-height:130px;resize:vertical}
-.form-note{font-size:13px;color:var(--muted);margin:14px 0 0}
-.form-note a{color:var(--gold)}
-
-/* ---------------- footer ---------------- */
-footer{border-top:1px solid var(--line-soft);padding:44px 0 52px;
-  background:rgba(11,7,8,.6)}
-/* portal row — Mak Fai is three sites; this bridges to the others */
-.portal{display:flex;align-items:center;gap:10px 26px;flex-wrap:wrap;
-  padding:0 0 30px;margin-bottom:34px;border-bottom:1px solid var(--line-soft)}
-.portal b{font-size:11px;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--muted);font-weight:600;margin-right:8px}
-.portal a{font-size:13.5px;color:#D9CEC6;display:inline-flex;
-  align-items:center;gap:7px;padding:6px 0;
-  transition:color .25s var(--ease)}
-.portal a:hover{color:var(--gold)}
-.portal a svg{opacity:.55}
-.portal .here{color:var(--red);pointer-events:none}
-.foot{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
-.foot img{width:46px}
-.foot p{margin:0;color:var(--muted);font-size:13.5px}
-.foot .top{margin-left:auto;font-size:12px;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--muted);display:inline-flex;
-  align-items:center;gap:8px;transition:color .25s var(--ease)}
-.foot .top:hover{color:var(--gold)}
-
-/* ---------------- responsive ---------------- */
+/* ========================= RESPONSIVE ========================= */
+@media (max-width:1080px){
+  .trad-grid,.trad-rev .trad-grid{grid-template-columns:1fr;gap:30px}
+  .trad-rev .trad-photo{order:1}
+  .trad-rev .trad-copy{order:2}
+  .trad-copy{max-width:60ch}
+  .values{grid-template-columns:1fr 1fr;gap:36px}
+  .honors{grid-template-columns:1fr 1fr;gap:24px}
+  .story-quotes{grid-template-columns:1fr}
+}
 @media (max-width:960px){
-  .vgrid{grid-template-columns:1fr 1fr}
-  .vcard.feature{grid-column:span 2;grid-row:auto}
-  .about-grid,.contact-grid{grid-template-columns:1fr}
-  .offer{grid-template-columns:1fr}
-  .quotes{grid-template-columns:1fr}
-  .schools{grid-template-columns:1fr}
-  .honors{grid-template-columns:1fr 1fr}
+  .contact-grid{grid-template-columns:1fr}
+  /* Mobile order: heading/copy, then Learn more, then the photo (with its
+     Chinatown-ID caption) at the very bottom -- different from desktop's
+     copy+cta-beside-photo layout, so it gets its own template instead of
+     just collapsing to one column. */
+  .intro-grid{grid-template-columns:1fr;
+    grid-template-areas:"copy" "cta" "photo"}
+  .intro-cta{margin-top:8px}
+  .intro-photo{margin-top:24px}
+  .mosaic{grid-template-columns:1fr 1fr}
+  .m-feature{grid-column:1/-1;grid-row:auto}
+  .m-tall{grid-column:span 1;grid-row:auto}
+  .m-half,.m-wide{grid-column:span 1}
+  .vcard .vthumb{aspect-ratio:16/10;min-height:0}
+  .m-tall img{aspect-ratio:3/4}
+  .mimg{min-height:0}
 }
 @media (max-width:720px){
-  .wrap{padding:0 22px}
-  /* The whole split turns 90 degrees on a phone -- lion on top, kung fu
-     below. A vertical split into two tall thin columns is unreadable at
-     this width. Still an exact half each. */
+  /* Concept 1: taller mobile hero (122svh, not the original 100svh) with
+     .hero-cta overlaid on the photo -- plain flat horizontal seam, lion top
+     / kung fu bottom, same identity rotated from the desktop left/right. */
+  .hero{min-height:136svh}
+  .hero-learn{display:none}
   .hero-split-lion{clip-path:inset(0 0 50% 0)}
   .hero-split-kungfu{clip-path:inset(50% 0 0 0)}
-  /* visible half is the full width but only the top half here */
-  /* halves are top/bottom here, so the images pin that way instead */
   .hero-split-panel img{width:100%;height:50%}
   .hero-split-lion img{left:0;top:0}
   .hero-split-kungfu img{right:0;top:auto;bottom:0}
-  /* Split is horizontal here, so the names stack above and below the logo,
-     each centred in its own half rather than flanking it. */
-  /* Back to the seam here -- the split is horizontal on a phone, so the
-     emblem straddling it is the whole point. Just smaller. */
-  .hero-logo{width:min(40vw,180px);top:50%}
-  /* Stacked halves here, so hugging left/right makes no sense -- both go
-     back to centred, one per half. */
-  /* keeps the same horizontal squeeze, just centred rather than edge-pinned */
-  .hero-word{font-size:clamp(32px,10vw,48px);text-align:center;
+  .hero-logo{width:min(34vw,156px);top:50%}
+  .hero-word{font-size:clamp(34px,10.5vw,50px);text-align:center;
     transform:translate(-50%,-50%) scaleX(.78);transform-origin:center}
-  .hero-word-lion{left:50%;right:auto;top:25%}
-  .hero-word-kungfu{left:50%;right:auto;top:75%}
-  .nav-links{
-    position:fixed;top:72px;left:0;right:0;flex-direction:column;gap:0;
-    background:rgba(250,246,239,.97);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
-    border-bottom:1px solid var(--line-l-soft);padding:10px 22px 22px;
-    transform:translateY(-12px);opacity:0;visibility:hidden;
-    transition:transform .3s var(--ease),opacity .3s var(--ease),
-               visibility .3s var(--ease);
-    align-items:stretch;
-  }
-  .nav.open .nav-links{transform:none;opacity:1;visibility:visible}
-  .nav-links a:not(.btn){padding:15px 2px;border-bottom:1px solid var(--line-l-soft);
-    font-size:15px;color:var(--muted-l)}
-  .nav-links a:not(.btn):hover{color:var(--ink-l)}
-  .nav-links a:not(.btn)::after{display:none}
-  .nav-links .btn{margin-top:16px;justify-content:center}
-  /* In the dropdown the links stack, so the icon row centres itself under
-     them instead of stretching. Slightly larger discs for thumbs. */
-  .nav-social{justify-content:center;gap:14px;margin:20px 0 4px}
-  .nav-links .nav-social a{width:44px;height:44px}
-  .nav-social svg{width:19px;height:19px}
+  .hero-word-lion{left:50%;right:auto;top:24%}
+  .hero-word-kungfu{left:50%;right:auto;top:74%}
+  .hero-cjk{font-size:clamp(64px,24vw,120px);left:50%;right:auto;
+    transform:translate(-50%,-50%);text-align:center}
+  .hero-cjk-lion{top:24%}
+  .hero-cjk-kungfu{top:74%}
+  .hero-status{bottom:108px;font-size:14px;width:min(94vw,360px);line-height:1.45}
+  .hero-support{bottom:46px;padding:8px 14px;font-size:9px}
+  .hero-nonprofit{bottom:30px;font-size:8px}
+  .hero-motto{bottom:14px;font-size:6.8px;letter-spacing:.19em}
+  @keyframes rise{from{opacity:0;transform:translate(-50%,-46%)}
+    to{opacity:1;transform:translate(-50%,-50%)}}
+
+  /* full-screen ivory menu — part of the brand, not an afterthought */
   .burger{display:block}
-  .vgrid{grid-template-columns:1fr}
-  .vcard.feature{grid-column:auto}
+  .nav-links{
+    /* Must beat main (z-index:1) or the hero paints over the open menu --
+       this was accidentally -1, which put the whole panel behind the page. */
+    position:fixed;inset:0;z-index:55;flex-direction:column;
+    justify-content:center;align-items:flex-start;gap:0;
+    padding:96px clamp(28px,8vw,48px) 40px;
+    background:var(--paper);
+    opacity:0;visibility:hidden;transform:translateY(-14px);
+    transition:opacity .35s var(--ease),transform .35s var(--ease),
+               visibility .35s var(--ease);
+  }
+  .nav.open .nav-links{opacity:1;visibility:visible;transform:none}
+  .nav-menu{flex-direction:column;align-items:flex-start;gap:0;width:100%}
+  .nav-menu a{
+    font-family:var(--serif);font-weight:520;text-transform:none;
+    letter-spacing:0;font-size:clamp(30px,8vw,40px);line-height:1.1;
+    color:var(--ink-l);padding:12px 0;width:100%;
+    border-bottom:1px solid var(--line-l-soft)}
+  .nav-menu a::after{display:none}
+  .nav-menu a sup{font-size:.4em;vertical-align:super}
+  .nav-social{margin-top:22px;gap:8px}
+  .nav-social a{width:48px;height:48px;color:var(--ink-l)}
+  .ico-glyph{width:22px;height:22px}
+  body.menu-open{overflow:hidden}
+
+  .statline{gap:26px 40px}
   .frow{grid-template-columns:1fr}
-  .stats{gap:26px}
-  .honors{grid-template-columns:1fr}
+  .values{grid-template-columns:1fr}
+  .honors{grid-template-columns:1fr;gap:20px}
+  .mosaic{grid-template-columns:1fr}
+  .m-feature,.m-tall,.m-half,.m-wide{grid-column:1/-1}
+  .g-head{align-items:flex-start;flex-direction:column}
+  .f-cols{grid-template-columns:1fr 1fr}
+  .f-top{flex-direction:column;align-items:flex-start}
+  .book-ctas .btn{width:100%;justify-content:center}
+  .story-photo{height:52vh}
+}
+@media (max-width:420px){
+  .f-cols{grid-template-columns:1fr}
+  .stat b{font-size:26px}
 }
 
 /* Reduced motion: content appears, nothing moves. */
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .hero [data-stagger]{opacity:1;transform:none}
+  .hero [data-stagger]{opacity:1}
   .reveal{opacity:1;transform:none}
 }
