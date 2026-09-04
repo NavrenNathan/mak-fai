@@ -37,6 +37,9 @@
   --ink-l:#221A15;      /* 14.9:1 on paper */
   --muted-l:#6B5E55;    /*  5.6:1          */
   --jade:#1E5A44;       /*  7.3:1 on paper — the editorial accent   */
+  /* The same green at display weight, for dark grounds only: --jade is
+     2.5:1 on --bg and disappears there. Hero LION DANCE + the Donate fill. */
+  --jade-bright:#39B44A;
   --red-l:#C8102E;      /*  5.0:1          */
   --bronze:#8A5E0C;     /*  4.9:1          */
   --line-l:rgba(34,26,21,.16);
@@ -163,7 +166,7 @@ header{position:relative;z-index:60}
 .nav-donate{order:2;position:relative;z-index:56;transform:translateY(-5px);
   display:inline-flex;align-items:center;flex-shrink:0;
   padding:11px 20px;border-radius:8px;
-  background:#39B44A;color:var(--ink-l);
+  background:var(--jade-bright);color:var(--ink-l);
   font-family:var(--sans);font-size:12px;font-weight:700;
   letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
   transition:background .25s var(--ease),transform .25s var(--ease),
@@ -307,8 +310,8 @@ header{position:relative;z-index:60}
   white-space:nowrap;pointer-events:none;
   text-shadow:0 6px 34px rgba(0,0,0,.45)}
 .hero-word span{display:block}
-.hw-green{color:#39B44A}
-.hw-gold{color:#FAAF3B}
+.hw-green{color:var(--jade-bright)}
+.hw-gold{color:var(--gold)}
 .hero-word-lion{left:clamp(24px,2.6vw,38px);text-align:left;
   transform:translateY(-50%) scaleX(.78);transform-origin:left center}
 .hero-word-kungfu{right:clamp(24px,2.6vw,38px);text-align:right;
@@ -420,9 +423,13 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   margin:0;color:#fff}
 .band-light .disp{color:var(--ink-l)}
 .disp-xl{font-size:clamp(36px,5.6vw,72px)}
+/* One green, one gold, split by ground rather than by section: the accent
+   rules go --gold on the dark bands and --jade on paper. No single hex can
+   do both -- the bright hero green measures 2.5:1 on --paper and --jade
+   only 2.5:1 on --bg -- so the pair is the unification, not a compromise. */
 .disp-rule{display:block;width:36px;height:2px;margin:26px 0 30px;
-  background:#fff;border-radius:1px}
-.band-light .disp-rule{background:var(--ink-l)}
+  background:var(--gold);border-radius:1px}
+.band-light .disp-rule{background:var(--jade)}
 .lede{color:var(--muted);font-size:18px;max-width:56ch;margin:0}
 .band-light .lede{color:var(--muted-l)}
 .band-light{background:var(--paper);color:var(--ink-l)}
@@ -474,7 +481,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
    A real cutout sidesteps the whole class of bug.) */
 .intro-calli{height:clamp(88px,11vw,132px);width:auto;flex-shrink:0}
 .intro-rule{display:block;width:36px;height:2px;margin:30px 0 34px;
-  background:var(--ink-l);border-radius:1px}
+  background:var(--jade);border-radius:1px}
 .intro-copy p{margin:0 0 20px;max-width:58ch}
 /* the photo rides lower than the text — deliberate asymmetry -- and nudged
    right within its own column so it doesn't read flush/off-centre against
