@@ -505,17 +505,84 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .trad-domain{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
   color:var(--muted-l)!important;margin:14px 0 0}
 
-/* ========================== VALUES ========================== */
-.sec-values{padding-top:calc(var(--sec) * .35);border-top:1px solid var(--line-l-soft)}
-.values{display:grid;grid-template-columns:repeat(3,1fr);
-  gap:clamp(28px,3.4vw,52px);margin-top:clamp(40px,5vw,64px)}
-.value{border-top:1px solid var(--line-l);padding-top:24px}
-.value-row{display:flex;align-items:center;justify-content:flex-end;
-  margin-bottom:34px}
-.value-icon{color:var(--jade)}
-.value h3{font-family:var(--serif);font-weight:560;font-size:23px;
-  letter-spacing:0;margin:0 0 12px;color:var(--ink-l)}
-.value p{margin:0;font-size:15px;line-height:1.65;color:var(--muted-l)!important}
+/* ========================== VALUES ==========================
+   The one centred, decorated section on the page -- ink-and-paper scenery
+   behind, brush rings around the icons. Everything here is scoped to
+   .sec-values so the shared .disp / .eyebrow rules stay left-aligned
+   everywhere else. */
+.sec-values{position:relative;overflow:hidden;
+  padding-top:calc(var(--sec) * .45);padding-bottom:calc(var(--sec) * .5);
+  border-top:1px solid var(--line-l-soft)}
+/* the filter defs carrier -- present in the DOM, never painted */
+.svg-defs{position:absolute;width:0;height:0;pointer-events:none}
+
+/* ---- background scenery ---- */
+.values-deco{position:absolute;inset:0;z-index:0;pointer-events:none;
+  overflow:hidden}
+/* seigaiha (wave scale) corner, drawn with stacked radial gradients */
+.deco-wave{position:absolute;top:-10px;right:-10px;
+  width:clamp(200px,26vw,380px);height:clamp(150px,18vw,260px);
+  background-image:radial-gradient(circle at 50% 100%,transparent 20%,
+    rgba(30,90,68,.5) 21%,rgba(30,90,68,.5) 23%,transparent 24%,
+    transparent 36%,rgba(30,90,68,.5) 37%,rgba(30,90,68,.5) 39%,
+    transparent 40%,transparent 52%,rgba(30,90,68,.5) 53%,
+    rgba(30,90,68,.5) 55%,transparent 56%);
+  background-size:46px 23px;opacity:.22;
+  -webkit-mask-image:linear-gradient(215deg,#000,transparent 72%);
+  mask-image:linear-gradient(215deg,#000,transparent 72%)}
+.deco-enso{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);
+  width:clamp(320px,38vw,540px);height:clamp(320px,38vw,540px);
+  color:var(--ink-l);opacity:.042}
+.deco-bamboo{position:absolute;right:clamp(-14px,1.4vw,30px);top:clamp(20px,4vw,54px);
+  width:clamp(104px,12vw,164px);height:auto;color:var(--jade);opacity:.3}
+.deco-hills{position:absolute;left:0;bottom:0;
+  width:clamp(280px,34vw,520px);height:clamp(110px,13vw,180px);
+  color:var(--ink-l);opacity:.09}
+
+/* ---- centred header ---- */
+.values-in{position:relative;z-index:1;text-align:center}
+.sec-values .eyebrow{margin-bottom:14px}
+.sec-values .disp{margin-inline:auto}
+.disp-dot{color:var(--jade)}
+.v-divide{display:flex;align-items:center;justify-content:center;
+  gap:18px;margin:26px auto clamp(46px,5.5vw,72px);max-width:340px}
+.v-divide-line{flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,var(--line-l) 40%,var(--line-l))}
+.v-divide-line:last-child{background:linear-gradient(270deg,transparent,var(--line-l) 40%,var(--line-l))}
+.v-seal{width:30px;height:30px;flex-shrink:0;color:var(--jade);opacity:.85}
+
+/* ---- the three columns ---- */
+.values{--vgap:clamp(26px,4vw,64px);
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--vgap)}
+.value{position:relative;text-align:center;
+  display:flex;flex-direction:column;align-items:center}
+/* hairline + gold lozenge sitting between columns */
+.value + .value::before{content:"";position:absolute;
+  left:calc(var(--vgap) / -2);top:6%;bottom:14%;width:1px;
+  background:linear-gradient(180deg,transparent,var(--line-l) 20%,
+             var(--line-l) 80%,transparent)}
+.value + .value::after{content:"";position:absolute;
+  left:calc(var(--vgap) / -2);top:38%;width:9px;height:9px;
+  transform:translate(-50%,-50%) rotate(45deg);
+  border:1px solid var(--bronze);background:var(--paper);opacity:.85}
+.value-ring{position:relative;display:grid;place-items:center;
+  width:clamp(104px,11vw,138px);height:clamp(104px,11vw,138px);
+  margin-bottom:22px}
+.ring-brush{position:absolute;inset:0;width:100%;height:100%;
+  color:rgba(34,26,21,.42)}
+.value-mid .ring-brush{color:var(--jade);opacity:.9}
+/* faint wash inside the middle ring so it reads as the anchor of the trio */
+.value-mid .value-ring::before{content:"";position:absolute;inset:14%;
+  border-radius:50%;background:rgba(30,90,68,.06)}
+.value-icon{position:relative;color:var(--jade);
+  width:clamp(40px,4.1vw,53px);height:clamp(40px,4.1vw,53px)}
+.value-tick{display:block;width:30px;height:1px;
+  background:var(--line-l);margin:0 0 18px}
+.value h3{font-family:var(--serif);font-weight:560;
+  font-size:clamp(22px,2.3vw,29px);letter-spacing:0;margin:0 0 12px;
+  color:var(--ink-l)}
+.value p{margin:0;max-width:26ch;font-size:15px;line-height:1.7;
+  color:var(--muted-l)!important}
 
 /* ====================== COMMUNITY STORY ====================== */
 .sec-story{padding:0;background:var(--bg)}
@@ -755,7 +822,9 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .trad-rev .trad-photo{order:1}
   .trad-rev .trad-copy{order:2}
   .trad-copy{max-width:60ch}
-  .values{grid-template-columns:1fr 1fr;gap:36px}
+  /* stays 3-across -- the copy is short, and 2 columns would orphan the
+     third value on its own row */
+  .values{--vgap:26px}
   .honors{grid-template-columns:1fr 1fr;gap:24px}
   .story-quotes{grid-template-columns:1fr}
 }
@@ -833,7 +902,15 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 
   .statline{gap:26px 40px}
   .frow{grid-template-columns:1fr}
-  .values{grid-template-columns:1fr}
+  /* single column: the between-column hairline becomes a short horizontal
+     rule with the same gold lozenge sitting on it */
+  .values{grid-template-columns:1fr;--vgap:40px}
+  .value + .value::before{left:50%;top:calc(var(--vgap) / -2);bottom:auto;
+    width:64px;height:1px;transform:translateX(-50%);
+    background:linear-gradient(90deg,transparent,var(--line-l) 25%,
+               var(--line-l) 75%,transparent)}
+  .value + .value::after{left:50%;top:calc(var(--vgap) / -2)}
+  .value-ring{margin-bottom:18px}
   .honors{grid-template-columns:1fr;gap:20px}
   .mosaic{grid-template-columns:1fr}
   .m-feature,.m-tall,.m-half,.m-wide{grid-column:1/-1}
