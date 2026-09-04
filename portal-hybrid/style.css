@@ -336,11 +336,20 @@ header{position:relative;z-index:60}
 /* Watermark hanzi -- sits behind the LION/DANCE and KUNG/FU type (z-index:1,
    same layer as the split photos, painted after them so it's above the
    photo but under the word), big and black but low-opacity so it reads as
-   a quiet texture, not a competing headline. */
+   a quiet texture, not a competing headline.
+   The hairline white outline lifts the glyphs off the darkest parts of the
+   photo, where a black-on-black watermark otherwise disappears entirely.
+   Width is in em, not px, so it stays a hairline at every clamp size
+   instead of turning into a thick rim on mobile. paint-order puts the
+   stroke behind the fill so only its outer half shows -- browsers without
+   it just get a stroke straddling the edge, which still reads as a border. */
 .hero-cjk{position:absolute;z-index:1;top:50%;transform:translateY(-50%);
   margin:0;color:#000;opacity:.63;font-weight:700;line-height:.88;
   font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",var(--sans);
-  font-size:clamp(120px,16.5vw,290px);pointer-events:none;user-select:none}
+  font-size:clamp(120px,16.5vw,290px);pointer-events:none;user-select:none;
+  -webkit-text-stroke:.014em rgba(255,255,255,.55);
+  paint-order:stroke fill;
+  text-shadow:0 0 .07em rgba(255,255,255,.14)}
 .hero-cjk-lion{left:clamp(20px,4vw,64px);text-align:left}
 .hero-cjk-kungfu{right:clamp(20px,4vw,64px);text-align:right}
 /* Deliberately NOT the uppercase/tracked-label voice used everywhere else
