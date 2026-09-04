@@ -519,7 +519,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 
 /* ====================== COMMUNITY STORY ====================== */
 .sec-story{padding:0;background:var(--bg)}
-.story-photo{margin:0;position:relative;height:clamp(340px,58vh,560px);
+.story-photo{margin:0;position:relative;height:clamp(400px,72vh,680px);
   overflow:hidden}
 .story-photo img{width:100%;height:100%;object-fit:cover;
   object-position:center 30%}
@@ -529,7 +529,12 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .story-photo::after{content:"";position:absolute;inset:0;
   background:linear-gradient(180deg,rgba(11,7,8,.22) 0%,transparent 32%,
              var(--bg) 100%)}
-.story-body{padding:clamp(56px,7vw,96px) clamp(22px,4vw,48px) var(--sec)}
+/* Pulled up to overlap the photo's already-faded-to-black bottom portion,
+   so "Keeping tradition..." starts while the photo is still technically
+   behind it -- reads as one continuous flow instead of two stacked blocks. */
+.story-body{position:relative;z-index:1;
+  margin-top:clamp(-212px,-18vw,-132px);
+  padding:clamp(56px,7vw,96px) clamp(22px,4vw,48px) var(--sec)}
 .story-copy{max-width:62ch;font-size:clamp(17px,1.6vw,19.5px);
   line-height:1.75;color:#E5DAD2;margin:0}
 .story-quotes{display:grid;grid-template-columns:1.35fr 1fr;
