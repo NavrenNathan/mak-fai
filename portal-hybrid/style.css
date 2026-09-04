@@ -721,22 +721,8 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   box-shadow:inset 0 0 0 1px var(--jade)}
 /* fixed height so picking a different tier doesn't jog the button up
    and down under the reader's cursor */
-.give-impact{min-height:42px;margin:16px 0 22px;
+.give-impact{min-height:42px;margin:16px 0 20px;
   font-size:13.5px;line-height:1.5;color:var(--muted-l)}
-/* the same green as the header Donate, ink text for the same contrast
-   reason (#39B44A is 2.4:1 on white, 8.9:1 on --ink-l) */
-.btn-give{display:block;width:100%;justify-content:center;text-align:center;
-  padding:17px 20px;border:0;border-radius:9px;cursor:pointer;
-  background:var(--jade-bright);color:var(--ink-l);
-  font-family:var(--sans);font-size:13px;font-weight:700;
-  letter-spacing:.12em;text-transform:uppercase;
-  transition:background .25s var(--ease),transform .25s var(--ease),
-             box-shadow .25s var(--ease)}
-.btn-give:hover:not(:disabled){background:#45c957;transform:translateY(-2px);
-  box-shadow:0 10px 28px rgba(57,180,74,.34)}
-.btn-give:active:not(:disabled){transform:translateY(0) scale(.99)}
-.btn-give:disabled{opacity:.45;cursor:not-allowed}
-.give-fine{margin:16px 0 0;font-size:12px;line-height:1.55;color:var(--muted-l)}
 
 /* --- "where your gift goes" -------------------------------------------- */
 .give-side .disp{font-size:clamp(24px,2.5vw,32px)}
@@ -749,11 +735,63 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .give-list b{display:block;font-family:var(--sans);font-weight:700;
   font-size:15.5px;color:var(--ink-l);margin-bottom:5px}
 .give-list p{margin:0;font-size:14px;line-height:1.6;color:var(--muted-l)}
+.give-fine{margin:16px 0 0;font-size:12px;line-height:1.55;color:var(--muted-l)}
+.give-fine a{color:var(--jade);font-weight:600}
 .give-note{margin-top:34px;padding:20px 22px;border-radius:12px;
   background:rgba(30,90,68,.06);border:1px solid rgba(30,90,68,.16)}
 .give-note p{margin:0;font-size:13.5px;line-height:1.6;color:#453B33}
 .give-note b{color:var(--jade)}
 
+/* --- payment methods ---------------------------------------------------- */
+.pay{display:grid;gap:10px;margin:4px 0 0}
+.pay-opt{padding:17px 18px;border-radius:11px;border:1px solid var(--line-l)}
+.pay-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.pay-head b{font-family:var(--sans);font-weight:700;font-size:15px;color:var(--ink-l)}
+.pay-badge{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  padding:4px 8px;border-radius:5px;background:var(--jade);color:#fff}
+/* Zelle is the house preference: it reads as the chosen path, not one of two. */
+.pay-zelle{border-color:rgba(30,90,68,.4);background:rgba(30,90,68,.05);
+  box-shadow:inset 0 0 0 1px rgba(30,90,68,.16)}
+.pay-why{margin:9px 0 0;font-size:13px;line-height:1.55;color:var(--muted-l)}
+.pay-to{display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+  margin:13px 0 0;font-size:13.5px;color:var(--ink-l)}
+.pay-to > span{color:var(--muted-l)}
+.pay-to b{color:var(--jade);font-weight:700}
+.pay-to code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+/* Unmistakably a blank, not a value to copy. */
+.pay-pending{padding:6px 11px;border-radius:6px;
+  border:1px dashed rgba(34,26,21,.3);background:rgba(34,26,21,.04);
+  color:var(--muted-l);font-style:italic}
+/* Reserved slot -- dashed so nobody mistakes it for a live checkout. */
+.pay-slot{border-style:dashed;border-color:rgba(34,26,21,.24);
+  background:rgba(34,26,21,.022)}
+.pay-slot .pay-head b{color:var(--muted-l)}
+.pay-slot-ph{margin:9px 0 0;font-size:12.5px;line-height:1.5;color:var(--muted-l)}
+.give-tierhint{margin:16px 0 0;padding:12px 14px;border-radius:9px;
+  background:rgba(242,180,65,.13);border:1px solid rgba(138,94,12,.28);
+  font-size:13px;line-height:1.5;color:#5B4407}
+.give-tierhint span{color:var(--bronze)}
+.give-tierhint a{color:var(--bronze);font-weight:700}
+
+/* --- scholarship members ------------------------------------------------ */
+.sec-members{position:relative;overflow:hidden;
+  border-top:1px solid rgba(242,180,65,.16);
+  padding-top:calc(var(--sec) * .58);padding-bottom:calc(var(--sec) * .58)}
+.sec-members .wrap{position:relative;z-index:1}
+.members-in{max-width:820px}
+.members-in .lede{margin-top:0}
+.members-list{list-style:none;margin:clamp(34px,4vw,50px) 0 0;padding:0;
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,2.6vw,34px)}
+.members-list li{display:flex;gap:15px;align-items:flex-start}
+.members-num{flex-shrink:0;font-family:var(--sans);font-weight:700;
+  font-size:12px;letter-spacing:.08em;color:var(--gold);
+  padding-top:3px;opacity:.8}
+.members-list b{display:block;font-family:var(--sans);font-weight:700;
+  font-size:15.5px;color:#fff;margin-bottom:6px}
+.members-list p{margin:0;font-size:13.5px;line-height:1.6;color:var(--muted)}
+.members-fine{margin:clamp(30px,3.4vw,42px) 0 0;padding-top:22px;
+  border-top:1px solid rgba(242,180,65,.18);
+  max-width:62ch;font-size:12.5px;line-height:1.65;color:var(--muted)}
 /* --- other ways to give (dark, reuses the awards card language) --------- */
 .sec-ways{position:relative;overflow:hidden;
   border-top:1px solid rgba(242,180,65,.16);
@@ -1138,6 +1176,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .honors{grid-template-columns:1fr;gap:20px}
   .awards{grid-template-columns:1fr;gap:16px}
   .ways{grid-template-columns:1fr;gap:14px}
+  .members-list{grid-template-columns:1fr;gap:22px}
   .amts{grid-template-columns:1fr 1fr}
   .dask{flex-direction:column;align-items:flex-start}
   .dask-links{text-align:left}
