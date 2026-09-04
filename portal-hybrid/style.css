@@ -530,9 +530,9 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   background-size:46px 23px;opacity:.22;
   -webkit-mask-image:linear-gradient(215deg,#000,transparent 72%);
   mask-image:linear-gradient(215deg,#000,transparent 72%)}
-.deco-enso{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);
-  width:clamp(320px,38vw,540px);height:clamp(320px,38vw,540px);
-  color:var(--ink-l);opacity:.042}
+.deco-taiji{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);
+  width:clamp(320px,38vw,520px);height:clamp(320px,38vw,520px);
+  color:var(--ink-l);opacity:.055}
 .deco-bamboo{position:absolute;right:clamp(-14px,1.4vw,30px);top:clamp(20px,4vw,54px);
   width:clamp(104px,12vw,164px);height:auto;color:var(--jade);opacity:.3}
 .deco-hills{position:absolute;left:0;bottom:0;

@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=121">
+<link rel="stylesheet" href="style.css?v=122">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
@@ -322,27 +322,42 @@
   <section id="values" class="band-light sec-values">
     <svg class="svg-defs" aria-hidden="true" focusable="false">
       <defs>
-        <filter id="mfBrush1" x="-25%" y="-25%" width="150%" height="150%">
-          <feTurbulence type="fractalNoise" baseFrequency=".045" numOctaves="3" seed="5" result="n"/>
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+        <!-- Two-pass displacement: a low-frequency wobble bends the stroke
+             like a loaded brush, then a high-frequency pass frays the edge
+             so it reads as dry bristle rather than a clean vector circle. -->
+        <filter id="mfBrush1" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency=".017" numOctaves="4" seed="5" result="b"/>
+          <feDisplacementMap in="SourceGraphic" in2="b" scale="8" xChannelSelector="R" yChannelSelector="G" result="d"/>
+          <feTurbulence type="fractalNoise" baseFrequency=".11" numOctaves="2" seed="9" result="f"/>
+          <feDisplacementMap in="d" in2="f" scale="2.4" xChannelSelector="R" yChannelSelector="G"/>
         </filter>
-        <filter id="mfBrush2" x="-25%" y="-25%" width="150%" height="150%">
-          <feTurbulence type="fractalNoise" baseFrequency=".038" numOctaves="3" seed="17" result="n"/>
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="5" xChannelSelector="R" yChannelSelector="G"/>
+        <filter id="mfBrush2" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency=".014" numOctaves="4" seed="21" result="b"/>
+          <feDisplacementMap in="SourceGraphic" in2="b" scale="9" xChannelSelector="R" yChannelSelector="G" result="d"/>
+          <feTurbulence type="fractalNoise" baseFrequency=".13" numOctaves="2" seed="4" result="f"/>
+          <feDisplacementMap in="d" in2="f" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
         </filter>
-        <filter id="mfBrush3" x="-25%" y="-25%" width="150%" height="150%">
-          <feTurbulence type="fractalNoise" baseFrequency=".052" numOctaves="3" seed="31" result="n"/>
-          <feDisplacementMap in="SourceGraphic" in2="n" scale="4.5" xChannelSelector="R" yChannelSelector="G"/>
+        <filter id="mfBrush3" x="-30%" y="-30%" width="160%" height="160%">
+          <feTurbulence type="fractalNoise" baseFrequency=".02" numOctaves="4" seed="37" result="b"/>
+          <feDisplacementMap in="SourceGraphic" in2="b" scale="7.5" xChannelSelector="R" yChannelSelector="G" result="d"/>
+          <feTurbulence type="fractalNoise" baseFrequency=".1" numOctaves="2" seed="14" result="f"/>
+          <feDisplacementMap in="d" in2="f" scale="2.2" xChannelSelector="R" yChannelSelector="G"/>
         </filter>
       </defs>
     </svg>
 
     <div class="values-deco" aria-hidden="true">
       <span class="deco-wave"></span>
-      <svg class="deco-enso" viewBox="0 0 200 200">
-        <circle cx="100" cy="100" r="80" fill="none" stroke="currentColor" stroke-width="9"
-                stroke-linecap="round" stroke-dasharray="474 34" transform="rotate(-28 100 100)"
-                filter="url(#mfBrush2)"/>
+      <!-- Taiji watermark, brush-drawn: the dark lobe carries its light eye
+           as an even-odd hole so it stays a real hole at any opacity. -->
+      <svg class="deco-taiji" viewBox="0 0 200 200">
+        <g filter="url(#mfBrush2)">
+          <path fill="currentColor" fill-rule="evenodd"
+                d="M100 12A88 88 0 0 1 100 188A44 44 0 0 1 100 100A44 44 0 0 0 100 12Z
+                   M100 131a13 13 0 1 0 0 26a13 13 0 1 0 0-26Z"/>
+          <circle cx="100" cy="56" r="13" fill="currentColor"/>
+          <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="4.5"/>
+        </g>
       </svg>
       <svg class="deco-bamboo" viewBox="0 0 130 210">
         <g fill="none" stroke="currentColor" stroke-linecap="round">
@@ -384,12 +399,17 @@
       <div class="values">
         <div class="value reveal">
           <span class="value-ring">
+            <!-- two overlapping arcs at slightly different radii give the
+                 thick/thin taper of a real brush turn -->
             <svg class="ring-brush" viewBox="0 0 120 120">
-              <circle cx="60" cy="60" r="51" fill="none" stroke="currentColor" stroke-width="4.4"
-                      stroke-linecap="round" stroke-dasharray="300 21" transform="rotate(-42 60 60)"
-                      filter="url(#mfBrush1)"/>
+              <g filter="url(#mfBrush1)">
+                <circle cx="60" cy="60" r="51" fill="none" stroke="currentColor" stroke-width="6.5"
+                        stroke-linecap="round" stroke-dasharray="296 25" transform="rotate(-42 60 60)"/>
+                <circle cx="60" cy="60" r="52.4" fill="none" stroke="currentColor" stroke-width="3"
+                        stroke-linecap="round" stroke-dasharray="150 171" transform="rotate(96 60 60)"/>
+              </g>
             </svg>
-            <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="6.4" r="2.9"/><circle cx="4.6" cy="10.2" r="2.5"/><circle cx="19.4" cy="10.2" r="2.5"/><path d="M6.9 20.4a5.1 5.1 0 0 1 10.2 0"/><path d="M1 20.4a4.3 4.3 0 0 1 3.9-4.3"/><path d="M23 20.4a4.3 4.3 0 0 0-3.9-4.3"/></svg>
           </span>
           <span class="value-tick" aria-hidden="true"></span>
           <h3>Community</h3>
@@ -399,11 +419,16 @@
         <div class="value value-mid reveal d1">
           <span class="value-ring">
             <svg class="ring-brush" viewBox="0 0 120 120">
-              <circle cx="60" cy="60" r="51" fill="none" stroke="currentColor" stroke-width="5"
-                      stroke-linecap="round" stroke-dasharray="308 14" transform="rotate(128 60 60)"
-                      filter="url(#mfBrush3)"/>
+              <g filter="url(#mfBrush3)">
+                <circle cx="60" cy="60" r="51" fill="none" stroke="currentColor" stroke-width="7"
+                        stroke-linecap="round" stroke-dasharray="302 19" transform="rotate(128 60 60)"/>
+                <circle cx="60" cy="60" r="52.6" fill="none" stroke="currentColor" stroke-width="3.4"
+                        stroke-linecap="round" stroke-dasharray="132 199" transform="rotate(-30 60 60)"/>
+              </g>
             </svg>
-            <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.35" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2.2M8.5 4.2h7"/><path d="M7.2 6.4c0 6 .9 7.8.9 7.8h7.8s.9-1.8.9-7.8"/><path d="M9.3 10h5.4M9.3 13.6h5.4"/><path d="M10.4 18h3.2M12 18v3"/></svg>
+            <!-- A paifang -- the Chinatown-International District gate a few
+                 blocks from the kwoon -- not the reference's Japanese torii. -->
+            <svg class="value-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.2v1.6"/><path d="M1.8 8.2q4.4-4 10.2-4t10.2 4"/><path d="M1.8 8.2q1.6.7 3.2.6M22.2 8.2q-1.6.7-3.2.6"/><path d="M5 12h14"/><path d="M7.4 8.8V21M16.6 8.8V21"/><path d="M4.6 21h4.2M15.2 21h4.2"/></svg>
           </span>
           <span class="value-tick" aria-hidden="true"></span>
           <h3>Culture</h3>
@@ -413,9 +438,12 @@
         <div class="value reveal d2">
           <span class="value-ring">
             <svg class="ring-brush" viewBox="0 0 120 120">
-              <circle cx="60" cy="60" r="51" fill="none" stroke="currentColor" stroke-width="4.4"
-                      stroke-linecap="round" stroke-dasharray="296 26" transform="rotate(64 60 60)"
-                      filter="url(#mfBrush2)"/>
+              <g filter="url(#mfBrush2)">
+                <circle cx="60" cy="60" r="51" fill="none" stroke="currentColor" stroke-width="6.5"
+                        stroke-linecap="round" stroke-dasharray="292 29" transform="rotate(64 60 60)"/>
+                <circle cx="60" cy="60" r="52.2" fill="none" stroke="currentColor" stroke-width="2.8"
+                        stroke-linecap="round" stroke-dasharray="140 181" transform="rotate(-140 60 60)"/>
+              </g>
             </svg>
             <!-- 勇 (courage) set inside the shield, the way a kwoon banner
                  carries a single character. -->
