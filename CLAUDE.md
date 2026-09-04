@@ -111,11 +111,15 @@ from the `.com`, every Lion Dance link points at **`makfailiondance.com`**.
 `TODO` comments sit beside every such link so the repoint stays one
 search-and-replace.
 
-Domain status (Aug 2026): `makfai.org`, `makfaikungfu.org`, and
-`makfailiondance.org` all return **401** — registered, resolving, behind
-pre-launch auth. Only `makfailiondance.com` is publicly reachable. Cross-site
-links already point at the correct final destinations; two of them hit a wall
-today.
+Domain status (Sep 2026): **`makfai.org` now returns 200** — the portal is
+deployed and publicly reachable, sitting behind a *client-side* password gate
+(`makfai123`, hard-coded in `index.html`/`donate.html`). That gate is a speed
+bump, not security: the full page ships in the HTML regardless, so crawlers can
+read it and View Source reveals the password. `robots.txt` still says
+`Allow: /`. If the site is meant to stay private until launch, that needs
+Netlify-level password protection restored — unresolved, worth confirming.
+`makfaikungfu.org` and `makfailiondance.org` still return **401**. Only
+`makfailiondance.com` is otherwise publicly reachable.
 
 ### Rule 2 — the portal is general, the school sites are specific
 
@@ -166,7 +170,19 @@ Tokens (defined in each variant's `style.css`):
 - Paper bands (`.band-light`): `--paper #FAF6EF`, `--ink-l #221A15`,
   daylight accents `--red-l #C8102E` (5.0:1) and `--bronze #8A5E0C` (4.9:1).
   Neon values fail contrast on paper — never carry them over.
-- Type: **Space Grotesk** throughout (Google Fonts, the one allowed external).
+- Type (Google Fonts, the one allowed external): **Inter** carries the site —
+  headings included; **Fraunces** is the serif, now only for numerals and the
+  odd display figure; **Poppins** is the hero's donor line. Space Grotesk was
+  the original hybrid face and is **gone** — don't reintroduce it.
+- Headings: one system, `.disp` — Inter 700, uppercase, tight tracking, with a
+  short `.disp-rule` bar underneath. `.disp-xl` for hero-scale. Every section
+  heading uses it; the serif headline treatment is retired.
+- **One green, one gold, split by ground.** `--jade #1E5A44` on paper,
+  `--gold #F2B441` on dark — that's the whole rule, and the section rules,
+  eyebrows and accents all follow it. No single hex works on both: the bright
+  green is 2.5:1 on paper and jade is 2.5:1 on the dark ground. The bright
+  green lives on as `--jade-bright #39B44A` for dark grounds only (hero LION
+  DANCE, the Donate fill).
 
 Interactions (all respect `prefers-reduced-motion`): scroll reveals via
 IntersectionObserver, glass nav with scrollspy (paper glass + ink text once
@@ -196,7 +212,7 @@ folder to the live domain. It has been deleted.
 
 | Folder | Role | State |
 |---|---|---|
-| `portal-hybrid/` | **makfai.org portal — the live deploy directory** | **Current build, and what Netlify publishes to makfai.org.** Self-contained deploy: also holds `_redirects`, `netlify.toml`, `robots.txt`, `sitemap.xml`. What you preview on :8115 is byte-for-byte what ships. Hero with both-school CTAs → About the association → Our Schools (two equal cards) → Achievements (honors grid + Golden 50 featured, films open in lightbox) → quotes → contact → footer family row. The kung fu card uses the 麥館 ink calligraphy (`assets/mak-kwoon.jpg`) because no kung fu photo exists yet — swap when Nathan supplies one. |
+| `portal-hybrid/` | **makfai.org portal — the live deploy directory** | **Current build, and what Netlify publishes to makfai.org.** Self-contained deploy: also holds `_redirects`, `netlify.toml`, `robots.txt`, `sitemap.xml`. What you preview on :8115 is byte-for-byte what ships. **Two pages**: `index.html` and `donate.html`, sharing one `style.css`. Current section order on the portal: split-screen hero (LION DANCE / KUNG FU, watermark hanzi, Support us) → Who we are → One roof, two traditions → Our values → Keeping tradition in motion → **Awards & honors** (the dark "trophy case") → Gallery & film → Bookings → Contact → footer. The 麥館 ink calligraphy is now an alpha-transparent PNG (`assets/mak-kwoon.png`, not the .jpg) — see the blend-mode gotcha below. |
 | `liondance-com-hybrid/` | Template for the **future lion dance site** | Nathan: how this looks "is how the lion dance page should be." Full one-pager with all 8 YouTube films. Don't touch until the lion dance site is up next. |
 | `liondance-com-modern/` | All-dark first pass of the .com redesign | Superseded exploration; kept for comparison. |
 | `portal-makfai-org/` | Superseded placeholder for makfai.org | The old 4.9 KB landing page. Kept as the reference implementation for cross-site link rules; **no longer deployed** — `portal-hybrid/` replaced it. |
@@ -221,6 +237,15 @@ YouTube embeds the lightbox opens.
   Keep that pattern when adding nav rules.
 - **`calligraphy.png` is white artwork on transparency** — invisible on light
   grounds. The light theme flattens it with `filter: brightness(0)`.
+- **Never use `mix-blend-mode: multiply` on anything inside a `.reveal`.** An
+  ancestor's animated opacity isolates blend compositing per spec, so the
+  multiply blends against transparent mid-transition and flashes white. That's
+  why `mak-kwoon.png` exists as a real alpha cutout.
+- **Headless Chrome silently clamps `--window-size` below ~500px to 500, then
+  *crops* the screenshot to the size you asked for.** Every sub-500px "mobile"
+  shot is a lie, and it manufactures phantom "text is cut off" bugs. Use CDP
+  `Emulation.setDeviceMetricsOverride` for narrow viewports instead, and
+  `Page.captureScreenshot`'s `clip` in *document* coordinates (add `scrollY`).
 - **`logo.png` is mostly dark olive and gold** — sits fine on both grounds.
 - **Do not let a hero pseudo-element bleed past its box.** A lantern string
   written with `left:-6%; right:-6%` once pushed the document 316px wider than
@@ -232,8 +257,16 @@ YouTube embeds the lightbox opens.
 
 ### Open
 
-- Portal: awaiting Nathan's review; needs a real kung fu photo for the school
-  card. When it ships it replaces the placeholder in `portal-makfai-org/`.
+- Portal: **shipped and live on makfai.org.** Still open on it —
+  (a) `donate.html` has **no payment processor**; the Give button opens a
+  mailto pledge and deliberately collects no card details. Swap the click
+  handler for a hosted checkout (Stripe Payment Link / Givebutter / PayPal
+  Giving Fund) and rewrite `.give-fine` to describe the real flow.
+  (b) The association's **EIN** is missing from the giving page — left blank on
+  purpose rather than filled with a placeholder.
+  (c) **Privacy Policy** is an `href="#"` placeholder on both pages.
+  (d) `hello@makfai.org` must be a live, monitored inbox — both the booking
+  form and every giving path land there.
 - Lion dance site: build next from `liondance-com-hybrid/`, adding the
   performance reels (WAVE, King of the Streets, Showtime, Team Wind) that were
   deliberately left off the portal.

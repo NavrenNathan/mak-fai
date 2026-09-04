@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Donate — Mak Fai Kung Fu Dragon &amp; Lion Dance Assn.</title>
+<meta name="description" content="Support Mak Fai Kung Fu Dragon & Lion Dance Association, a Seattle 501(c)(3) nonprofit. Your gift funds youth scholarships, equipment, and free community performances in the Chinatown-International District.">
+<link rel="canonical" href="https://makfai.org/donate.html">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://makfai.org/donate.html">
+<meta property="og:title" content="Donate — Mak Fai Kung Fu Dragon & Lion Dance Association">
+<meta property="og:description" content="Fifty years of lion dance and kung fu in Seattle's Chinatown-International District, kept going by the people who show up for it.">
+<meta property="og:image" content="https://makfai.org/assets/lion-dance-hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="assets/mk-logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
+<!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
+     copy (same cache-buster convention used on the other Navren sites). -->
+<link rel="stylesheet" href="style.css?v=131">
+<noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
+</head>
+<body>
+
+<!-- Password gate: soft client-side lock for pre-launch preview access.
+     Not real security — the password lives in this file's source, so anyone
+     using View Source can read it. It only keeps casual visitors out while
+     the site isn't ready to announce; treat it the same as the Netlify
+     dashboard password protection it's meant to sit alongside.
+     TODO: remove this block (and the matching CSS in style.css) once
+     makfai.org is ready to launch publicly. -->
+<div id="pw-gate" class="pw-gate">
+  <form id="pw-gate-form" class="pw-gate-card" autocomplete="off">
+    <img class="pw-gate-logo" src="assets/mk-logo.png" alt="Mak Fai lion head crest">
+    <img class="pw-gate-calli" src="assets/calligraphy.png" alt="Mak Fai in Chinese calligraphy">
+    <p class="eyebrow">Mak Fai · Preview</p>
+    <p class="pw-gate-title">Enter password to continue</p>
+    <div class="pw-gate-field">
+      <input id="pw-gate-input" class="pw-gate-input" type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
+      <button type="button" id="pw-gate-toggle" class="pw-gate-toggle" aria-label="Show password" aria-pressed="false">
+        <svg id="pw-gate-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+    </div>
+    <button type="submit" class="btn btn-red pw-gate-btn">Enter</button>
+    <p id="pw-gate-error" class="pw-gate-error" hidden>Incorrect password — try again.</p>
+  </form>
+</div>
+<script>
+(function(){
+  var KEY = 'makfaiPortalUnlocked', PASSWORD = 'makfai123';
+  var gate = document.getElementById('pw-gate');
+  var card = document.getElementById('pw-gate-form');
+  var unlocked = false;
+  try { unlocked = sessionStorage.getItem(KEY) === '1'; } catch (e) {}
+  if (unlocked) {
+    gate.style.display = 'none';
+    return;
+  }
+  document.documentElement.style.overflow = 'hidden';
+
+  // Lock the intro animation off once it has played, so a later wrong-password
+  // shake doesn't replay the whole card fade/scale-in (see the matching
+  // .pw-gate-card.intro-done rule in style.css).
+  card.addEventListener('animationend', function (ev) {
+    if (ev.animationName === 'pw-gate-in') card.classList.add('intro-done');
+  });
+
+  var input = document.getElementById('pw-gate-input');
+  var toggle = document.getElementById('pw-gate-toggle');
+  var eye = document.getElementById('pw-gate-eye');
+  var EYE = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/>';
+  var EYE_OFF = '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a20.3 20.3 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a20.28 20.28 0 0 1-3.22 4.44M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/>';
+
+  toggle.addEventListener('click', function () {
+    var showing = input.type === 'text';
+    input.type = showing ? 'password' : 'text';
+    eye.innerHTML = showing ? EYE : EYE_OFF;
+    toggle.setAttribute('aria-pressed', String(!showing));
+    toggle.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
+    input.focus();
+  });
+
+  document.getElementById('pw-gate-form').addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (input.value === PASSWORD) {
+      try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
+      document.documentElement.style.overflow = '';
+      gate.classList.add('pw-gate-hide');
+    } else {
+      document.getElementById('pw-gate-error').hidden = false;
+      gate.classList.remove('shake');
+      void gate.offsetWidth;
+      gate.classList.add('shake');
+      input.value = '';
+      input.focus();
+    }
+  });
+})();
+</script>
+
+<a class="skip" href="#give">Skip to content</a>
+
+<!-- TODO: repoint every makfailiondance.com link to https://makfailiondance.org
+     once the domain is live and the 301 from the .com is in place -->
+<header>
+  <nav class="nav" id="nav" aria-label="Main">
+    <div class="nav-in">
+      <a class="brand" href="index.html">
+        <img src="assets/mk-logo.png" alt="" width="44" height="44">
+        <span class="brand-t"><b>Mak Fai</b>
+          <img class="brand-calli" src="assets/calligraphy.png" alt="麥翹輝龍獅團" width="180" height="44">
+        </span>
+      </a>
+      <!-- Current page: still shown so the header is identical everywhere,
+           but it scrolls to the form rather than reloading. -->
+      <a class="nav-donate" href="#give" aria-current="page">Donate</a>
+      <button class="burger" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="navlinks">
+        <span></span><span></span>
+      </button>
+      <!-- Nav links (About / Lion Dance / Kung Fu / Gallery / Community /
+           Book us) removed at Vincent's request -- brand + social icons
+           only for now. The sections themselves are untouched and still
+           reachable by scrolling; only the header's shortcuts are gone. -->
+      <div class="nav-links" id="navlinks">
+        <span class="nav-social">
+          <!-- .ico-ring is a decorative circle that draws itself in on
+               hover/focus (stroke-dashoffset animating to 0) -- the icon
+               itself carries no circle or fill by default. -->
+          <a href="https://www.instagram.com/makfaikungfu/" target="_blank" rel="noopener" aria-label="Mak Fai on Instagram">
+            <span class="ico-ring" aria-hidden="true"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/></svg></span>
+            <svg class="ico-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://www.facebook.com/makfaikungfuliondance" target="_blank" rel="noopener" aria-label="Mak Fai on Facebook">
+            <span class="ico-ring" aria-hidden="true"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/></svg></span>
+            <svg class="ico-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+          <a href="https://www.youtube.com/@makfaikungfu" target="_blank" rel="noopener" aria-label="Mak Fai on YouTube">
+            <span class="ico-ring" aria-hidden="true"><svg viewBox="0 0 44 44"><circle cx="22" cy="22" r="19"/></svg></span>
+            <svg class="ico-glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round" stroke-linejoin="round"><path d="M22.5 6.4a3 3 0 0 0-2.1-2.1C18.6 3.8 12 3.8 12 3.8s-6.6 0-8.4.5A3 3 0 0 0 1.5 6.4 31 31 0 0 0 1 12a31 31 0 0 0 .5 5.6 3 3 0 0 0 2.1 2.1c1.8.5 8.4.5 8.4.5s6.6 0 8.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23 12a31 31 0 0 0-.5-5.6z"/><path d="m9.8 15.1 5.4-3.1-5.4-3.1z" fill="currentColor" stroke="none"/></svg></a>
+        </span>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main id="donate-top">
+
+  <!-- ============ GIVING HERO ============ -->
+  <section class="dhero" aria-labelledby="dhero-h">
+    <span class="dhero-glow" aria-hidden="true"></span>
+    <div class="wrap dhero-in">
+      <p class="eyebrow reveal">Support us</p>
+      <h1 id="dhero-h" class="disp disp-xl reveal d1">Keep the lion<br>dancing</h1>
+      <span class="disp-rule reveal d1" aria-hidden="true"></span>
+      <p class="lede reveal d2">Mak Fai has taught kung fu and brought lion dance to
+        Seattle&rsquo;s Chinatown-International District since 1974 &mdash; and we have
+        never turned a student away for lack of money. Giving is what makes that
+        promise keepable.</p>
+      <div class="dstats reveal d3">
+        <span class="dstat"><b>1974</b><i>Founded</i></span>
+        <span class="dstat"><b>50+</b><i>Years of tradition</i></span>
+        <span class="dstat"><b>501(c)(3)</b><i>Tax-deductible</i></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ THE GIVE FORM ============ -->
+  <section id="give" class="band-light sec-give">
+    <div class="wrap give-grid">
+
+      <div class="give-card reveal">
+        <h2 class="give-title">Make a gift</h2>
+
+        <div class="freq" role="group" aria-label="Giving frequency">
+          <button type="button" class="on" data-freq="once">One-time</button>
+          <button type="button" data-freq="monthly">Monthly</button>
+        </div>
+
+        <p class="give-label" id="amt-label">Choose an amount</p>
+        <div class="amts" role="group" aria-labelledby="amt-label">
+          <button type="button" class="amt" data-amt="25"  data-impact="Covers a month of classes for one student on scholarship.">$25</button>
+          <button type="button" class="amt on" data-amt="50" data-impact="Buys a practice drum head &mdash; the part that wears out fastest.">$50</button>
+          <button type="button" class="amt" data-amt="100" data-impact="Outfits one young dancer in a full practice uniform and sash.">$100</button>
+          <button type="button" class="amt" data-amt="250" data-impact="Repairs and re-furs a lion head so it can dance another season.">$250</button>
+          <button type="button" class="amt" data-amt="500" data-impact="Underwrites a free performance at a school or senior center.">$500</button>
+          <button type="button" class="amt amt-other" data-amt="other" data-impact="Whatever you give goes to the same three places &mdash; students, gear, and the neighborhood.">Other</button>
+        </div>
+
+        <div class="amt-custom" hidden id="customwrap">
+          <label class="vis-hidden" for="customamt">Custom amount in US dollars</label>
+          <span aria-hidden="true">$</span>
+          <input id="customamt" type="number" min="1" step="1" inputmode="numeric" placeholder="Enter an amount">
+        </div>
+
+        <p class="give-impact" id="impact">Buys a practice drum head &mdash; the part that wears out fastest.</p>
+
+        <!-- ------------------------------------------------------------------
+             NOT A CHECKOUT. There is no payment processor connected to this
+             site, so this button deliberately collects no card details and
+             makes no claim to. It opens the visitor's mail app with the gift
+             they picked filled in, which is the same static-honest pattern
+             the booking form on the home page uses.
+
+             TO GO LIVE: replace the click handler at the bottom of this file
+             with the processor's hosted checkout (Stripe Payment Link,
+             Givebutter, PayPal Giving Fund) and pass the amount + frequency
+             through. Then rewrite .give-fine to describe the real flow.
+             ------------------------------------------------------------------ -->
+        <button type="button" class="btn btn-give" id="givebtn">Give $50</button>
+        <p class="give-fine">Card payments are being set up now. Until they are
+          live this sends us your pledge by email and we will reply with a
+          secure giving link &mdash; usually the same day.</p>
+      </div>
+
+      <div class="give-side">
+        <h2 class="disp reveal">Where your gift goes</h2>
+        <span class="disp-rule reveal" aria-hidden="true"></span>
+        <ul class="give-list">
+          <li class="reveal d1">
+            <span class="give-ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 6 3.5 11.5 16 17l12.5-5.5z"/><path d="M8.5 14v6.5c0 2.2 3.4 3.8 7.5 3.8s7.5-1.6 7.5-3.8V14"/><path d="M28.5 11.5v7"/>
+              </svg></span>
+            <div><b>Youth scholarships</b><p>No child is turned away. Gifts cover
+              tuition for families who cannot pay it.</p></div>
+          </li>
+          <li class="reveal d2">
+            <span class="give-ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <ellipse cx="16" cy="10.5" rx="9.5" ry="3.5"/><path d="M6.5 10.5v11c0 1.9 4.3 3.5 9.5 3.5s9.5-1.6 9.5-3.5v-11"/><path d="M6.5 16c0 1.9 4.3 3.5 9.5 3.5s9.5-1.6 9.5-3.5"/>
+              </svg></span>
+            <div><b>Lions, drums &amp; uniforms</b><p>A lion head is hand-made and
+              wears out. Drums split. Sashes fray. All of it gets replaced.</p></div>
+          </li>
+          <li class="reveal d3">
+            <span class="give-ico" aria-hidden="true">
+              <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 26V13l12-7 12 7v13"/><path d="M4 26h24"/><path d="M12.5 26v-7h7v7"/>
+              </svg></span>
+            <div><b>Free community performances</b><p>Lunar New Year, senior
+              centers, schools, street festivals &mdash; performed at no charge.</p></div>
+          </li>
+        </ul>
+
+        <div class="give-note reveal d3">
+          <p><b>Mak Fai is a 501(c)(3) nonprofit.</b> Gifts are tax-deductible to
+            the extent allowed by law, and a receipt follows every gift.</p>
+          <!-- TODO: add the association's EIN here once Nathan supplies it.
+               Deliberately left out rather than filled with a placeholder --
+               a wrong tax ID on a giving page is worse than no tax ID. -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ OTHER WAYS TO GIVE ============ -->
+  <section class="sec-ways" aria-labelledby="ways-h">
+    <span class="awards-glow" aria-hidden="true"></span>
+    <div class="wrap">
+      <p class="eyebrow reveal">Beyond a card</p>
+      <h2 id="ways-h" class="disp reveal d1">Other ways to give</h2>
+      <span class="disp-rule reveal d1" aria-hidden="true"></span>
+
+      <div class="ways">
+        <article class="way reveal">
+          <h3>Mail a check</h3>
+          <p>Made out to Mak Fai Kung Fu Dragon &amp; Lion Dance Assn.</p>
+          <p class="way-addr">606 Maynard Ave S, Ste 107<br>Seattle, WA 98104</p>
+        </article>
+        <article class="way reveal d1">
+          <h3>Employer matching</h3>
+          <p>Many Seattle employers double a gift to a registered nonprofit.
+            Ask us for the paperwork and we will fill in our side.</p>
+          <a class="way-link" href="mailto:hello@makfai.org?subject=Employer%20matching">hello@makfai.org</a>
+        </article>
+        <article class="way reveal d2">
+          <h3>Sponsor a performance</h3>
+          <p>Underwrite a Lunar New Year or festival appearance so the
+            neighborhood sees it for free.</p>
+          <a class="way-link" href="index.html#book">Talk to us about it</a>
+        </article>
+        <article class="way reveal d3">
+          <h3>Give time or goods</h3>
+          <p>Rehearsal space, transport, sewing, photography, a hand at
+            festivals &mdash; all of it counts, none of it costs you money.</p>
+          <a class="way-link" href="mailto:hello@makfai.org?subject=Volunteering">Volunteer with us</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ QUESTIONS ============ -->
+  <section class="band-light sec-dask">
+    <div class="wrap dask">
+      <div>
+        <h2 class="disp reveal">Questions about giving?</h2>
+        <span class="disp-rule reveal" aria-hidden="true"></span>
+        <p class="lede reveal d1">Talk to a person &mdash; not a form. We will tell you
+          exactly where a gift lands.</p>
+      </div>
+      <div class="dask-links reveal d2">
+        <a href="mailto:hello@makfai.org">hello@makfai.org</a>
+        <a href="tel:+12064378131">(206) 437-8131</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap f-top">
+    <div class="f-brand">
+      <img class="f-logo" src="assets/mk-logo.png" alt="" width="58" height="58" loading="lazy">
+      <p class="f-name"><b>Mak Fai</b>
+        <img class="f-calli" src="assets/calligraphy.png" alt="麥翹輝龍獅團" loading="lazy">
+      </p>
+    </div>
+    <a class="cta cta-light f-book" href="index.html#book">Request a performance
+      <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+  </div>
+
+  <div class="wrap f-cols">
+    <nav class="f-col" aria-label="Explore">
+      <p class="f-h">Explore</p>
+      <a href="index.html#about">About</a>
+      <a href="index.html#gallery">Gallery</a>
+      <a href="index.html#community">Community</a>
+      <a href="index.html#book">Bookings</a>
+      <a href="donate.html">Donate</a>
+      <a href="index.html#contact">Contact</a>
+    </nav>
+    <!-- Cross-site links stay absolute (three separate sites).
+         TODO: repoint lion dance to the .org once live + 301. -->
+    <nav class="f-col" aria-label="The Mak Fai family">
+      <p class="f-h">The Mak Fai family</p>
+      <a href="index.html">Main Portal</a>
+      <a href="https://www.makfailiondance.com" target="_blank" rel="noopener">Lion Dance Portal <sup>↗</sup></a>
+      <a href="https://makfaikungfu.org" target="_blank" rel="noopener">Kung Fu Portal <sup>↗</sup></a>
+    </nav>
+    <nav class="f-col" aria-label="Connect">
+      <p class="f-h">Connect</p>
+      <a href="https://www.instagram.com/makfaikungfu/" target="_blank" rel="noopener">Instagram <sup>↗</sup></a>
+      <a href="https://www.facebook.com/makfaikungfuliondance" target="_blank" rel="noopener">Facebook <sup>↗</sup></a>
+      <a href="https://www.youtube.com/@makfaikungfu" target="_blank" rel="noopener">YouTube <sup>↗</sup></a>
+    </nav>
+    <div class="f-col">
+      <p class="f-h">Visit</p>
+      <p class="f-addr">606 Maynard Ave S, Ste 107<br>Seattle, WA 98104</p>
+      <a href="tel:+12064378131">(206) 437-8131</a>
+      <a href="mailto:hello@makfai.org">hello@makfai.org</a>
+    </div>
+  </div>
+
+  <div class="wrap f-bottom">
+    <p>© 2022 Mak Fai Kung Fu Dragon &amp; Lion Dance Assn.
+      <!-- TODO: no privacy policy page exists yet -- this is a placeholder
+           link until real policy content is written. -->
+      <a class="f-legal" href="#">Privacy Policy</a></p>
+    <a class="top" href="#donate-top">Back to top
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></a>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* nav: transparent at the top, paper once scrolled -- same as the home page */
+  var nav = document.getElementById('nav');
+  var onScroll = function(){ nav.classList.toggle('scrolled', scrollY > 24); };
+  addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  /* mobile menu */
+  var burger = document.getElementById('burger');
+  burger.addEventListener('click', function(){
+    var open = nav.classList.toggle('open');
+    burger.setAttribute('aria-expanded', open);
+    document.body.classList.toggle('menu-open', open);
+  });
+  document.getElementById('navlinks').addEventListener('click', function(e){
+    if (e.target.closest('a')) {
+      nav.classList.remove('open');
+      burger.setAttribute('aria-expanded','false');
+      document.body.classList.remove('menu-open');
+    }
+  });
+
+  /* reveal on scroll */
+  var toReveal = [].slice.call(document.querySelectorAll('.reveal'));
+  if (reduced || !('IntersectionObserver' in window)) {
+    toReveal.forEach(function(el){ el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    toReveal.forEach(function(el){ io.observe(el); });
+  }
+
+  /* ---- gift picker ------------------------------------------------------ */
+  var freq    = 'once';
+  var amount  = '50';
+  var custom  = document.getElementById('customamt');
+  var wrap    = document.getElementById('customwrap');
+  var impact  = document.getElementById('impact');
+  var btn     = document.getElementById('givebtn');
+
+  function currentAmount(){
+    if (amount !== 'other') return amount;
+    var v = parseInt(custom.value, 10);
+    return (v > 0) ? String(v) : '';
+  }
+
+  function paint(){
+    var a = currentAmount();
+    btn.textContent = a
+      ? 'Give $' + a + (freq === 'monthly' ? ' a month' : '')
+      : 'Enter an amount';
+    btn.disabled = !a;
+  }
+
+  [].slice.call(document.querySelectorAll('.freq button')).forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.freq button').forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      freq = b.dataset.freq;
+      paint();
+    });
+  });
+
+  [].slice.call(document.querySelectorAll('.amt')).forEach(function(b){
+    b.addEventListener('click', function(){
+      document.querySelectorAll('.amt').forEach(function(x){ x.classList.remove('on'); });
+      b.classList.add('on');
+      amount = b.dataset.amt;
+      wrap.hidden = (amount !== 'other');
+      if (amount === 'other') custom.focus();
+      impact.innerHTML = b.dataset.impact;
+      paint();
+    });
+  });
+
+  custom.addEventListener('input', paint);
+
+  /* Opens the visitor's mail app -- see the long comment beside the button.
+     Swap this whole handler for the real hosted checkout when one exists. */
+  btn.addEventListener('click', function(){
+    var a = currentAmount();
+    if (!a) return;
+    var kind = (freq === 'monthly') ? 'a monthly gift' : 'a one-time gift';
+    var subject = 'Pledge: $' + a + ' ' + (freq === 'monthly' ? 'monthly' : 'one-time');
+    var body = "I'd like to make " + kind + ' of $' + a + " to Mak Fai.\n\n" +
+               'Name:\nPhone (optional):\n\n' +
+               'Please send me a secure link to complete it.';
+    location.href = 'mailto:hello@makfai.org?subject=' +
+      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  });
+
+  paint();
+})();
+</script>
+
+</body>
+</html>
