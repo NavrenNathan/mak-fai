@@ -352,10 +352,6 @@ header{position:relative;z-index:60}
   text-shadow:0 0 .07em rgba(255,255,255,.14)}
 .hero-cjk-lion{left:clamp(20px,4vw,64px);text-align:left}
 .hero-cjk-kungfu{right:clamp(20px,4vw,64px);text-align:right}
-/* Deliberately NOT the uppercase/tracked-label voice used everywhere else
-   in the hero -- this one reads as an actual small paragraph (sentence
-   case, regular weight, its own two lines) so it sits apart from .hero-tag
-   and .hero-motto instead of repeating either. */
 /* This is the donor-facing line -- it needs to actually stick out, not read
    as fine print. Bold geometric-sans, uppercase, white -- the reference was
    the TED "ideas worth spreading" wordmark; Poppins is the closest match
@@ -374,7 +370,7 @@ header{position:relative;z-index:60}
    both the dark lion stage and the kung fu half. Shorter/squarer than the
    shared .btn default, lighter weight, and softly rounded rather than the
    site-wide near-sharp 2px corner. */
-.hero-support{position:absolute;z-index:2;left:50%;bottom:90px;
+.hero-support{position:absolute;z-index:2;left:50%;bottom:62px;
   transform:translateX(-50%);
   padding:14px 22px;border-radius:8px;font-weight:400}
 /* Same lift-and-glow as .nav-donate, tinted to this button's own ivory
@@ -386,23 +382,17 @@ header{position:relative;z-index:60}
 .btn-paper.hero-support:active{transform:translate(-50%,0) scale(.98)}
 /* Demoted to a quiet caption under the button now that "Training the next
    generation of leaders" carries the headline on its own. */
-.hero-nonprofit{position:absolute;z-index:2;left:50%;bottom:58px;
+.hero-nonprofit{position:absolute;z-index:2;left:50%;bottom:30px;
   transform:translateX(-50%);margin:0;white-space:nowrap;
   font-family:'Poppins',var(--sans);font-weight:600;
-  font-size:clamp(9px,.88vw,10.5px);letter-spacing:.04em;
+  font-size:clamp(11px,1.06vw,12.5px);letter-spacing:.04em;
   color:rgba(246,239,232,.75)}
-/* Below that. Carries the old .hero-tag treatment (uppercase, tracked
-   sans) now that that line's been dropped -- same design, this text instead. */
-.hero-motto{position:absolute;z-index:2;left:50%;bottom:32px;
-  transform:translateX(-50%);margin:0;white-space:nowrap;
-  color:rgba(246,239,232,.78);font-size:clamp(10.5px,.98vw,11.5px);
-  font-weight:600;letter-spacing:.28em;text-transform:uppercase}
 /* staggered entrance */
 .hero [data-stagger]{opacity:0;animation:rise .9s var(--ease) forwards}
 .hero .hero-word[data-stagger]{animation-name:rise-word}
 @keyframes rise{from{opacity:0;transform:translate(-50%,-44%)}
   to{opacity:1;transform:translate(-50%,-50%)}}
-.hero .hero-status,.hero .hero-support,.hero .hero-nonprofit,.hero .hero-motto{animation-name:rise-tag}
+.hero .hero-status,.hero .hero-support,.hero .hero-nonprofit{animation-name:rise-tag}
 @keyframes rise-tag{from{opacity:0;transform:translate(-50%,10px)}
   to{opacity:1;transform:translate(-50%,0)}}
 @keyframes rise-word{from{opacity:0}to{opacity:1}}
@@ -585,7 +575,6 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .values-in{position:relative;z-index:1;text-align:center}
 .sec-values .eyebrow{margin-bottom:14px}
 .sec-values .disp{margin-inline:auto}
-.disp-dot{color:var(--jade)}
 .v-divide{display:flex;align-items:center;justify-content:center;
   gap:18px;margin:26px auto clamp(46px,5.5vw,72px);max-width:340px}
 .v-divide-line{flex:1;height:1px;
@@ -909,9 +898,8 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .hero-cjk-lion{top:24%}
   .hero-cjk-kungfu{top:74%}
   .hero-status{bottom:108px;font-size:14px;width:min(94vw,360px);line-height:1.45}
-  .hero-support{bottom:46px;padding:8px 14px;font-size:9px}
-  .hero-nonprofit{bottom:30px;font-size:8px}
-  .hero-motto{bottom:14px;font-size:6.8px;letter-spacing:.19em}
+  .hero-support{bottom:42px;padding:8px 14px;font-size:9px}
+  .hero-nonprofit{bottom:14px;font-size:10px}
   @keyframes rise{from{opacity:0;transform:translate(-50%,-46%)}
     to{opacity:1;transform:translate(-50%,-50%)}}
 
