@@ -160,7 +160,7 @@ header{position:relative;z-index:60}
    social icons) and just left of the burger on mobile. Positioned + z-56
    for the same reason .brand and .burger are -- the mobile menu goes
    position:fixed at z-55 and would otherwise paint straight over it. */
-.nav-donate{order:2;position:relative;z-index:56;
+.nav-donate{order:2;position:relative;z-index:56;transform:translateY(-5px);
   display:inline-flex;align-items:center;flex-shrink:0;
   padding:11px 20px;border-radius:8px;
   background:#39B44A;color:var(--ink-l);
@@ -169,8 +169,9 @@ header{position:relative;z-index:60}
   transition:background .25s var(--ease),transform .25s var(--ease),
              box-shadow .25s var(--ease)}
 .nav-donate:hover,.nav-donate:focus-visible{background:#45c957;
-  transform:translateY(-2px);box-shadow:0 10px 24px rgba(57,180,74,.3)}
-.nav-donate:active{transform:translateY(0) scale(.98)}
+  transform:translateY(-7px);
+  box-shadow:0 8px 26px rgba(57,180,74,.55),0 0 20px rgba(57,180,74,.38)}
+.nav-donate:active{transform:translateY(-5px) scale(.98)}
 .brand{order:0}
 .nav-links{order:1}
 .burger{order:3}
@@ -364,9 +365,13 @@ header{position:relative;z-index:60}
 .hero-support{position:absolute;z-index:2;left:50%;bottom:90px;
   transform:translateX(-50%);
   padding:14px 22px;border-radius:8px;font-weight:400}
-/* .btn-paper:hover adds a drop shadow site-wide -- kill it just here, the
-   lift (translateY) still happens via .hero-support's own transform below. */
-.btn-paper.hero-support:hover{box-shadow:none}
+/* Same lift-and-glow as .nav-donate, tinted to this button's own ivory
+   rather than the Donate green. The transform has to restate the
+   translateX(-50%) that centres it, or hovering would knock it off-centre. */
+.btn-paper.hero-support:hover,.btn-paper.hero-support:focus-visible{
+  transform:translate(-50%,-3px);
+  box-shadow:0 8px 28px rgba(250,246,239,.5),0 0 20px rgba(250,246,239,.32)}
+.btn-paper.hero-support:active{transform:translate(-50%,0) scale(.98)}
 /* Demoted to a quiet caption under the button now that "Training the next
    generation of leaders" carries the headline on its own. */
 .hero-nonprofit{position:absolute;z-index:2;left:50%;bottom:58px;
