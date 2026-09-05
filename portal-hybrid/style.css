@@ -188,7 +188,7 @@ header{position:relative;z-index:60}
              box-shadow .25s var(--ease)}
 .nav-donate:hover,.nav-donate:focus-visible{background:#45c957;
   transform:translateY(-7px);
-  box-shadow:0 8px 26px rgba(57,180,74,.44),0 0 20px rgba(57,180,74,.3)}
+  box-shadow:0 8px 22px rgba(57,180,74,.35),0 0 16px rgba(57,180,74,.24)}
 .nav-donate:active{transform:translateY(-5px) scale(.98)}
 .brand{order:0}
 .nav-links{order:1}
@@ -393,7 +393,7 @@ header{position:relative;z-index:60}
    translateX(-50%) that centres it, or hovering would knock it off-centre. */
 .btn-paper.hero-support:hover,.btn-paper.hero-support:focus-visible{
   transform:translate(-50%,-3px);
-  box-shadow:0 8px 28px rgba(250,246,239,.4),0 0 20px rgba(250,246,239,.26)}
+  box-shadow:0 8px 24px rgba(250,246,239,.32),0 0 16px rgba(250,246,239,.21)}
 .btn-paper.hero-support:active{transform:translate(-50%,0) scale(.98)}
 /* Demoted to a quiet caption under the button now that "Training the next
    generation of leaders" carries the headline on its own. */
@@ -862,7 +862,9 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
     rgba(242,180,65,.14),rgba(242,180,65,.05) 42%,transparent 70%)}
 .sec-awards .wrap{position:relative;z-index:1}
 .sec-awards .lede{max-width:52ch}
-.awards{display:grid;grid-template-columns:repeat(4,1fr);
+/* 3 columns, not 4 -- a 5th card (the CanAm medal) turned a clean 4-across
+   row into a 4+1 orphan. 3 wraps 5 cards as 3-then-2, no lonely last card. */
+.awards{display:grid;grid-template-columns:repeat(3,1fr);
   gap:clamp(14px,1.5vw,20px);margin-top:clamp(38px,4.4vw,58px)}
 /* Cards are lit glass, not flat panels: a top-down white wash for the
    "display case" read, a gold hairline for the frame. */
@@ -895,6 +897,11 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   mask-image:url(assets/award-milestone.png)}
 .ico-city{-webkit-mask-image:url(assets/award-city.png);
   mask-image:url(assets/award-city.png)}
+/* Vincent's artwork sheet didn't include a medal -- this one is redrawn
+   vector, matching the ribbon-and-star silhouette he pasted in, and masked
+   the same way as the rest so it stays tied to --gold. */
+.ico-medal{-webkit-mask-image:url(assets/award-medal.png);
+  mask-image:url(assets/award-medal.png)}
 /* The "50" is a wide logotype, not a square badge -- letting it size to the
    same box makes it read small, so it gets a touch more room. */
 .ico-milestone{-webkit-mask-size:112%;mask-size:112%}
@@ -908,6 +915,27 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .award p{margin:0;font-size:14px;line-height:1.62;color:var(--muted)}
 /* the one fact each card is actually about */
 .award p b{color:var(--gold);font-weight:600}
+
+/* Results strip: two horizontal panels for the back-to-back Can-Am
+   placements. A big place number carries the fact at a glance; the italic
+   line underneath is the one bit of context that number can't say on its
+   own (which years, that it was a second team). */
+.results-strip{display:grid;grid-template-columns:1fr 1fr;
+  gap:clamp(14px,1.5vw,20px);margin-top:clamp(14px,1.5vw,20px)}
+.result-panel{display:flex;align-items:center;gap:20px;
+  padding:clamp(18px,1.8vw,24px) clamp(22px,2.2vw,28px);border-radius:10px;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.018));
+  border:1px solid rgba(242,180,65,.22);
+  transition:border-color .3s var(--ease),transform .3s var(--ease),
+             box-shadow .3s var(--ease)}
+.result-panel:hover{transform:translateY(-4px);border-color:rgba(242,180,65,.52);
+  box-shadow:0 16px 44px rgba(0,0,0,.5),0 0 26px rgba(242,180,65,.1)}
+.result-place{flex-shrink:0;font-family:var(--serif);font-weight:600;
+  font-size:clamp(30px,3.2vw,40px);line-height:1;color:var(--gold)}
+.result-copy b{display:block;font-family:var(--sans);font-weight:700;
+  font-size:clamp(14.5px,1.2vw,16px);line-height:1.32;color:#fff}
+.result-copy i{display:block;margin-top:6px;font-style:normal;
+  font-size:12.5px;line-height:1.5;color:var(--muted)}
 .honors{display:grid;grid-template-columns:repeat(4,1fr);
   gap:clamp(20px,2.6vw,40px);margin:0 0 clamp(44px,5.5vw,72px)}
 .honor{border-top:1px solid var(--line);padding-top:18px}
@@ -1125,6 +1153,9 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .values{--vgap:26px}
   .honors{grid-template-columns:1fr 1fr;gap:24px}
   .awards{grid-template-columns:1fr 1fr}
+  /* 5 cards in 2 columns orphans the last one alone on its own row --
+     spanning it full-width reads as a deliberate close, not a leftover. */
+  .award:last-child{grid-column:1/-1}
   .ways{grid-template-columns:1fr 1fr}
   .story-quotes{grid-template-columns:1fr}
 }
@@ -1212,6 +1243,8 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .value-ring{margin-bottom:18px}
   .honors{grid-template-columns:1fr;gap:20px}
   .awards{grid-template-columns:1fr;gap:16px}
+  .results-strip{grid-template-columns:1fr;gap:12px}
+  .result-panel{gap:16px}
   .ways{grid-template-columns:1fr;gap:14px}
   .members-list{grid-template-columns:1fr;gap:22px}
   .amts{grid-template-columns:1fr 1fr}
