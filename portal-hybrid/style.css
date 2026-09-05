@@ -1132,40 +1132,31 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   @keyframes rise{from{opacity:0;transform:translate(-50%,-46%)}
     to{opacity:1;transform:translate(-50%,-50%)}}
 
-  /* full-screen ivory menu — part of the brand, not an afterthought */
-  .burger{display:block}
-  /* the bar is brand + donate + burger here, so tighten both the gap and
-     the pill to keep it off the brand at 390px */
-  .nav-in{gap:12px;height:88px}
-  .nav-donate{padding:9px 13px;font-size:10px;letter-spacing:.1em}
+  /* No burger on mobile. The full-screen menu it opened held nothing but
+     the three social icons, so the panel was a whole interaction standing
+     between the visitor and something that fits in the bar. The icons now
+     sit inline in the same order as desktop -- brand, social, Donate -- and
+     the button stays in the DOM (display:none, so out of the tab order too)
+     purely so the menu script has something to bind to. */
+  .burger{display:none}
+  /* the bar is brand + social + donate here, so tighten the gap and the
+     pill to keep everything off the brand at 390px */
+  .nav-in{gap:8px;height:88px}
+  .nav-donate{padding:9px 12px;font-size:10px;letter-spacing:.08em}
   .brand{gap:9px}
   .brand img{height:52px}
   .brand-t b{font-size:17px;letter-spacing:.16em}
   .brand .brand-calli{height:16px;margin-top:4px}
-  .nav-links{
-    /* Must beat main (z-index:1) or the hero paints over the open menu --
-       this was accidentally -1, which put the whole panel behind the page. */
-    position:fixed;inset:0;z-index:55;flex-direction:column;
-    justify-content:center;align-items:flex-start;gap:0;
-    padding:96px clamp(28px,8vw,48px) 40px;
-    background:var(--paper);
-    opacity:0;visibility:hidden;transform:translateY(-14px);
-    transition:opacity .35s var(--ease),transform .35s var(--ease),
-               visibility .35s var(--ease);
-  }
-  .nav.open .nav-links{opacity:1;visibility:visible;transform:none}
-  .nav-menu{flex-direction:column;align-items:flex-start;gap:0;width:100%}
-  .nav-menu a{
-    font-family:var(--serif);font-weight:520;text-transform:none;
-    letter-spacing:0;font-size:clamp(30px,8vw,40px);line-height:1.1;
-    color:var(--ink-l);padding:12px 0;width:100%;
-    border-bottom:1px solid var(--line-l-soft)}
-  .nav-menu a::after{display:none}
-  .nav-menu a sup{font-size:.4em;vertical-align:super}
-  .nav-social{margin-top:22px;gap:8px}
-  .nav-social a{width:48px;height:48px;color:var(--ink-l)}
-  .ico-glyph{width:22px;height:22px}
-  body.menu-open{overflow:hidden}
+  /* Was position:fixed for the overlay -- now just a normal flex item. */
+  .nav-links{display:flex;align-items:center;gap:0;
+    position:static;padding:0;background:none;
+    opacity:1;visibility:visible;transform:none}
+  /* Tap targets shrink from 46px to 36px: three of them plus the brand and
+     the Donate pill will not fit a 390px bar otherwise. Still above the
+     24px minimum, and the glyphs come down with them so they don't crowd. */
+  .nav-social{gap:0;transform:translateY(-4px)}
+  .nav-social a{width:36px;height:36px}
+  .ico-glyph{width:19px;height:19px}
 
   .statline{gap:26px 40px}
   .frow{grid-template-columns:1fr}
