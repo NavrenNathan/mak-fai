@@ -51,15 +51,30 @@
   --sec:clamp(96px,11vw,150px);   /* section rhythm */
 }
 html{scroll-behavior:smooth}
+/* Horizontal lock. This used to be overflow-x:clip on body alone, which
+   needs Safari 16+; on older iOS it degrades to visible and the decorative
+   glows -- which deliberately run ~50px past each edge -- let the whole page
+   pan sideways. hidden is honoured everywhere, so it goes first as the
+   floor; clip upgrades it where supported because, unlike hidden, it clips
+   without turning the root into a scroll container. Both html and body are
+   pinned so neither can end up the sideways scroller. */
+html,body{max-width:100%;overflow-x:hidden}
+@supports (overflow:clip){html,body{overflow-x:clip}}
 body{
   margin:0;background:var(--bg);color:var(--ink);
   font-family:var(--sans);font-size:16.5px;
   line-height:1.7;-webkit-font-smoothing:antialiased;
-  overflow-x:clip;
 }
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 sup{font-size:.62em;margin-left:2px}
+/* "Opens in a new tab" mark. Was a bare U+2197; iOS gives that codepoint
+   emoji presentation by default, so it rendered as a blue-and-white emoji
+   tile in the footer instead of a hairline arrow. Drawn instead of typed,
+   so it can't be substituted by any platform's emoji font. */
+.ext{display:inline-block;width:.58em;height:.58em;margin-left:.3em;
+  vertical-align:baseline;position:relative;top:-.3em;opacity:.72}
+.ext svg{width:100%;height:100%;display:block}
 .wrap{max-width:1220px;margin:0 auto;padding:0 clamp(22px,4vw,48px)}
 a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   outline:2px solid currentColor;outline-offset:3px}
@@ -552,7 +567,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .values-deco{position:absolute;inset:0;z-index:0;pointer-events:none;
   overflow:hidden}
 /* seigaiha (wave scale) corner, drawn with stacked radial gradients */
-.deco-wave{position:absolute;top:-10px;right:-10px;
+.deco-wave{position:absolute;top:-10px;right:0;
   width:clamp(200px,26vw,380px);height:clamp(150px,18vw,260px);
   background-image:radial-gradient(circle at 50% 100%,transparent 20%,
     rgba(30,90,68,.5) 21%,rgba(30,90,68,.5) 23%,transparent 24%,
@@ -661,7 +676,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .dhero{position:relative;overflow:hidden;
   padding-top:calc(var(--sec) * .78);padding-bottom:calc(var(--sec) * .5)}
 .dhero-glow{position:absolute;left:50%;top:-28%;transform:translateX(-50%);
-  width:min(1200px,130vw);height:96%;pointer-events:none;
+  width:min(1200px,100%);height:96%;pointer-events:none;
   background:radial-gradient(ellipse at 50% 0%,
     rgba(242,180,65,.15),rgba(242,180,65,.05) 44%,transparent 72%)}
 .dhero-in{position:relative;z-index:1}
@@ -842,7 +857,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   border-top:1px solid rgba(242,180,65,.16);
   padding-top:calc(var(--sec) * .58);padding-bottom:calc(var(--sec) * .58)}
 .awards-glow{position:absolute;left:50%;top:-14%;transform:translateX(-50%);
-  width:min(1180px,124vw);height:74%;pointer-events:none;
+  width:min(1180px,100%);height:74%;pointer-events:none;
   background:radial-gradient(ellipse at 50% 0%,
     rgba(242,180,65,.14),rgba(242,180,65,.05) 42%,transparent 70%)}
 .sec-awards .wrap{position:relative;z-index:1}
@@ -963,6 +978,11 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .info-row b{display:block;font-size:11px;letter-spacing:.24em;
   text-transform:uppercase;color:var(--muted-l);font-weight:600;margin-bottom:3px}
 .info-row a:hover{color:var(--jade)}
+/* Phone and email are the two things people actually tap in this section,
+   and the bare line box left them ~20px tall -- under the 24px minimum.
+   inline-block + padding grows the target; the negative margin keeps the
+   text where it already sat so the row spacing is untouched. */
+.info-row a{display:inline-block;padding:6px 0;margin:-6px 0}
 .socials{display:flex;gap:12px;margin-top:30px}
 .socials a{width:44px;height:44px;border-radius:50%;border:1px solid var(--line-l);
   display:flex;align-items:center;justify-content:center;color:var(--muted-l);
@@ -998,7 +1018,10 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 /* Was ".f-brand img", which also caught .f-calli below it and squashed the
    wide calligraphy banner into a distorted 58x58 square. Scoped to the
    crest specifically so .f-calli's own sizing rule actually wins. */
-.f-logo{width:58px;height:58px}
+/* Height-only, like the header's .brand img. The crest is 900x763 (1.18:1);
+   the old 58x58 forced it square and squashed it ~15% horizontally -- the
+   same defect the calligraphy had, fixed there but not here. */
+.f-logo{width:auto;height:58px}
 /* Matches the header wordmark treatment (bold tracked-out uppercase sans +
    the calligraphy underneath) instead of the old serif name + text subtitle. */
 .f-name{margin:0}
@@ -1198,6 +1221,34 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .m-feature,.m-tall,.m-half,.m-wide{grid-column:1/-1}
   .g-head{align-items:flex-start;flex-direction:column}
   .f-cols{grid-template-columns:1fr 1fr}
+  /* Footer links were ~20px tall -- under the 24px minimum and easy to
+     mis-tap in a stacked column. Padding grows the target without moving
+     the text, so the footer rhythm is unchanged. */
+  /* Card height comes from the grid row, not the card. At 120px rows a
+     two-line video title pushed the caption block up into the centred play
+     button -- and the "Award-winning documentary" badge straight through it.
+     Taller single rows give the caption room to clear the button, and the
+     thumbnails read far better on a phone besides. */
+  /* These five labels wrapped 1 / 1 / 2 / 1 at 390px, which reads as a
+     mistake rather than a layout. One per line is deliberate and calm. */
+  .fields{flex-direction:column;gap:2px}
+  .mosaic{grid-auto-rows:minmax(240px,auto)}
+  .m-feature{grid-row:auto}
+  /* The caption block runs ~124px tall once it carries a badge and a
+     two-line title, so a dead-centre button cannot clear it at any sane
+     card height. Sitting it a third of the way down keeps it over open
+     image and off the text. */
+  .play{top:32%}
+  .f-col a,.f-here{padding:9px 0}
+  /* 9-9.5px uppercase is legible on a desktop monitor and squints on a
+     phone. Only the two labels added in this build move; the hero sizes
+     are Vincent's own tuning and stay put. */
+  .award-kind{font-size:10.5px}
+  .pay-badge{font-size:10px}
+  .f-addr{padding-bottom:2px}
+  .f-bottom{gap:14px}
+  .f-legal{display:inline-block;padding:8px 0}
+  .f-bottom .top{padding:8px 0}
   .f-top{flex-direction:column;align-items:flex-start}
   .book-ctas .btn{width:100%;justify-content:center}
   .story-photo{height:52vh}
