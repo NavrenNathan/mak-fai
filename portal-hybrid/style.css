@@ -862,10 +862,16 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
     rgba(242,180,65,.14),rgba(242,180,65,.05) 42%,transparent 70%)}
 .sec-awards .wrap{position:relative;z-index:1}
 .sec-awards .lede{max-width:52ch}
-/* 3 columns, not 4 -- a 5th card (the CanAm medal) turned a clean 4-across
-   row into a 4+1 orphan. 3 wraps 5 cards as 3-then-2, no lonely last card. */
-.awards{display:grid;grid-template-columns:repeat(3,1fr);
+/* 6 tracks, each card spanning 2 -- still reads as 3-across, but the extra
+   granularity lets the leftover last row (2 cards, 5 total) be explicitly
+   centered instead of left-aligning with a gap on the right. If the total
+   card count ever stops being "a multiple of 3, plus 2," the centering
+   below needs revisiting. */
+.awards{display:grid;grid-template-columns:repeat(6,1fr);
   gap:clamp(14px,1.5vw,20px);margin-top:clamp(38px,4.4vw,58px)}
+.award{grid-column:span 2}
+.award:nth-last-child(2){grid-column:2/4}
+.award:last-child{grid-column:4/6}
 /* Cards are lit glass, not flat panels: a top-down white wash for the
    "display case" read, a gold hairline for the frame. */
 .award{display:flex;flex-direction:column;position:relative;
@@ -1153,6 +1159,9 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .values{--vgap:26px}
   .honors{grid-template-columns:1fr 1fr;gap:24px}
   .awards{grid-template-columns:1fr 1fr}
+  /* Reset the desktop 6-track centering math -- with only 2 real columns
+     here, "column 2/4" would spill into an implicit 3rd track. */
+  .award,.award:nth-last-child(2){grid-column:auto}
   /* 5 cards in 2 columns orphans the last one alone on its own row --
      spanning it full-width reads as a deliberate close, not a leftover. */
   .award:last-child{grid-column:1/-1}
