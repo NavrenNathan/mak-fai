@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=133">
+<link rel="stylesheet" href="style.css?v=134">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 </head>
 <body>
@@ -151,10 +151,10 @@
       <p class="eyebrow reveal">Support us</p>
       <h1 id="dhero-h" class="disp disp-xl reveal d1">Fund the<br>next fifty</h1>
       <span class="disp-rule reveal d1" aria-hidden="true"></span>
-      <p class="lede reveal d2">One roof, two traditions &mdash; Hung Sing Choy Lay Fut
-        kung fu and lion dance, taught in Seattle&rsquo;s Chinatown-International
-        District since 1974. In fifty years we have never turned a student away
-        for lack of money. Giving is what keeps that promise keepable.</p>
+      <p class="lede reveal d2">For over fifty years, Mak Fai has served the
+        community. We have trained generations of students and inspired
+        audiences around the world. With your support, we can preserve that
+        legacy and look ahead to the next fifty years.</p>
       <div class="dstats reveal d3">
         <span class="dstat"><b>1974</b><i>Founded</i></span>
         <span class="dstat"><b>50+</b><i>Years of tradition</i></span>
@@ -177,12 +177,12 @@
 
         <p class="give-label" id="amt-label">Choose an amount</p>
         <div class="amts" role="group" aria-labelledby="amt-label">
-          <button type="button" class="amt" data-amt="25"  data-impact="Covers a month of classes for one student on scholarship.">$25</button>
-          <button type="button" class="amt on" data-amt="50" data-impact="Buys a practice drum head &mdash; the part that wears out fastest.">$50</button>
-          <button type="button" class="amt" data-amt="100" data-impact="Outfits one new student in a full practice uniform and sash.">$100</button>
+          <button type="button" class="amt" data-amt="25"  data-impact="Replaces old practice gear and equipment">$25</button>
+          <button type="button" class="amt on" data-amt="50" data-impact="Outfits one new student in a full practice uniform and sash.">$50</button>
+          <button type="button" class="amt" data-amt="100" data-impact="Repairs our drum head &mdash; the part that wears out fastest.">$100</button>
           <button type="button" class="amt" data-amt="250" data-impact="Restocks the kung fu weapons rack &mdash; staffs, broadswords, spears.">$250</button>
-          <button type="button" class="amt" data-amt="500" data-impact="Underwrites a free performance &mdash; and makes you a Scholarship Member.">$500</button>
-          <button type="button" class="amt amt-other" data-amt="other" data-impact="Whatever you give goes to the same three places &mdash; students, gear, and the neighborhood.">Other</button>
+          <button type="button" class="amt" data-amt="500" data-impact="Makes you an official Sponsorship Member (details below)">$500</button>
+          <button type="button" class="amt amt-other" data-amt="other">Other</button>
         </div>
 
         <div class="amt-custom" hidden id="customwrap">
@@ -191,7 +191,7 @@
           <input id="customamt" type="number" min="1" step="1" inputmode="numeric" placeholder="Enter an amount">
         </div>
 
-        <p class="give-impact" id="impact">Buys a practice drum head &mdash; the part that wears out fastest.</p>
+        <p class="give-impact" id="impact">Outfits one new student in a full practice uniform and sash.</p>
 
         <p class="give-label">How to send it</p>
 
@@ -236,7 +236,7 @@
 
         <p class="give-tierhint" id="tierhint" hidden>
           <span aria-hidden="true">&#9733;</span> At $500 or more you become a
-          <a href="#members">Scholarship Member</a>.</p>
+          <a href="#members">Sponsorship Member</a>.</p>
 
         <p class="give-fine">Mak Fai is a 501(c)(3) nonprofit and a receipt
           follows every gift. Prefer we send you a link instead?
@@ -260,16 +260,17 @@
               <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                 <ellipse cx="16" cy="10.5" rx="9.5" ry="3.5"/><path d="M6.5 10.5v11c0 1.9 4.3 3.5 9.5 3.5s9.5-1.6 9.5-3.5v-11"/><path d="M6.5 16c0 1.9 4.3 3.5 9.5 3.5s9.5-1.6 9.5-3.5"/>
               </svg></span>
-            <div><b>Gear that wears out</b><p>Hand-made lion heads, drum skins,
-              training weapons, uniforms and sashes &mdash; all of it gets replaced.</p></div>
+            <div><b>Gear that wears out</b><p>Old lion heads, drum skins, training
+              weapons, uniforms &mdash; all the worn-down stuff can finally get
+              replaced.</p></div>
           </li>
           <li class="reveal d3">
             <span class="give-ico" aria-hidden="true">
               <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M4 26V13l12-7 12 7v13"/><path d="M4 26h24"/><path d="M12.5 26v-7h7v7"/>
               </svg></span>
-            <div><b>Free community performances</b><p>Lunar New Year, senior
-              centers, schools, street festivals &mdash; performed at no charge.</p></div>
+            <div><b>Operational</b><p>Covering everyday costs to keep our doors open
+              and our programs running.</p></div>
           </li>
         </ul>
 
@@ -303,40 +304,45 @@
     <div class="wrap">
       <div class="members-in">
         <p class="eyebrow reveal">$500 and above</p>
-        <h2 id="members-h" class="disp reveal d1">Scholarship Members</h2>
+        <h2 id="members-h" class="disp reveal d1">Sponsorship Members</h2>
         <span class="disp-rule reveal d1" aria-hidden="true"></span>
-        <p class="lede reveal d2">Give $500 or more in a year and you fund a
-          student&rsquo;s place in the kwoon outright &mdash; and you get a say in how
-          the association runs.</p>
+        <p class="lede reveal d2">Give $500 or more in a year and you become a
+          member of the association&mdash;and get a say in how we run.</p>
 
         <ul class="members-list">
           <li class="reveal d1">
             <span class="members-num" aria-hidden="true">01</span>
-            <div><b>A vote on community decisions</b><p>Members are invited to
-              vote on programming, events, and how giving is spent &mdash; the
-              internal calls that shape the year.</p></div>
+            <div><b>Help shape Mak Fai&rsquo;s future</b><p>Sponsorship Members
+              have a voice in matters presented to the membership and, together
+              as a class, elect a representative to Mak Fai&rsquo;s Board of
+              Directors.</p></div>
           </li>
           <li class="reveal d2">
             <span class="members-num" aria-hidden="true">02</span>
-            <div><b>The annual members&rsquo; meeting</b><p>Where those decisions
-              get made, with the association&rsquo;s books open in the room.</p></div>
+            <div><b>Join the annual members&rsquo; meeting</b><p>Come together with
+              Mak Fai&rsquo;s leadership, students, instructors, and fellow supporters
+              to hear about the organization&rsquo;s progress and what lies
+              ahead.</p></div>
           </li>
           <li class="reveal d3">
             <span class="members-num" aria-hidden="true">03</span>
-            <div><b>First word on performances</b><p>Demonstrations, festival
-              appearances and Lunar New Year, before they are announced.</p></div>
+            <div><b>Stay connected to our work</b><p>Receive updates on Mak
+              Fai&rsquo;s programs, performances, competitions, community initiatives,
+              and the impact your support is making.</p></div>
           </li>
           <li class="reveal d3">
             <span class="members-num" aria-hidden="true">04</span>
-            <div><b>Named &mdash; or not</b><p>Listed on the annual thank-you, or
-              kept anonymous. Entirely your call.</p></div>
+            <div><b>Be recognized &mdash; or remain anonymous</b><p>We are proud to
+              recognize the people who help sustain Mak Fai. Sponsorship Members
+              may be acknowledged as supporters or choose to remain
+              anonymous.</p></div>
           </li>
         </ul>
 
-        <p class="members-fine reveal d3">A membership year runs from the date of
-          your first gift, and monthly giving counts toward the $500. Membership
-          is a thank-you, not a purchase &mdash; your gift stays tax-deductible to
-          the extent allowed by law.</p>
+        <p class="members-fine reveal d3">Sponsorship Membership is for a
+          12-month term and is subject to the eligibility requirements and
+          designation procedures established by Mak Fai&rsquo;s Board of Directors,
+          pursuant to our bylaws.</p>
       </div>
     </div>
   </section>
@@ -357,20 +363,21 @@
         </article>
         <article class="way reveal d1">
           <h3>Employer matching</h3>
-          <p>Many Seattle employers double a gift to a registered nonprofit.
+          <p>Many Seattle employers match a gift to a registered nonprofit.
             Ask us for the paperwork and we will fill in our side.</p>
           <a class="way-link" href="mailto:hello@makfai.org?subject=Employer%20matching">hello@makfai.org</a>
         </article>
         <article class="way reveal d2">
           <h3>Sponsor a performance</h3>
-          <p>Underwrite a Lunar New Year or festival appearance so the
+          <p>Sponsor a Lunar New Year or festival appearance so the
             neighborhood sees it for free.</p>
           <a class="way-link" href="index.html#book">Talk to us about it</a>
         </article>
         <article class="way reveal d3">
           <h3>Give time or goods</h3>
-          <p>Rehearsal space, transport, sewing, photography, a hand at
-            festivals &mdash; all of it counts, none of it costs you money.</p>
+          <p>Equipment, photography, services, event support, or your time
+            &mdash; there are many ways to support us beyond making a financial
+            gift.</p>
           <a class="way-link" href="mailto:hello@makfai.org?subject=Volunteering">Volunteer with us</a>
         </article>
       </div>
@@ -381,10 +388,10 @@
   <section class="sec-dask">
     <div class="wrap dask">
       <div>
-        <h2 class="disp reveal">Questions about giving?</h2>
+        <h2 class="disp reveal">Have a question about giving?</h2>
         <span class="disp-rule reveal" aria-hidden="true"></span>
-        <p class="lede reveal d1">Talk to a person &mdash; not a form. We will tell you
-          exactly where a gift lands.</p>
+        <p class="lede reveal d1">We&rsquo;re happy to talk through ways your support
+          can make the greatest impact.</p>
       </div>
       <div class="dask-links reveal d2">
         <a href="mailto:hello@makfai.org">hello@makfai.org</a>
@@ -537,7 +544,13 @@
       amount = b.dataset.amt;
       wrap.hidden = (amount !== 'other');
       if (amount === 'other') custom.focus();
-      impact.innerHTML = b.dataset.impact;
+      /* "Other" carries no impact line, so the paragraph is hidden outright
+         rather than left as 42px of empty reserved space. Every other tier
+         has one, and .give-impact keeps its min-height so switching between
+         those doesn't jog the panel. */
+      var line = b.dataset.impact || '';
+      impact.innerHTML = line;
+      impact.hidden = !line;
       paint();
     });
   });
