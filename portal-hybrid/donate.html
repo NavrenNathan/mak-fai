@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=144">
+<link rel="stylesheet" href="style.css?v=145">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 </head>
 <body>
@@ -201,10 +201,9 @@
              the association's preferred route because the full amount arrives
              -- a card processor takes roughly 2-3% of every gift.
 
-             TO GO LIVE: (a) fill in the real Zelle recipient below, and
-             (b) drop the Stripe embed into .pay-slot and delete .pay-slot-ph.
-             Stripe Checkout carries card, Apple Pay, Google Pay and PayPal in
-             one integration, so one embed covers the lot.
+             TO GO LIVE: drop the Stripe embed into .pay-slot and delete
+             .pay-slot-ph. Stripe Checkout carries card, Apple Pay, Google Pay
+             and PayPal in one integration, so one embed covers the lot.
              ------------------------------------------------------------------ -->
         <div class="pay">
           <div class="pay-opt pay-zelle">
@@ -216,12 +215,9 @@
               reaches the students.</p>
             <p class="pay-to">
               <span>Send <b id="zelleamt">$50</b> to</span>
-              <!-- TODO: the association's real Zelle recipient (the email or
-                   phone number registered with its bank). Deliberately left
-                   blank -- publishing a guess would send donors' money to a
-                   stranger, and Zelle transfers are not reversible. -->
-              <code class="pay-pending">recipient to be confirmed</code>
+              <code class="pay-recipient">(206) 437-8131</code>
             </p>
+            <p class="pay-note">Zelle ID: <code>makfai-donations</code></p>
           </div>
 
           <div class="pay-opt pay-slot">
