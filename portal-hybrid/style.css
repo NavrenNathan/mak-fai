@@ -773,14 +773,12 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .pay-to > span{color:var(--muted-l)}
 .pay-to b{color:var(--jade);font-weight:700}
 .pay-to code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
-/* The confirmed recipient -- solid, not dashed, so it reads as a real value
-   to copy rather than the placeholder it replaced. */
-.pay-recipient{padding:6px 11px;border-radius:6px;
-  border:1px solid rgba(30,90,68,.3);background:rgba(30,90,68,.08);
-  color:var(--jade);font-weight:600}
-.pay-note{margin:9px 0 0;font-size:12.5px;color:var(--muted-l)}
-.pay-note code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
-  color:var(--ink-l)}
+/* The one value a donor actually needs -- solid fill and a heavier weight
+   than the rest of the line so it's the thing the eye lands on, not the
+   dollar amount or the word "Zelle." */
+.pay-recipient{padding:7px 13px;border-radius:6px;
+  border:1px solid rgba(30,90,68,.35);background:rgba(30,90,68,.12);
+  color:var(--jade);font-weight:700;font-size:14.5px;letter-spacing:.01em}
 /* Reserved slot -- dashed so nobody mistakes it for a live checkout. */
 .pay-slot{border-style:dashed;border-color:rgba(34,26,21,.24);
   background:rgba(34,26,21,.022)}
