@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=146">
+<link rel="stylesheet" href="style.css?v=147">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 </head>
 <body>
@@ -196,14 +196,22 @@
         <p class="give-label">How to send it</p>
 
         <!-- ------------------------------------------------------------------
-             NOT A CHECKOUT. No payment processor is connected to this site
-             yet, so nothing here collects card details or claims to. Zelle is
-             the association's preferred route because the full amount arrives
-             -- a card processor takes roughly 2-3% of every gift.
+             Zelle is the association's preferred route because the full
+             amount arrives -- a card processor takes roughly 2-3% of every
+             gift. The Stripe link below is a hosted, flexible-amount
+             Donation Link (not a Checkout Session), so it can't inherit
+             whichever tier the visitor picked above -- that would need a
+             backend this static site doesn't have. The donor re-enters the
+             amount on Stripe's own page. Confirmed by loading the link
+             directly: it offers Card, Apple Pay, Amazon Pay, and Stripe's
+             own "Link" wallet -- no PayPal or Google Pay, so the copy below
+             doesn't promise them. If Vincent enables either later, update
+             the wording here to match.
 
-             TO GO LIVE: drop the Stripe embed into .pay-slot and delete
-             .pay-slot-ph. Stripe Checkout carries card, Apple Pay, Google Pay
-             and PayPal in one integration, so one embed covers the lot.
+             If fixed amounts matter more than this being simple, replace
+             this one URL with per-tier Stripe Payment Links and swap
+             PAY_LINK_URL for a small lookup keyed on `amount` in the script
+             below -- five more links to create in Stripe, one per tier.
              ------------------------------------------------------------------ -->
         <div class="pay">
           <div class="pay-opt pay-zelle">
@@ -219,13 +227,17 @@
             </p>
           </div>
 
-          <div class="pay-opt pay-slot">
+          <div class="pay-opt pay-card">
             <div class="pay-head">
-              <b>Card, Apple&nbsp;Pay, Google&nbsp;Pay &amp; PayPal</b>
+              <b>Card &amp; digital wallets</b>
             </div>
-            <!-- The Stripe embed replaces this placeholder. -->
-            <p class="pay-slot-ph">Stripe checkout is being set up &mdash; this
-              is where it will live.</p>
+            <p class="pay-why">Apple&nbsp;Pay, Amazon&nbsp;Pay, and card,
+              handled securely by Stripe.</p>
+            <a class="btn btn-ink pay-cta" href="https://donate.stripe.com/6oU00k85z2MraXBekfafS00"
+               target="_blank" rel="noopener">Give with card
+              <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+            <p class="pay-note">Opens Stripe&rsquo;s secure page &mdash; enter
+              whatever amount you&rsquo;d like to give there.</p>
           </div>
         </div>
 

@@ -779,11 +779,12 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .pay-recipient{padding:7px 13px;border-radius:6px;
   border:1px solid rgba(30,90,68,.35);background:rgba(30,90,68,.12);
   color:var(--jade);font-weight:700;font-size:14.5px;letter-spacing:.01em}
-/* Reserved slot -- dashed so nobody mistakes it for a live checkout. */
-.pay-slot{border-style:dashed;border-color:rgba(34,26,21,.24);
-  background:rgba(34,26,21,.022)}
-.pay-slot .pay-head b{color:var(--muted-l)}
-.pay-slot-ph{margin:9px 0 0;font-size:12.5px;line-height:1.5;color:var(--muted-l)}
+/* Live now -- solid border like .pay-zelle's own option, just without the
+   jade tint that marks Zelle as the house preference. */
+.pay-card{border-color:rgba(34,26,21,.14)}
+.pay-cta{width:100%;justify-content:center;margin-top:13px;
+  padding:13px 20px;font-size:12px}
+.pay-note{margin:10px 0 0;font-size:12px;line-height:1.5;color:var(--muted-l)}
 .give-tierhint{margin:16px 0 0;padding:12px 14px;border-radius:9px;
   background:rgba(242,180,65,.13);border:1px solid rgba(138,94,12,.28);
   font-size:13px;line-height:1.5;color:#5B4407}
