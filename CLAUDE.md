@@ -216,7 +216,8 @@ folder to the live domain. It has been deleted.
 | `liondance-com-hybrid/` | Template for the **future lion dance site** | Nathan: how this looks "is how the lion dance page should be." Full one-pager with all 8 YouTube films. Don't touch until the lion dance site is up next. |
 | `liondance-com-modern/` | All-dark first pass of the .com redesign | Superseded exploration; kept for comparison. |
 | `portal-makfai-org/` | Superseded placeholder for makfai.org | The old 4.9 KB landing page. Kept as the reference implementation for cross-site link rules; **no longer deployed** — `portal-hybrid/` replaced it. |
-| `lion-dance-makfailiondance-org/`, `kung-fu-makfaikungfu-org/` | Deploy folders for the school sites | Placeholder landing pages + netlify config. |
+| `lion-dance-makfailiondance-org/` | Deploy folder for the lion dance site | Placeholder landing page + netlify config. |
+| `kung-fu-makfaikungfu-org/` | Deploy folder for the kung fu site | Placeholder landing page + netlify config — unrelated pre-hybrid design, gets fully replaced. **Has its own `CLAUDE.md`** with the build brief for this site. |
 | `site/`, `site-light/`, `site-neon-red/` | The three original theme variants (four pages each) | Predate the hybrid. `site-neon-red/` documents the C-ID red-neon art direction; `site-light/` documents the daylight token derivation. Both informed the hybrid. `site/` is the superseded green-led dark. |
 | `mockups/` | 17 early exploration pages | Untouched. |
 | `.bak-site/` | Pre-cross-site-fix originals of `site/` | Archive. |
@@ -270,7 +271,11 @@ YouTube embeds the lightbox opens.
 - Lion dance site: build next from `liondance-com-hybrid/`, adding the
   performance reels (WAVE, King of the Streets, Showtime, Team Wind) that were
   deliberately left off the portal.
-- Kung fu site: nothing designed yet; no photography exists.
+- Kung fu site: nothing designed yet; no photography exists. **See
+  `kung-fu-makfaikungfu-org/CLAUDE.md`** — a dedicated build doc distilling
+  the portal's full design system (tokens, type, components, the hard-won
+  gotchas), the cross-site linking rules, and what content belongs on this
+  site vs. the portal, so it doesn't need re-deriving from scratch.
 - `site/kung-fu.html` and `site/lion-dance.html` are orphaned since the
   cross-site fix — fold into the school sites or delete. Not yet decided.
 - Theme variants carry a floating `.themepeek` pill; blog layouts carry `.pv`.
