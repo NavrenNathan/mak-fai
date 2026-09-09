@@ -752,11 +752,13 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   margin:16px 0 0;font-size:14.5px;color:var(--ink-l)}
 .pay-to > span{color:var(--muted-l)}
 .pay-to code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px}
-/* The one value a donor actually needs -- solid fill and a heavier weight
-   than the rest of the line so it's the thing the eye lands on. */
+/* Either value reaches the same Zelle-linked account -- solid fill and a
+   heavier weight than the rest of the line so both are what the eye lands
+   on, not the surrounding sentence. */
 .pay-recipient{padding:8px 15px;border-radius:7px;
   border:1px solid rgba(30,90,68,.4);background:rgba(30,90,68,.14);
   color:var(--jade);font-weight:700;font-size:16px;letter-spacing:.01em}
+.pay-or{color:var(--muted-l);font-size:13px;font-style:italic}
 .pay-card{border-color:rgba(34,26,21,.16)}
 .pay-card:hover{border-color:rgba(34,26,21,.28);
   box-shadow:0 14px 34px rgba(34,26,21,.08)}
