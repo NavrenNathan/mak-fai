@@ -695,27 +695,17 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .sec-give{padding-top:calc(var(--sec) * .6);padding-bottom:calc(var(--sec) * .6)}
 .give-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
   gap:clamp(30px,4.6vw,74px);align-items:start}
+/* Larger and heavier than before -- with the amount picker gone, this card
+   IS just Zelle + Stripe, so it carries more visual weight to fill the
+   role a whole donation form used to. */
 .give-card{background:var(--card);border:1px solid var(--line-l);
-  border-radius:14px;padding:clamp(22px,2.7vw,34px);
-  box-shadow:0 20px 54px rgba(34,26,21,.08)}
+  border-radius:16px;padding:clamp(28px,3.4vw,44px);
+  box-shadow:0 26px 70px rgba(34,26,21,.11)}
 .give-title{font-family:var(--sans);font-weight:700;text-transform:uppercase;
-  font-size:clamp(19px,1.8vw,23px);letter-spacing:-.005em;
-  margin:0 0 22px;color:var(--ink-l)}
-/* segmented control -- the moving "on" pill is a plain background swap
-   rather than a sliding element, so it can't desync from the buttons. */
-.freq{display:flex;gap:5px;padding:5px;margin:0 0 26px;
-  background:rgba(34,26,21,.055);border-radius:11px}
-.freq button{flex:1;padding:11px 8px;border:0;border-radius:7px;cursor:pointer;
-  background:transparent;color:var(--muted-l);
-  font-family:var(--sans);font-size:11px;font-weight:700;
-  letter-spacing:.14em;text-transform:uppercase;
-  transition:background .22s var(--ease),color .22s var(--ease),
-             box-shadow .22s var(--ease)}
-.freq button:hover{color:var(--ink-l)}
-.freq button.on{background:#fff;color:var(--ink-l);
-  box-shadow:0 1px 3px rgba(34,26,21,.14)}
-.give-label{margin:0 0 12px;font-size:11px;letter-spacing:.2em;
-  text-transform:uppercase;font-weight:600;color:var(--muted-l)}
+  font-size:clamp(22px,2.1vw,27px);letter-spacing:-.005em;
+  margin:0 0 26px;color:var(--ink-l)}
+.give-label{margin:0 0 16px;font-size:11.5px;letter-spacing:.22em;
+  text-transform:uppercase;font-weight:700;color:var(--muted-l)}
 /* --- "where your gift goes" -------------------------------------------- */
 .give-side .disp{font-size:clamp(24px,2.5vw,32px)}
 .give-side .disp-rule{margin:20px 0 30px}
@@ -734,34 +724,46 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .give-note p{margin:0;font-size:13.5px;line-height:1.6;color:#453B33}
 .give-note b{color:var(--jade)}
 
-/* --- payment methods ---------------------------------------------------- */
-.pay{display:grid;gap:10px;margin:4px 0 0}
-.pay-opt{padding:17px 18px;border-radius:11px;border:1px solid var(--line-l)}
-.pay-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-.pay-head b{font-family:var(--sans);font-weight:700;font-size:15px;color:var(--ink-l)}
-.pay-badge{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
-  padding:4px 8px;border-radius:5px;background:var(--jade);color:#fff}
-/* Zelle is the house preference: it reads as the chosen path, not one of two. */
-.pay-zelle{border-color:rgba(30,90,68,.4);background:rgba(30,90,68,.05);
-  box-shadow:inset 0 0 0 1px rgba(30,90,68,.16)}
-.pay-why{margin:9px 0 0;font-size:13px;line-height:1.55;color:var(--muted-l)}
-.pay-to{display:flex;align-items:center;gap:9px;flex-wrap:wrap;
-  margin:13px 0 0;font-size:13.5px;color:var(--ink-l)}
+/* --- payment methods -----------------------------------------------------
+   These two options are the whole card now, so each gets real presence:
+   an icon, a bigger heading, more air. Zelle carries the strongest
+   treatment (thicker border, deeper tint, a bigger badge) since it's the
+   one path that gets the full gift to the students. */
+.pay{display:grid;gap:16px;margin:4px 0 0}
+.pay-opt{padding:24px 26px;border-radius:14px;border:1.5px solid var(--line-l);
+  transition:border-color .25s var(--ease),box-shadow .25s var(--ease),
+             transform .25s var(--ease)}
+.pay-opt:hover{transform:translateY(-2px)}
+.pay-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pay-ico{flex-shrink:0;width:26px;height:26px;display:block}
+.pay-head b{font-family:var(--sans);font-weight:700;font-size:18px;color:var(--ink-l)}
+.pay-badge{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  padding:5px 11px;border-radius:6px;background:var(--jade);color:#fff;
+  box-shadow:0 0 0 3px rgba(30,90,68,.14)}
+/* Zelle is the house preference: it reads as the chosen path, not one of
+   two -- a heavier border and a real tint, not just a hairline. */
+.pay-zelle{border-width:2px;border-color:rgba(30,90,68,.5);
+  background:rgba(30,90,68,.06);box-shadow:inset 0 0 0 1px rgba(30,90,68,.2)}
+.pay-zelle:hover{border-color:rgba(30,90,68,.7);
+  box-shadow:inset 0 0 0 1px rgba(30,90,68,.2),0 14px 34px rgba(30,90,68,.14)}
+.pay-zelle .pay-ico{color:var(--jade)}
+.pay-why{margin:11px 0 0;font-size:14px;line-height:1.55;color:var(--muted-l)}
+.pay-to{display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  margin:16px 0 0;font-size:14.5px;color:var(--ink-l)}
 .pay-to > span{color:var(--muted-l)}
-.pay-to b{color:var(--jade);font-weight:700}
-.pay-to code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.pay-to code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13.5px}
 /* The one value a donor actually needs -- solid fill and a heavier weight
-   than the rest of the line so it's the thing the eye lands on, not the
-   dollar amount or the word "Zelle." */
-.pay-recipient{padding:7px 13px;border-radius:6px;
-  border:1px solid rgba(30,90,68,.35);background:rgba(30,90,68,.12);
-  color:var(--jade);font-weight:700;font-size:14.5px;letter-spacing:.01em}
-/* Live now -- solid border like .pay-zelle's own option, just without the
-   jade tint that marks Zelle as the house preference. */
-.pay-card{border-color:rgba(34,26,21,.14)}
-.pay-cta{width:100%;justify-content:center;margin-top:13px;
-  padding:13px 20px;font-size:12px}
-.pay-note{margin:10px 0 0;font-size:12px;line-height:1.5;color:var(--muted-l)}
+   than the rest of the line so it's the thing the eye lands on. */
+.pay-recipient{padding:8px 15px;border-radius:7px;
+  border:1px solid rgba(30,90,68,.4);background:rgba(30,90,68,.14);
+  color:var(--jade);font-weight:700;font-size:16px;letter-spacing:.01em}
+.pay-card{border-color:rgba(34,26,21,.16)}
+.pay-card:hover{border-color:rgba(34,26,21,.28);
+  box-shadow:0 14px 34px rgba(34,26,21,.08)}
+.pay-card .pay-ico{color:var(--ink-l)}
+.pay-cta{width:100%;justify-content:center;margin-top:17px;
+  padding:16px 22px;font-size:13px}
+.pay-note{margin:11px 0 0;font-size:12.5px;line-height:1.5;color:var(--muted-l)}
 .give-tierhint{margin:16px 0 0;padding:12px 14px;border-radius:9px;
   background:rgba(242,180,65,.13);border:1px solid rgba(138,94,12,.28);
   font-size:13px;line-height:1.5;color:#5B4407}

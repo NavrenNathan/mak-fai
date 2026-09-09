@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=148">
+<link rel="stylesheet" href="style.css?v=149">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 </head>
 <body>
@@ -171,40 +171,26 @@
         <h2 class="give-title">Make a gift</h2>
 
         <!-- No amount picker: neither payment path below can inherit a
-             pre-picked figure without a backend (see the comment further
-             down), so a tier grid here would only ever be decorative --
-             the donor still types their own amount on Zelle or Stripe
-             regardless of what they clicked. Frequency stays, since it
-             decides which of the two Stripe links the card button opens. -->
-        <div class="freq" role="group" aria-label="Giving frequency">
-          <button type="button" class="on" data-freq="once">One-time</button>
-          <button type="button" data-freq="monthly">Monthly</button>
-        </div>
-
+             pre-picked figure without a backend, so a tier grid here would
+             only ever be decorative -- the donor types their own amount on
+             Zelle or Stripe regardless of what they'd have clicked. With
+             the picker gone these two options ARE the card, so they carry
+             more visual weight than a typical form field: real icons, a
+             bigger badge on Zelle, a bigger button on Stripe. -->
         <p class="give-label">How to send it</p>
 
-        <!-- ------------------------------------------------------------------
-             Zelle is the association's preferred route because the full
+        <!-- Zelle is the association's preferred route because the full
              amount arrives -- a card processor takes roughly 2-3% of every
-             gift. It offers Card, Apple Pay, Amazon Pay, and Stripe's own
+             gift. Stripe offers Card, Apple Pay, Amazon Pay, and its own
              "Link" wallet -- no PayPal or Google Pay, so the copy below
              doesn't promise them. If Vincent enables either later, update
-             the wording here to match.
-
-             MONTHLY GIVING: STRIPE_MONTHLY_URL below is a placeholder.
-             Stripe recurring donations need a SEPARATE Payment Link with a
-             recurring (monthly) price -- the one-time link can't be reused
-             for this, even with a URL parameter. In the Stripe dashboard:
-             Payment links -> Create -> add a product/price, choose
-             "Recurring" instead of "One time," billing period "Monthly"
-             (Stripe supports "customer chooses the amount" on recurring
-             prices too, same as the one-time link). Copy that link's URL
-             into STRIPE_MONTHLY_URL in the script below and the Monthly
-             toggle will start sending people to the right place -- until
-             then it falls back to the one-time link with a note. -->
+             the wording here to match. -->
         <div class="pay">
           <div class="pay-opt pay-zelle">
             <div class="pay-head">
+              <span class="pay-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9.5"/><path d="M8.5 8.5h7M8.5 15.5h7M15.5 8.5 8.5 15.5"/></svg>
+              </span>
               <b>Zelle</b>
               <span class="pay-badge">Preferred</span>
             </div>
@@ -214,24 +200,22 @@
               <span>Send your gift to Zelle ID</span>
               <code class="pay-recipient">makfai-donations</code>
             </p>
-            <!-- Zelle has no recurring-payment feature -- shown only when
-                 Monthly is selected, so it's not clutter for one-time givers. -->
-            <p class="pay-note" id="zellemonthlynote" hidden>Zelle doesn&rsquo;t
-              support recurring gifts &mdash; you&rsquo;ll need to resend this
-              manually each month.</p>
           </div>
 
           <div class="pay-opt pay-card">
             <div class="pay-head">
+              <span class="pay-ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5.5" width="19" height="13" rx="2"/><path d="M2.5 9.5h19"/><path d="M6 14.5h4"/></svg>
+              </span>
               <b>Card &amp; digital wallets</b>
             </div>
             <p class="pay-why">Apple&nbsp;Pay, Amazon&nbsp;Pay, and card,
               handled securely by Stripe.</p>
-            <a class="btn btn-ink pay-cta" id="stripebtn" href="https://donate.stripe.com/6oU00k85z2MraXBekfafS00"
-               target="_blank" rel="noopener"><span id="stripebtnlabel">Give with card</span>
+            <a class="btn btn-ink pay-cta" href="https://donate.stripe.com/6oU00k85z2MraXBekfafS00"
+               target="_blank" rel="noopener">Give with card
               <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
-            <p class="pay-note" id="stripenote">Opens Stripe&rsquo;s secure page
-              &mdash; enter whatever amount you&rsquo;d like to give there.</p>
+            <p class="pay-note">Opens Stripe&rsquo;s secure page &mdash; enter
+              whatever amount you&rsquo;d like to give there.</p>
           </div>
         </div>
 
@@ -494,66 +478,14 @@
     toReveal.forEach(function(el){ io.observe(el); });
   }
 
-  /* ---- gift picker ------------------------------------------------------ */
-  var freq        = 'once';
-  var pledge      = document.getElementById('pledgelink');
-  var zelleNote   = document.getElementById('zellemonthlynote');
-  var stripeBtn   = document.getElementById('stripebtn');
-  var stripeLabel = document.getElementById('stripebtnlabel');
-  var stripeNote  = document.getElementById('stripenote');
-
-  var STRIPE_ONCE_URL    = 'https://donate.stripe.com/6oU00k85z2MraXBekfafS00';
-  /* TODO: paste the recurring Payment Link's URL here once it exists --
-     see the long comment above the .pay block for how to create it in
-     Stripe. Left empty rather than guessed at, same reasoning as every
-     other placeholder on this page: a wrong link would send a monthly
-     donor's card straight into a one-time charge instead. */
-  var STRIPE_MONTHLY_URL  = '';
-
-  function paint(){
-    var monthly = (freq === 'monthly');
-    zelleNote.hidden = !monthly;
-
-    if (monthly && STRIPE_MONTHLY_URL) {
-      stripeBtn.href = STRIPE_MONTHLY_URL;
-      stripeLabel.textContent = 'Give monthly with card';
-      stripeNote.innerHTML = 'Opens Stripe&rsquo;s secure page &mdash; enter ' +
-        'whatever amount you&rsquo;d like to give each month.';
-    } else if (monthly) {
-      /* No recurring link configured yet -- stay on the one-time link
-         rather than silently charging a monthly donor once and never
-         again, and say so plainly instead of pretending it's ready. */
-      stripeBtn.href = STRIPE_ONCE_URL;
-      stripeLabel.textContent = 'Give with card';
-      stripeNote.innerHTML = 'Monthly card giving is being set up &mdash; ' +
-        'this currently opens a one-time gift. <a href="mailto:hello@makfai.org">' +
-        'Email us</a> to set up a recurring gift in the meantime.';
-    } else {
-      stripeBtn.href = STRIPE_ONCE_URL;
-      stripeLabel.textContent = 'Give with card';
-      stripeNote.innerHTML = 'Opens Stripe&rsquo;s secure page &mdash; enter ' +
-        'whatever amount you&rsquo;d like to give there.';
-    }
-
-    var kind = monthly ? 'a monthly gift' : 'a one-time gift';
-    var subject = 'Pledge: ' + (monthly ? 'monthly gift' : 'one-time gift');
-    var body = "I'd like to make " + kind + " to Mak Fai.\n\n" +
-               'Amount: $\nName:\nPhone (optional):\n\n' +
-               'Please send me a secure link to complete it.';
-    pledge.href = 'mailto:hello@makfai.org?subject=' +
-      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-  }
-
-  [].slice.call(document.querySelectorAll('.freq button')).forEach(function(b){
-    b.addEventListener('click', function(){
-      document.querySelectorAll('.freq button').forEach(function(x){ x.classList.remove('on'); });
-      b.classList.add('on');
-      freq = b.dataset.freq;
-      paint();
-    });
-  });
-
-  paint();
+  /* ---- pledge fallback --------------------------------------------------- */
+  var pledge = document.getElementById('pledgelink');
+  var subject = 'Pledge: a gift to Mak Fai';
+  var body = "I'd like to make a gift to Mak Fai.\n\n" +
+             'Amount: $\nName:\nPhone (optional):\n\n' +
+             'Please send me a secure link to complete it.';
+  pledge.href = 'mailto:hello@makfai.org?subject=' +
+    encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
 })();
 </script>
 
