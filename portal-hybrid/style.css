@@ -716,29 +716,6 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   box-shadow:0 1px 3px rgba(34,26,21,.14)}
 .give-label{margin:0 0 12px;font-size:11px;letter-spacing:.2em;
   text-transform:uppercase;font-weight:600;color:var(--muted-l)}
-.amts{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
-.amt{padding:17px 8px;border:1px solid var(--line-l);border-radius:10px;
-  background:#fff;cursor:pointer;color:var(--ink-l);
-  font-family:var(--sans);font-size:18px;font-weight:700;
-  transition:border-color .2s var(--ease),background .2s var(--ease),
-             box-shadow .2s var(--ease),transform .2s var(--ease)}
-.amt:hover{border-color:rgba(30,90,68,.5);transform:translateY(-1px)}
-.amt.on{border-color:var(--jade);background:rgba(30,90,68,.07);
-  box-shadow:inset 0 0 0 1px var(--jade)}
-.amt-other{font-size:12.5px;letter-spacing:.12em;text-transform:uppercase}
-.amt-custom{position:relative;margin-top:10px}
-.amt-custom > span{position:absolute;left:16px;top:50%;transform:translateY(-50%);
-  color:var(--muted-l);font-weight:600;pointer-events:none}
-.amt-custom input{width:100%;padding:15px 16px 15px 31px;
-  border:1px solid var(--line-l);border-radius:10px;background:#fff;
-  font-family:var(--sans);font-size:16px;font-weight:600;color:var(--ink-l)}
-.amt-custom input:focus{outline:none;border-color:var(--jade);
-  box-shadow:inset 0 0 0 1px var(--jade)}
-/* fixed height so picking a different tier doesn't jog the button up
-   and down under the reader's cursor */
-.give-impact{min-height:42px;margin:16px 0 20px;
-  font-size:13.5px;line-height:1.5;color:var(--muted-l)}
-
 /* --- "where your gift goes" -------------------------------------------- */
 .give-side .disp{font-size:clamp(24px,2.5vw,32px)}
 .give-side .disp-rule{margin:20px 0 30px}
@@ -1261,7 +1238,6 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .result-panel{gap:16px}
   .ways{grid-template-columns:1fr;gap:14px}
   .members-list{grid-template-columns:1fr;gap:22px}
-  .amts{grid-template-columns:1fr 1fr}
   .dask{flex-direction:column;align-items:flex-start}
   .dask-links{text-align:left}
   .mosaic{grid-template-columns:1fr}
