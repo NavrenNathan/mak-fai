@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=150">
+<link rel="stylesheet" href="style.css?v=152">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 </head>
 <body>
@@ -170,13 +170,30 @@
       <div class="give-card reveal">
         <h2 class="give-title">Make a gift</h2>
 
-        <!-- No amount picker: neither payment path below can inherit a
-             pre-picked figure without a backend, so a tier grid here would
-             only ever be decorative -- the donor types their own amount on
-             Zelle or Stripe regardless of what they'd have clicked. With
-             the picker gone these two options ARE the card, so they carry
-             more visual weight than a typical form field: real icons, a
-             bigger badge on Zelle, a bigger button on Stripe. -->
+        <!-- Amount picker. The reason one was dropped before is real: a
+             Stripe Payment Link cannot take an amount from the URL (only
+             UTM codes and client_reference_id are accepted), so a single
+             flexible-amount link can never inherit a pre-picked figure.
+             The fix is one Payment Link per amount, which is what PAY_LINKS
+             in the script below holds. Any tier without a real link yet
+             falls back to the flexible link, so no button is ever dead. -->
+        <p class="give-label" id="amt-label">Choose an amount</p>
+        <div class="amts" role="group" aria-labelledby="amt-label">
+          <button type="button" class="amt" data-amt="25">$25</button>
+          <button type="button" class="amt on" data-amt="50" aria-pressed="true">$50</button>
+          <button type="button" class="amt" data-amt="125">$125</button>
+          <button type="button" class="amt" data-amt="250">$250</button>
+          <button type="button" class="amt" data-amt="500">$500</button>
+          <button type="button" class="amt amt-other" data-amt="other">Other</button>
+        </div>
+        <div class="amt-custom" hidden id="customwrap">
+          <label class="vis-hidden" for="customamt">Custom amount in US dollars</label>
+          <span class="amt-cur" aria-hidden="true">$</span>
+          <input id="customamt" type="number" min="1" step="1" inputmode="numeric"
+                 placeholder="Enter an amount">
+        </div>
+        <p class="amt-impact" id="amtimpact"></p>
+
         <p class="give-label">How to send it</p>
 
         <!-- Zelle is the association's preferred route because the full
@@ -197,7 +214,7 @@
             <p class="pay-why">No processor takes a cut, so the whole gift
               reaches the students.</p>
             <p class="pay-to">
-              <span>Send your gift to Zelle ID</span>
+              <span>Send <b id="zelleamt">$50</b> to Zelle ID</span>
               <code class="pay-recipient">makfai-donations</code>
               <span class="pay-or">or</span>
               <code class="pay-recipient">donations@makfai.org</code>
@@ -213,11 +230,12 @@
             </div>
             <p class="pay-why">Apple&nbsp;Pay, Amazon&nbsp;Pay, and card,
               handled securely by Stripe.</p>
-            <a class="btn btn-ink pay-cta" href="https://donate.stripe.com/6oU00k85z2MraXBekfafS00"
-               target="_blank" rel="noopener">Give with card
+            <a class="btn btn-ink pay-cta" id="paycta"
+               href="https://donate.stripe.com/6oU00k85z2MraXBekfafS00"
+               target="_blank" rel="noopener"><span id="payctatext">Give with card</span>
               <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
-            <p class="pay-note">Opens Stripe&rsquo;s secure page &mdash; enter
-              whatever amount you&rsquo;d like to give there.</p>
+            <p class="pay-note" id="paynote">Opens Stripe&rsquo;s secure page
+              &mdash; enter whatever amount you&rsquo;d like to give there.</p>
           </div>
         </div>
 
@@ -491,5 +509,110 @@
 })();
 </script>
 
+
+<script>
+/* ---------------------------------------------------------------
+   Amount picker.
+
+   A Stripe Payment Link takes no amount parameter -- the only query
+   params it honours are UTM codes and client_reference_id -- so a
+   single flexible-amount link can never inherit what the donor
+   clicked. The only way to charge a fixed figure without a backend
+   is a separate Payment Link per amount. PAY_LINKS is that lookup.
+
+   Each tier below is its own fixed-amount Payment Link, so picking a
+   chip and clicking through charges that figure with nothing to type.
+   "Other" keeps the original flexible link by design -- that is the one
+   path where the donor should name their own amount.
+   --------------------------------------------------------------- */
+(function () {
+  var FLEXIBLE_LINK = 'https://donate.stripe.com/6oU00k85z2MraXBekfafS00';
+
+  /* One Payment Link per tier, each a fixed-amount product created in the
+     Stripe dashboard. Verified 2026-09-11: every URL resolves and renders
+     the matching figure on Stripe's page. If a tier is ever set back to
+     null it falls back to FLEXIBLE_LINK rather than breaking. */
+  var PAY_LINKS = {
+    '25':  'https://buy.stripe.com/00w6oIfy1cn12r5b83afS01',
+    '50':  'https://buy.stripe.com/9B6fZi0D74Uz3v9fojafS02',
+    '125': 'https://buy.stripe.com/dRmeVedpT3Qv7Lp4JFafS03',
+    '250': 'https://buy.stripe.com/bJecN6etX5YDfdRekfafS04',
+    '500': 'https://buy.stripe.com/7sY4gA1Hbcn1aXB0tpafS05'
+  };
+
+  var IMPACT = {
+    '25':  'Replaces worn practice gear.',
+    '50':  'Outfits one new student in a full practice uniform and sash.',
+    '125': 'Repairs a drum head \u2014 the part that wears out fastest.',
+    '250': 'Restocks the weapons rack \u2014 staffs, broadswords, spears.',
+    '500': 'Makes you a Sponsorship Member for the year.'
+  };
+
+  var chips   = [].slice.call(document.querySelectorAll('.amt'));
+  var wrap    = document.getElementById('customwrap');
+  var custom  = document.getElementById('customamt');
+  var impact  = document.getElementById('amtimpact');
+  var zelle   = document.getElementById('zelleamt');
+  var cta     = document.getElementById('paycta');
+  var ctaText = document.getElementById('payctatext');
+  var note    = document.getElementById('paynote');
+  if (!chips.length || !cta) return;
+
+  var picked = '50';
+
+  function money(v) {
+    var n = Number(v);
+    if (!isFinite(n) || n <= 0) return null;
+    // whole dollars display without a trailing .00
+    return '$' + (n % 1 === 0 ? n.toFixed(0) : n.toFixed(2));
+  }
+
+  function amountNow() {
+    if (picked !== 'other') return picked;
+    return custom && custom.value ? custom.value : null;
+  }
+
+  function render() {
+    var amt = amountNow();
+    var label = money(amt);
+    var link = (picked !== 'other' && PAY_LINKS[picked]) || null;
+
+    // Zelle: the donor types the amount themselves, so this is only an echo
+    if (zelle) zelle.textContent = label || 'your gift';
+
+    if (link) {
+      cta.href = link;
+      ctaText.textContent = 'Give ' + label + ' with card';
+      note.textContent = 'Opens Stripe\u2019s secure page for ' + label + '.';
+    } else {
+      cta.href = FLEXIBLE_LINK;
+      ctaText.textContent = label ? 'Give ' + label + ' with card' : 'Give with card';
+      note.textContent = label
+        ? 'Opens Stripe\u2019s secure page \u2014 enter ' + label + ' there to complete it.'
+        : 'Opens Stripe\u2019s secure page \u2014 enter whatever amount you\u2019d like to give there.';
+    }
+
+    impact.textContent = (picked !== 'other' && IMPACT[picked]) ? IMPACT[picked] : '';
+  }
+
+  chips.forEach(function (chip) {
+    chip.addEventListener('click', function () {
+      picked = chip.getAttribute('data-amt');
+      chips.forEach(function (c) {
+        var on = c === chip;
+        c.classList.toggle('on', on);
+        c.setAttribute('aria-pressed', String(on));
+      });
+      var other = picked === 'other';
+      wrap.hidden = !other;
+      if (other) custom.focus();
+      render();
+    });
+  });
+
+  if (custom) custom.addEventListener('input', render);
+  render();
+})();
+</script>
 </body>
 </html>
