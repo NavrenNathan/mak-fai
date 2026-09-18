@@ -597,22 +597,20 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .v-divide-line:last-child{background:linear-gradient(270deg,transparent,var(--line-l) 40%,var(--line-l))}
 .v-seal{width:30px;height:30px;flex-shrink:0;color:var(--jade);opacity:.85}
 
-/* ---- one enclosing card, three photo-style tiles inside it --------------
-   Outer frame is back to the paper-card look (matches .give-card/.award),
-   the "black and gold" now lives inside each tile instead of on the whole
-   box -- a light bezel holding three dark 3:4 panels, each with a frosted
-   gold-on-black label plate anchored near the bottom, the way a photo tile
-   carries a caption card. No real photography exists per value yet, so
-   each tile is a dark gradient stand-in; drop a real photo in as
-   background-image on .value-tile when one exists per pillar. */
-.values{--vgap:14px;
-  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--vgap);
-  background:var(--card);border:1px solid var(--line-l);
-  border-radius:22px;padding:clamp(14px,1.8vw,20px);
-  box-shadow:0 24px 60px rgba(34,26,21,.08)}
+/* ---- one continuous box, no gaps -- only the slant line divides it ------
+   Went through a "light frame + three separate rounded tiles" version
+   first; Vincent wants the box itself back to one unbroken surface, the
+   slanted gold line doing the only work of separating the three. So: zero
+   grid gap, no per-tile radius (the outer .values radius + overflow:hidden
+   rounds only the far left/right corners), tiles butt directly against
+   each other and the gold line sits exactly on that shared edge. */
+.values{display:grid;grid-template-columns:repeat(3,1fr);gap:0;
+  background:var(--bg);border:1px solid rgba(242,180,65,.28);
+  border-radius:18px;overflow:hidden;
+  box-shadow:0 24px 60px rgba(11,7,8,.35),inset 0 0 0 1px rgba(242,180,65,.06)}
 .value{position:relative}
 .value-tile{position:relative;aspect-ratio:3/4;overflow:hidden;
-  border-radius:14px;display:flex;align-items:flex-end;padding:clamp(10px,1.4vw,16px);
+  display:flex;align-items:flex-end;padding:clamp(16px,2vw,26px);
   background:radial-gradient(140% 110% at 28% 6%,#241a12 0%,#0B0708 62%)}
 .value-plate{position:relative;width:100%;border-radius:11px;
   padding:clamp(14px,1.6vw,20px) clamp(14px,1.7vw,20px);
@@ -622,13 +620,14 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   font-size:clamp(17px,1.7vw,21px);margin:0 0 6px;color:var(--gold)}
 .value-plate p{margin:0;font-size:13px;line-height:1.5;color:var(--muted)!important}
 /* Slanted divider between the three -- a tilted hairline rather than the
-   plumb-straight rule a plain grid gap would suggest, so the seam between
-   tiles reads as a deliberate cut, not a leftover column boundary. Sits
-   above the tiles (z-index) since a big rotation drifts the ends of the
-   line past the narrow gap and across the neighbouring tile corners --
-   crossing over reads as a stitched seam rather than getting hidden. */
+   plumb-straight rule a plain grid seam would suggest, so the cut between
+   values reads as a deliberate mark, not a leftover column boundary. Sits
+   above the tiles (z-index) since the rotation drifts the ends sideways
+   over the tile's full height, past the shared edge and into both
+   neighbouring corners -- crossing over reads as a stitched seam rather
+   than disappearing at the edge. */
 .value + .value::before{content:"";position:absolute;z-index:2;
-  left:calc(var(--vgap) / -2);top:-3%;bottom:-3%;width:1.5px;
+  left:0;top:-3%;bottom:-3%;width:1.5px;
   background:linear-gradient(180deg,transparent,rgba(242,180,65,.75) 14%,
              rgba(242,180,65,.75) 86%,transparent);
   transform:rotate(9deg);
@@ -1143,7 +1142,6 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .trad-copy{max-width:60ch}
   /* stays 3-across -- the copy is short, and 2 columns would orphan the
      third value on its own row */
-  .values{--vgap:26px}
   .honors{grid-template-columns:1fr 1fr;gap:24px}
   .awards{grid-template-columns:1fr 1fr}
   /* Reset the desktop 8-track centering math -- with only 2 real columns
@@ -1231,11 +1229,11 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 
   .statline{gap:26px 40px}
   .frow{grid-template-columns:1fr}
-  /* single column: the slanted vertical divider becomes a short slanted
-     rule stacked between rows instead of beside columns -- gold, same as
-     desktop, since it now needs to read against the tile's own dark fill. */
-  .values{grid-template-columns:1fr;--vgap:28px}
-  .value + .value::before{left:50%;top:calc(var(--vgap) / -2);bottom:auto;
+  /* single column, still one continuous box: tiles stack flush (no row
+     gap) and the slanted divider becomes a short slanted rule sitting
+     exactly on the shared top edge between rows instead of beside columns. */
+  .values{grid-template-columns:1fr}
+  .value + .value::before{left:50%;top:0;bottom:auto;
     width:70px;height:1.5px;transform:translateX(-50%) rotate(9deg);
     background:linear-gradient(90deg,transparent,rgba(242,180,65,.75) 20%,
                rgba(242,180,65,.75) 80%,transparent);
