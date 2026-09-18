@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=157">
+<link rel="stylesheet" href="style.css?v=158">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
@@ -212,39 +212,9 @@
        are one SVG filter (feTurbulence + feDisplacementMap) applied to plain
        circles -- no extra image assets. ============ -->
   <section id="values" class="sec-values">
-    <svg class="svg-defs" aria-hidden="true" focusable="false">
-      <defs>
-        <!-- Two-pass displacement: a low-frequency wobble bends the stroke
-             like a loaded brush, then a high-frequency pass frays the edge
-             so it reads as dry bristle rather than a clean vector circle.
-             mfBrush1/3 were only used by the value icons/rings, now removed
-             -- mfBrush2 stays, the taiji watermark below still uses it. -->
-        <filter id="mfBrush2" x="-30%" y="-30%" width="160%" height="160%">
-          <feTurbulence type="fractalNoise" baseFrequency=".014" numOctaves="4" seed="21" result="b"/>
-          <feDisplacementMap in="SourceGraphic" in2="b" scale="9" xChannelSelector="R" yChannelSelector="G" result="d"/>
-          <feTurbulence type="fractalNoise" baseFrequency=".13" numOctaves="2" seed="4" result="f"/>
-          <feDisplacementMap in="d" in2="f" scale="2.6" xChannelSelector="R" yChannelSelector="G"/>
-        </filter>
-      </defs>
-    </svg>
 
     <div class="values-deco" aria-hidden="true">
       <span class="deco-wave"></span>
-      <!-- Taiji watermark, brush-drawn: the dark lobe carries its light eye
-           as an even-odd hole so it stays a real hole at any opacity. -->
-      <svg class="deco-taiji" viewBox="0 0 200 200">
-        <g filter="url(#mfBrush2)">
-          <path fill="currentColor" fill-rule="evenodd"
-                d="M100 12A88 88 0 0 1 100 188A44 44 0 0 1 100 100A44 44 0 0 0 100 12Z
-                   M100 131a13 13 0 1 0 0 26a13 13 0 1 0 0-26Z"/>
-          <circle cx="100" cy="56" r="13" fill="currentColor"/>
-          <circle cx="100" cy="100" r="88" fill="none" stroke="currentColor" stroke-width="4.5"/>
-        </g>
-      </svg>
-      <svg class="deco-hills" viewBox="0 0 420 170" preserveAspectRatio="none">
-        <path d="M0 170V104q34-30 62-6 22-26 44 2 26-34 54 6 22-22 44 8l60 56Z" fill="currentColor" opacity=".55"/>
-        <path d="M0 170v-38q46-30 84 4 30-26 60 10 30-24 58 12l70 12Z" fill="currentColor" opacity=".33"/>
-      </svg>
     </div>
 
     <div class="wrap values-in">
