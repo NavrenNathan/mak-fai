@@ -597,35 +597,42 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .v-divide-line:last-child{background:linear-gradient(270deg,transparent,var(--line-l) 40%,var(--line-l))}
 .v-seal{width:30px;height:30px;flex-shrink:0;color:var(--jade);opacity:.85}
 
-/* ---- one enclosing card, three columns inside it ------------------------
-   Was three loose columns with icons above each; now a single card holds
-   all three, no-icon, dark/gold like the Awards "trophy case" instead of
-   the paper-card look the rest of this section uses -- a deliberate change
-   of register so "our values" reads as struck in gold rather than printed. */
-.values{--vgap:clamp(26px,4vw,64px);
+/* ---- one enclosing card, three photo-style tiles inside it --------------
+   Outer frame is back to the paper-card look (matches .give-card/.award),
+   the "black and gold" now lives inside each tile instead of on the whole
+   box -- a light bezel holding three dark 3:4 panels, each with a frosted
+   gold-on-black label plate anchored near the bottom, the way a photo tile
+   carries a caption card. No real photography exists per value yet, so
+   each tile is a dark gradient stand-in; drop a real photo in as
+   background-image on .value-tile when one exists per pillar. */
+.values{--vgap:14px;
   display:grid;grid-template-columns:repeat(3,1fr);gap:var(--vgap);
-  background:var(--bg);border:1px solid rgba(242,180,65,.28);
-  border-radius:18px;padding:clamp(44px,5vw,64px) clamp(24px,3.4vw,44px);
-  box-shadow:0 24px 60px rgba(11,7,8,.35),inset 0 0 0 1px rgba(242,180,65,.06)}
-.value{position:relative;text-align:center;
-  display:flex;flex-direction:column;align-items:center}
+  background:var(--card);border:1px solid var(--line-l);
+  border-radius:22px;padding:clamp(14px,1.8vw,20px);
+  box-shadow:0 24px 60px rgba(34,26,21,.08)}
+.value{position:relative}
+.value-tile{position:relative;aspect-ratio:3/4;overflow:hidden;
+  border-radius:14px;display:flex;align-items:flex-end;padding:clamp(10px,1.4vw,16px);
+  background:radial-gradient(140% 110% at 28% 6%,#241a12 0%,#0B0708 62%)}
+.value-plate{position:relative;width:100%;border-radius:11px;
+  padding:clamp(14px,1.6vw,20px) clamp(14px,1.7vw,20px);
+  background:rgba(11,7,8,.6);border:1px solid rgba(242,180,65,.25);
+  -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
+.value-plate h3{font-family:var(--serif);font-weight:560;letter-spacing:.005em;
+  font-size:clamp(17px,1.7vw,21px);margin:0 0 6px;color:var(--gold)}
+.value-plate p{margin:0;font-size:13px;line-height:1.5;color:var(--muted)!important}
 /* Slanted divider between the three -- a tilted hairline rather than the
    plumb-straight rule a plain grid gap would suggest, so the seam between
-   values reads as a deliberate cut, not a leftover column boundary. Runs
-   past the card's own top/bottom edge slightly so the tilt doesn't leave a
-   visible gap at either end. Gold, to read against the dark fill. */
-.value + .value::before{content:"";position:absolute;
-  left:calc(var(--vgap) / -2);top:-4%;bottom:-4%;width:1px;
-  background:linear-gradient(180deg,transparent,rgba(242,180,65,.3) 16%,
-             rgba(242,180,65,.3) 84%,transparent);
-  transform:rotate(9deg)}
-.value-tick{display:block;width:30px;height:2px;border-radius:1px;
-  background:var(--gold);margin:0 0 20px}
-.value h3{font-family:var(--serif);font-weight:560;
-  font-size:clamp(22px,2.3vw,29px);letter-spacing:.01em;margin:0 0 12px;
-  color:var(--gold)}
-.value p{margin:0;max-width:26ch;font-size:15px;line-height:1.7;
-  color:var(--muted)!important}
+   tiles reads as a deliberate cut, not a leftover column boundary. Sits
+   above the tiles (z-index) since a big rotation drifts the ends of the
+   line past the narrow gap and across the neighbouring tile corners --
+   crossing over reads as a stitched seam rather than getting hidden. */
+.value + .value::before{content:"";position:absolute;z-index:2;
+  left:calc(var(--vgap) / -2);top:-3%;bottom:-3%;width:1.5px;
+  background:linear-gradient(180deg,transparent,rgba(242,180,65,.75) 14%,
+             rgba(242,180,65,.75) 86%,transparent);
+  transform:rotate(9deg);
+  box-shadow:0 0 6px rgba(242,180,65,.35)}
 
 /* ====================== COMMUNITY STORY ====================== */
 .sec-story{padding:0;background:var(--bg)}
@@ -1225,12 +1232,14 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .statline{gap:26px 40px}
   .frow{grid-template-columns:1fr}
   /* single column: the slanted vertical divider becomes a short slanted
-     rule stacked between rows instead of beside columns */
-  .values{grid-template-columns:1fr;--vgap:40px}
+     rule stacked between rows instead of beside columns -- gold, same as
+     desktop, since it now needs to read against the tile's own dark fill. */
+  .values{grid-template-columns:1fr;--vgap:28px}
   .value + .value::before{left:50%;top:calc(var(--vgap) / -2);bottom:auto;
-    width:64px;height:1px;transform:translateX(-50%) rotate(9deg);
-    background:linear-gradient(90deg,transparent,var(--line-l) 25%,
-               var(--line-l) 75%,transparent)}
+    width:70px;height:1.5px;transform:translateX(-50%) rotate(9deg);
+    background:linear-gradient(90deg,transparent,rgba(242,180,65,.75) 20%,
+               rgba(242,180,65,.75) 80%,transparent);
+    box-shadow:0 0 6px rgba(242,180,65,.35)}
   .honors{grid-template-columns:1fr;gap:20px}
   .awards{grid-template-columns:1fr;gap:16px}
   .results-strip{grid-template-columns:1fr;gap:12px}
