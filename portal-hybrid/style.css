@@ -597,20 +597,28 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .v-divide-line:last-child{background:linear-gradient(270deg,transparent,var(--line-l) 40%,var(--line-l))}
 .v-seal{width:30px;height:30px;flex-shrink:0;color:var(--jade);opacity:.85}
 
-/* ---- the three columns ---- */
+/* ---- one enclosing card, three columns inside it ------------------------
+   Was three loose columns with a hairline+lozenge floating between them;
+   now a single bordered card (same paper-card language as .give-card /
+   .award) holds all three, so "our values" reads as one idea with three
+   facets rather than three separate things sitting side by side. */
 .values{--vgap:clamp(26px,4vw,64px);
-  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--vgap)}
+  display:grid;grid-template-columns:repeat(3,1fr);gap:var(--vgap);
+  background:var(--card);border:1px solid var(--line-l);
+  border-radius:18px;padding:clamp(38px,4.6vw,58px) clamp(24px,3.4vw,44px);
+  box-shadow:0 24px 60px rgba(34,26,21,.08)}
 .value{position:relative;text-align:center;
   display:flex;flex-direction:column;align-items:center}
-/* hairline + gold lozenge sitting between columns */
+/* Slanted divider between the three -- a tilted hairline rather than the
+   plumb-straight rule a plain grid gap would suggest, so the seam between
+   values reads as a deliberate cut, not a leftover column boundary. Runs
+   past the card's own top/bottom edge slightly so the tilt doesn't leave a
+   visible gap at either end. */
 .value + .value::before{content:"";position:absolute;
-  left:calc(var(--vgap) / -2);top:6%;bottom:14%;width:1px;
-  background:linear-gradient(180deg,transparent,var(--line-l) 20%,
-             var(--line-l) 80%,transparent)}
-.value + .value::after{content:"";position:absolute;
-  left:calc(var(--vgap) / -2);top:38%;width:9px;height:9px;
-  transform:translate(-50%,-50%) rotate(45deg);
-  border:1px solid var(--bronze);background:var(--paper);opacity:.85}
+  left:calc(var(--vgap) / -2);top:-4%;bottom:-4%;width:1px;
+  background:linear-gradient(180deg,transparent,var(--line-l) 16%,
+             var(--line-l) 84%,transparent);
+  transform:rotate(9deg)}
 .value-ring{position:relative;display:grid;place-items:center;
   width:clamp(104px,11vw,138px);height:clamp(104px,11vw,138px);
   margin-bottom:22px}
@@ -1227,14 +1235,13 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 
   .statline{gap:26px 40px}
   .frow{grid-template-columns:1fr}
-  /* single column: the between-column hairline becomes a short horizontal
-     rule with the same gold lozenge sitting on it */
+  /* single column: the slanted vertical divider becomes a short slanted
+     rule stacked between rows instead of beside columns */
   .values{grid-template-columns:1fr;--vgap:40px}
   .value + .value::before{left:50%;top:calc(var(--vgap) / -2);bottom:auto;
-    width:64px;height:1px;transform:translateX(-50%);
+    width:64px;height:1px;transform:translateX(-50%) rotate(9deg);
     background:linear-gradient(90deg,transparent,var(--line-l) 25%,
                var(--line-l) 75%,transparent)}
-  .value + .value::after{left:50%;top:calc(var(--vgap) / -2)}
   .value-ring{margin-bottom:18px}
   .honors{grid-template-columns:1fr;gap:20px}
   .awards{grid-template-columns:1fr;gap:16px}
