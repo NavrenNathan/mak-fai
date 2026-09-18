@@ -609,16 +609,17 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   border-radius:18px;overflow:hidden;
   box-shadow:0 24px 60px rgba(11,7,8,.35),inset 0 0 0 1px rgba(242,180,65,.06)}
 .value{position:relative}
+/* No plate now -- the text sits directly on the tile, dead-centred both
+   ways, rather than anchored in a frosted box near the bottom. */
 .value-tile{position:relative;aspect-ratio:3/4;overflow:hidden;
-  display:flex;align-items:flex-end;padding:clamp(16px,2vw,26px);
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(20px,2.6vw,32px);text-align:center;
   background:radial-gradient(140% 110% at 28% 6%,#241a12 0%,#0B0708 62%)}
-.value-plate{position:relative;width:100%;border-radius:11px;
-  padding:clamp(14px,1.6vw,20px) clamp(14px,1.7vw,20px);
-  background:rgba(11,7,8,.6);border:1px solid rgba(242,180,65,.25);
-  -webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
+.value-plate{position:relative;width:100%}
 .value-plate h3{font-family:var(--serif);font-weight:560;letter-spacing:.005em;
-  font-size:clamp(17px,1.7vw,21px);margin:0 0 6px;color:var(--gold)}
-.value-plate p{margin:0;font-size:13px;line-height:1.5;color:var(--muted)!important}
+  font-size:clamp(18px,1.9vw,23px);margin:0 0 10px;color:var(--gold)}
+.value-plate p{margin:0 auto;max-width:24ch;font-size:14px;line-height:1.6;
+  color:var(--muted)!important}
 /* Slanted divider between the three -- a tilted hairline rather than the
    plumb-straight rule a plain grid seam would suggest, so the cut between
    values reads as a deliberate mark, not a leftover column boundary. Sits
