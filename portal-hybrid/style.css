@@ -557,34 +557,37 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
    behind, brush rings around the icons. Everything here is scoped to
    .sec-values so the shared .disp / .eyebrow rules stay left-aligned
    everywhere else. */
-.sec-values{position:relative;overflow:hidden;
+/* No longer .band-light -- the whole section went black-and-gold, matching
+   the theme already established inside the .values box, rather than
+   leaving the heading/watermarks on paper around a dark box. */
+.sec-values{position:relative;overflow:hidden;background:var(--bg);color:var(--ink);
   padding-top:calc(var(--sec) * .45);padding-bottom:calc(var(--sec) * .5);
-  border-top:1px solid var(--line-l-soft)}
+  border-top:1px solid rgba(242,180,65,.16)}
 /* the filter defs carrier -- present in the DOM, never painted */
 .svg-defs{position:absolute;width:0;height:0;pointer-events:none}
 
-/* ---- background scenery ---- */
+/* ---- background scenery -- all retinted gold, was jade/ink for paper ---- */
 .values-deco{position:absolute;inset:0;z-index:0;pointer-events:none;
   overflow:hidden}
 /* seigaiha (wave scale) corner, drawn with stacked radial gradients */
 .deco-wave{position:absolute;top:-10px;right:0;
   width:clamp(200px,26vw,380px);height:clamp(150px,18vw,260px);
   background-image:radial-gradient(circle at 50% 100%,transparent 20%,
-    rgba(30,90,68,.5) 21%,rgba(30,90,68,.5) 23%,transparent 24%,
-    transparent 36%,rgba(30,90,68,.5) 37%,rgba(30,90,68,.5) 39%,
-    transparent 40%,transparent 52%,rgba(30,90,68,.5) 53%,
-    rgba(30,90,68,.5) 55%,transparent 56%);
-  background-size:46px 23px;opacity:.22;
+    rgba(242,180,65,.5) 21%,rgba(242,180,65,.5) 23%,transparent 24%,
+    transparent 36%,rgba(242,180,65,.5) 37%,rgba(242,180,65,.5) 39%,
+    transparent 40%,transparent 52%,rgba(242,180,65,.5) 53%,
+    rgba(242,180,65,.5) 55%,transparent 56%);
+  background-size:46px 23px;opacity:.16;
   -webkit-mask-image:linear-gradient(215deg,#000,transparent 72%);
   mask-image:linear-gradient(215deg,#000,transparent 72%)}
 .deco-taiji{position:absolute;left:50%;top:54%;transform:translate(-50%,-50%);
   width:clamp(320px,38vw,520px);height:clamp(320px,38vw,520px);
-  color:var(--ink-l);opacity:.055}
+  color:var(--gold);opacity:.06}
 .deco-bamboo{position:absolute;right:clamp(-14px,1.4vw,30px);top:clamp(20px,4vw,54px);
-  width:clamp(104px,12vw,164px);height:auto;color:var(--jade);opacity:.3}
+  width:clamp(104px,12vw,164px);height:auto;color:var(--gold);opacity:.28}
 .deco-hills{position:absolute;left:0;bottom:0;
   width:clamp(280px,34vw,520px);height:clamp(110px,13vw,180px);
-  color:var(--ink-l);opacity:.09}
+  color:var(--gold);opacity:.1}
 
 /* ---- centred header ---- */
 .values-in{position:relative;z-index:1;text-align:center}
@@ -593,9 +596,9 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .v-divide{display:flex;align-items:center;justify-content:center;
   gap:18px;margin:26px auto clamp(46px,5.5vw,72px);max-width:340px}
 .v-divide-line{flex:1;height:1px;
-  background:linear-gradient(90deg,transparent,var(--line-l) 40%,var(--line-l))}
-.v-divide-line:last-child{background:linear-gradient(270deg,transparent,var(--line-l) 40%,var(--line-l))}
-.v-seal{width:30px;height:30px;flex-shrink:0;color:var(--jade);opacity:.85}
+  background:linear-gradient(90deg,transparent,rgba(242,180,65,.35) 40%,rgba(242,180,65,.35))}
+.v-divide-line:last-child{background:linear-gradient(270deg,transparent,rgba(242,180,65,.35) 40%,rgba(242,180,65,.35))}
+.v-seal{width:30px;height:30px;flex-shrink:0;color:var(--gold);opacity:.85}
 
 /* ---- one continuous box, no gaps -- only the slant line divides it ------
    Went through a "light frame + three separate rounded tiles" version
