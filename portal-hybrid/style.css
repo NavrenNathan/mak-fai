@@ -602,6 +602,16 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   border-radius:18px;overflow:hidden;
   box-shadow:0 24px 60px rgba(11,7,8,.35),inset 0 0 0 1px rgba(242,180,65,.06)}
 .value{position:relative;aspect-ratio:3/4}
+/* .value is also .reveal, which normally slides up on scroll-in via
+   transform. But .value is the containing block for the absolutely
+   positioned, clip-path'd .value-tile above -- animating the parent's
+   transform every frame made Chromium paint the photos with their old
+   plumb-straight edge for the length of that transition, then snap to the
+   correct diagonal once it settled (the reload "glitch" where the seam
+   flashes straight before correcting itself). Cancelling just the slide
+   (the opacity fade from .reveal still runs) removes the per-frame
+   transform recalculation the clip was fighting with. */
+.value.reveal{transform:none}
 /* No plate -- text sits directly on the tile, anchored to the bottom edge
    (was dead-centre vertically) but still centred horizontally. aspect-ratio
    lives on .value (the grid cell) rather than here from 721px up, since at
@@ -646,16 +656,20 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
    From 721px (where the three sit side by side) each tile now overlaps its
    neighbour and is clipped along the *same* rotate(9deg) angle as the
    divider, so the photo seam itself is the slash rather than just an
-   accent floating over a straight one. Math: the divider is a line of
-   height ~106% of the tile (top:-3%/bottom:-3%) rotated 9deg, so its two
-   ends spread apart horizontally by height*sin(9deg) =~ 0.166 * tile
-   height; at this tile's fixed 3:4 ratio that is ~22.1% of the tile's
-   *width*, i.e. +-11% from the nominal seam. Left/right insets below give
-   each tile that same 11% overlap into its neighbour, and the clip-path's
-   bottom corner pulls back by the matching percentage of the now-wider
-   box (80.2% / 82% -- the two differ because tile 2 widens on both sides
-   while tile 1 only widens on the right). Left untouched below 721px,
-   where the tiles stack full-width and there's no side-by-side seam. */
+   accent floating over a straight one. Math: the divider is a line
+   rotated 9deg around the tile's own vertical centre; measured strictly
+   between the tile's top and bottom edges (NOT the line's own -3%/+3%
+   overshoot past them -- an earlier pass used the overshot 106% length
+   here, which overshot the real drift and left the seam visibly off
+   near the top/bottom), its two ends spread apart horizontally by
+   tileHeight*sin(9deg) =~ 0.1564 * tile height; at this tile's fixed 3:4
+   ratio that is ~20.86% of the tile's *width*, i.e. +-10.43% from the
+   nominal seam. Left/right insets below give each tile that same 10.43%
+   overlap into its neighbour, and the clip-path's bottom corner pulls
+   back by the matching percentage of the now-wider box (81.1% / 82.7% --
+   the two differ because tile 2 widens on both sides while tile 1 only
+   widens on the right). Left untouched below 721px, where the tiles
+   stack full-width and there's no side-by-side seam. */
 @media (min-width:721px){
   /* aspect-ratio has to be reset here: with left+right AND top+bottom all
      definite this shouldn't matter per spec, but browsers were still
@@ -663,10 +677,10 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
      overriding bottom:0, stretching every tile taller than .value and
      pushing the bottom-anchored text off past the visible box. */
   .value-tile{position:absolute;top:0;bottom:0;aspect-ratio:auto}
-  .value:nth-child(1) .value-tile{left:0;right:-11%;z-index:3;
-    clip-path:polygon(0 0,100% 0,80.2% 100%,0 100%)}
-  .value:nth-child(2) .value-tile{left:-11%;right:-11%;z-index:2;
-    clip-path:polygon(0 0,100% 0,82% 100%,0 100%)}
+  .value:nth-child(1) .value-tile{left:0;right:-10.43%;z-index:3;
+    clip-path:polygon(0 0,100% 0,81.1% 100%,0 100%)}
+  .value:nth-child(2) .value-tile{left:-10.43%;right:-10.43%;z-index:2;
+    clip-path:polygon(0 0,100% 0,82.7% 100%,0 100%)}
   .value:nth-child(3) .value-tile{left:-11%;right:0;z-index:1}
 }
 
