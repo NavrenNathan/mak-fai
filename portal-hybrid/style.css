@@ -928,6 +928,47 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   border-bottom:1px solid rgba(242,180,65,.34);
   transition:border-color .25s var(--ease)}
 .dask-links a:hover{border-color:var(--gold)}
+/* ---------- WHY DONATE ---------------------------------------------------
+   Same problem .sec-awards solves one section down: this also sits between
+   two dark sections (Community above, Awards below), so it borrows the
+   identical fix -- gold hairline top border + one pool of warm light from
+   above -- rather than inventing a second way to separate dark bands.
+   Cards reuse .award's exact glass-panel/gold-hairline/hover-lift values;
+   only the class names and column count (3, not 8-track) differ, since
+   introducing a second card language here for the sake of it would be the
+   thing worth avoiding, not a feature. */
+.sec-why{position:relative;overflow:hidden;
+  border-top:1px solid rgba(242,180,65,.16);
+  padding-top:calc(var(--sec) * .58);padding-bottom:calc(var(--sec) * .58)}
+.why-glow{position:absolute;left:50%;top:-14%;transform:translateX(-50%);
+  width:min(1180px,100%);height:74%;pointer-events:none;
+  background:radial-gradient(ellipse at 50% 0%,
+    rgba(242,180,65,.14),rgba(242,180,65,.05) 42%,transparent 70%)}
+.sec-why .wrap{position:relative;z-index:1}
+.sec-why .lede{max-width:58ch}
+.impact{display:grid;grid-template-columns:repeat(3,1fr);
+  gap:clamp(14px,1.5vw,20px);margin-top:clamp(38px,4.4vw,58px)}
+.impact-card{display:flex;flex-direction:column;position:relative;
+  padding:clamp(22px,2.2vw,28px);border-radius:10px;
+  background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.018));
+  border:1px solid rgba(242,180,65,.22);
+  transition:border-color .3s var(--ease),transform .3s var(--ease),
+             box-shadow .3s var(--ease),background .3s var(--ease)}
+.impact-card:hover{transform:translateY(-4px);
+  border-color:rgba(242,180,65,.52);
+  background:linear-gradient(180deg,rgba(255,255,255,.085),rgba(255,255,255,.025));
+  box-shadow:0 16px 44px rgba(0,0,0,.5),0 0 26px rgba(242,180,65,.1)}
+.impact-ico{flex-shrink:0;display:block;margin-bottom:16px;
+  width:clamp(30px,2.6vw,34px);height:clamp(30px,2.6vw,34px);color:var(--gold)}
+.impact-ico svg{width:100%;height:100%}
+.impact-card h3{margin:0 0 10px;font-family:var(--sans);font-weight:700;
+  font-size:clamp(16px,1.32vw,18.5px);line-height:1.28;
+  letter-spacing:-.005em;color:#fff}
+.impact-card p{margin:0;font-size:14px;line-height:1.62;color:var(--muted)}
+.why-cta-row{margin-top:clamp(30px,3.4vw,44px);display:flex;
+  align-items:center;flex-wrap:wrap;gap:18px 24px}
+.why-fine{margin:0;font-size:13px;color:var(--muted)}
+
 /* ---------- AWARDS / trophy case ----------------------------------------
    Sits between two dark sections, so without help it would read as one
    endless dark slab. A hairline gold top border plus a single pool of warm
@@ -1239,6 +1280,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   /* stays 3-across -- the copy is short, and 2 columns would orphan the
      third value on its own row */
   .honors{grid-template-columns:1fr 1fr;gap:24px}
+  .impact{grid-template-columns:1fr 1fr}
   .awards{grid-template-columns:1fr 1fr}
   /* Reset the desktop 8-track centering math -- with only 2 real columns
      here, "column 3/5" would spill into implicit extra tracks. 6 cards in
@@ -1338,6 +1380,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
                rgba(242,180,65,.75) 80%,transparent);
     box-shadow:0 0 6px rgba(242,180,65,.35)}
   .honors{grid-template-columns:1fr;gap:20px}
+  .impact{grid-template-columns:1fr;gap:16px}
   .awards{grid-template-columns:1fr;gap:16px}
   .results-strip{grid-template-columns:1fr;gap:12px}
   .result-panel{gap:16px}
