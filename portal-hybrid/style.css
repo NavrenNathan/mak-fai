@@ -1458,3 +1458,58 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .hero [data-stagger]{opacity:1}
   .reveal{opacity:1;transform:none}
 }
+
+/* ============================================================
+   DONATE — amount picker
+   Reinstated with one Stripe Payment Link per tier (a Payment
+   Link takes no amount parameter, so a single flexible link
+   cannot inherit a pre-picked figure). Chips sit above the two
+   send-methods and drive both: the Zelle line echoes the figure,
+   the Stripe button points at that tier's link.
+   ============================================================ */
+.amts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:0 0 14px}
+.amt{
+  appearance:none;cursor:pointer;padding:15px 10px;
+  font-family:var(--sans);font-size:17px;font-weight:700;letter-spacing:.01em;
+  color:var(--ink-l);background:var(--card);
+  border:1.5px solid var(--line-l);border-radius:12px;
+  transition:border-color .18s var(--ease),background .18s var(--ease),
+             color .18s var(--ease),transform .12s var(--ease),
+             box-shadow .18s var(--ease);
+}
+.amt:hover{border-color:var(--jade);transform:translateY(-1px)}
+.amt:focus-visible{outline:2px solid var(--jade);outline-offset:2px}
+.amt:active{transform:translateY(0)}
+.amt.on{
+  background:var(--jade);border-color:var(--jade);color:#fff;
+  box-shadow:0 6px 18px rgba(30,90,68,.24);
+}
+.amt-other{font-size:15px;font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted-l)}
+.amt-other.on{color:#fff}
+
+/* custom-amount field, revealed only by "Other" */
+.amt-custom{position:relative;margin:0 0 14px}
+.amt-cur{position:absolute;left:15px;top:50%;transform:translateY(-50%);
+  color:var(--muted-l);font-weight:700;pointer-events:none}
+.amt-custom input{
+  width:100%;padding:14px 15px 14px 30px;
+  font-family:var(--sans);font-size:16px;color:var(--ink-l);
+  background:var(--card);border:1.5px solid var(--line-l);border-radius:12px;
+}
+.amt-custom input:focus{outline:none;border-color:var(--jade)}
+/* the number spinners fight the layout and add nothing here */
+.amt-custom input::-webkit-outer-spin-button,
+.amt-custom input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.amt-custom input[type=number]{-moz-appearance:textfield}
+
+.amt-impact{margin:0 0 20px;min-height:1.2em;
+  font-size:13.5px;line-height:1.5;color:var(--muted-l)}
+.amt-impact:empty{margin-bottom:6px}
+
+/* the Zelle echo — same weight as the recipient codes beside it */
+#zelleamt{color:var(--jade);font-weight:700}
+
+@media (max-width:560px){
+  .amts{grid-template-columns:repeat(2,1fr)}
+}
