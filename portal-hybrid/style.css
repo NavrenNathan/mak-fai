@@ -327,8 +327,8 @@ header{position:relative;z-index:60}
   white-space:nowrap;pointer-events:none;
   text-shadow:0 6px 34px rgba(0,0,0,.45)}
 .hero-word span{display:block}
-.hw-green{color:var(--jade-bright)}
-.hw-gold{color:var(--gold)}
+.hw-green{color:#006837}
+.hw-gold{color:#F4B21E}
 .hero-word-lion{left:clamp(24px,2.6vw,38px);text-align:left;
   transform:translateY(-50%) scaleX(.78);transform-origin:left center}
 .hero-word-kungfu{right:clamp(24px,2.6vw,38px);text-align:right;
