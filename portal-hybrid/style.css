@@ -136,7 +136,7 @@ header{position:relative;z-index:60}
    z-index, is what actually wins that specific comparison. */
 .brand{position:relative;z-index:56;
   display:flex;align-items:center;gap:13px;margin-right:auto}
-/* height-locked, width auto -- the new mark (assets/mk-logo.png) isn't a
+/* height-locked, width auto -- the new mark (assets/branding/mk-logo.png) isn't a
    perfect circle/square like the old crest, so a fixed square box would
    squash it. */
 .brand img{width:auto;height:70px}
@@ -971,18 +971,18 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
   -webkit-mask-position:center;mask-position:center;
   -webkit-mask-size:contain;mask-size:contain}
-.ico-competition{-webkit-mask-image:url(assets/award-competition.png);
-  mask-image:url(assets/award-competition.png)}
-.ico-honor{-webkit-mask-image:url(assets/award-honor.png);
-  mask-image:url(assets/award-honor.png)}
-.ico-milestone{-webkit-mask-image:url(assets/award-milestone.png);
-  mask-image:url(assets/award-milestone.png)}
-.ico-city{-webkit-mask-image:url(assets/award-city.png);
-  mask-image:url(assets/award-city.png)}
+.ico-competition{-webkit-mask-image:url(assets/awards-section/award-competition.png);
+  mask-image:url(assets/awards-section/award-competition.png)}
+.ico-honor{-webkit-mask-image:url(assets/awards-section/award-honor.png);
+  mask-image:url(assets/awards-section/award-honor.png)}
+.ico-milestone{-webkit-mask-image:url(assets/awards-section/award-milestone.png);
+  mask-image:url(assets/awards-section/award-milestone.png)}
+.ico-city{-webkit-mask-image:url(assets/awards-section/award-city.png);
+  mask-image:url(assets/awards-section/award-city.png)}
 /* Vincent's own medal artwork, keyed and masked the same way as the rest so
    it stays tied to --gold instead of shipping pre-tinted. */
-.ico-medal{-webkit-mask-image:url(assets/award-medal.png);
-  mask-image:url(assets/award-medal.png)}
+.ico-medal{-webkit-mask-image:url(assets/awards-section/award-medal.png);
+  mask-image:url(assets/awards-section/award-medal.png)}
 /* The "50" is a wide logotype, not a square badge -- letting it size to the
    same box makes it read small, so it gets a touch more room. */
 .ico-milestone{-webkit-mask-size:112%;mask-size:112%}
