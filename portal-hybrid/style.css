@@ -180,7 +180,7 @@ header{position:relative;z-index:60}
    position:fixed at z-55 and would otherwise paint straight over it. */
 .nav-donate{order:2;position:relative;z-index:56;transform:translateY(-5px);
   display:inline-flex;align-items:center;flex-shrink:0;
-  padding:11px 20px;border-radius:8px;
+  padding:11px 20px;border-radius:999px;
   background:#006837;color:#fff;
   font-family:var(--sans);font-size:12px;font-weight:700;
   letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
