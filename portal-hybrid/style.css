@@ -186,9 +186,9 @@ header{position:relative;z-index:60}
   letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
   transition:background .25s var(--ease),transform .25s var(--ease),
              box-shadow .25s var(--ease)}
-.nav-donate:hover,.nav-donate:focus-visible{background:#004f28;
-  transform:translateY(-7px);
-  box-shadow:0 8px 22px rgba(0,104,55,.35),0 0 16px rgba(0,104,55,.24)}
+.nav-donate:hover,.nav-donate:focus-visible{
+  transform:translateY(-8px);
+  box-shadow:0 8px 24px rgba(0,104,55,.32),0 0 16px rgba(0,104,55,.21)}
 .nav-donate:active{transform:translateY(-5px) scale(.98)}
 .brand{order:0}
 .nav-links{order:1}
