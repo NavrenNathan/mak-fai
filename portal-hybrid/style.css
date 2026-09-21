@@ -601,9 +601,13 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   background:var(--bg);border:1px solid rgba(242,180,65,.28);
   border-radius:18px;overflow:hidden;
   box-shadow:0 24px 60px rgba(11,7,8,.35),inset 0 0 0 1px rgba(242,180,65,.06)}
-.value{position:relative}
+.value{position:relative;aspect-ratio:3/4}
 /* No plate -- text sits directly on the tile, anchored to the bottom edge
-   (was dead-centre vertically) but still centred horizontally. */
+   (was dead-centre vertically) but still centred horizontally. aspect-ratio
+   lives on .value (the grid cell) rather than here from 721px up, since at
+   that width .value-tile goes position:absolute with its own left/right/
+   top/bottom insets (see the diagonal-seam block below) and no longer has a
+   free dimension for aspect-ratio to resolve against. */
 .value-tile{position:relative;aspect-ratio:3/4;overflow:hidden;
   display:flex;align-items:flex-end;justify-content:center;
   padding:clamp(20px,2.6vw,32px);text-align:center;
@@ -619,7 +623,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
              rgba(11,7,8,.92) 100%)}
 .value-plate{position:relative;z-index:2;width:100%}
 .value-plate h3{font-family:var(--serif);font-weight:560;letter-spacing:.005em;
-  font-size:clamp(18px,1.9vw,23px);margin:0 0 10px;color:var(--gold)}
+  font-size:clamp(18px,1.9vw,23px);margin:0 0 10px;color:#F4B21E}
 .value-plate p{margin:0 auto;max-width:24ch;font-size:14px;line-height:1.6;
   color:var(--muted)!important}
 /* Slanted divider between the three -- a tilted hairline rather than the
@@ -629,12 +633,42 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
    over the tile's full height, past the shared edge and into both
    neighbouring corners -- crossing over reads as a stitched seam rather
    than disappearing at the edge. */
-.value + .value::before{content:"";position:absolute;z-index:2;
+.value + .value::before{content:"";position:absolute;z-index:10;
   left:0;top:-3%;bottom:-3%;width:1.5px;
   background:linear-gradient(180deg,transparent,rgba(242,180,65,.75) 14%,
              rgba(242,180,65,.75) 86%,transparent);
   transform:rotate(9deg);
   box-shadow:0 0 6px rgba(242,180,65,.35)}
+
+/* The photos themselves used to butt together in a plumb-straight line,
+   which fought with the slanted gold divider drawn on top of that same
+   seam -- one straight cut, one slanted line, visibly not the same edge.
+   From 721px (where the three sit side by side) each tile now overlaps its
+   neighbour and is clipped along the *same* rotate(9deg) angle as the
+   divider, so the photo seam itself is the slash rather than just an
+   accent floating over a straight one. Math: the divider is a line of
+   height ~106% of the tile (top:-3%/bottom:-3%) rotated 9deg, so its two
+   ends spread apart horizontally by height*sin(9deg) =~ 0.166 * tile
+   height; at this tile's fixed 3:4 ratio that is ~22.1% of the tile's
+   *width*, i.e. +-11% from the nominal seam. Left/right insets below give
+   each tile that same 11% overlap into its neighbour, and the clip-path's
+   bottom corner pulls back by the matching percentage of the now-wider
+   box (80.2% / 82% -- the two differ because tile 2 widens on both sides
+   while tile 1 only widens on the right). Left untouched below 721px,
+   where the tiles stack full-width and there's no side-by-side seam. */
+@media (min-width:721px){
+  /* aspect-ratio has to be reset here: with left+right AND top+bottom all
+     definite this shouldn't matter per spec, but browsers were still
+     deriving height from the (now 111%-wide) width via the ratio and
+     overriding bottom:0, stretching every tile taller than .value and
+     pushing the bottom-anchored text off past the visible box. */
+  .value-tile{position:absolute;top:0;bottom:0;aspect-ratio:auto}
+  .value:nth-child(1) .value-tile{left:0;right:-11%;z-index:3;
+    clip-path:polygon(0 0,100% 0,80.2% 100%,0 100%)}
+  .value:nth-child(2) .value-tile{left:-11%;right:-11%;z-index:2;
+    clip-path:polygon(0 0,100% 0,82% 100%,0 100%)}
+  .value:nth-child(3) .value-tile{left:-11%;right:0;z-index:1}
+}
 
 /* ====================== COMMUNITY STORY ====================== */
 .sec-story{padding:0;background:var(--bg)}
