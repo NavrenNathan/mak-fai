@@ -1322,11 +1322,14 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .statline{gap:26px 40px}
   .frow{grid-template-columns:1fr}
   /* single column, still one continuous box: tiles stack flush (no row
-     gap) and the slanted divider becomes a short slanted rule sitting
-     exactly on the shared top edge between rows instead of beside columns. */
+     gap) and the divider becomes a short straight rule sitting exactly on
+     the shared top edge between rows instead of beside columns. Vincent:
+     the slant reads fine on desktop (kept there) but on a short stacked
+     seam it just looked like a stray diagonal fragment -- flat and a bit
+     shorter here instead. */
   .values{grid-template-columns:1fr}
   .value + .value::before{left:50%;top:0;bottom:auto;
-    width:70px;height:1.5px;transform:translateX(-50%) rotate(9deg);
+    width:44px;height:1.5px;transform:translateX(-50%);
     background:linear-gradient(90deg,transparent,rgba(242,180,65,.75) 20%,
                rgba(242,180,65,.75) 80%,transparent);
     box-shadow:0 0 6px rgba(242,180,65,.35)}
