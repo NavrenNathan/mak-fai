@@ -188,7 +188,7 @@ header{position:relative;z-index:60}
              box-shadow .25s var(--ease)}
 .nav-donate:hover,.nav-donate:focus-visible{
   transform:translateY(-8px);
-  box-shadow:0 8px 24px rgba(0,104,55,.32),0 0 16px rgba(0,104,55,.21)}
+  box-shadow:0 8px 24px rgba(0,104,55,.304),0 0 16px rgba(0,104,55,.1995)}
 .nav-donate:active{transform:translateY(-5px) scale(.98)}
 .brand{order:0}
 .nav-links{order:1}
@@ -395,7 +395,7 @@ header{position:relative;z-index:60}
    translateX(-50%) that centres it, or hovering would knock it off-centre. */
 .btn-paper.hero-support:hover,.btn-paper.hero-support:focus-visible{
   transform:translate(-50%,-3px);
-  box-shadow:0 8px 24px rgba(250,246,239,.32),0 0 16px rgba(250,246,239,.21)}
+  box-shadow:0 8px 24px rgba(250,246,239,.304),0 0 16px rgba(250,246,239,.1995)}
 .btn-paper.hero-support:active{transform:translate(-50%,0) scale(.98)}
 /* Demoted to a quiet caption under the button now that "Training the next
    generation of leaders" carries the headline on its own. */

@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=164">
+<link rel="stylesheet" href="style.css?v=165">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
@@ -747,6 +747,22 @@
     }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
     toReveal.forEach(function(el){ io.observe(el); });
   }
+
+  /* The hero's one-shot entrance animation (rise/rise-tag) uses fill-mode
+     forwards, which keeps "winning" the transform property forever after
+     it finishes -- a running animation always outranks a plain :hover rule
+     for the same property, regardless of specificity. Left alone, that
+     silently ate the Support-us button's hover lift (only its box-shadow,
+     which the animation never touches, showed on hover). Dropping the
+     animation once it ends hands transform back to normal CSS -- opacity
+     has to be pinned to 1 first, since these elements' only opacity:1 ever
+     comes from the animation's own forwards fill, not a base rule. */
+  [].slice.call(document.querySelectorAll('.hero [data-stagger]')).forEach(function(el){
+    el.addEventListener('animationend', function(){
+      el.style.opacity = '1';
+      el.style.animation = 'none';
+    }, {once:true});
+  });
 
   /* scrollspy removed along with .nav-menu -- there's nothing left in the
      header for it to highlight. Re-add if the nav links come back. */
