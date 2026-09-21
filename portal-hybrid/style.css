@@ -181,14 +181,14 @@ header{position:relative;z-index:60}
 .nav-donate{order:2;position:relative;z-index:56;transform:translateY(-5px);
   display:inline-flex;align-items:center;flex-shrink:0;
   padding:11px 20px;border-radius:8px;
-  background:var(--jade-bright);color:var(--ink-l);
+  background:#006837;color:#fff;
   font-family:var(--sans);font-size:12px;font-weight:700;
   letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;
   transition:background .25s var(--ease),transform .25s var(--ease),
              box-shadow .25s var(--ease)}
-.nav-donate:hover,.nav-donate:focus-visible{background:#45c957;
+.nav-donate:hover,.nav-donate:focus-visible{background:#004f28;
   transform:translateY(-7px);
-  box-shadow:0 8px 22px rgba(57,180,74,.35),0 0 16px rgba(57,180,74,.24)}
+  box-shadow:0 8px 22px rgba(0,104,55,.35),0 0 16px rgba(0,104,55,.24)}
 .nav-donate:active{transform:translateY(-5px) scale(.98)}
 .brand{order:0}
 .nav-links{order:1}
