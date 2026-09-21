@@ -602,16 +602,20 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   border-radius:18px;overflow:hidden;
   box-shadow:0 24px 60px rgba(11,7,8,.35),inset 0 0 0 1px rgba(242,180,65,.06)}
 .value{position:relative;aspect-ratio:3/4}
-/* .value is also .reveal, which normally slides up on scroll-in via
-   transform. But .value is the containing block for the absolutely
-   positioned, clip-path'd .value-tile above -- animating the parent's
-   transform every frame made Chromium paint the photos with their old
-   plumb-straight edge for the length of that transition, then snap to the
-   correct diagonal once it settled (the reload "glitch" where the seam
-   flashes straight before correcting itself). Cancelling just the slide
-   (the opacity fade from .reveal still runs) removes the per-frame
-   transform recalculation the clip was fighting with. */
-.value.reveal{transform:none}
+/* .value is also .reveal, which normally fades+slides in on scroll-in. But
+   .value is the containing block for the absolutely positioned, clip-path'd
+   .value-tile above, and this codebase has already hit this exact class of
+   bug once (see the mix-blend-mode note on mak-kwoon.png): an ancestor's
+   *animated opacity* forces the browser to isolate compositing for its
+   descendants for the length of the transition, since the isolated layer
+   can get rasterized from a stale pre-clip state. Killing just the
+   transform (an earlier pass at this fix) wasn't enough -- the still-
+   animating opacity alone was sufficient to trigger it, which is why the
+   photos kept flashing their old straight edge on reload before snapping
+   to the correct diagonal. Removing the whole .reveal effect here (opacity
+   included, not just transform) leaves no animated property left to
+   isolate compositing over. */
+.value.reveal{opacity:1;transform:none;transition:none}
 /* No plate -- text sits directly on the tile, anchored to the bottom edge
    (was dead-centre vertically) but still centred horizontally. aspect-ratio
    lives on .value (the grid cell) rather than here from 721px up, since at
