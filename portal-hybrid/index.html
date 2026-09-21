@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=178">
+<link rel="stylesheet" href="style.css?v=179">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
@@ -60,7 +60,7 @@
     <p class="eyebrow">Mak Fai · Preview</p>
     <p class="pw-gate-title">Enter password to continue</p>
     <div class="pw-gate-field">
-      <input id="pw-gate-input" class="pw-gate-input" type="password" name="password" placeholder="Password" autocomplete="off" autofocus>
+      <input id="pw-gate-input" class="pw-gate-input" type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="off" autofocus>
       <button type="button" id="pw-gate-toggle" class="pw-gate-toggle" aria-label="Show password" aria-pressed="false">
         <svg id="pw-gate-eye" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
       </button>
@@ -235,7 +235,7 @@
       <div class="values">
         <div class="value reveal">
           <div class="value-tile">
-            <img class="value-photo" src="assets/values-community-culture-courage/value-community.jpg" alt="" width="1400" height="1045" loading="lazy">
+            <img class="value-photo" src="assets/values-community-culture-courage/value-community.jpg" alt="A Mak Fai lion dance performance in front of the Space Needle at a Seattle community event" width="1400" height="1045" loading="lazy">
             <div class="value-plate">
               <h3>Community</h3>
               <p>We honor and give back to our communities.</p>
@@ -245,7 +245,7 @@
 
         <div class="value reveal d1">
           <div class="value-tile">
-            <img class="value-photo" src="assets/values-community-culture-courage/value-culture.jpg" alt="" width="1400" height="933" loading="lazy">
+            <img class="value-photo" src="assets/values-community-culture-courage/value-culture.jpg" alt="Mak Fai students and instructors posing with lion dance heads outside a Chinatown-International District building" width="1400" height="933" loading="lazy">
             <div class="value-plate">
               <h3>Culture</h3>
               <p>We respect our traditions while looking towards the future.</p>
@@ -255,7 +255,7 @@
 
         <div class="value reveal d2">
           <div class="value-tile">
-            <img class="value-photo" src="assets/values-community-culture-courage/value-courage.jpg" alt="" width="1120" height="1400" loading="lazy">
+            <img class="value-photo" src="assets/values-community-culture-courage/value-courage.jpg" alt="A Mak Fai lion dancer lifted high above a traditional Chinatown gate during a performance" width="1120" height="1400" loading="lazy">
             <div class="value-plate">
               <h3>Courage</h3>
               <p>We train the next generation of courageous leaders.</p>
@@ -412,6 +412,26 @@
           <b>Call or text</b>
           <a class="hq-phone" href="tel:+12064378131">(206) 437-8131</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BELLEVUE (second location, details pending) ============
+       Deliberately minimal -- no confirmed Bellevue-specific details exist
+       yet (address, schedule, instructor, photos), so none are invented
+       here. Kept as its own small band-light section right after Seattle
+       HQ rather than folded into it, so HQ's own layout/copy stays
+       untouched. The dashed-border treatment matches .hq-placeholder's own
+       "intentionally pending" language, so this reads as designed rather
+       than unfinished. -->
+  <section id="bellevue" class="band-light sec-bellevue" aria-labelledby="bellevue-h">
+    <div class="wrap bellevue-in">
+      <p class="eyebrow reveal">Expanding soon</p>
+      <h2 id="bellevue-h" class="disp reveal d1">Bellevue</h2>
+      <span class="disp-rule reveal d1" aria-hidden="true"></span>
+      <div class="bellevue-note reveal d2">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        <p>More details coming soon</p>
       </div>
     </div>
   </section>

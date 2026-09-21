@@ -726,6 +726,28 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   display:inline-block;padding:4px 0;margin:-4px 0}
 .hq-phone:hover{color:var(--jade)}
 
+/* ========================== BELLEVUE ==========================
+   Deliberately short section -- there's real content at Seattle HQ above
+   and none yet here, so this stays compact rather than stretching to match
+   HQ's height and looking half-empty. Centred like .values-in rather than
+   the left-aligned band-light default, since a single short line reads
+   better centred than pinned left with a ragged right edge. */
+.sec-bellevue{padding-top:calc(var(--sec) * .38);
+  padding-bottom:calc(var(--sec) * .4);
+  border-top:1px solid var(--line-l)}
+.bellevue-in{text-align:center}
+.sec-bellevue .disp-rule{margin-left:auto;margin-right:auto}
+/* Same dashed-border "intentionally pending" language as .hq-placeholder,
+   scaled down to an inline pill instead of a photo-sized block -- one
+   short line doesn't need a whole box. */
+.bellevue-note{display:inline-flex;align-items:center;gap:10px;
+  margin-top:clamp(20px,2.4vw,28px);padding:12px 22px;
+  border:1px dashed var(--line-l);border-radius:999px;
+  color:var(--muted-l)}
+.bellevue-note svg{flex-shrink:0}
+.bellevue-note p{margin:0;font-size:14px;font-weight:500;
+  letter-spacing:.01em;color:var(--muted-l)}
+
 /* ====================== COMMUNITY STORY ====================== */
 .sec-story{padding:0;background:var(--bg)}
 .story-photo{margin:0;position:relative;height:clamp(400px,72vh,680px);
