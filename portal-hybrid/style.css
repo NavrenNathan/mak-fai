@@ -389,7 +389,7 @@ header{position:relative;z-index:60}
    site-wide near-sharp 2px corner. */
 .hero-support{position:absolute;z-index:2;left:50%;bottom:62px;
   transform:translateX(-50%);
-  padding:14px 22px;border-radius:8px;font-weight:400}
+  padding:14px 22px;border-radius:999px;font-weight:400}
 /* Same lift-and-glow as .nav-donate, tinted to this button's own ivory
    rather than the Donate green. The transform has to restate the
    translateX(-50%) that centres it, or hovering would knock it off-centre. */
