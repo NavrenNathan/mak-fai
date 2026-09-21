@@ -395,7 +395,7 @@ header{position:relative;z-index:60}
    translateX(-50%) that centres it, or hovering would knock it off-centre. */
 .btn-paper.hero-support:hover,.btn-paper.hero-support:focus-visible{
   transform:translate(-50%,-3px);
-  box-shadow:0 8px 24px rgba(250,246,239,.2746),0 0 16px rgba(250,246,239,.18)}
+  box-shadow:0 8px 24px rgba(250,246,239,.2609),0 0 16px rgba(250,246,239,.171)}
 .btn-paper.hero-support:active{transform:translate(-50%,0) scale(.98)}
 /* Demoted to a quiet caption under the button now that "Training the next
    generation of leaders" carries the headline on its own. */
