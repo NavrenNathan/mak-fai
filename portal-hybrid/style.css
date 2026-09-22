@@ -671,7 +671,26 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
     clip-path:polygon(0 0,100% 0,81.1% 100%,0 100%)}
   .value:nth-child(2) .value-tile{left:-10.43%;right:-10.43%;z-index:2;
     clip-path:polygon(0 0,100% 0,82.7% 100%,0 100%)}
-  .value:nth-child(3) .value-tile{left:-11%;right:0;z-index:1}
+  .value:nth-child(3) .value-tile{left:-10.43%;right:0;z-index:1}
+  /* Tiles 1 and 3 only widen on one side (into the neighbour they overlap),
+     so .value-plate{width:100%} + justify-content:center (the shared base
+     rule) centers text on the WIDENED box, not the true column underneath.
+     Measured: Community's heading landed 19.5px right of its column's real
+     centre, Courage's 20.5px left -- mirror images, matching the one-sided
+     10.43% widening (Culture widens evenly both sides and measured 0px
+     off, correctly). Fix: shrink the plate back to the true nominal width
+     (100%/1.1043 =~ 90.55% of the widened box) and flush it to whichever
+     edge is the tile's UNWIDENED side, instead of centering a full-width
+     plate on a box that isn't actually centred on the column. A first pass
+     tried correcting with a plain translateX() percentage instead -- close
+     (~20px to ~3px) but not exact, since that % is relative to the plate's
+     own box and doesn't account for .value-tile's padding shrinking the
+     actual content width unevenly relative to the theoretical math. This
+     approach doesn't depend on that assumption. */
+  .value:nth-child(1) .value-tile{justify-content:flex-start}
+  .value:nth-child(1) .value-plate{width:90.55%}
+  .value:nth-child(3) .value-tile{justify-content:flex-end}
+  .value:nth-child(3) .value-plate{width:90.55%}
 }
 
 /* ====================== COMMUNITY STORY ====================== */
