@@ -369,20 +369,6 @@ header{position:relative;z-index:60}
   text-shadow:0 0 .07em rgba(255,255,255,.14)}
 .hero-cjk-lion{left:clamp(20px,4vw,64px);text-align:left}
 .hero-cjk-kungfu{right:clamp(20px,4vw,64px);text-align:right}
-/* This is the donor-facing line -- it needs to actually stick out, not read
-   as fine print. Bold geometric-sans, uppercase, white -- the reference was
-   the TED "ideas worth spreading" wordmark; Poppins is the closest match
-   available on Google Fonts (true geometric circles on the O/C, wide-set). */
-.hero-status{position:absolute;z-index:2;left:50%;bottom:220px;
-  transform:translateX(-50%);margin:0;width:min(92vw,560px);
-  font-family:'Poppins',var(--sans);font-weight:700;text-transform:uppercase;
-  letter-spacing:.01em;font-size:clamp(20px,2.3vw,26px);
-  line-height:1.5;text-align:center;color:#fff;
-  text-shadow:0 2px 3px rgba(0,0,0,.85),0 8px 26px rgba(0,0,0,.7)}
-/* "leaders." gets its own line and reads noticeably bigger than the rest of
-   the statement, so it's the one word that really lands. */
-.hero-status-big{display:inline-block;margin-top:2px;font-style:italic;
-  font-size:2em;letter-spacing:.02em}
 /* centred bottom of the hero -- .btn-paper (ivory) reads clearly against
    both the dark lion stage and the kung fu half. Shorter/squarer than the
    shared .btn default, lighter weight, and softly rounded rather than the
@@ -409,7 +395,7 @@ header{position:relative;z-index:60}
 .hero .hero-word[data-stagger]{animation-name:rise-word}
 @keyframes rise{from{opacity:0;transform:translate(-50%,-44%)}
   to{opacity:1;transform:translate(-50%,-50%)}}
-.hero .hero-status,.hero .hero-support,.hero .hero-nonprofit{animation-name:rise-tag}
+.hero .hero-support,.hero .hero-nonprofit{animation-name:rise-tag}
 @keyframes rise-tag{from{opacity:0;transform:translate(-50%,10px)}
   to{opacity:1;transform:translate(-50%,0)}}
 @keyframes rise-word{from{opacity:0}to{opacity:1}}
@@ -688,66 +674,6 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   .value:nth-child(3) .value-tile{left:-11%;right:0;z-index:1}
 }
 
-/* ========================== SEATTLE HQ ==========================
-   Plain two-column info section between Traditions and the Community
-   story -- photo/placeholder left, address + schedule + phone right.
-   Reuses existing primitives (.eyebrow/.disp/.disp-rule, .info-row from
-   Contact) rather than introducing a parallel heading or address style. */
-.hq-grid{display:grid;grid-template-columns:1fr 1.1fr;
-  gap:clamp(36px,5.5vw,88px);align-items:center}
-.hq-photo{margin:0}
-/* Dashed border + muted fill read unmistakably as "placeholder" rather
-   than a real (if plain) photo -- deliberate, since there's no real HQ
-   photograph yet and this shouldn't be mistaken for one. */
-.hq-placeholder{width:100%;aspect-ratio:4/3.1;border-radius:2px;
-  border:1px dashed var(--line-l);background:var(--line-l-soft);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:12px;color:var(--muted-l)}
-.hq-placeholder svg{opacity:.7}
-.hq-placeholder span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;
-  font-weight:600}
-.hq-copy .info-rows{margin-top:30px}
-.hq-schedule{list-style:none;margin:4px 0 0;padding:0;display:grid;gap:5px;
-  max-width:280px}
-.hq-schedule li{display:flex;justify-content:space-between;gap:16px}
-.hq-schedule li span:first-child{color:var(--ink-l);font-weight:500}
-.hq-schedule li span:last-child{color:var(--muted-l)}
-/* Same card treatment as .form in Contact (--card + hairline + soft shadow)
-   so the phone number reads as its own distinct box, per spec, without
-   inventing a second "card" language for the page. */
-.hq-contact{margin-top:32px;background:var(--card);
-  border:1px solid var(--line-l-soft);border-radius:2px;
-  padding:20px 26px;box-shadow:0 2px 20px rgba(24,16,10,.05);
-  display:flex;align-items:center;flex-wrap:wrap;gap:4px 18px}
-.hq-contact b{font-size:11px;letter-spacing:.24em;text-transform:uppercase;
-  color:var(--muted-l);font-weight:600}
-.hq-phone{font-family:var(--serif);font-weight:520;
-  font-size:clamp(19px,2.1vw,24px);color:var(--ink-l);text-decoration:none;
-  display:inline-block;padding:4px 0;margin:-4px 0}
-.hq-phone:hover{color:var(--jade)}
-
-/* ========================== BELLEVUE ==========================
-   Deliberately short section -- there's real content at Seattle HQ above
-   and none yet here, so this stays compact rather than stretching to match
-   HQ's height and looking half-empty. Centred like .values-in rather than
-   the left-aligned band-light default, since a single short line reads
-   better centred than pinned left with a ragged right edge. */
-.sec-bellevue{padding-top:calc(var(--sec) * .38);
-  padding-bottom:calc(var(--sec) * .4);
-  border-top:1px solid var(--line-l)}
-.bellevue-in{text-align:center}
-.sec-bellevue .disp-rule{margin-left:auto;margin-right:auto}
-/* Same dashed-border "intentionally pending" language as .hq-placeholder,
-   scaled down to an inline pill instead of a photo-sized block -- one
-   short line doesn't need a whole box. */
-.bellevue-note{display:inline-flex;align-items:center;gap:10px;
-  margin-top:clamp(20px,2.4vw,28px);padding:12px 22px;
-  border:1px dashed var(--line-l);border-radius:999px;
-  color:var(--muted-l)}
-.bellevue-note svg{flex-shrink:0}
-.bellevue-note p{margin:0;font-size:14px;font-weight:500;
-  letter-spacing:.01em;color:var(--muted-l)}
-
 /* ====================== COMMUNITY STORY ====================== */
 .sec-story{padding:0;background:var(--bg)}
 .story-photo{margin:0;position:relative;height:clamp(400px,72vh,680px);
@@ -768,9 +694,10 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   padding:clamp(56px,7vw,96px) clamp(22px,4vw,48px) var(--sec)}
 .story-copy{max-width:62ch;font-size:clamp(17px,1.6vw,19.5px);
   line-height:1.75;color:#E5DAD2;margin:0}
-.story-quotes{display:grid;grid-template-columns:1.35fr 1fr;
-  gap:clamp(28px,4vw,64px);margin-top:clamp(48px,6vw,80px)}
-.squote{margin:0;padding:6px 0 6px clamp(20px,2.4vw,32px);
+/* Single quote now (the second was removed) -- capped to a readable
+   measure instead of stretching the pull-quote treatment full width. */
+.story-quotes{margin-top:clamp(48px,6vw,80px)}
+.squote{margin:0;max-width:60ch;padding:6px 0 6px clamp(20px,2.4vw,32px);
   border-left:1px solid rgba(242,180,65,.5)}
 .squote p{margin:0;font-family:var(--serif);font-weight:450;
   font-size:clamp(19px,2.1vw,25px);line-height:1.45;color:var(--ink)}
@@ -1292,9 +1219,6 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 
 /* ========================= RESPONSIVE ========================= */
 @media (max-width:1080px){
-  /* Photo is already first in the DOM, so this stacks it above the copy
-     with no order/reflow needed -- unlike .trad-rev, which has to flip. */
-  .hq-grid{grid-template-columns:1fr;gap:30px}
   .trad-grid,.trad-rev .trad-grid{grid-template-columns:1fr;gap:30px}
   .trad-rev .trad-photo{order:1}
   .trad-rev .trad-copy{order:2}
@@ -1314,7 +1238,6 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .award{grid-column:auto}
   .award:last-child,.award:nth-last-child(2){grid-column:auto}
   .ways{grid-template-columns:1fr 1fr}
-  .story-quotes{grid-template-columns:1fr}
 }
 @media (max-width:960px){
   .give-grid{grid-template-columns:1fr;gap:44px}
@@ -1355,7 +1278,6 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
     transform:translate(-50%,-50%);text-align:center}
   .hero-cjk-lion{top:24%}
   .hero-cjk-kungfu{top:74%}
-  .hero-status{bottom:108px;font-size:14px;width:min(94vw,360px);line-height:1.45}
   .hero-support{bottom:42px;padding:8px 14px;font-size:9px}
   .hero-nonprofit{bottom:9px;font-size:10px}
   @keyframes rise{from{opacity:0;transform:translate(-50%,-46%)}
