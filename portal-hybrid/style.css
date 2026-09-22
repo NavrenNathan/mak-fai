@@ -1273,7 +1273,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
      to both push the lion lower in frame and crop the pink competition
      banner out of view at the bottom. A modest zoom creates the extra
      overflow needed to do both at once. */
-  .hero-split-lion img{left:0;top:0;transform:scale(1.18) translateY(45px)}
+  .hero-split-lion img{left:0;top:0;transform:scale(1.18) translateY(25px)}
   .hero-split-kungfu img{right:0;top:auto;bottom:0}
   .hero-word{font-size:clamp(34px,10.5vw,50px);text-align:center;
     transform:translate(-50%,-50%) scaleX(.78);transform-origin:center}
