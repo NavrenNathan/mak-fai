@@ -932,16 +932,13 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
     rgba(242,180,65,.14),rgba(242,180,65,.05) 42%,transparent 70%)}
 .sec-awards .wrap{position:relative;z-index:1}
 .sec-awards .lede{max-width:52ch}
-/* 8 tracks, each card spanning 2 -- reads as 4-across (6 cards: 4 fill row
-   one, 2 left over). The extra granularity lets that leftover pair be
-   explicitly centered instead of left-aligning with a gap on the right. If
-   the total card count ever stops being "a multiple of 4, plus 2," the
-   centering below needs revisiting. */
+/* 8 tracks, each card spanning 2 -- reads as a clean 4-across single row
+   with exactly 4 cards (the two CanAm competition cards moved down into
+   .results-strip below, alongside the Can-Am championship placements they
+   overlapped with). */
 .awards{display:grid;grid-template-columns:repeat(8,1fr);
   gap:clamp(14px,1.5vw,20px);margin-top:clamp(38px,4.4vw,58px)}
 .award{grid-column:span 2}
-.award:nth-last-child(2){grid-column:3/5}
-.award:last-child{grid-column:5/7}
 /* Cards are lit glass, not flat panels: a top-down white wash for the
    "display case" read, a gold hairline for the frame. */
 .award{display:flex;flex-direction:column;position:relative;
@@ -1228,15 +1225,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .honors{grid-template-columns:1fr 1fr;gap:24px}
   .impact{grid-template-columns:1fr 1fr}
   .awards{grid-template-columns:1fr 1fr}
-  /* Reset the desktop 8-track centering math -- with only 2 real columns
-     here, "column 3/5" would spill into implicit extra tracks. 6 cards in
-     2 columns is already 3 clean rows, so nothing needs centering here.
-     Matches the :last-child/:nth-last-child(2) SPECIFICITY, not just the
-     plain .award selector -- a bare .award{grid-column:auto} here loses to
-     those compound selectors regardless of which comes later in the file,
-     since specificity is decided before source order. */
   .award{grid-column:auto}
-  .award:last-child,.award:nth-last-child(2){grid-column:auto}
   .ways{grid-template-columns:1fr 1fr}
 }
 @media (max-width:960px){
