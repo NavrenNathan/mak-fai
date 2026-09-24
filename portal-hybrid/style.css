@@ -506,16 +506,22 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 /* Placeholder slots for the client's own photos -- one per field above.
    Dashed frame reads as "a slot", not a broken image, until real photos
    land (see the TODO beside this block in index.html). */
+/* Each slot is cut to the crest's banner: square top, pointed foot, green
+   frame around a black field. The frame is the outer element's own fill
+   showing through the inner's padding, so both carry the same polygon. */
 .field-photos{display:grid;grid-template-columns:repeat(3,1fr);
-  gap:clamp(12px,2vw,20px);margin-top:clamp(28px,3.5vw,40px)}
-.field-photo{aspect-ratio:5/4;border:1.5px dashed var(--line-l);
-  border-radius:12px;background:rgba(34,26,21,.03);
+  gap:clamp(20px,3vw,44px);margin-top:clamp(36px,4.5vw,56px);
+  padding:0 clamp(0px,3vw,48px)}
+.field-photo{--cut:polygon(0 0,100% 0,100% 84%,50% 100%,0 84%);
+  aspect-ratio:3/4;background:var(--jade);clip-path:var(--cut);
+  padding:clamp(7px,.8vw,10px)}
+.fp-field{height:100%;background:#0B0708;clip-path:var(--cut);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:14px;padding:16px;text-align:center;color:var(--muted-l)}
-.fp-icon{width:38px;height:38px;opacity:.5}
+  gap:14px;padding:16px 16px 22%;text-align:center}
+.fp-icon{width:38px;height:38px;color:var(--gold);opacity:.7}
 .fp-label{font-size:13px;letter-spacing:.14em;text-transform:uppercase;
-  font-weight:600;color:var(--ink-l)}
-.fp-note{font-size:11px;letter-spacing:.06em;color:var(--muted-l)}
+  font-weight:600;color:var(--gold)}
+.fp-note{font-size:11px;letter-spacing:.06em;color:var(--muted)}
 
 /* ========================= TRADITIONS ========================= */
 .sec-trad{padding-top:calc(var(--sec) * .5);padding-bottom:0}
@@ -1366,8 +1372,8 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   /* These five labels wrapped 1 / 1 / 2 / 1 at 390px, which reads as a
      mistake rather than a layout. One per line is deliberate and calm. */
   .fields{flex-direction:column;gap:2px}
-  .field-photos{grid-template-columns:1fr;gap:10px}
-  .field-photo{aspect-ratio:4/3}
+  .field-photos{grid-template-columns:1fr;gap:18px;padding:0;
+    width:min(78%,280px);margin-left:auto;margin-right:auto}
   .mosaic{grid-auto-rows:minmax(240px,auto)}
   .m-feature{grid-row:auto}
   /* The caption block runs ~124px tall once it carries a badge and a
