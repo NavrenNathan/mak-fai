@@ -488,15 +488,17 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   display:flex;align-items:center;gap:8px}
 .intro-photo figcaption .pin{flex-shrink:0;color:var(--red-l)}
 /* Section label for the stats + program rows below -- same eyebrow/disp
-   voice as Traditions, but centred with a longer rule like the Values
-   header above it, since the two now bookend the same block. */
+   voice as Traditions, but centred with the Values header's own seal
+   divider (jade version), since the two now bookend the same block. */
 .runs-intro{margin-top:clamp(48px,6vw,84px);text-align:center}
 .runs-intro .disp{margin-inline:auto}
-.runs-intro .disp-rule{margin-inline:auto;width:72px}
+.runs-intro .v-divide{margin-bottom:0}
+.v-divide-l .v-divide-line{background:linear-gradient(90deg,transparent,rgba(30,90,68,.35) 40%,rgba(30,90,68,.35))}
+.v-divide-l .v-divide-line:last-child{background:linear-gradient(270deg,transparent,rgba(30,90,68,.35) 40%,rgba(30,90,68,.35))}
+.v-divide-l .v-seal{color:var(--jade)}
 .statline{display:flex;justify-content:center;text-align:center;
   gap:clamp(30px,6vw,90px);flex-wrap:wrap;
-  border-top:1px solid var(--line-l);margin-top:clamp(48px,6vw,84px);
-  padding-top:clamp(28px,3.5vw,44px)}
+  margin-top:clamp(48px,6vw,84px)}
 .stat b{display:block;font-family:var(--serif);font-weight:520;
   font-size:clamp(30px,3.4vw,44px);line-height:1;color:var(--ink-l);
   letter-spacing:-.01em}
