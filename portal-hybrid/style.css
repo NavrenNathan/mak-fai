@@ -457,7 +457,21 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   column-gap:clamp(40px,6vw,96px);row-gap:14px;align-items:start}
 .intro-copy{grid-area:copy}
 .intro-photo{grid-area:photo}
-.intro-cta{grid-area:cta;align-self:start}
+/* The 1974/50+ facts used to float centred beneath the whole grid as an
+   unattached third row -- reads as an afterthought. Folded into the copy
+   column's own close instead: a hairline, the two facts, then Learn more,
+   so it reads as one editorial unit (story, then vitals, then the link)
+   rather than a stray banner. */
+.intro-close{grid-area:cta;align-self:start;display:flex;
+  flex-direction:column;gap:26px;padding-top:26px;
+  border-top:1px solid var(--line-l-soft)}
+.statline{display:flex;flex-wrap:wrap;text-align:left;
+  gap:clamp(28px,4vw,44px)}
+.stat b{display:block;font-family:var(--serif);font-weight:520;
+  font-size:clamp(22px,2.2vw,28px);line-height:1;color:var(--ink-l);
+  letter-spacing:-.01em}
+.stat i{font-style:normal;display:block;margin-top:6px;font-size:11px;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--muted-l)}
 .intro-sub{font-family:var(--serif);font-style:italic;font-weight:450;
   font-size:clamp(18px,2vw,22px);color:var(--jade)!important;margin:0 0 26px}
 /* Bold uppercase grotesque instead of the section's usual serif .disp --
@@ -494,14 +508,6 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .runs-intro{margin-top:0;text-align:center}
 .runs-intro .disp{margin-inline:auto}
 .runs-intro .v-divide{margin-bottom:0}
-.statline{display:flex;justify-content:center;text-align:center;
-  gap:clamp(30px,6vw,90px);flex-wrap:wrap;
-  margin-top:clamp(48px,6vw,84px)}
-.stat b{display:block;font-family:var(--serif);font-weight:520;
-  font-size:clamp(30px,3.4vw,44px);line-height:1;color:var(--ink-l);
-  letter-spacing:-.01em}
-.stat i{font-style:normal;display:block;margin-top:8px;font-size:11px;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--muted-l)}
 
 /* What we do -- one row per program, photo side alternating. Kept apart
    from Traditions' floating photo + text: here each row is one white sheet
@@ -1275,7 +1281,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
      just collapsing to one column. */
   .intro-grid{grid-template-columns:1fr;
     grid-template-areas:"copy" "cta" "photo"}
-  .intro-cta{margin-top:8px}
+  .intro-close{margin-top:8px}
   .intro-photo{margin-top:24px}
   .mosaic{grid-template-columns:1fr 1fr}
   .m-feature{grid-column:1/-1;grid-row:auto}
