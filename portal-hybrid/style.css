@@ -496,12 +496,13 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .runs-intro .v-divide{margin-bottom:0}
 .statline{display:flex;justify-content:center;text-align:center;
   gap:clamp(30px,6vw,90px);flex-wrap:wrap;
-  margin-top:clamp(16px,2.2vw,28px)}
+  border-top:1px solid var(--line-l);margin-top:clamp(48px,6vw,84px);
+  padding-top:clamp(28px,3.5vw,44px)}
 .stat b{display:block;font-family:var(--serif);font-weight:520;
-  font-size:clamp(30px,3.4vw,44px);line-height:1;color:#fff;
+  font-size:clamp(30px,3.4vw,44px);line-height:1;color:var(--ink-l);
   letter-spacing:-.01em}
 .stat i{font-style:normal;display:block;margin-top:8px;font-size:11px;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+  letter-spacing:.24em;text-transform:uppercase;color:var(--muted-l)}
 
 /* What we do -- one row per program, photo side alternating. Kept apart
    from Traditions' floating photo + text: here each row is one white sheet
