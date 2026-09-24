@@ -498,7 +498,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .v-divide-l .v-seal{color:var(--jade)}
 .statline{display:flex;justify-content:center;text-align:center;
   gap:clamp(30px,6vw,90px);flex-wrap:wrap;
-  margin-top:clamp(48px,6vw,84px)}
+  margin-top:clamp(16px,2.2vw,28px)}
 .stat b{display:block;font-family:var(--serif);font-weight:520;
   font-size:clamp(30px,3.4vw,44px);line-height:1;color:var(--ink-l);
   letter-spacing:-.01em}
