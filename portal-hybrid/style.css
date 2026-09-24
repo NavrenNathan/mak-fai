@@ -500,13 +500,15 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 /* What we do -- one row per program, photo side alternating. Kept apart
    from Traditions' floating photo + text: here each row is one white sheet
    the photo bleeds into, so the three read as a set rather than as more
-   Traditions rows. The seal is a name chop -- red square, the character
-   knocked out in paper -- standing in for an icon. */
-.runs{display:grid;gap:clamp(16px,2vw,24px);margin-top:clamp(44px,5.5vw,72px)}
-.run{display:grid;grid-template-columns:1fr 1fr;min-height:clamp(340px,30vw,420px);
+   Traditions rows. Rows run wider than .wrap and stay short, so they read
+   as bands rather than blocks. */
+.runs{display:grid;gap:clamp(12px,1.4vw,18px);margin-top:clamp(44px,5.5vw,72px);
+  width:min(1320px,calc(100vw - 48px));position:relative;left:50%;transform:translateX(-50%)}
+.run{display:grid;grid-template-columns:5fr 7fr;min-height:clamp(220px,17vw,260px);
   background:var(--card);border:1px solid var(--line-l-soft);border-radius:2px;
   overflow:hidden;box-shadow:0 1px 2px rgba(34,26,21,.04),0 18px 40px -28px rgba(34,26,21,.22)}
 .run:nth-child(odd) .run-photo{order:2}
+.run:nth-child(odd){grid-template-columns:7fr 5fr}
 .run-photo{position:relative;background:var(--panel);
   display:flex;align-items:center;justify-content:center}
 .run-photo > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -514,18 +516,13 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
 .run-ph svg{width:34px;height:34px;color:var(--gold);opacity:.75}
 .run-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
-  padding:clamp(32px,4.5vw,64px) clamp(28px,4.5vw,68px)}
-.run-seal{display:grid;place-items:center;width:46px;height:46px;margin-bottom:26px;
-  background:var(--red-l);color:var(--paper);border-radius:3px;
-  font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",var(--sans);
-  font-size:26px;font-weight:700;line-height:1;
-  box-shadow:inset 0 0 0 2px var(--red-l),inset 0 0 0 3.5px rgba(250,246,239,.55)}
+  padding:clamp(26px,2.6vw,38px) clamp(28px,4vw,64px)}
 .run-title{font-family:var(--sans);font-weight:700;text-transform:uppercase;
   font-size:clamp(24px,2.6vw,34px);line-height:1;letter-spacing:-.01em;
-  margin:0 0 14px;color:var(--ink-l);text-wrap:balance}
+  margin:0 0 10px;color:var(--ink-l);text-wrap:balance}
 .run-line{font-family:var(--serif);font-style:italic;font-weight:450;
-  font-size:17.5px;color:var(--bronze);margin:0 0 18px}
-.run-body{margin:0 0 28px;max-width:46ch;color:var(--muted-l);line-height:1.65}
+  font-size:17px;color:var(--bronze);margin:0 0 12px}
+.run-body{margin:0 0 20px;max-width:64ch;color:var(--muted-l);line-height:1.65}
 
 /* ========================= TRADITIONS ========================= */
 .sec-trad{padding-top:calc(var(--sec) * .5);padding-bottom:0}
@@ -1373,10 +1370,11 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
      button -- and the "Award-winning documentary" badge straight through it.
      Taller single rows give the caption room to clear the button, and the
      thumbnails read far better on a phone besides. */
-  .run{grid-template-columns:1fr;min-height:0}
+  .runs{width:auto;left:auto;transform:none}
+  .run,.run:nth-child(odd){grid-template-columns:1fr;min-height:0}
   .run:nth-child(odd) .run-photo{order:0}
-  .run-photo{aspect-ratio:4/3}
-  .run-copy{padding:30px 24px 34px}
+  .run-photo{aspect-ratio:16/9}
+  .run-copy{padding:24px 22px 26px}
   .mosaic{grid-auto-rows:minmax(240px,auto)}
   .m-feature{grid-row:auto}
   /* The caption block runs ~124px tall once it carries a badge and a
