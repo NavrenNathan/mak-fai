@@ -496,8 +496,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .runs-intro .v-divide{margin-bottom:0}
 .statline{display:flex;justify-content:center;text-align:center;
   gap:clamp(30px,6vw,90px);flex-wrap:wrap;
-  border-top:1px solid var(--line-l);margin-top:clamp(48px,6vw,84px);
-  padding-top:clamp(28px,3.5vw,44px)}
+  margin-top:clamp(48px,6vw,84px)}
 .stat b{display:block;font-family:var(--serif);font-weight:520;
   font-size:clamp(30px,3.4vw,44px);line-height:1;color:var(--ink-l);
   letter-spacing:-.01em}
