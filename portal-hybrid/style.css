@@ -487,23 +487,21 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   text-transform:uppercase;color:var(--muted-l);
   display:flex;align-items:center;gap:8px}
 .intro-photo figcaption .pin{flex-shrink:0;color:var(--red-l)}
-/* Section label for the stats + program rows below -- same eyebrow/disp
-   voice as Traditions, but centred with the Values header's own seal
-   divider (jade version), since the two now bookend the same block. */
-.runs-intro{margin-top:clamp(48px,6vw,84px);text-align:center}
+/* WHAT WE DO -- its own dark band now, same treatment as Values (gold
+   eyebrow/seal on black) rather than a light section. */
+.sec-programs{background:var(--bg);color:var(--ink);
+  border-top:1px solid rgba(242,180,65,.16)}
+.runs-intro{margin-top:0;text-align:center}
 .runs-intro .disp{margin-inline:auto}
 .runs-intro .v-divide{margin-bottom:0}
-.v-divide-l .v-divide-line{background:linear-gradient(90deg,transparent,rgba(30,90,68,.35) 40%,rgba(30,90,68,.35))}
-.v-divide-l .v-divide-line:last-child{background:linear-gradient(270deg,transparent,rgba(30,90,68,.35) 40%,rgba(30,90,68,.35))}
-.v-divide-l .v-seal{color:var(--jade)}
 .statline{display:flex;justify-content:center;text-align:center;
   gap:clamp(30px,6vw,90px);flex-wrap:wrap;
   margin-top:clamp(16px,2.2vw,28px)}
 .stat b{display:block;font-family:var(--serif);font-weight:520;
-  font-size:clamp(30px,3.4vw,44px);line-height:1;color:var(--ink-l);
+  font-size:clamp(30px,3.4vw,44px);line-height:1;color:#fff;
   letter-spacing:-.01em}
 .stat i{font-style:normal;display:block;margin-top:8px;font-size:11px;
-  letter-spacing:.24em;text-transform:uppercase;color:var(--muted-l)}
+  letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
 
 /* What we do -- one row per program, photo side alternating. Kept apart
    from Traditions' floating photo + text: here each row is one white sheet
