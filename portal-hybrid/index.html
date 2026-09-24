@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=193">
+<link rel="stylesheet" href="style.css?v=194">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
@@ -303,30 +303,50 @@
         <div class="stat"><b>50+</b><i>Years of tradition</i></div>
       </div>
 
-      <!-- TODO: client to provide a photo for each -- swap the placeholder
-           box (icon + caption) for a real <img> once supplied. -->
-      <div class="field-photos">
-        <div class="field-photo">
-          <div class="fp-field">
-            <svg class="fp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/></svg>
-            <span class="fp-label">Community events</span>
-            <span class="fp-note">Photo coming soon</span>
+      <!-- What we do: one row per program. Photo side alternates.
+           TODO: client to supply a photo per row -- replace each
+           .run-photo placeholder's contents with <img alt="..."> (it
+           already crops to fill with object-fit). -->
+      <div class="runs">
+        <article class="run reveal">
+          <div class="run-photo">
+            <span class="run-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/></svg>Photo coming soon</span>
           </div>
-        </div>
-        <div class="field-photo">
-          <div class="fp-field">
-            <svg class="fp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/></svg>
-            <span class="fp-label">Youth programs</span>
-            <span class="fp-note">Photo coming soon</span>
+          <div class="run-copy">
+            <span class="run-seal" aria-hidden="true">社</span>
+            <h3 class="run-title">Community Events</h3>
+            <p class="run-line">Where the neighborhood gathers.</p>
+            <p class="run-body">Lion dance brings people out into the street. We perform at Lunar New Year, festivals, grand openings and celebrations across Seattle, starting in the Chinatown-International District we call home.</p>
+            <a class="cta" href="#book">Book a performance
+              <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
           </div>
-        </div>
-        <div class="field-photo">
-          <div class="fp-field">
-            <svg class="fp-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/></svg>
-            <span class="fp-label">Cultural education</span>
-            <span class="fp-note">Photo coming soon</span>
+        </article>
+        <article class="run reveal">
+          <div class="run-photo">
+            <span class="run-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/></svg>Photo coming soon</span>
           </div>
-        </div>
+          <div class="run-copy">
+            <span class="run-seal" aria-hidden="true">青</span>
+            <h3 class="run-title">Youth Programs</h3>
+            <p class="run-line">Training the next generation.</p>
+            <p class="run-body">Kung fu and lion dance give young students more than technique. Training builds discipline, confidence and respect, the values that shape the next generation of community leaders.</p>
+            <a class="cta" href="https://makfaikungfu.org" target="_blank" rel="noopener">Explore kung fu classes
+              <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+          </div>
+        </article>
+        <article class="run reveal">
+          <div class="run-photo">
+            <span class="run-ph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="8.5" cy="10" r="1.5"/><path d="m3 16 5-5 4 4 3-3 6 6"/></svg>Photo coming soon</span>
+          </div>
+          <div class="run-copy">
+            <span class="run-seal" aria-hidden="true">文</span>
+            <h3 class="run-title">Cultural Education</h3>
+            <p class="run-line">Fifty years of passing it on.</p>
+            <p class="run-body">Hung Sing Choy Lay Fut kung fu and Southern lion dance have been handed down at Mak Fai since 1974. We keep the history, the music and the meaning of both traditions alive for whoever comes next.</p>
+            <a class="cta" href="#gallery">Watch our films
+              <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+          </div>
+        </article>
       </div>
     </div>
   </section>

@@ -497,25 +497,35 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .stat i{font-style:normal;display:block;margin-top:8px;font-size:11px;
   letter-spacing:.24em;text-transform:uppercase;color:var(--muted-l)}
 
-/* Placeholder slots for the client's own photos -- one per field we run.
-   Dashed frame reads as "a slot", not a broken image, until real photos
-   land (see the TODO beside this block in index.html). */
-/* Each slot is cut to the crest's banner: square top, pointed foot, green
-   frame around a black field. The frame is the outer element's own fill
-   showing through the inner's padding, so both carry the same polygon. */
-.field-photos{display:grid;grid-template-columns:repeat(3,1fr);
-  gap:clamp(20px,3vw,44px);margin-top:clamp(36px,4.5vw,56px);
-  padding:0 clamp(0px,3vw,48px)}
-.field-photo{--cut:polygon(0 0,100% 0,100% 84%,50% 100%,0 84%);
-  aspect-ratio:3/4;background:var(--jade);clip-path:var(--cut);
-  padding:clamp(7px,.8vw,10px)}
-.fp-field{height:100%;background:#0B0708;clip-path:var(--cut);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:14px;padding:16px 16px 22%;text-align:center}
-.fp-icon{width:38px;height:38px;color:var(--gold);opacity:.7}
-.fp-label{font-size:13px;letter-spacing:.14em;text-transform:uppercase;
-  font-weight:600;color:var(--gold)}
-.fp-note{font-size:11px;letter-spacing:.06em;color:var(--muted)}
+/* What we do -- one row per program, photo side alternating. Kept apart
+   from Traditions' floating photo + text: here each row is one white sheet
+   the photo bleeds into, so the three read as a set rather than as more
+   Traditions rows. The seal is a name chop -- red square, the character
+   knocked out in paper -- standing in for an icon. */
+.runs{display:grid;gap:clamp(16px,2vw,24px);margin-top:clamp(44px,5.5vw,72px)}
+.run{display:grid;grid-template-columns:1fr 1fr;min-height:clamp(340px,30vw,420px);
+  background:var(--card);border:1px solid var(--line-l-soft);border-radius:2px;
+  overflow:hidden;box-shadow:0 1px 2px rgba(34,26,21,.04),0 18px 40px -28px rgba(34,26,21,.22)}
+.run:nth-child(odd) .run-photo{order:2}
+.run-photo{position:relative;background:var(--panel);
+  display:flex;align-items:center;justify-content:center}
+.run-photo > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.run-ph{display:flex;flex-direction:column;align-items:center;gap:12px;
+  font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted)}
+.run-ph svg{width:34px;height:34px;color:var(--gold);opacity:.75}
+.run-copy{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+  padding:clamp(32px,4.5vw,64px) clamp(28px,4.5vw,68px)}
+.run-seal{display:grid;place-items:center;width:46px;height:46px;margin-bottom:26px;
+  background:var(--red-l);color:var(--paper);border-radius:3px;
+  font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",var(--sans);
+  font-size:26px;font-weight:700;line-height:1;
+  box-shadow:inset 0 0 0 2px var(--red-l),inset 0 0 0 3.5px rgba(250,246,239,.55)}
+.run-title{font-family:var(--sans);font-weight:700;text-transform:uppercase;
+  font-size:clamp(24px,2.6vw,34px);line-height:1;letter-spacing:-.01em;
+  margin:0 0 14px;color:var(--ink-l);text-wrap:balance}
+.run-line{font-family:var(--serif);font-style:italic;font-weight:450;
+  font-size:17.5px;color:var(--bronze);margin:0 0 18px}
+.run-body{margin:0 0 28px;max-width:46ch;color:var(--muted-l);line-height:1.65}
 
 /* ========================= TRADITIONS ========================= */
 .sec-trad{padding-top:calc(var(--sec) * .5);padding-bottom:0}
@@ -1363,8 +1373,10 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
      button -- and the "Award-winning documentary" badge straight through it.
      Taller single rows give the caption room to clear the button, and the
      thumbnails read far better on a phone besides. */
-  .field-photos{grid-template-columns:1fr;gap:18px;padding:0;
-    width:min(78%,280px);margin-left:auto;margin-right:auto}
+  .run{grid-template-columns:1fr;min-height:0}
+  .run:nth-child(odd) .run-photo{order:0}
+  .run-photo{aspect-ratio:4/3}
+  .run-copy{padding:30px 24px 34px}
   .mosaic{grid-auto-rows:minmax(240px,auto)}
   .m-feature{grid-row:auto}
   /* The caption block runs ~124px tall once it carries a badge and a
