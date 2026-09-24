@@ -496,14 +496,8 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   letter-spacing:-.01em}
 .stat i{font-style:normal;display:block;margin-top:8px;font-size:11px;
   letter-spacing:.24em;text-transform:uppercase;color:var(--muted-l)}
-.fields{display:flex;justify-content:center;flex-wrap:wrap;
-  gap:0 clamp(26px,3.4vw,48px);
-  list-style:none;margin:clamp(30px,4vw,44px) 0 0;padding:20px 0 0;
-  border-top:1px solid var(--line-l-soft)}
-.fields li{font-size:12px;letter-spacing:.22em;text-transform:uppercase;
-  color:var(--muted-l);padding:6px 0}
 
-/* Placeholder slots for the client's own photos -- one per field above.
+/* Placeholder slots for the client's own photos -- one per field we run.
    Dashed frame reads as "a slot", not a broken image, until real photos
    land (see the TODO beside this block in index.html). */
 /* Each slot is cut to the crest's banner: square top, pointed foot, green
@@ -1369,9 +1363,6 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
      button -- and the "Award-winning documentary" badge straight through it.
      Taller single rows give the caption room to clear the button, and the
      thumbnails read far better on a phone besides. */
-  /* These five labels wrapped 1 / 1 / 2 / 1 at 390px, which reads as a
-     mistake rather than a layout. One per line is deliberate and calm. */
-  .fields{flex-direction:column;gap:2px}
   .field-photos{grid-template-columns:1fr;gap:18px;padding:0;
     width:min(78%,280px);margin-left:auto;margin-right:auto}
   .mosaic{grid-auto-rows:minmax(240px,auto)}
