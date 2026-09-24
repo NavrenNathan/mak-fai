@@ -487,6 +487,10 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   text-transform:uppercase;color:var(--muted-l);
   display:flex;align-items:center;gap:8px}
 .intro-photo figcaption .pin{flex-shrink:0;color:var(--red-l)}
+/* Section label for the stats + program rows below -- same eyebrow/disp
+   voice as Traditions, left-aligned like every other section intro (the
+   dark Values section is the one exception, centred on its own). */
+.runs-intro{margin-top:clamp(48px,6vw,84px)}
 .statline{display:flex;justify-content:center;text-align:center;
   gap:clamp(30px,6vw,90px);flex-wrap:wrap;
   border-top:1px solid var(--line-l);margin-top:clamp(48px,6vw,84px);
