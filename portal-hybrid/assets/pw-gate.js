@@ -1,7 +1,7 @@
 /* Password gate scene: a Chinese dragon chasing the flaming pearl.
    Pre-launch only -- delete with the #pw-gate markup and CSS.
-   The pearl follows the pointer; left alone it circles the lion on the
-   poles in the photo and the dragon hunts it. Wrong password = roar,
+   The pearl follows the pointer; left alone it loops between the lion
+   dance and kung fu photos and the dragon hunts it. Wrong password = roar,
    right password = the pearl bursts and the gate opens.
 
    Drawing order per frame: back clouds, body glow, pearl, far legs,
@@ -12,8 +12,8 @@
 
   var canvas = gate.querySelector('.pwg-canvas');
   var ctx = canvas.getContext('2d');
-  var photo = gate.querySelector('.pwg-photo');
-  var hanzi = gate.querySelector('.pwg-hanzi');
+  var photos = gate.querySelectorAll('.pwg-photo');
+  var hanzis = gate.querySelectorAll('.pwg-hanzi');
   var input = document.getElementById('pw-gate-input');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -39,9 +39,9 @@
     N = W < 700 ? 46 : 64;
     SP = 11 * S;
     var wide = W >= 900;
-    cx = wide ? W * 0.6 : W * 0.5;
+    cx = W * 0.5;
     cy = H * 0.5;
-    A = wide ? W * 0.27 : W * 0.4;
+    A = wide ? W * 0.34 : W * 0.4;
     B = H * (wide ? 0.32 : 0.42);
     clouds = [];
     for (var c = 0; c < 6; c++) {
@@ -564,8 +564,10 @@
       ctx.fillStyle = 'rgba(' + (bursting ? '255,226,170' : '230,59,82') + ',' + flash + ')';
       ctx.fillRect(0, 0, W, H);
     }
-    if (photo) photo.style.transform = 'translate3d(' + (-par.x * 22).toFixed(2) + 'px,' + (-par.y * 14).toFixed(2) + 'px,0)';
-    if (hanzi) hanzi.style.transform = 'translate3d(' + (par.x * 34).toFixed(2) + 'px,' + (par.y * 22).toFixed(2) + 'px,0)';
+    var pt = 'translate3d(' + (-par.x * 22).toFixed(2) + 'px,' + (-par.y * 14).toFixed(2) + 'px,0)';
+    var ht = 'translate3d(' + (par.x * 34).toFixed(2) + 'px,' + (par.y * 22).toFixed(2) + 'px,0)';
+    for (var p = 0; p < photos.length; p++) photos[p].style.transform = pt;
+    for (var h = 0; h < hanzis.length; h++) hanzis[h].style.transform = ht;
   }
 
   /* ------------------------------ lifecycle --------------------------- */
