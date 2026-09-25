@@ -1,24 +1,24 @@
 /* Password gate scene: a Chinese dragon chasing the flaming pearl.
    Pre-launch only -- delete with the #pw-gate markup and CSS.
-   The pearl follows the pointer; left alone it loops between the lion
-   dance and kung fu photos and the dragon hunts it. Wrong password = roar,
+   The pearl follows the pointer; left alone it loops through the night
+   sky over an ink-landscape mountain range and the dragon hunts it. Wrong password = roar,
    right password = the pearl bursts and the gate opens.
 
-   Drawing order per frame: back clouds, body glow, pearl, far legs,
-   crest + belly hair, scaled body, near legs, head, embers, front clouds. */
+   Drawing order per frame: back clouds, far + mid mountains, body glow,
+   pearl, far legs, crest + belly hair, scaled body, near legs, head,
+   embers, near cliff, front clouds. Mountain layers are painted once per
+   resize into offscreen canvases and blitted with parallax. */
 (function () {
   var gate = document.getElementById('pw-gate');
   if (!gate || getComputedStyle(gate).display === 'none') return;
 
   var canvas = gate.querySelector('.pwg-canvas');
   var ctx = canvas.getContext('2d');
-  var photos = gate.querySelectorAll('.pwg-photo');
-  var hanzis = gate.querySelectorAll('.pwg-hanzi');
   var input = document.getElementById('pw-gate-input');
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var W, H, S, N, SP, cx, cy, A, B;
-  var trail = [], segs = [], embers = [], clouds = [];
+  var trail = [], segs = [], embers = [], clouds = [], land = [];
   var head = { x: 0, y: 0, a: 0, v: 3, flip: 1, turn: 0 };
   var pearl = { x: 0, y: 0, pulse: 0 };
   var ptr = { x: 0, y: 0, t: -1e9 };
@@ -44,13 +44,14 @@
     A = wide ? W * 0.34 : W * 0.4;
     B = H * (wide ? 0.32 : 0.42);
     clouds = [];
-    for (var c = 0; c < 6; c++) {
+    for (var c = 0; c < 7; c++) {
       clouds.push({
-        x: Math.random() * W, y: H * (0.12 + Math.random() * 0.76),
+        x: Math.random() * W, y: H * (0.05 + Math.random() * 0.3),
         s: (0.7 + Math.random() * 0.8) * S, v: (0.08 + Math.random() * 0.14) * S,
-        front: c > 3, seed: Math.random() * 10
+        front: c > 4, seed: Math.random() * 10
       });
     }
+    buildLand(dpr);
   }
 
   function seed() {
@@ -126,7 +127,7 @@
     for (var c = 0; c < clouds.length; c++) {
       var cl = clouds[c];
       cl.x += cl.v * f * (cl.front ? 1.6 : 1);
-      if (cl.x - 220 * cl.s > W) { cl.x = -220 * cl.s; cl.y = H * (0.12 + Math.random() * 0.76); }
+      if (cl.x - 220 * cl.s > W) { cl.x = -220 * cl.s; cl.y = H * (0.05 + Math.random() * 0.3); }
     }
     par.x += ((pearl.x / W - 0.5) - par.x) * 0.04 * f;
     par.y += ((pearl.y / H - 0.5) - par.y) * 0.04 * f;
@@ -198,6 +199,147 @@
     for (var a = 0; a < N; a++) { var p = segs[a]; a ? ctx.lineTo(p.x + p.nx * p.r, p.y + p.ny * p.r) : ctx.moveTo(p.x + p.nx * p.r, p.y + p.ny * p.r); }
     for (var b = N - 1; b >= 0; b--) { var q = segs[b]; ctx.lineTo(q.x - q.nx * q.r, q.y - q.ny * q.r); }
     ctx.closePath();
+  }
+
+
+  /* ---------------------------- landscape -----------------------------
+     Shan shui in the same language as the clouds: dark silhouettes with a
+     gold rim along the ridge, a few ink "texture" strokes on the slopes,
+     and mist pooling at each layer's foot. Far karst peaks, a nearer
+     range, then a foreground cliff with a leaning pine. */
+  var PAD = 90;
+  function rng(seed) { return function () { seed = (seed * 16807) % 2147483647; return (seed - 1) / 2147483646; }; }
+
+  function layerCanvas(dpr) {
+    var c = document.createElement('canvas');
+    c.width = Math.round((W + PAD * 2) * dpr); c.height = Math.round(H * dpr);
+    var x = c.getContext('2d'); x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    return { c: c, x: x };
+  }
+
+  /* One layer of karst spires. Each peak is a narrow pillar with a slight
+     lean and a small rounded crown; every few peaks a tall spire breaks
+     the rhythm. Valleys sag between them. */
+  function range(g, rnd, base, hMin, hMax, wMin, wMax, top, bottom, rim, strokes) {
+    var w = W + PAD * 2, pts = [], x = -60, maxH = 0;
+    while (x < w + 60) {
+      var pw = (wMin + rnd() * (wMax - wMin)) * S;
+      var tall = rnd() < 0.22;
+      var ph = H * (hMin + rnd() * (hMax - hMin)) * (tall ? 1.35 : 1);
+      pts.push({ x: x, w: pw, h: ph, lean: (rnd() - 0.5) * 0.3, dip: 0.02 + rnd() * 0.12 });
+      maxH = Math.max(maxH, ph); x += pw * (0.55 + rnd() * 0.35);
+    }
+    function outline() {
+      g.beginPath(); g.moveTo(-60, base);
+      for (var i = 0; i < pts.length; i++) {
+        var p = pts[i], x0 = p.x, pw = p.w, ph = p.h, cx = x0 + pw * (0.5 + p.lean), cr = pw * 0.2;
+        var nx = i + 1 < pts.length ? pts[i + 1].x : x0 + pw;
+        g.bezierCurveTo(x0 + pw * 0.22, base - ph * 0.35, cx - cr * 1.6, base - ph * 0.82, cx - cr, base - ph + cr * 0.5);
+        g.quadraticCurveTo(cx, base - ph - cr * 0.6, cx + cr, base - ph + cr * 0.5);
+        g.bezierCurveTo(cx + cr * 1.6, base - ph * 0.82, x0 + pw * 0.8, base - ph * 0.35, (x0 + pw + nx) / 2, base - ph * p.dip);
+      }
+    }
+    outline(); g.lineTo(w + 60, H + 10); g.lineTo(-60, H + 10); g.closePath();
+    var gr = g.createLinearGradient(0, base - maxH, 0, base);
+    gr.addColorStop(0, top); gr.addColorStop(1, bottom);
+    g.fillStyle = gr; g.fill();
+    g.save(); g.clip();
+    // cun: short vertical ink strokes down the flanks
+    g.strokeStyle = 'rgba(242,180,65,.075)'; g.lineWidth = 1 * S; g.lineCap = 'round';
+    for (var k = 0; k < strokes; k++) {
+      var p2 = pts[Math.floor(rnd() * pts.length)], side = rnd() < 0.5 ? -1 : 1;
+      var sx = p2.x + p2.w * (0.5 + p2.lean) + side * p2.w * (0.08 + rnd() * 0.2);
+      var sy = base - p2.h * (0.25 + rnd() * 0.6), len = (12 + rnd() * 26) * S;
+      g.beginPath(); g.moveTo(sx, sy); g.quadraticCurveTo(sx + side * len * 0.25, sy + len * 0.5, sx + side * len * 0.1, sy + len); g.stroke();
+    }
+    g.restore();
+    outline(); g.strokeStyle = rim; g.lineWidth = 1.2 * S; g.stroke();
+    // mist pooling at the foot of the range
+    var m0 = base - maxH * 0.35, m1 = base + maxH * 0.25;
+    var mist = g.createLinearGradient(0, m0, 0, m1);
+    mist.addColorStop(0, 'rgba(236,214,190,0)'); mist.addColorStop(0.58, 'rgba(236,214,190,.08)'); mist.addColorStop(1, 'rgba(236,214,190,0)');
+    g.fillStyle = mist; g.fillRect(0, m0, w, m1 - m0);
+  }
+
+  function pine(g, x, y, s, lean) {
+    g.lineCap = 'round'; g.lineJoin = 'round';
+    var ink = '#0B0706', rim = 'rgba(242,180,65,.34)';
+    // trunk: a gnarled S reaching out over the drop
+    g.beginPath(); g.moveTo(x, y);
+    g.bezierCurveTo(x + 6 * s * lean, y - 30 * s, x + 40 * s * lean, y - 40 * s, x + 60 * s * lean, y - 58 * s);
+    g.bezierCurveTo(x + 76 * s * lean, y - 72 * s, x + 100 * s * lean, y - 70 * s, x + 118 * s * lean, y - 76 * s);
+    g.strokeStyle = ink; g.lineWidth = 6.5 * s; g.stroke();
+    g.strokeStyle = rim; g.lineWidth = 0.9 * s; g.stroke();
+    // flat needle tiers: each is a fan of short strokes over a dark pad
+    var tiers = [[34, -44, 30, 0.1], [62, -60, 38, -0.05], [98, -76, 42, 0.08], [120, -80, 26, -0.1], [80, -92, 26, 0.05]];
+    for (var i = 0; i < tiers.length; i++) {
+      var tx = x + tiers[i][0] * s * lean, ty = y + tiers[i][1] * s, tw = tiers[i][2] * s, rot = tiers[i][3];
+      g.save(); g.translate(tx, ty); g.rotate(rot);
+      g.beginPath(); g.moveTo(-tw, 2 * s);
+      g.quadraticCurveTo(-tw * 0.6, -9 * s, 0, -10 * s); g.quadraticCurveTo(tw * 0.6, -9 * s, tw, 2 * s);
+      g.quadraticCurveTo(0, 6 * s, -tw, 2 * s); g.closePath();
+      g.fillStyle = ink; g.fill();
+      g.strokeStyle = 'rgba(242,180,65,.2)'; g.lineWidth = 0.8 * s;
+      for (var n = -6; n <= 6; n++) {
+        var nx = n / 6 * tw * 0.9;
+        g.beginPath(); g.moveTo(nx * 0.4, -2 * s); g.lineTo(nx, -8 * s - (6 - Math.abs(n)) * 0.5 * s); g.stroke();
+      }
+      g.beginPath(); g.moveTo(-tw * 0.9, -2 * s); g.quadraticCurveTo(0, -12 * s, tw * 0.9, -2 * s);
+      g.strokeStyle = rim; g.lineWidth = 1 * s; g.stroke();
+      g.restore();
+    }
+  }
+
+  function cliff(g, rnd) {
+    var w = W + PAD * 2, wide = W >= 900;
+    var tx = PAD + W * (wide ? 0.2 : 0.3), ty = H * (wide ? 0.66 : 0.8);
+    g.beginPath();
+    g.moveTo(-40, H + 10); g.lineTo(-40, ty + 40 * S);
+    g.bezierCurveTo(PAD + W * 0.04, ty + 10 * S, PAD + W * 0.1, ty - 18 * S, tx - 30 * S, ty - 6 * S);
+    g.bezierCurveTo(tx - 6 * S, ty - 2 * S, tx + 14 * S, ty + 4 * S, tx + 22 * S, ty + 18 * S);   // overhang lip
+    g.bezierCurveTo(tx + 6 * S, ty + 60 * S, tx + 40 * S, ty + 120 * S, tx + 26 * S, H + 10);
+    g.closePath();
+    var gr = g.createLinearGradient(0, ty - 20 * S, 0, H);
+    gr.addColorStop(0, '#140C0B'); gr.addColorStop(1, '#080505');
+    g.fillStyle = gr; g.fill();
+    g.save(); g.clip();
+    g.strokeStyle = 'rgba(242,180,65,.08)'; g.lineWidth = 1.2 * S; g.lineCap = 'round';
+    for (var k = 0; k < 16; k++) {
+      var sx = PAD + rnd() * (tx - PAD), sy = ty + rnd() * (H - ty), len = (14 + rnd() * 30) * S;
+      g.beginPath(); g.moveTo(sx, sy); g.quadraticCurveTo(sx + len * 0.5, sy + len * 0.2, sx + len * 0.2, sy + len); g.stroke();
+    }
+    g.restore();
+    g.beginPath();
+    g.moveTo(-40, ty + 40 * S);
+    g.bezierCurveTo(PAD + W * 0.04, ty + 10 * S, PAD + W * 0.1, ty - 18 * S, tx - 30 * S, ty - 6 * S);
+    g.bezierCurveTo(tx - 6 * S, ty - 2 * S, tx + 14 * S, ty + 4 * S, tx + 22 * S, ty + 18 * S);
+    g.strokeStyle = 'rgba(242,180,65,.34)'; g.lineWidth = 1.4 * S; g.stroke();
+    pine(g, tx - 22 * S, ty - 4 * S, S * (wide ? 1 : 0.7), 1);
+
+    // a lower spur on the right edge to frame the other side
+    var rx = PAD + W * (wide ? 0.86 : 0.8), ry = H * (wide ? 0.8 : 0.88);
+    g.beginPath();
+    g.moveTo(w + 40, H + 10); g.lineTo(w + 40, ry - 30 * S);
+    g.bezierCurveTo(PAD + W * 0.95, ry - 40 * S, rx + 30 * S, ry - 24 * S, rx, ry);
+    g.bezierCurveTo(rx - 14 * S, ry + 30 * S, rx - 4 * S, ry + 70 * S, rx - 20 * S, H + 10);
+    g.closePath(); g.fillStyle = '#0A0606'; g.fill();
+    g.beginPath(); g.moveTo(w + 40, ry - 30 * S);
+    g.bezierCurveTo(PAD + W * 0.95, ry - 40 * S, rx + 30 * S, ry - 24 * S, rx, ry);
+    g.strokeStyle = 'rgba(242,180,65,.28)'; g.lineWidth = 1.3 * S; g.stroke();
+  }
+
+  function buildLand(dpr) {
+    var rnd = rng(19740101);
+    var far = layerCanvas(dpr), mid = layerCanvas(dpr), near = layerCanvas(dpr);
+    range(far.x, rnd, H * 0.9, 0.2, 0.34, 70, 140, '#2E1C18', '#1A100E', 'rgba(242,180,65,.22)', 40);
+    range(mid.x, rnd, H * 0.99, 0.12, 0.24, 90, 170, '#1C110F', '#0E0908', 'rgba(242,180,65,.17)', 30);
+    cliff(near.x, rnd);
+    land = [{ c: far.c, k: 0.12 }, { c: mid.c, k: 0.3 }, { c: near.c, k: 0.65 }];
+  }
+
+  function blit(i) {
+    var L = land[i]; if (!L) return;
+    ctx.drawImage(L.c, -PAD - par.x * 80 * L.k, -par.y * 24 * L.k, W + PAD * 2, H);
   }
 
   /* ------------------------------ clouds ------------------------------ */
@@ -547,11 +689,13 @@
   function draw() {
     ctx.clearRect(0, 0, W, H);
     for (var c = 0; c < clouds.length; c++) if (!clouds[c].front) cloud(clouds[c]);
+    blit(0); blit(1);
     drawGlow();
     drawPearl();
     drawBody();
     drawHead();
     drawEmbers();
+    blit(2);
     for (var c2 = 0; c2 < clouds.length; c2++) if (clouds[c2].front) cloud(clouds[c2]);
     if (bursting) {
       ctx.globalCompositeOperation = 'lighter';
@@ -564,10 +708,6 @@
       ctx.fillStyle = 'rgba(' + (bursting ? '255,226,170' : '230,59,82') + ',' + flash + ')';
       ctx.fillRect(0, 0, W, H);
     }
-    var pt = 'translate3d(' + (-par.x * 22).toFixed(2) + 'px,' + (-par.y * 14).toFixed(2) + 'px,0)';
-    var ht = 'translate3d(' + (par.x * 34).toFixed(2) + 'px,' + (par.y * 22).toFixed(2) + 'px,0)';
-    for (var p = 0; p < photos.length; p++) photos[p].style.transform = pt;
-    for (var h = 0; h < hanzis.length; h++) hanzis[h].style.transform = ht;
   }
 
   /* ------------------------------ lifecycle --------------------------- */

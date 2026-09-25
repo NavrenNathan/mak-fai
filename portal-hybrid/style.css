@@ -1219,47 +1219,23 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 /* ================= PASSWORD GATE (pre-launch only) =================
    TODO: remove this block (and the matching markup/script in index.html)
    once makfai.org is ready to launch publicly. */
-/* Scene, back to front: graded kung fu photo (right, masked into the
-   dark), shade, a giant outline 龍, then the canvas dragon chasing the
-   pearl. The card is centred at every width. */
+/* Scene, back to front: night sky (.pwg-shade), then the canvas --
+   clouds, mountains, the dragon and its pearl. The card is centred at
+   every width. */
 .pw-gate{--ease-io:cubic-bezier(.77,0,.175,1);
   position:fixed;inset:0;z-index:999;display:flex;align-items:center;
   justify-content:center;padding:24px clamp(24px,7vw,128px);
   background:var(--bg);overflow:hidden;color:var(--ink)}
 .pwg-scene{position:absolute;inset:0;pointer-events:none}
-/* Desktop mirrors the hero split: lion dance left with 舞獅, kung fu right
-   with 功夫, both fading into the dark centre where the card sits. Each
-   photo zooms from a different origin so its festival banner (bottom of
-   the lion shot, top of the kung fu shot) stays out of frame. */
-.pwg-photo{position:absolute;top:0;bottom:0;width:56%}
-.pwg-photo-lion{left:0;
-  -webkit-mask-image:linear-gradient(90deg,#000 0,#000 38%,transparent 96%);
-  mask-image:linear-gradient(90deg,#000 0,#000 38%,transparent 96%)}
-.pwg-photo-kungfu{right:0;
-  -webkit-mask-image:linear-gradient(270deg,#000 0,#000 38%,transparent 96%);
-  mask-image:linear-gradient(270deg,#000 0,#000 38%,transparent 96%)}
-.pwg-photo img{width:100%;height:100%;object-fit:cover;
-  filter:saturate(.62) contrast(1.12) brightness(.52);
-  animation:pwg-drift 26s var(--ease-io) infinite alternate}
-.pwg-photo-lion img{object-position:50% 20%;transform-origin:50% 18%}
-.pwg-photo-kungfu img{object-position:46% 50%;transform-origin:45% 78%}
-@keyframes pwg-drift{from{transform:scale(1.2)}to{transform:scale(1.28)}}
+/* Night sky behind the canvas: a low red-gold glow on the horizon that
+   the mountain range (drawn on the canvas) stands in silhouette against,
+   and a soft vignette. */
 .pwg-shade{position:absolute;inset:0;background:
-  linear-gradient(180deg,rgba(11,7,8,.8) 0,rgba(11,7,8,0) 24%,rgba(11,7,8,0) 64%,rgba(11,7,8,.96) 94%),
-  radial-gradient(30% 44% at 18% 58%,rgba(230,59,82,.14),transparent 70%),
-  radial-gradient(30% 44% at 82% 58%,rgba(230,59,82,.14),transparent 70%),
-  radial-gradient(40% 62% at 50% 50%,rgba(11,7,8,.78),transparent 100%)}
-.pwg-hanzi{position:absolute;pointer-events:none;user-select:none;
-  font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",var(--sans);font-weight:700}
-.pwg-hanzi-dragon{display:none;top:50%;margin-top:-.46em;line-height:.92;
-  color:rgba(242,180,65,.06)}
-/* Same treatment as the hero's watermark characters (.hero-cjk). */
-.pwg-hanzi-side{top:50%;margin-top:-.88em;line-height:.88;
-  font-size:clamp(120px,15vw,260px);color:#000;opacity:.63;
-  -webkit-text-stroke:.014em rgba(255,255,255,.52);paint-order:stroke fill;
-  text-shadow:0 0 .07em rgba(255,255,255,.14)}
-.pwg-hanzi-lion{left:clamp(20px,4vw,64px);text-align:left}
-.pwg-hanzi-kungfu{right:clamp(20px,4vw,64px);text-align:right}
+  radial-gradient(70% 42% at 50% 100%,rgba(230,59,82,.16),transparent 70%),
+  radial-gradient(46% 26% at 50% 88%,rgba(242,180,65,.10),transparent 70%),
+  radial-gradient(60% 40% at 50% 0,rgba(242,180,65,.05),transparent 70%),
+  radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(0,0,0,.55) 100%),
+  linear-gradient(180deg,#0B0708 0,#120A0A 62%,#1A0E0C 100%)}
 .pwg-canvas{position:absolute;inset:0;width:100%;height:100%}
 
 /* The card: dark frosted panel so the dragon glows through as it passes
@@ -1346,34 +1322,16 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 
 @media (max-width:900px){
   .pw-gate{justify-content:center;padding:24px 18px 64px}
-  .pwg-photo-kungfu,.pwg-hanzi-side{display:none}
-  .pwg-photo-lion{width:100%;
-    -webkit-mask-image:linear-gradient(180deg,#000 0,#000 40%,transparent 96%);
-    mask-image:linear-gradient(180deg,#000 0,#000 40%,transparent 96%)}
-  /* Portrait photo on a portrait screen has no vertical crop to spare, so
-     zoom from near the top instead -- keeps the lion and pushes the
-     championship banner at the bottom of the frame out of view. */
-  .pwg-photo-lion img{filter:saturate(.62) contrast(1.1) brightness(.42);
-    transform-origin:50% 20%;animation-name:pwg-drift-m}
-  @keyframes pwg-drift-m{from{transform:scale(1.4)}to{transform:scale(1.48)}}
-  .pwg-shade{background:
-    radial-gradient(60% 40% at 50% 30%,rgba(230,59,82,.16),transparent 70%),
-    linear-gradient(180deg,rgba(11,7,8,.9) 0,rgba(11,7,8,.55) 22%,rgba(11,7,8,.72) 55%,rgba(11,7,8,.95) 100%)}
-  .pwg-hanzi-dragon{display:block;left:50%;margin-left:-.5em;font-size:min(92vw,520px)}
   .pw-gate-card{padding:32px 24px 28px}
   .pwg-foot{bottom:14px;font-size:9px;letter-spacing:.12em}
   .pwg-foot-x{display:none}
   .pwg-hint{bottom:34px;font-size:9.5px}
 }
 @media (prefers-reduced-motion:reduce){
-  .pwg-photo img{animation:none;transform:scale(1.2)}
   .pw-gate-card,.pw-gate-card > *{animation:pwg-fade .3s ease both}
   .pw-gate.shake .pw-gate-card{animation:none}
   .pw-gate.pw-gate-hide .pw-gate-card{transform:none}
   @keyframes pwg-fade{from{opacity:0}to{opacity:1}}
-}
-@media (prefers-reduced-motion:reduce) and (max-width:900px){
-  .pwg-photo-lion img{transform:scale(1.4);transform-origin:50% 20%}
 }
 
 /* ========================= RESPONSIVE ========================= */
