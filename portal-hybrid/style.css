@@ -1221,11 +1221,10 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
    once makfai.org is ready to launch publicly. */
 /* Scene, back to front: graded kung fu photo (right, masked into the
    dark), shade, a giant outline 龍, then the canvas dragon chasing the
-   pearl. The card sits left on wide screens so the dragon has the
-   performer's side of the stage to itself; centred on narrow ones. */
+   pearl. The card is centred at every width. */
 .pw-gate{--ease-io:cubic-bezier(.77,0,.175,1);
   position:fixed;inset:0;z-index:999;display:flex;align-items:center;
-  justify-content:flex-start;padding:24px clamp(24px,7vw,128px);
+  justify-content:center;padding:24px clamp(24px,7vw,128px);
   background:var(--bg);overflow:hidden;color:var(--ink)}
 .pwg-scene{position:absolute;inset:0;pointer-events:none}
 .pwg-photo{position:absolute;top:0;right:0;bottom:0;width:64%;
@@ -1238,7 +1237,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 .pwg-shade{position:absolute;inset:0;background:
   linear-gradient(180deg,rgba(11,7,8,.94) 0,rgba(11,7,8,0) 30%),
   radial-gradient(38% 48% at 67% 60%,rgba(230,59,82,.17),transparent 70%),
-  linear-gradient(90deg,rgba(11,7,8,.96) 0,rgba(11,7,8,.62) 34%,rgba(11,7,8,0) 62%),
+  linear-gradient(90deg,rgba(11,7,8,.9) 0,rgba(11,7,8,.45) 30%,rgba(11,7,8,0) 55%),
   radial-gradient(90% 75% at 64% 55%,transparent 42%,rgba(11,7,8,.86) 100%)}
 .pwg-hanzi{position:absolute;right:1vw;top:50%;margin-top:-.46em;line-height:.92;
   font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",var(--sans);
