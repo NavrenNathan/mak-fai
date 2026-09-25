@@ -140,6 +140,11 @@ header{position:relative;z-index:60}
    perfect circle/square like the old crest, so a fixed square box would
    squash it. */
 .brand img{width:auto;height:70px}
+/* Wordmark and calligraphy stack centred on each other. The negative right
+   margin cancels the tracking after the final letter, which would otherwise
+   push MAK FAI's optical centre left of the calligraphy's. */
+.brand-t{display:flex;flex-direction:column;align-items:center}
+.brand-t b{margin-right:-.2em}
 .brand-t b{display:block;color:#fff;font-size:24px;font-weight:700;
   letter-spacing:.2em;text-transform:uppercase;line-height:1.2;
   white-space:nowrap;
@@ -1214,37 +1219,86 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 /* ================= PASSWORD GATE (pre-launch only) =================
    TODO: remove this block (and the matching markup/script in index.html)
    once makfai.org is ready to launch publicly. */
-.pw-gate{position:fixed;inset:0;z-index:999;display:flex;align-items:center;
-  justify-content:center;padding:24px;background:var(--bg);
-  background-image:radial-gradient(60% 60% at 50% 30%,rgba(230,59,82,.16),transparent 70%);
-  transition:opacity .4s var(--ease),visibility .4s var(--ease)}
-.pw-gate.pw-gate-hide{opacity:0;visibility:hidden;pointer-events:none}
-.pw-gate-card{width:min(380px,100%);text-align:center;padding:44px 36px;
-  border-radius:8px;border:1px solid var(--line);
-  background:linear-gradient(160deg,var(--panel),var(--panel-2));
-  box-shadow:0 40px 120px rgba(0,0,0,.6);
-  animation:pw-gate-in .55s var(--ease) both}
+/* Scene, back to front: graded kung fu photo (right, masked into the
+   dark), shade, a giant outline 龍, then the canvas dragon chasing the
+   pearl. The card sits left on wide screens so the dragon has the
+   performer's side of the stage to itself; centred on narrow ones. */
+.pw-gate{--ease-io:cubic-bezier(.77,0,.175,1);
+  position:fixed;inset:0;z-index:999;display:flex;align-items:center;
+  justify-content:flex-start;padding:24px clamp(24px,7vw,128px);
+  background:var(--bg);overflow:hidden;color:var(--ink)}
+.pwg-scene{position:absolute;inset:0;pointer-events:none}
+.pwg-photo{position:absolute;top:0;right:0;bottom:0;width:64%;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 44%);
+  mask-image:linear-gradient(90deg,transparent 0,#000 44%)}
+.pwg-photo img{width:100%;height:100%;object-fit:cover;object-position:44% 46%;
+  filter:saturate(.6) contrast(1.12) brightness(.5);transform-origin:45% 50%;
+  animation:pwg-drift 26s var(--ease-io) infinite alternate}
+@keyframes pwg-drift{from{transform:scale(1.06)}to{transform:scale(1.15) translate(-1.2%,-.8%)}}
+.pwg-shade{position:absolute;inset:0;background:
+  linear-gradient(180deg,rgba(11,7,8,.94) 0,rgba(11,7,8,0) 30%),
+  radial-gradient(38% 48% at 67% 60%,rgba(230,59,82,.17),transparent 70%),
+  linear-gradient(90deg,rgba(11,7,8,.96) 0,rgba(11,7,8,.62) 34%,rgba(11,7,8,0) 62%),
+  radial-gradient(90% 75% at 64% 55%,transparent 42%,rgba(11,7,8,.86) 100%)}
+.pwg-hanzi{position:absolute;right:1vw;top:50%;margin-top:-.46em;line-height:.92;
+  font-family:"PingFang SC","Microsoft YaHei","Noto Sans SC",var(--sans);
+  font-weight:700;font-size:clamp(280px,46vw,720px);
+  color:rgba(242,180,65,.06);user-select:none}
+.pwg-canvas{position:absolute;inset:0;width:100%;height:100%}
+
+/* The card: dark frosted panel so the dragon glows through as it passes
+   behind, framed with a double gold rule like a scroll mount. */
+.pw-gate-card{position:relative;z-index:2;width:min(400px,100%);text-align:center;
+  padding:40px 38px 34px;border-radius:3px;
+  border:1px solid rgba(242,180,65,.26);
+  background:rgba(11,7,8,.6);
+  -webkit-backdrop-filter:blur(14px) saturate(1.25);backdrop-filter:blur(14px) saturate(1.25);
+  box-shadow:0 34px 90px -24px rgba(0,0,0,.85);
+  animation:pw-gate-in .7s var(--ease) both}
+.pw-gate-card::before{content:"";position:absolute;inset:6px;pointer-events:none;
+  border:1px solid rgba(242,180,65,.09);border-radius:2px}
 .pw-gate-card.intro-done{animation:none}
 @keyframes pw-gate-in{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
-.pw-gate-logo{display:block;width:76px;height:76px;object-fit:contain;
-  margin:0 auto 14px;filter:drop-shadow(0 6px 18px rgba(0,0,0,.55))}
-.pw-gate-calli{display:block;width:min(210px,80%);margin:0 auto 22px;
-  filter:drop-shadow(0 0 16px rgba(242,180,65,.4))}
-.pw-gate .eyebrow{color:var(--gold)}
-.pw-gate-title{font-size:21px;line-height:1.3;margin:0 0 22px;color:var(--ink);
-  font-weight:600}
-.pw-gate-field{position:relative;margin-bottom:16px}
-.pw-gate-input{width:100%;padding:13px 44px 13px 16px;font-size:15px;
-  font-family:inherit;color:var(--ink);background:rgba(255,255,255,.04);
-  border:1px solid var(--line);border-radius:6px;outline:none;
-  transition:border-color .25s var(--ease)}
-.pw-gate-input:focus{border-color:var(--gold)}
-.pw-gate-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);
-  display:flex;align-items:center;justify-content:center;width:32px;height:32px;
-  background:none;border:0;border-radius:6px;color:var(--muted);cursor:pointer;
+.pw-gate-card > *{animation:pwg-rise .6s var(--ease) both}
+.pw-gate-card > :nth-child(2){animation-delay:.06s}
+.pw-gate-card > :nth-child(3){animation-delay:.12s}
+.pw-gate-card > :nth-child(4){animation-delay:.18s}
+.pw-gate-card > :nth-child(5){animation-delay:.22s}
+.pw-gate-card > :nth-child(n+6){animation-delay:.26s}
+@keyframes pwg-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pw-gate-logo{display:block;width:auto;height:66px;margin:0 auto 18px;
+  filter:drop-shadow(0 8px 20px rgba(0,0,0,.6))}
+.pw-gate-calli{display:block;width:min(250px,82%);height:auto;margin:0 auto 20px;
+  filter:drop-shadow(0 0 14px rgba(242,180,65,.35))}
+.pwg-divide{display:flex;align-items:center;gap:14px;max-width:220px;margin:0 auto 24px}
+.pwg-divide span{flex:1;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(242,180,65,.45))}
+.pwg-divide span:last-child{background:linear-gradient(270deg,transparent,rgba(242,180,65,.45))}
+.pwg-divide .v-seal{width:24px;height:24px}
+.pw-gate-title{font-family:var(--sans);font-weight:700;text-transform:uppercase;
+  font-size:clamp(24px,2.4vw,30px);line-height:1;letter-spacing:.02em;
+  margin:0 0 12px;color:#fff}
+.pwg-sub{font-size:14px;line-height:1.55;color:var(--muted);margin:0 auto 24px;max-width:32ch;text-wrap:balance}
+.pw-gate-field{position:relative;margin-bottom:14px}
+.pw-gate-input{width:100%;height:50px;padding:0 48px 0 16px;font-size:16px;
+  font-family:inherit;color:var(--ink);letter-spacing:.06em;
+  background:rgba(255,255,255,.045);caret-color:var(--gold);
+  border:1px solid rgba(242,180,65,.24);border-radius:3px;outline:none;
+  transition:border-color .2s var(--ease),box-shadow .2s var(--ease),background .2s var(--ease)}
+.pw-gate-input::placeholder{color:rgba(179,166,158,.7);letter-spacing:.04em}
+.pw-gate-input:focus{border-color:var(--gold);background:rgba(255,255,255,.06);
+  box-shadow:0 0 0 3px rgba(242,180,65,.16)}
+.pw-gate-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);
+  display:flex;align-items:center;justify-content:center;width:34px;height:34px;
+  background:none;border:0;border-radius:3px;color:var(--muted);cursor:pointer;
   transition:color .2s var(--ease),background .2s var(--ease)}
-.pw-gate-toggle:hover{color:var(--gold);background:rgba(255,255,255,.06)}
-.pw-gate-btn{width:100%;justify-content:center}
+@media (hover:hover) and (pointer:fine){
+  .pw-gate-toggle:hover{color:var(--gold);background:rgba(255,255,255,.06)}
+}
+.pw-gate-toggle:focus-visible,.pw-gate-btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.pw-gate-btn{width:100%;height:50px;justify-content:center;border-radius:3px;
+  letter-spacing:.2em;transition:background .2s var(--ease),transform .16s var(--ease)}
+.pw-gate-btn:active{transform:scale(.97)}
 .pw-gate-error{color:var(--red);font-size:13px;margin:14px 0 0}
 .pw-gate.shake .pw-gate-card{animation:pw-shake .4s var(--ease)}
 @keyframes pw-shake{
@@ -1253,6 +1307,51 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   40%{transform:translateX(8px)}
   60%{transform:translateX(-5px)}
   80%{transform:translateX(5px)}
+}
+.pwg-foot,.pwg-hint{position:absolute;z-index:2;bottom:22px;margin:0;
+  font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(179,166,158,.7)}
+.pwg-foot{left:clamp(24px,7vw,128px)}
+.pwg-hint{right:clamp(24px,4vw,56px);color:rgba(242,180,65,.7)}
+.pwg-hint-touch{display:none}
+@media (hover:none){.pwg-hint-fine{display:none}.pwg-hint-touch{display:inline}}
+
+/* Unlock: the canvas bursts the pearl first, the card lifts away, then
+   the whole gate dissolves into the site underneath. */
+.pw-gate.pw-gate-hide{opacity:0;visibility:hidden;pointer-events:none;
+  transition:opacity .8s var(--ease) .45s,visibility 0s linear 1.25s}
+.pw-gate.pw-gate-hide .pw-gate-card{opacity:0;transform:scale(.96) translateY(-8px);
+  transition:opacity .3s var(--ease),transform .3s var(--ease)}
+.pw-gate.pw-gate-hide .pwg-foot,.pw-gate.pw-gate-hide .pwg-hint{opacity:0;transition:opacity .25s var(--ease)}
+
+@media (max-width:900px){
+  .pw-gate{justify-content:center;padding:24px 18px 64px}
+  .pwg-photo{width:100%;
+    -webkit-mask-image:linear-gradient(180deg,#000 0,#000 40%,transparent 96%);
+    mask-image:linear-gradient(180deg,#000 0,#000 40%,transparent 96%)}
+  /* Portrait photo on a portrait screen has no vertical crop to spare, so
+     zoom toward the performer instead -- pushes the festival banner at the
+     top of the frame out of view. */
+  .pwg-photo img{filter:saturate(.6) contrast(1.1) brightness(.4);
+    transform-origin:45% 72%;animation-name:pwg-drift-m}
+  @keyframes pwg-drift-m{from{transform:scale(1.4)}to{transform:scale(1.48)}}
+  .pwg-shade{background:
+    radial-gradient(60% 40% at 50% 30%,rgba(230,59,82,.16),transparent 70%),
+    linear-gradient(180deg,rgba(11,7,8,.9) 0,rgba(11,7,8,.55) 22%,rgba(11,7,8,.72) 55%,rgba(11,7,8,.95) 100%)}
+  .pwg-hanzi{right:auto;left:50%;margin-left:-.5em;font-size:min(92vw,520px)}
+  .pw-gate-card{padding:32px 24px 28px}
+  .pwg-foot{left:0;right:0;text-align:center;bottom:34px;font-size:9px;letter-spacing:.12em}
+  .pwg-foot-x{display:none}
+  .pwg-hint{left:0;right:0;text-align:center;bottom:14px;font-size:9.5px}
+}
+@media (prefers-reduced-motion:reduce){
+  .pwg-photo img{animation:none;transform:scale(1.06)}
+  .pw-gate-card,.pw-gate-card > *{animation:pwg-fade .3s ease both}
+  .pw-gate.shake .pw-gate-card{animation:none}
+  .pw-gate.pw-gate-hide .pw-gate-card{transform:none}
+  @keyframes pwg-fade{from{opacity:0}to{opacity:1}}
+}
+@media (prefers-reduced-motion:reduce) and (max-width:900px){
+  .pwg-photo img{transform:scale(1.4)}
 }
 
 /* ========================= RESPONSIVE ========================= */
@@ -1330,7 +1429,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .nav-donate{padding:9px 12px;font-size:10px;letter-spacing:.08em}
   .brand{gap:9px}
   .brand img{height:52px}
-  .brand-t b{font-size:17px;letter-spacing:.16em}
+  .brand-t b{font-size:17px;letter-spacing:.16em;margin-right:-.16em}
   .brand .brand-calli{height:16px;margin-top:4px}
   /* Was position:fixed for the overlay -- now just a normal flex item. */
   .nav-links{display:flex;align-items:center;gap:0;

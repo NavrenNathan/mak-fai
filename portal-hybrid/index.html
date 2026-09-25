@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=207">
+<link rel="stylesheet" href="style.css?v=210">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
@@ -54,11 +54,29 @@
      TODO: remove this block (and the matching CSS in style.css) once
      makfai.org is ready to launch publicly. -->
 <div id="pw-gate" class="pw-gate">
+  <!-- Scene: graded kung fu photo, a giant 龍, and the canvas dragon that
+       chases the pearl (assets/pw-gate.js). All decorative. -->
+  <div class="pwg-scene" aria-hidden="true">
+    <div class="pwg-photo"><img src="assets/hero-section/kung-fu-hero.jpg" alt=""></div>
+    <span class="pwg-shade"></span>
+    <span class="pwg-hanzi">龍</span>
+    <canvas class="pwg-canvas"></canvas>
+  </div>
   <form id="pw-gate-form" class="pw-gate-card" autocomplete="off">
-    <img class="pw-gate-logo" src="assets/branding/mk-logo.png" alt="Mak Fai lion head crest">
-    <img class="pw-gate-calli" src="assets/branding/calligraphy.png" alt="Mak Fai in Chinese calligraphy">
-    <p class="eyebrow">Mak Fai · Preview</p>
-    <p class="pw-gate-title">Enter password to continue</p>
+    <img class="pw-gate-logo" src="assets/branding/mak-fai-crest-3.png" alt="Mak Fai crest" width="900" height="747">
+    <img class="pw-gate-calli" src="assets/branding/calligraphy-final.png" alt="麥顯輝龍獅體育基金" width="780" height="150">
+    <div class="pwg-divide" aria-hidden="true">
+      <span></span>
+      <svg class="v-seal" viewBox="0 0 32 32">
+        <circle cx="16" cy="16" r="13.5" fill="none" stroke="currentColor" stroke-width="1"/>
+        <rect x="10" y="10" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1"/>
+        <rect x="13.5" y="13.5" width="5" height="5" fill="currentColor" opacity=".55"/>
+        <path d="M16 1.6v3.2M16 27.2v3.2M1.6 16h3.2M27.2 16h3.2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+      </svg>
+      <span></span>
+    </div>
+    <p class="pw-gate-title">Enter the kwoon</p>
+    <p class="pwg-sub">A private preview of makfai.org. The dragon keeps the door.</p>
     <div class="pw-gate-field">
       <input id="pw-gate-input" class="pw-gate-input" type="password" name="password" placeholder="Password" aria-label="Password" autocomplete="off" autofocus>
       <button type="button" id="pw-gate-toggle" class="pw-gate-toggle" aria-label="Show password" aria-pressed="false">
@@ -68,6 +86,8 @@
     <button type="submit" class="btn btn-red pw-gate-btn">Enter</button>
     <p id="pw-gate-error" class="pw-gate-error" hidden>Incorrect password — try again.</p>
   </form>
+  <p class="pwg-foot" aria-hidden="true">Mak Fai Kung Fu Dragon &amp; Lion Dance Association<span class="pwg-foot-x"> · Since 1974</span></p>
+  <p class="pwg-hint" aria-hidden="true"><span class="pwg-hint-fine">Move to guide the pearl</span><span class="pwg-hint-touch">Touch to guide the pearl</span></p>
 </div>
 <script>
 (function(){
@@ -121,6 +141,7 @@
   });
 })();
 </script>
+<script src="assets/pw-gate.js?v=2" defer></script>
 
 <a class="skip" href="#about">Skip to content</a>
 
@@ -132,7 +153,7 @@
       <a class="brand" href="#top">
         <img src="assets/branding/mak-fai-crest-3.png" alt="" width="900" height="747">
         <span class="brand-t"><b>Mak Fai</b>
-          <img class="brand-calli" src="assets/branding/calligraphy-final.png" alt="麥顯輝龍獅體育基金" width="260" height="50">
+          <img class="brand-calli" src="assets/branding/calligraphy-final.png" alt="麥顯輝龍獅體育基金" width="780" height="150">
         </span>
       </a>
       <a class="nav-donate" href="donate.html">Donate</a>
@@ -316,9 +337,9 @@
         <div class="v-divide reveal d1" aria-hidden="true">
           <span class="v-divide-line"></span>
           <svg class="v-seal" viewBox="0 0 32 32">
-            <circle cx="16" cy="16" r="13.5" fill="none" stroke="currentColor" stroke-width="1"/>
-            <rect x="10" y="10" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1"/>
-            <rect x="13.5" y="13.5" width="5" height="5" fill="currentColor" opacity=".55"/>
+        <circle cx="16" cy="16" r="13.5" fill="none" stroke="currentColor" stroke-width="1"/>
+        <rect x="10" y="10" width="12" height="12" fill="none" stroke="currentColor" stroke-width="1"/>
+        <rect x="13.5" y="13.5" width="5" height="5" fill="currentColor" opacity=".55"/>
             <path d="M16 1.6v3.2M16 27.2v3.2M1.6 16h3.2M27.2 16h3.2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
           </svg>
           <span class="v-divide-line"></span>
