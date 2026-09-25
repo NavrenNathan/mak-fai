@@ -1,13 +1,13 @@
 /* Password gate scene: a Chinese dragon chasing the flaming pearl.
    Pre-launch only -- delete with the #pw-gate markup and CSS.
-   The pearl follows the pointer; left alone it loops through the night
-   sky over an ink-landscape mountain range and the dragon hunts it. Wrong password = roar,
+   The pearl follows the pointer; left alone it loops around the card
+   over a distant mountain massif and the dragon hunts it. Wrong password = roar,
    right password = the pearl bursts and the gate opens.
 
-   Drawing order per frame: back clouds, far + mid mountains, body glow,
-   pearl, far legs, crest + belly hair, scaled body, near legs, head,
-   embers, near cliff, front clouds. Mountain layers are painted once per
-   resize into offscreen canvases and blitted with parallax. */
+   Drawing order per frame: back clouds, distant massif, front clouds,
+   valley walls, then the dragon on top of everything -- nothing is ever
+   drawn over it. Landscape layers are painted once per resize into
+   offscreen canvases and blitted with parallax. */
 (function () {
   var gate = document.getElementById('pw-gate');
   if (!gate || getComputedStyle(gate).display === 'none') return;
@@ -15,6 +15,9 @@
   var canvas = gate.querySelector('.pwg-canvas');
   var ctx = canvas.getContext('2d');
   var input = document.getElementById('pw-gate-input');
+  var cardEl = gate.querySelector('.pw-gate-card');
+  var footEls = gate.querySelectorAll('.pwg-hint, .pwg-foot');
+  var card = { x0: 0, y0: 0, x1: 0, y1: 0, cx: 0, cy: 0 }, zones = [card];
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   var W, H, S, N, SP, cx, cy, A, B;
@@ -51,11 +54,44 @@
         front: c > 4, seed: Math.random() * 10
       });
     }
+    measureCard();
     buildLand(dpr);
   }
 
+  /* The HTML card sits above the canvas, so the dragon must never pass
+     under it: the pearl is kept outside the card, and the head is steered
+     away from it with a margin wide enough for the body behind it. */
+  function box(r, m) {
+    return { x0: r.left - m, y0: r.top - m, x1: r.right + m, y1: r.bottom + m, cx: (r.left + r.right) / 2, cy: (r.top + r.bottom) / 2 };
+  }
+  function measureCard() {
+    if (!cardEl) return;
+    card = box(cardEl.getBoundingClientRect(), 10 * S);
+    zones = [card];
+    // the hint + association lines, as one band sized to their text
+    var fx0 = 1e9, fy0 = 1e9, fx1 = -1e9, fy1 = -1e9;
+    for (var i = 0; i < footEls.length; i++) {
+      var el = footEls[i], rg = document.createRange(); rg.selectNodeContents(el);
+      var r = rg.getBoundingClientRect();
+      if (!r.width) continue;
+      fx0 = Math.min(fx0, r.left); fy0 = Math.min(fy0, r.top); fx1 = Math.max(fx1, r.right); fy1 = Math.max(fy1, r.bottom);
+    }
+    if (fx1 > fx0) zones.push(box({ left: fx0, top: fy0, right: fx1, bottom: fy1 }, 8 * S));
+  }
+  function pushOne(o, x, y, m) {
+    var x0 = o.x0 - m, x1 = o.x1 + m, y0 = o.y0 - m, y1 = o.y1 + m;
+    if (x <= x0 || x >= x1 || y <= y0 || y >= y1) return [x, y];
+    var dl = x - x0, dr = x1 - x, dt = y - y0, db = y1 - y, mn = Math.min(dl, dr, dt, db);
+    if (mn === dl) return [x0, y]; if (mn === dr) return [x1, y]; if (mn === dt) return [x, y0]; return [x, y1];
+  }
+  function pushOut(x, y, m) {
+    var p = [x, y];
+    for (var i = 0; i < zones.length; i++) p = pushOne(zones[i], p[0], p[1], m);
+    return p;
+  }
+
   function seed() {
-    head.x = -120 * S; head.y = H * 0.74; head.a = -0.35; head.v = 4 * S;
+    head.x = -120 * S; head.y = Math.min(H * 0.9, Math.max(H * 0.74, card.y1 + 70 * S)); head.a = -0.2; head.v = 4 * S;
     pearl.x = cx; pearl.y = cy;
     trail.length = 0;
     for (var k = 0; k < N * SP / 1.5; k++) {
@@ -85,16 +121,31 @@
     var tx, ty;
     if (active) { tx = ptr.x; ty = ptr.y; }
     else {
-      tx = cx + A * Math.sin(t * 0.37) + A * 0.3 * Math.sin(t * 1.09 + 0.7);
-      ty = cy + B * Math.sin(t * 0.53 + 1.2) + B * 0.22 * Math.cos(t * 1.31);
+      // loop around the card rather than through it
+      var ox = Math.max((card.x1 - card.x0) / 2 + 210 * S, A), oy = Math.max((card.y1 - card.y0) / 2 + 150 * S, B * 0.8);
+      tx = card.cx + ox * Math.cos(t * 0.33) + ox * 0.18 * Math.sin(t * 1.07);
+      ty = card.cy + oy * Math.sin(t * 0.33) + oy * 0.14 * Math.cos(t * 1.29);
     }
+    var tp = pushOut(tx, ty, 70 * S); tx = tp[0]; ty = tp[1];
     var k = 1 - Math.pow(1 - (active ? 0.16 : 0.05), f);
     pearl.x += (tx - pearl.x) * k; pearl.y += (ty - pearl.y) * k;
+    var pp = pushOut(pearl.x, pearl.y, 34 * S); pearl.x = pp[0]; pearl.y = pp[1];
     pearl.pulse *= Math.pow(0.9, f);
 
     var dx = pearl.x - head.x, dy = pearl.y - head.y, dist = Math.hypot(dx, dy);
-    var diff = wrap(Math.atan2(dy, dx) - head.a);
-    var turn = (0.042 + roar * 0.06 + (bursting ? 0.05 : 0)) * f;
+    var ux = dx / (dist || 1), uy = dy / (dist || 1), avoid = 0;
+    if (!bursting) {
+      for (var oi = 0; oi < zones.length; oi++) {
+        var o = zones[oi], w = 0;
+        var qx = clamp(head.x, o.x0, o.x1), qy = clamp(head.y, o.y0, o.y1);
+        var ax = head.x - qx, ay = head.y - qy, ad = Math.hypot(ax, ay), R = 170 * S;
+        if (ad === 0) { ax = head.x - o.cx; ay = head.y - o.cy; ad = Math.hypot(ax, ay) || 1; w = 3; }
+        else if (ad < R) w = Math.pow(1 - ad / R, 2) * 3;
+        ux += ax / ad * w; uy += ay / ad * w; avoid = Math.max(avoid, w);
+      }
+    }
+    var diff = wrap(Math.atan2(uy, ux) - head.a);
+    var turn = (0.042 + roar * 0.06 + (bursting ? 0.05 : 0) + avoid * 0.03) * f;
     var da = clamp(diff, -turn, turn) + Math.sin(t * 2.1) * 0.016 * f;
     head.a = wrap(head.a + da);
     head.turn += (da / f - head.turn) * 0.15 * f;
@@ -102,6 +153,9 @@
     head.v += (targetV - head.v) * 0.06 * f;
     head.x += Math.cos(head.a) * head.v * f;
     head.y += Math.sin(head.a) * head.v * f;
+    // hard floor under the steering: the head (and so the trail the body
+    // follows) can never enter the card, margin included for crest and legs
+    if (!bursting) { var hp = pushOut(head.x, head.y, 46 * S); head.x = hp[0]; head.y = hp[1]; }
     head.flip += ((Math.cos(head.a) >= 0 ? 1 : -1) - head.flip) * 0.06 * f;
     trail.unshift({ x: head.x, y: head.y, f: head.flip });
 
@@ -217,124 +271,148 @@
     return { c: c, x: x };
   }
 
-  /* One layer of karst spires. Each peak is a narrow pillar with a slight
-     lean and a small rounded crown; every few peaks a tall spire breaks
-     the rhythm. Valleys sag between them. */
-  function range(g, rnd, base, hMin, hMax, wMin, wMax, top, bottom, rim, strokes) {
-    var w = W + PAD * 2, pts = [], x = -60, maxH = 0;
-    while (x < w + 60) {
-      var pw = (wMin + rnd() * (wMax - wMin)) * S;
-      var tall = rnd() < 0.22;
-      var ph = H * (hMin + rnd() * (hMax - hMin)) * (tall ? 1.35 : 1);
-      pts.push({ x: x, w: pw, h: ph, lean: (rnd() - 0.5) * 0.3, dip: 0.02 + rnd() * 0.12 });
-      maxH = Math.max(maxH, ph); x += pw * (0.55 + rnd() * 0.35);
-    }
-    function outline() {
-      g.beginPath(); g.moveTo(-60, base);
-      for (var i = 0; i < pts.length; i++) {
-        var p = pts[i], x0 = p.x, pw = p.w, ph = p.h, cx = x0 + pw * (0.5 + p.lean), cr = pw * 0.2;
-        var nx = i + 1 < pts.length ? pts[i + 1].x : x0 + pw;
-        g.bezierCurveTo(x0 + pw * 0.22, base - ph * 0.35, cx - cr * 1.6, base - ph * 0.82, cx - cr, base - ph + cr * 0.5);
-        g.quadraticCurveTo(cx, base - ph - cr * 0.6, cx + cr, base - ph + cr * 0.5);
-        g.bezierCurveTo(cx + cr * 1.6, base - ph * 0.82, x0 + pw * 0.8, base - ph * 0.35, (x0 + pw + nx) / 2, base - ph * p.dip);
+  /* A jagged ridge line by midpoint displacement between hand-placed key
+     points (feet, shoulders, summits), so the silhouette reads as a real
+     alpine massif rather than a row of bumps. */
+  function ridge(rnd, keys, rough, depth) {
+    var pts = keys.map(function (k) { return [k[0], k[1]]; });
+    for (var d = 0; d < depth; d++) {
+      var out = [pts[0]];
+      for (var i = 0; i < pts.length - 1; i++) {
+        var p = pts[i], q = pts[i + 1], len = Math.hypot(q[0] - p[0], q[1] - p[1]);
+        out.push([(p[0] + q[0]) / 2 + (rnd() - 0.5) * len * rough * 0.35,
+                  (p[1] + q[1]) / 2 + (rnd() - 0.5) * len * rough]);
+        out.push(q);
       }
+      pts = out; rough *= 0.62;
     }
-    outline(); g.lineTo(w + 60, H + 10); g.lineTo(-60, H + 10); g.closePath();
-    var gr = g.createLinearGradient(0, base - maxH, 0, base);
+    return pts;
+  }
+
+  /* Distant massif: silhouette, then faceted light -- every ridge segment
+     that climbs left-to-right faces the light and gets a warm gold facet,
+     every descending one a shadow facet, both falling diagonally down the
+     face. Couloir lines from the high points, gold rim on the crest, haze
+     at the foot. */
+  function massif(g, rnd, pts, base, top, bottom, litA, shadeA, rimA) {
+    var minY = H;
+    for (var i = 0; i < pts.length; i++) minY = Math.min(minY, pts[i][1]);
+    function path() {
+      g.beginPath(); g.moveTo(pts[0][0], pts[0][1]);
+      for (var i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]);
+    }
+    path(); g.lineTo(pts[pts.length - 1][0], H + 10); g.lineTo(pts[0][0], H + 10); g.closePath();
+    var gr = g.createLinearGradient(0, minY, 0, base);
     gr.addColorStop(0, top); gr.addColorStop(1, bottom);
     g.fillStyle = gr; g.fill();
     g.save(); g.clip();
-    // cun: short vertical ink strokes down the flanks
-    g.strokeStyle = 'rgba(242,180,65,.075)'; g.lineWidth = 1 * S; g.lineCap = 'round';
-    for (var k = 0; k < strokes; k++) {
-      var p2 = pts[Math.floor(rnd() * pts.length)], side = rnd() < 0.5 ? -1 : 1;
-      var sx = p2.x + p2.w * (0.5 + p2.lean) + side * p2.w * (0.08 + rnd() * 0.2);
-      var sy = base - p2.h * (0.25 + rnd() * 0.6), len = (12 + rnd() * 26) * S;
-      g.beginPath(); g.moveTo(sx, sy); g.quadraticCurveTo(sx + side * len * 0.25, sy + len * 0.5, sx + side * len * 0.1, sy + len); g.stroke();
+    for (var j = 0; j < pts.length - 1; j++) {
+      var p = pts[j], q = pts[j + 1], up = q[1] < p[1];
+      var hgt = base - Math.min(p[1], q[1]), drop = hgt * (0.35 + rnd() * 0.4), slide = drop * (up ? -0.55 : 0.55);
+      g.beginPath(); g.moveTo(p[0], p[1]); g.lineTo(q[0], q[1]);
+      g.lineTo(q[0] + slide, q[1] + drop); g.lineTo(p[0] + slide, p[1] + drop); g.closePath();
+      var fg = g.createLinearGradient(0, Math.min(p[1], q[1]), 0, Math.max(p[1], q[1]) + drop);
+      if (up) { fg.addColorStop(0, 'rgba(255,196,110,' + litA + ')'); fg.addColorStop(1, 'rgba(255,196,110,0)'); }
+      else { fg.addColorStop(0, 'rgba(0,0,0,' + shadeA + ')'); fg.addColorStop(1, 'rgba(0,0,0,0)'); }
+      g.fillStyle = fg; g.fill();
     }
-    g.restore();
-    outline(); g.strokeStyle = rim; g.lineWidth = 1.2 * S; g.stroke();
-    // mist pooling at the foot of the range
-    var m0 = base - maxH * 0.35, m1 = base + maxH * 0.25;
-    var mist = g.createLinearGradient(0, m0, 0, m1);
-    mist.addColorStop(0, 'rgba(236,214,190,0)'); mist.addColorStop(0.58, 'rgba(236,214,190,.08)'); mist.addColorStop(1, 'rgba(236,214,190,0)');
-    g.fillStyle = mist; g.fillRect(0, m0, w, m1 - m0);
-  }
-
-  function pine(g, x, y, s, lean) {
-    g.lineCap = 'round'; g.lineJoin = 'round';
-    var ink = '#0B0706', rim = 'rgba(242,180,65,.34)';
-    // trunk: a gnarled S reaching out over the drop
-    g.beginPath(); g.moveTo(x, y);
-    g.bezierCurveTo(x + 6 * s * lean, y - 30 * s, x + 40 * s * lean, y - 40 * s, x + 60 * s * lean, y - 58 * s);
-    g.bezierCurveTo(x + 76 * s * lean, y - 72 * s, x + 100 * s * lean, y - 70 * s, x + 118 * s * lean, y - 76 * s);
-    g.strokeStyle = ink; g.lineWidth = 6.5 * s; g.stroke();
-    g.strokeStyle = rim; g.lineWidth = 0.9 * s; g.stroke();
-    // flat needle tiers: each is a fan of short strokes over a dark pad
-    var tiers = [[34, -44, 30, 0.1], [62, -60, 38, -0.05], [98, -76, 42, 0.08], [120, -80, 26, -0.1], [80, -92, 26, 0.05]];
-    for (var i = 0; i < tiers.length; i++) {
-      var tx = x + tiers[i][0] * s * lean, ty = y + tiers[i][1] * s, tw = tiers[i][2] * s, rot = tiers[i][3];
-      g.save(); g.translate(tx, ty); g.rotate(rot);
-      g.beginPath(); g.moveTo(-tw, 2 * s);
-      g.quadraticCurveTo(-tw * 0.6, -9 * s, 0, -10 * s); g.quadraticCurveTo(tw * 0.6, -9 * s, tw, 2 * s);
-      g.quadraticCurveTo(0, 6 * s, -tw, 2 * s); g.closePath();
-      g.fillStyle = ink; g.fill();
-      g.strokeStyle = 'rgba(242,180,65,.2)'; g.lineWidth = 0.8 * s;
-      for (var n = -6; n <= 6; n++) {
-        var nx = n / 6 * tw * 0.9;
-        g.beginPath(); g.moveTo(nx * 0.4, -2 * s); g.lineTo(nx, -8 * s - (6 - Math.abs(n)) * 0.5 * s); g.stroke();
+    g.strokeStyle = 'rgba(242,180,65,' + (rimA * 0.45) + ')'; g.lineWidth = 1 * S; g.lineCap = 'round';
+    for (var k = 1; k < pts.length - 1; k++) {
+      var pk = pts[k];
+      if (!(pk[1] < pts[k - 1][1] && pk[1] < pts[k + 1][1])) continue;
+      var hh = base - pk[1];
+      if (hh < H * 0.08) continue;
+      for (var c = 0; c < 2; c++) {
+        var dir = c ? 1 : -1, l = hh * (0.3 + rnd() * 0.35);
+        g.beginPath(); g.moveTo(pk[0], pk[1] + 3 * S);
+        g.quadraticCurveTo(pk[0] + dir * l * 0.25, pk[1] + l * 0.55, pk[0] + dir * l * (0.35 + rnd() * 0.2), pk[1] + l);
+        g.stroke();
       }
-      g.beginPath(); g.moveTo(-tw * 0.9, -2 * s); g.quadraticCurveTo(0, -12 * s, tw * 0.9, -2 * s);
-      g.strokeStyle = rim; g.lineWidth = 1 * s; g.stroke();
-      g.restore();
     }
+    var haze = g.createLinearGradient(0, base - (base - minY) * 0.45, 0, base);
+    haze.addColorStop(0, 'rgba(236,214,190,0)'); haze.addColorStop(1, 'rgba(236,214,190,.1)');
+    g.fillStyle = haze; g.fillRect(0, base - (base - minY) * 0.45, W + PAD * 2, H);
+    g.restore();
+    path(); g.strokeStyle = 'rgba(242,180,65,' + rimA + ')'; g.lineWidth = 1.3 * S; g.lineJoin = 'round'; g.stroke();
   }
 
-  function cliff(g, rnd) {
-    var w = W + PAD * 2, wide = W >= 900;
-    var tx = PAD + W * (wide ? 0.2 : 0.3), ty = H * (wide ? 0.66 : 0.8);
-    g.beginPath();
-    g.moveTo(-40, H + 10); g.lineTo(-40, ty + 40 * S);
-    g.bezierCurveTo(PAD + W * 0.04, ty + 10 * S, PAD + W * 0.1, ty - 18 * S, tx - 30 * S, ty - 6 * S);
-    g.bezierCurveTo(tx - 6 * S, ty - 2 * S, tx + 14 * S, ty + 4 * S, tx + 22 * S, ty + 18 * S);   // overhang lip
-    g.bezierCurveTo(tx + 6 * S, ty + 60 * S, tx + 40 * S, ty + 120 * S, tx + 26 * S, H + 10);
-    g.closePath();
-    var gr = g.createLinearGradient(0, ty - 20 * S, 0, H);
-    gr.addColorStop(0, '#140C0B'); gr.addColorStop(1, '#080505');
+  function fir(g, x, y, h) {
+    var w = h * 0.34;
+    g.beginPath(); g.moveTo(x, y - h);
+    for (var t2 = 0; t2 < 4; t2++) {
+      var ty = y - h + h * (t2 + 1) / 4.2, tw = w * (0.45 + t2 * 0.2);
+      g.lineTo(x + tw, ty); g.lineTo(x + tw * 0.45, ty - h * 0.06);
+    }
+    g.lineTo(x + w * 0.1, y); g.lineTo(x - w * 0.1, y);
+    for (var t3 = 3; t3 >= 0; t3--) {
+      var ty2 = y - h + h * (t3 + 1) / 4.2, tw2 = w * (0.45 + t3 * 0.2);
+      g.lineTo(x - tw2 * 0.45, ty2 - h * 0.06); g.lineTo(x - tw2, ty2);
+    }
+    g.closePath(); g.fillStyle = '#0A0605'; g.fill();
+    g.beginPath(); g.moveTo(x, y - h); g.lineTo(x - w * 0.45, y - h + h / 4.2);
+    g.strokeStyle = 'rgba(242,180,65,.3)'; g.lineWidth = 0.9 * S; g.stroke();
+  }
+
+  /* Foreground valley walls converging on a misty lake, wooded along
+     their crests. */
+  function slope(g, rnd, pts, side) {
+    g.beginPath(); g.moveTo(pts[0][0], pts[0][1]);
+    for (var i = 1; i < pts.length; i++) g.lineTo(pts[i][0], pts[i][1]);
+    g.lineTo(pts[pts.length - 1][0], H + 10); g.lineTo(pts[0][0], H + 10); g.closePath();
+    var gr = g.createLinearGradient(0, H * 0.5, 0, H);
+    gr.addColorStop(0, '#150D0B'); gr.addColorStop(1, '#070404');
     g.fillStyle = gr; g.fill();
     g.save(); g.clip();
-    g.strokeStyle = 'rgba(242,180,65,.08)'; g.lineWidth = 1.2 * S; g.lineCap = 'round';
-    for (var k = 0; k < 16; k++) {
-      var sx = PAD + rnd() * (tx - PAD), sy = ty + rnd() * (H - ty), len = (14 + rnd() * 30) * S;
-      g.beginPath(); g.moveTo(sx, sy); g.quadraticCurveTo(sx + len * 0.5, sy + len * 0.2, sx + len * 0.2, sy + len); g.stroke();
+    g.strokeStyle = 'rgba(242,180,65,.06)'; g.lineWidth = 1 * S;
+    for (var k = 0; k < 24; k++) {
+      var pp = pts[Math.floor(rnd() * pts.length)], sy = pp[1] + (20 + rnd() * 120) * S;
+      g.beginPath(); g.moveTo(pp[0], sy); g.lineTo(pp[0] - side * (10 + rnd() * 30) * S, sy + (18 + rnd() * 30) * S); g.stroke();
     }
     g.restore();
-    g.beginPath();
-    g.moveTo(-40, ty + 40 * S);
-    g.bezierCurveTo(PAD + W * 0.04, ty + 10 * S, PAD + W * 0.1, ty - 18 * S, tx - 30 * S, ty - 6 * S);
-    g.bezierCurveTo(tx - 6 * S, ty - 2 * S, tx + 14 * S, ty + 4 * S, tx + 22 * S, ty + 18 * S);
-    g.strokeStyle = 'rgba(242,180,65,.34)'; g.lineWidth = 1.4 * S; g.stroke();
-    pine(g, tx - 22 * S, ty - 4 * S, S * (wide ? 1 : 0.7), 1);
-
-    // a lower spur on the right edge to frame the other side
-    var rx = PAD + W * (wide ? 0.86 : 0.8), ry = H * (wide ? 0.8 : 0.88);
-    g.beginPath();
-    g.moveTo(w + 40, H + 10); g.lineTo(w + 40, ry - 30 * S);
-    g.bezierCurveTo(PAD + W * 0.95, ry - 40 * S, rx + 30 * S, ry - 24 * S, rx, ry);
-    g.bezierCurveTo(rx - 14 * S, ry + 30 * S, rx - 4 * S, ry + 70 * S, rx - 20 * S, H + 10);
-    g.closePath(); g.fillStyle = '#0A0606'; g.fill();
-    g.beginPath(); g.moveTo(w + 40, ry - 30 * S);
-    g.bezierCurveTo(PAD + W * 0.95, ry - 40 * S, rx + 30 * S, ry - 24 * S, rx, ry);
-    g.strokeStyle = 'rgba(242,180,65,.28)'; g.lineWidth = 1.3 * S; g.stroke();
+    g.beginPath(); g.moveTo(pts[0][0], pts[0][1]);
+    for (var j = 1; j < pts.length; j++) g.lineTo(pts[j][0], pts[j][1]);
+    g.strokeStyle = 'rgba(242,180,65,.3)'; g.lineWidth = 1.3 * S; g.stroke();
+    for (var f = 1; f < pts.length - 1; f++) {
+      if (rnd() < 0.35) continue;
+      var h = (16 + rnd() * 34) * S, jx = pts[f][0] + (rnd() - 0.5) * 8 * S;
+      fir(g, jx, pts[f][1] + 4 * S, h);
+    }
   }
 
   function buildLand(dpr) {
-    var rnd = rng(19740101);
-    var far = layerCanvas(dpr), mid = layerCanvas(dpr), near = layerCanvas(dpr);
-    range(far.x, rnd, H * 0.9, 0.2, 0.34, 70, 140, '#2E1C18', '#1A100E', 'rgba(242,180,65,.22)', 40);
-    range(mid.x, rnd, H * 0.99, 0.12, 0.24, 90, 170, '#1C110F', '#0E0908', 'rgba(242,180,65,.17)', 30);
-    cliff(near.x, rnd);
-    land = [{ c: far.c, k: 0.12 }, { c: mid.c, k: 0.3 }, { c: near.c, k: 0.65 }];
+    var rnd = rng(19740101), wide = W >= 900, X = function (u) { return PAD + W * u; };
+    var far = layerCanvas(dpr), near = layerCanvas(dpr);
+    // on phones the card fills the middle, so the range sits in the sky
+    // strip above it, with the clouds drifting in front
+    var base = wide ? H * 0.84 : card.y0 + 40 * S, ph = wide ? H * 0.54 : base * 0.8;
+    var sx = wide ? 0.68 : 0.62;
+    // the main massif: summit off-centre right so it clears the card
+    var mainKeys = [
+      [X(-0.05), base - ph * 0.18], [X(0.12), base - ph * 0.42], [X(0.22), base - ph * 0.36],
+      [X(0.33), base - ph * 0.62], [X(0.42), base - ph * 0.5], [X(0.52), base - ph * 0.74],
+      [X(sx - 0.05), base - ph * 0.86], [X(sx), base - ph], [X(sx + 0.05), base - ph * 0.82],
+      [X(sx + 0.1), base - ph * 0.88], [X(sx + 0.16), base - ph * 0.6], [X(0.92), base - ph * 0.66],
+      [X(1.05), base - ph * 0.3]
+    ];
+    // a hazier range behind it for atmospheric depth
+    var backKeys = mainKeys.map(function (k, i) { return [k[0] + W * 0.07, k[1] - ph * (0.06 + (i % 3) * 0.05)]; });
+    massif(far.x, rnd, ridge(rnd, backKeys, 0.3, 5), base, '#2A1C1A', '#1B1210', 0.05, 0.1, 0.12);
+    massif(far.x, rnd, ridge(rnd, mainKeys, 0.34, 6), base + 10 * S, '#35221C', '#1C120F', 0.16, 0.26, 0.3);
+
+    // valley: two wooded walls and a lake between them
+    var lake = far.x.createLinearGradient(0, H * 0.84, 0, H);
+    lake.addColorStop(0, 'rgba(242,180,65,.10)'); lake.addColorStop(1, 'rgba(230,59,82,.04)');
+    far.x.fillStyle = lake; far.x.fillRect(0, H * 0.84, W + PAD * 2, H * 0.16);
+    far.x.strokeStyle = 'rgba(255,214,140,.14)'; far.x.lineWidth = 1 * S;
+    for (var r = 0; r < 9; r++) {
+      var ly = H * (0.87 + r * 0.013), lw = W * (0.08 + rnd() * 0.12), lx = X(0.5) + (rnd() - 0.5) * W * 0.2;
+      far.x.beginPath(); far.x.moveTo(lx - lw / 2, ly); far.x.lineTo(lx + lw / 2, ly); far.x.stroke();
+    }
+    var L = ridge(rnd, [[X(-0.05), H * (wide ? 0.6 : 0.74)], [X(0.12), H * (wide ? 0.66 : 0.79)], [X(0.28), H * 0.8], [X(0.44), H * 0.94]], 0.12, 4);
+    var Rr = ridge(rnd, [[X(1.05), H * (wide ? 0.64 : 0.76)], [X(0.88), H * (wide ? 0.7 : 0.81)], [X(0.72), H * 0.84], [X(0.57), H * 0.96]], 0.12, 4).reverse();
+    slope(near.x, rnd, L, 1);
+    slope(near.x, rnd, Rr, -1);
+    land = [{ c: far.c, k: 0.14 }, { c: near.c, k: 0.5 }];
   }
 
   function blit(i) {
@@ -689,14 +767,14 @@
   function draw() {
     ctx.clearRect(0, 0, W, H);
     for (var c = 0; c < clouds.length; c++) if (!clouds[c].front) cloud(clouds[c]);
-    blit(0); blit(1);
+    blit(0);
+    for (var c1 = 0; c1 < clouds.length; c1++) if (clouds[c1].front) cloud(clouds[c1]);
+    blit(1);
     drawGlow();
     drawPearl();
     drawBody();
     drawHead();
     drawEmbers();
-    blit(2);
-    for (var c2 = 0; c2 < clouds.length; c2++) if (clouds[c2].front) cloud(clouds[c2]);
     if (bursting) {
       ctx.globalCompositeOperation = 'lighter';
       var al = Math.max(0, 1 - burstR / (Math.max(W, H) * 1.2));
@@ -762,6 +840,7 @@
   });
 
   resize(); seed();
+  setTimeout(measureCard, 900);
   window.addEventListener('pointermove', onMove, { passive: true });
   window.addEventListener('pointerdown', onMove, { passive: true });
   window.addEventListener('resize', onResize);

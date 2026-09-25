@@ -1226,6 +1226,9 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   position:fixed;inset:0;z-index:999;display:flex;align-items:center;
   justify-content:center;padding:24px clamp(24px,7vw,128px);
   background:var(--bg);overflow:hidden;color:var(--ink)}
+/* The card and the hint/footer lines sit above the canvas; the dragon
+   steers around both (see measureCard in pw-gate.js), so it is never
+   drawn under anything. */
 .pwg-scene{position:absolute;inset:0;pointer-events:none}
 /* Night sky behind the canvas: a low red-gold glow on the horizon that
    the mountain range (drawn on the canvas) stands in silhouette against,
