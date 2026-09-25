@@ -1,7 +1,7 @@
 /* Password gate scene: a Chinese dragon chasing the flaming pearl.
    Pre-launch only -- delete with the #pw-gate markup and CSS.
-   The pearl follows the pointer; left alone it circles the kung fu
-   performer in the photo and the dragon hunts it. Wrong password = roar,
+   The pearl follows the pointer; left alone it circles the lion on the
+   poles in the photo and the dragon hunts it. Wrong password = roar,
    right password = the pearl bursts and the gate opens.
 
    Drawing order per frame: back clouds, body glow, pearl, far legs,
