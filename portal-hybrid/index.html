@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=216">
+<link rel="stylesheet" href="style.css?v=217">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
@@ -305,8 +305,13 @@
             generation of community leaders.</p>
         </div>
         <figure class="intro-photo reveal d1">
-          <img src="assets/about-section/assoc.jpg" loading="lazy"
-               alt="Mak Fai lions, banners, and guests at the association's 50th anniversary celebration">
+          <!-- Panorama, 1.88:1. The frame's aspect-ratio is set to match it
+               exactly (see .intro-photo img) so nobody is cropped out of the
+               group shot -- the lion at the left edge and the dragon head at
+               the right both sit right on the boundary. If this photo is ever
+               replaced, update that ratio to the new file's. -->
+          <img src="assets/about-section/assoc-group.jpg" width="1024" height="544" loading="lazy"
+               alt="The full Mak Fai association gathered outside the kwoon in Seattle's Chinatown-International District, with lions, dragons, and ceremonial banners">
           <figcaption>
             <svg class="pin" width="10" height="16" viewBox="0 0 10 16" fill="none" aria-hidden="true">
               <path d="M5 15S1.4 9.2 1.4 5.6a3.6 3.6 0 1 1 7.2 0C8.6 9.2 5 15 5 15Z" fill="currentColor"/>

@@ -457,9 +457,14 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .sec-intro{padding-bottom:calc(var(--sec) * .3)}
 /* Named areas so mobile can restack copy/photo/cta in a different order
    than desktop without fighting grid auto-placement or DOM order. */
-.intro-grid{display:grid;grid-template-columns:1fr .92fr;
+/* The photo column carries more of the width than it used to (was .92fr with
+   a 96px gap). The group panorama is short for its width, so at the old size
+   the faces got very small -- giving the column more room scales the whole
+   photo up without distorting it. The copy column still lands around 480px,
+   a comfortable measure for 17px body text. */
+.intro-grid{display:grid;grid-template-columns:1fr 1.2fr;
   grid-template-areas:"copy photo" "cta photo";
-  column-gap:clamp(40px,6vw,96px);row-gap:14px;align-items:start}
+  column-gap:clamp(32px,4.5vw,64px);row-gap:14px;align-items:start}
 .intro-copy{grid-area:copy}
 .intro-photo{grid-area:photo}
 /* The 1974/50+ facts used to float centred beneath the whole grid as an
@@ -484,9 +489,15 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
    wordmark than a headline. The short rule underneath stands in for the
    eyebrow label that used to sit above it. */
 .intro-title-row{display:flex;align-items:center;gap:22px;margin:0}
+/* Stays on one line, and is sized as large as that allows. nowrap enforces
+   the single line; the ceiling is what keeps it inside the column, which the
+   wider photo narrowed to ~480px. Measured limit before the title collides
+   with the calligraphy beside it is ~61px at desktop and ~50px at 1024, so
+   58px / 4.6vw sits just under both with a few px of margin. Raising either
+   number further pushes the row out of the column rather than wrapping it. */
 .intro-title{font-family:var(--sans);font-weight:700;text-transform:uppercase;
-  font-size:clamp(38px,5.2vw,64px);line-height:1;letter-spacing:-.01em;
-  margin:0;color:var(--ink-l)}
+  font-size:clamp(34px,4.6vw,58px);line-height:1;letter-spacing:-.01em;
+  white-space:nowrap;margin:0;color:var(--ink-l)}
 /* mak-kwoon.png is a real alpha-transparent cutout of mak-kwoon.jpg's ink
    strokes (the JPG has no alpha; a mix-blend-mode:multiply was tried
    instead but flashed white during the .reveal fade-in -- an ancestor's
@@ -500,8 +511,19 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 /* the photo rides lower than the text — deliberate asymmetry -- and nudged
    right within its own column so it doesn't read flush/off-centre against
    the wider text column beside it. */
-.intro-photo{margin:clamp(24px,4vw,72px) 0 0 clamp(16px,3vw,40px)}
-.intro-photo img{width:100%;aspect-ratio:4/3.1;object-fit:cover}
+/* Left indent dropped (was clamp(16px,3vw,40px)) so the photo starts at the
+   column edge and keeps that width for itself. */
+.intro-photo{margin:clamp(24px,4vw,72px) 0 0 0}
+/* Ratio matches assets/about-section/assoc-group.jpg natively (1024x544), not
+   the 4/3.1 this frame used to hold. A group photo is the one case where a
+   crop costs something real -- at 4/3.1 roughly a third of the width goes,
+   taking the lion and the dragon head at either edge with it. Update this if
+   the photo is swapped.
+   height:auto is required, not tidiness: the img carries width/height
+   attributes (which reserve space and stop layout shift), and those map to a
+   presentational height. That makes the box definite and cancels
+   aspect-ratio outright -- the frame renders 457x544 instead of 16:8.5. */
+.intro-photo img{width:100%;height:auto;aspect-ratio:1024/544;object-fit:cover}
 .intro-photo figcaption{margin-top:14px;font-size:11px;letter-spacing:.22em;
   text-transform:uppercase;color:var(--muted-l);
   display:flex;align-items:center;gap:8px}
