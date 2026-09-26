@@ -260,6 +260,10 @@ header{position:relative;z-index:60}
 .btn-paper{background:var(--paper);color:var(--ink-l)}
 .btn-paper:hover{background:#fff;transform:translateY(-2px);
   box-shadow:0 14px 34px rgba(0,0,0,.4)}
+/* Why Donate CTA: the hero/nav Donate green so the ask stands out on the
+   dark band. White on #006837 is 7.7:1. */
+.btn-paper.btn-donate{background:#006837;color:#fff}
+.btn-paper.btn-donate:hover{background:#007A41;color:#fff}
 .btn-red{background:var(--red-deep);color:#fff;border-color:rgba(242,180,65,.35);
   border-radius:8px}
 .btn-red:hover{background:#C01D26}
@@ -672,7 +676,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
              rgba(11,7,8,.92) 100%)}
 .value-plate{position:relative;z-index:2;width:100%}
 .value-plate h3{font-family:var(--serif);font-weight:560;letter-spacing:.005em;
-  font-size:clamp(18px,1.9vw,23px);margin:0 0 10px;color:#F4B21E}
+  font-size:clamp(20.5px,calc(1.9vw + 2.5px),25.5px);margin:0 0 10px;color:#F4B21E}
 .value-plate p{margin:0 auto;max-width:24ch;font-size:14px;line-height:1.6;
   color:var(--muted)!important}
 /* Slanted divider between the three -- a tilted hairline rather than the

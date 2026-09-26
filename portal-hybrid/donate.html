@@ -18,7 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=217">
+<link rel="stylesheet" href="style.css?v=218">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 </head>
 <body>
@@ -277,16 +277,16 @@
               <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M16 6 3.5 11.5 16 17l12.5-5.5z"/><path d="M8.5 14v6.5c0 2.2 3.4 3.8 7.5 3.8s7.5-1.6 7.5-3.8V14"/><path d="M28.5 11.5v7"/>
               </svg></span>
-            <div><b>Youth scholarships</b><p>No child is turned away. Gifts cover
-              tuition for families who cannot pay it.</p></div>
+            <div><b>Youth Scholarships</b><p>No child is turned away. Gifts cover
+              tuition for families who need it most.</p></div>
           </li>
           <li class="reveal d2">
             <span class="give-ico" aria-hidden="true">
               <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
                 <ellipse cx="16" cy="10.5" rx="9.5" ry="3.5"/><path d="M6.5 10.5v11c0 1.9 4.3 3.5 9.5 3.5s9.5-1.6 9.5-3.5v-11"/><path d="M6.5 16c0 1.9 4.3 3.5 9.5 3.5s9.5-1.6 9.5-3.5"/>
               </svg></span>
-            <div><b>Gear that wears out</b><p>Old lion heads, drum skins, training
-              weapons, uniforms &mdash; all the worn-down stuff can finally get
+            <div><b>Gear that wears out</b><p>All the worn-down stuff&mdash;old
+              lion heads, training weapons, uniforms&mdash;can finally get
               replaced.</p></div>
           </li>
           <li class="reveal d3">
@@ -603,10 +603,12 @@
     if (link) {
       cta.href = link;
       ctaText.textContent = 'Give ' + label + ' with card';
-      note.textContent = 'Opens Stripe\u2019s secure page for ' + label + '.';
+      // fixed amounts need no explanation under the button
+      note.textContent = ''; note.hidden = true;
     } else {
       cta.href = FLEXIBLE_LINK;
       ctaText.textContent = label ? 'Give ' + label + ' with card' : 'Give with card';
+      note.hidden = false;
       note.textContent = label
         ? 'Opens Stripe\u2019s secure page \u2014 enter ' + label + ' there to complete it.'
         : 'Opens Stripe\u2019s secure page \u2014 enter whatever amount you\u2019d like to give there.';
