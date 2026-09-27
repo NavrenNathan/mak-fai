@@ -1200,7 +1200,13 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 .f-name b{display:block;font-family:var(--sans);font-weight:700;
   font-size:22px;letter-spacing:.2em;text-transform:uppercase;
   color:var(--ink);line-height:1.2}
-.f-calli{display:block;height:30px;width:auto;margin-top:8px}
+/* Same stack as the header: wordmark and the full calligraphy centred on
+   each other (the negative margin cancels the tracking after the last
+   letter). The calligraphy is wider than the old six-character one, so it
+   is sized to sit under the wordmark rather than run past it. */
+.f-name{display:flex;flex-direction:column;align-items:center}
+.f-name b{margin-right:-.2em}
+.f-calli{display:block;height:22px;width:auto;margin-top:8px}
 .f-cols{display:grid;grid-template-columns:repeat(4,1fr);
   gap:clamp(26px,4vw,56px);padding-bottom:clamp(36px,5vw,60px)}
 .f-h{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;
