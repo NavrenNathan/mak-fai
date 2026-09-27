@@ -1206,7 +1206,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
    is sized to sit under the wordmark rather than run past it. */
 .f-name{display:flex;flex-direction:column;align-items:center}
 .f-name b{margin-right:-.2em}
-.f-calli{display:block;height:22px;width:auto;margin-top:8px}
+.f-calli{display:block;height:23px;width:auto;margin-top:5px}
 .f-cols{display:grid;grid-template-columns:repeat(4,1fr);
   gap:clamp(26px,4vw,56px);padding-bottom:clamp(36px,5vw,60px)}
 .f-h{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;
