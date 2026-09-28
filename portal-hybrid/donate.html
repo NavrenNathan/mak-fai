@@ -201,7 +201,7 @@
         <div class="amts" role="group" aria-labelledby="amt-label">
           <button type="button" class="amt" data-amt="25">$25</button>
           <button type="button" class="amt on" data-amt="50" aria-pressed="true">$50</button>
-          <button type="button" class="amt" data-amt="125">$125</button>
+          <button type="button" class="amt" data-amt="150">$150</button>
           <button type="button" class="amt" data-amt="250">$250</button>
           <button type="button" class="amt" data-amt="500">$500</button>
           <button type="button" class="amt amt-other" data-amt="other">Other</button>
@@ -260,7 +260,7 @@
         </div>
 
         <p class="give-tierhint">
-          <span aria-hidden="true">&#9733;</span> Giving $500 or more in a
+          <span aria-hidden="true">&#9733;</span> Giving $150 or more in a
           year makes you a <a href="#members">Sponsorship Member</a>.</p>
 
         <p class="give-fine">Mak Fai is a 501(c)(3) nonprofit and a receipt
@@ -318,7 +318,7 @@
        (2) When a donor receives something of value in return, the IRS treats
            the gift as quid pro quo and only the excess over that value is
            deductible. Voting rights are usually treated as having no market
-           value, which keeps the full $500 deductible, but that call belongs
+           value, which keeps the full $150 deductible, but that call belongs
            to the association's accountant, not to this page.
        The copy below deliberately says members are "invited to vote" on
        community decisions rather than claiming statutory voting power, and
@@ -328,10 +328,10 @@
     <span class="awards-glow" aria-hidden="true"></span>
     <div class="wrap">
       <div class="members-in">
-        <p class="eyebrow reveal">$500 and above</p>
+        <p class="eyebrow reveal">$150 and above</p>
         <h2 id="members-h" class="disp reveal d1">Sponsorship Members</h2>
         <span class="disp-rule reveal d1" aria-hidden="true"></span>
-        <p class="lede reveal d2">Give $500 or more in a year and you become a
+        <p class="lede reveal d2">Give $150 or more in a year and you become a
           member of the association&mdash;and get a say in how we run.</p>
 
         <ul class="members-list">
@@ -555,7 +555,7 @@
   var PAY_LINKS = {
     '25':  'https://buy.stripe.com/00w6oIfy1cn12r5b83afS01',
     '50':  'https://buy.stripe.com/9B6fZi0D74Uz3v9fojafS02',
-    '125': 'https://buy.stripe.com/dRmeVedpT3Qv7Lp4JFafS03',
+    '150': 'https://buy.stripe.com/9B63cw71v9aPd5J2BxafS06',
     '250': 'https://buy.stripe.com/bJecN6etX5YDfdRekfafS04',
     '500': 'https://buy.stripe.com/7sY4gA1Hbcn1aXB0tpafS05'
   };
@@ -563,10 +563,21 @@
   var IMPACT = {
     '25':  'Replaces worn practice gear.',
     '50':  'Outfits one new student in a full practice uniform and sash.',
-    '125': 'Repairs a drum head \u2014 the part that wears out fastest.',
-    '250': 'Restocks the weapons rack \u2014 staffs, broadswords, spears.',
-    '500': 'Makes you a Sponsorship Member for the year.'
+    '150': 'Repairs a drum head \u2014 the part that wears out fastest.',
+    '250': 'Restocks the weapons rack \u2014 staffs, broadswords, spears.'
   };
+
+  /* Sponsorship Membership threshold. It is applied in render() rather than
+     written into one tier's impact line, because at $150 it is no longer the
+     top tier alone that qualifies -- $150, $250 and $500 all clear it, and so
+     does any custom amount at or above it. Hard-coding it to '500' the way
+     this did previously would have told a $250 donor nothing and a $200
+     custom donor nothing at all.
+     The threshold also appears in the page copy (the star hint above, and the
+     "$150 and above" eyebrow and lede in the members section). Those are
+     static text and have to be kept in step with this by hand. */
+  var MEMBER_MIN  = 150;
+  var MEMBER_LINE = 'Makes you a Sponsorship Member for the year.';
 
   var chips   = [].slice.call(document.querySelectorAll('.amt'));
   var wrap    = document.getElementById('customwrap');
@@ -614,7 +625,11 @@
         : 'Opens Stripe\u2019s secure page \u2014 enter whatever amount you\u2019d like to give there.';
     }
 
-    impact.textContent = (picked !== 'other' && IMPACT[picked]) ? IMPACT[picked] : '';
+    var lines = [];
+    if (picked !== 'other' && IMPACT[picked]) lines.push(IMPACT[picked]);
+    var n = Number(amt);
+    if (isFinite(n) && n >= MEMBER_MIN) lines.push(MEMBER_LINE);
+    impact.textContent = lines.join(' ');
   }
 
   chips.forEach(function (chip) {
