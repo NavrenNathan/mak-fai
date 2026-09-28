@@ -1556,6 +1556,15 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   background:var(--jade);border-color:var(--jade);color:#fff;
   box-shadow:0 6px 18px rgba(30,90,68,.24);
 }
+/* $150 is the Sponsorship Member level: a small tag riding the chip's top
+   edge, in the same voice as .pay-badge ("Preferred" on Zelle). The paper
+   ring keeps it legible against the jade border when the chip is on. */
+.amt-member{position:relative}
+.amt-badge{position:absolute;top:-8px;right:8px;
+  font-size:8.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  line-height:1;padding:4px 7px;border-radius:5px;
+  background:var(--jade);color:#fff;box-shadow:0 0 0 2px var(--paper)}
+.amt-member.on .amt-badge{background:#F4B21E;color:var(--ink-l)}
 .amt-other{font-size:15px;font-weight:600;letter-spacing:.06em;
   text-transform:uppercase;color:var(--muted-l)}
 .amt-other.on{color:#fff}
@@ -1582,6 +1591,15 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 /* the Zelle echo — same weight as the recipient codes beside it */
 #zelleamt{color:var(--jade);font-weight:700}
 
+/* Phones: the stylesheet's own floor for small uppercase labels is ~10px
+   (see .pay-badge / .award-kind), and in the 2-column grid the $150 chip
+   sits directly under $25 -- the extra row gap and a shallower badge keep
+   the tag clear of that chip and of its keyboard focus ring. These live
+   after the base .amt-badge rule so they win the cascade. */
+@media (max-width:720px){
+  .amt-badge{font-size:10px;padding:4px 8px}
+}
 @media (max-width:560px){
-  .amts{grid-template-columns:repeat(2,1fr)}
+  .amts{grid-template-columns:repeat(2,1fr);row-gap:16px}
+  .amt-badge{top:-6px}
 }
