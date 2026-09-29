@@ -1385,6 +1385,8 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
      third value on its own row */
   .honors{grid-template-columns:1fr 1fr;gap:24px}
   .impact{grid-template-columns:1fr 1fr}
+  /* three cards in two columns: let the odd one out take the full row */
+  .impact-card:last-child:nth-child(odd){grid-column:1/-1}
   .awards{grid-template-columns:1fr 1fr}
   .award{grid-column:auto}
   .ways{grid-template-columns:1fr 1fr}
