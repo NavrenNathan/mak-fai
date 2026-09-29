@@ -271,7 +271,8 @@
 
         <p class="give-fine">Mak Fai is a 501(c)(3) nonprofit and a receipt
           follows every gift. Prefer we send you a link instead?
-          <a id="pledgelink" href="mailto:hello@makfai.org">Email us your pledge</a>.</p>
+          <a id="pledgelink" href="mailto:hello@makfai.org">Email us your pledge</a>.
+          Read our <a href="privacy.html">Privacy Policy</a>.</p>
       </div>
 
       <div class="give-side">
@@ -483,11 +484,17 @@
   if (reduced || !('IntersectionObserver' in window)) {
     toReveal.forEach(function(el){ el.classList.add('in'); });
   } else {
+    // 12% visible, or -- for anything taller than most of the screen, like
+    // the donate give card, whose 12% never fits in the first viewport --
+    // as soon as it enters the view
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
-        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        if (en.isIntersecting && (en.intersectionRatio >= .12 ||
+            en.boundingClientRect.height > innerHeight * .8)) {
+          en.target.classList.add('in'); io.unobserve(en.target);
+        }
       });
-    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    }, {threshold:[0, .12], rootMargin:'0px 0px -8% 0px'});
     toReveal.forEach(function(el){ io.observe(el); });
   }
 

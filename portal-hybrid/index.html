@@ -770,7 +770,8 @@
             <a href="mailto:hello@makfai.org">hello@makfai.org</a>.</p>
           <p class="form-note">This opens your email app with the message ready
             to send — or write us directly at
-            <a href="mailto:hello@makfai.org">hello@makfai.org</a>.</p>
+            <a href="mailto:hello@makfai.org">hello@makfai.org</a>.
+            Read our <a href="privacy.html">Privacy Policy</a>.</p>
         </form>
       </div>
     </div>
@@ -849,11 +850,17 @@
   if (reduced || !('IntersectionObserver' in window)) {
     toReveal.forEach(function(el){ el.classList.add('in'); });
   } else {
+    // 12% visible, or -- for anything taller than most of the screen, like
+    // the donate give card, whose 12% never fits in the first viewport --
+    // as soon as it enters the view
     var io = new IntersectionObserver(function(entries){
       entries.forEach(function(en){
-        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+        if (en.isIntersecting && (en.intersectionRatio >= .12 ||
+            en.boundingClientRect.height > innerHeight * .8)) {
+          en.target.classList.add('in'); io.unobserve(en.target);
+        }
       });
-    }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
+    }, {threshold:[0, .12], rootMargin:'0px 0px -8% 0px'});
     toReveal.forEach(function(el){ io.observe(el); });
   }
 
