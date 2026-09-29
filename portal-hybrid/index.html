@@ -743,20 +743,20 @@
           <div class="frow">
             <div class="field">
               <label for="f-name">Name</label>
-              <input id="f-name" name="name" type="text" autocomplete="name" required>
+              <input id="f-name" name="name" type="text" autocomplete="name" maxlength="100" required>
             </div>
             <div class="field">
               <label for="f-email">Email</label>
-              <input id="f-email" name="email" type="email" autocomplete="email" required>
+              <input id="f-email" name="email" type="email" autocomplete="email" maxlength="254" required>
             </div>
           </div>
           <div class="field">
             <label for="f-date">Topic <span class="opt">(optional)</span></label>
-            <input id="f-date" name="date" type="text" placeholder="e.g. community event, press, partnership">
+            <input id="f-date" name="date" type="text" maxlength="120" placeholder="e.g. community event, press, partnership">
           </div>
           <div class="field">
             <label for="f-msg">Message</label>
-            <textarea id="f-msg" name="message" required placeholder="Tell us what you&rsquo;re reaching out about…"></textarea>
+            <textarea id="f-msg" name="message" maxlength="1500" required placeholder="Tell us what you&rsquo;re reaching out about…"></textarea>
           </div>
           <button class="btn btn-ink" type="submit">Send message
             <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
@@ -915,7 +915,7 @@
   var lastFocus = null;
   function openLb(id){
     lastFocus = document.activeElement;
-    frame.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0';
+    frame.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
     lb.classList.add('on');
     document.body.style.overflow = 'hidden';
     document.getElementById('lbclose').focus();

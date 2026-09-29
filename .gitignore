@@ -8,3 +8,22 @@ node_modules/
 # nothing references them -- the site ships the optimised JPEGs -- so they
 # stay out of git, which would otherwise carry the blobs forever.
 *Hero.png
+
+# Secrets: the repo is public on GitHub, so none of these may ever be committed.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+*.keystore
+id_rsa*
+id_ed25519*
+.npmrc
+.netrc
+credentials*.json
+
+# portal-hybrid/ is published as-is to makfai.org, so notes and docs dropped
+# into it (e.g. INTEGRATION.md) must never be committed from there.
+portal-hybrid/**/*.md

@@ -7,3 +7,14 @@
     X-Frame-Options = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # CSP + Permissions-Policy. Every new script, embed, font or form service
+    # (analytics, Sentry, a map, a different video host) must be added here in
+    # the same change, or the browser will block it on the live site. The
+    # :8115 localhost preview does NOT send these headers, so test a change
+    # like this with a header-aware server before pushing.
+    # script-src keeps 'unsafe-inline' while the pages carry inline <script>
+    # blocks (the password gate among them); hashes would silently break on
+    # any edit. Tighten to 'self' once those move into .js files.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+    Permissions-Policy = 'accelerometer=(), autoplay=(self "https://www.youtube-nocookie.com"), browsing-topics=(), camera=(), display-capture=(), encrypted-media=(self "https://www.youtube-nocookie.com"), fullscreen=(self "https://www.youtube-nocookie.com"), geolocation=(), gyroscope=(), hid=(), idle-detection=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(self "https://www.youtube-nocookie.com"), publickey-credentials-get=(), screen-wake-lock=(), serial=(), usb=(), xr-spatial-tracking=()'

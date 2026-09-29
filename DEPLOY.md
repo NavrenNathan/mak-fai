@@ -151,6 +151,27 @@ because each site only publishes its own base directory:
 The old drag-and-drop `*.zip` artifacts have been deleted and `*.zip` is
 gitignored.
 
+
+## Open legal questions (moved out of the page source)
+
+These were HTML comments in the deployed pages, readable by anyone via View
+Source. They live here instead. Nothing below is resolved yet.
+
+- **Sponsorship Membership ($150+), donate.html #members.**
+  1. A voting membership class has to exist in the association's bylaws and be
+     registered under WA nonprofit law -- a line on a web page can't create it.
+     The visible copy promises members a voice and a class-elected board seat.
+  2. Member perks (merchandise, member-only events) have a market value, which
+     likely makes a $150+ membership gift a quid pro quo contribution: only the
+     amount above the perks' fair market value is deductible, and gifts over
+     $75 need a written disclosure of that value on the receipt. The
+     association's accountant sets that value and the receipt wording. (Owner
+     decision, Sep 2026: the site copy stays as is; donors handle their own tax
+     reporting.)
+- **privacy.html** is a plain-language summary written from what the code does.
+  It has not been reviewed by a lawyer. Nathan or the association's counsel
+  should confirm it. The legal entity is the Association (confirmed Sep 2026).
+
 ---
 
 ## Why not the Netlify CLI

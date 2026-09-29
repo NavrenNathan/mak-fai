@@ -213,7 +213,7 @@
         <div class="amt-custom" hidden id="customwrap">
           <label class="vis-hidden" for="customamt">Custom amount in US dollars</label>
           <span class="amt-cur" aria-hidden="true">$</span>
-          <input id="customamt" type="number" min="1" step="1" inputmode="numeric"
+          <input id="customamt" type="number" min="1" max="999999" step="1" inputmode="numeric"
                  placeholder="Enter an amount">
         </div>
         <p class="amt-impact" id="amtimpact"></p>
@@ -316,23 +316,6 @@
   </section>
 
   <!-- ============ SCHOLARSHIP MEMBERS ============ -->
-  <!-- FLAG FOR NATHAN: tying a vote to a donation is not just a copy decision.
-       (1) A voting membership class has to exist in the association's bylaws
-           and be registered under WA nonprofit law -- it can't be created by
-           a line on a web page.
-       (2) When a donor receives something of value in return, the IRS treats
-           the gift as quid pro quo and only the excess over that value is
-           deductible. Voting rights alone usually have no market value, but
-           benefit 03 now promises exclusive merchandise and member-only
-           events, which do. That likely makes a $150+ membership gift a quid
-           pro quo contribution: only the amount above the benefits' fair
-           market value is deductible, and gifts over $75 need a written
-           disclosure of that value on the receipt. The association's
-           accountant has to set that value and the receipt wording.
-       The copy below deliberately says members are "invited to vote" on
-       community decisions rather than claiming statutory voting power, and
-       repeats that the gift stays fully deductible only "to the extent
-       allowed by law". Have both checked before this goes live. -->
   <section id="members" class="sec-members" aria-labelledby="members-h">
     <span class="awards-glow" aria-hidden="true"></span>
     <div class="wrap">
@@ -608,7 +591,8 @@
 
   function money(v) {
     var n = Number(v);
-    if (!isFinite(n) || n <= 0) return null;
+    // under $1 or absurdly large (e.g. 1e21) is not a real gift amount
+    if (!isFinite(n) || n < 1 || n > 999999) return null;
     // whole dollars display without a trailing .00
     return '$' + (n % 1 === 0 ? n.toFixed(0) : n.toFixed(2));
   }
@@ -646,7 +630,7 @@
     var lines = [];
     if (picked !== 'other' && IMPACT[picked]) lines.push(IMPACT[picked]);
     var n = Number(amt);
-    if (picked === 'other' && isFinite(n) && n >= MEMBER_MIN) lines.push(MEMBER_LINE);
+    if (picked === 'other' && label && n >= MEMBER_MIN) lines.push(MEMBER_LINE);
     impact.textContent = lines.join(' ');
   }
 
