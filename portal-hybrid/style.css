@@ -896,7 +896,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .pay-cta{width:100%;justify-content:center;margin-top:17px;
   padding:16px 22px;font-size:13px}
 .pay-note{margin:11px 0 0;font-size:12.5px;line-height:1.5;color:var(--muted-l)}
-.give-tierhint{margin:16px 0 0;padding:12px 14px;border-radius:9px;
+.give-tierhint{text-wrap:balance;margin:16px 0 0;padding:12px 14px;border-radius:9px;
   background:rgba(242,180,65,.13);border:1px solid rgba(138,94,12,.28);
   font-size:13px;line-height:1.5;color:#5B4407}
 .give-tierhint span{color:var(--bronze)}
