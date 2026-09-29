@@ -1578,6 +1578,8 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .nav-social a{width:32px;height:32px}
   .ico-glyph{width:17px;height:17px}
   .nav-donate{padding:8px 9px}
+  /* the feature title wraps to more lines here, pushing its badge up */
+  .m-feature .play{top:22%}
 }
 @media (max-width:420px){
   .f-cols{grid-template-columns:1fr}
