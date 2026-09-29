@@ -584,7 +584,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .trad-rev .trad-photo{order:2}
 .trad-rev .trad-copy{order:1}
 .trad-photo{position:relative;margin:0;overflow:hidden}
-.trad-photo > img{width:100%;aspect-ratio:16/10.5;object-fit:cover}
+.trad-photo > img{width:100%;height:auto;aspect-ratio:16/10.5;object-fit:cover}
 .trad-copy{position:relative}
 .trad-no{display:block;font-family:var(--serif);font-weight:400;
   font-size:clamp(52px,5.4vw,76px);line-height:1;color:transparent;
