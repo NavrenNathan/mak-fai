@@ -759,6 +759,13 @@
           </div>
           <button class="btn btn-ink" type="submit">Send message
             <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
+          <!-- Shown after Send: a mailto hand-off gives no signal back, so
+               without this a visitor with no mail app set up saw nothing
+               happen at all. -->
+          <p class="form-status" id="formstatus" role="status" hidden>Your email
+            app should now open with your message ready to send. If it
+            didn&rsquo;t, email us at
+            <a href="mailto:hello@makfai.org">hello@makfai.org</a>.</p>
           <p class="form-note">This opens your email app with the message ready
             to send — or write us directly at
             <a href="mailto:hello@makfai.org">hello@makfai.org</a>.</p>
@@ -937,6 +944,7 @@
       '\n\n' + f.message.value;
     location.href = 'mailto:hello@makfai.org?subject=' +
       encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    document.getElementById('formstatus').hidden = false;
   });
 })();
 </script>

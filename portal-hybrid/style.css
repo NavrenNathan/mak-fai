@@ -1199,6 +1199,10 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .field input:focus,.field textarea:focus{outline:none;border-color:var(--jade);
   box-shadow:0 0 0 3px rgba(30,90,68,.14)}
 .field textarea{min-height:132px;resize:vertical}
+.form-status{margin:18px 0 0;padding:12px 16px;font-size:14px;line-height:1.55;
+  color:var(--ink-l);background:rgba(30,90,68,.07);border-left:2px solid var(--jade)}
+.form-status a{color:var(--jade);text-decoration:underline;text-underline-offset:2px}
+.form-status[hidden]{display:none}
 .form-note{font-size:13px;color:var(--muted-l);margin:16px 0 0}
 .form-note a{color:var(--jade);text-decoration:underline;
   text-underline-offset:3px}
