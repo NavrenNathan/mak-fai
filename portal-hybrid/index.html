@@ -27,25 +27,63 @@
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
-  "@context":"https://schema.org",
-  "@type":"Organization",
-  "name":"Mak Fai Kung Fu Dragon & Lion Dance Association",
-  "url":"https://makfai.org",
-  "foundingDate":"1974",
-  "telephone":"(206) 437-8131",
-  "email":"hello@makfai.org",
-  "address":{
-    "@type":"PostalAddress",
-    "streetAddress":"606 Maynard Ave S, Ste 107",
-    "addressLocality":"Seattle","addressRegion":"WA","postalCode":"98104"
-  },
-  "sameAs":[
-    "https://makfaikungfu.org",
-    "https://www.makfailiondance.com",
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "NGO",
+   "@id": "https://makfai.org/#org",
+   "name": "Mak Fai Kung Fu Dragon & Lion Dance Association",
+   "legalName": "Mak Fai Kung Fu Dragon & Lion Dance Association",
+   "alternateName": "Mak Fai",
+   "url": "https://makfai.org/",
+   "logo": "https://makfai.org/assets/branding/mak-fai-crest-3.png",
+   "image": "https://makfai.org/assets/branding/og-image.jpg",
+   "description": "A nonprofit based in Seattle's Chinatown-International District, established by Grandmaster Mak Hin Fai in 1974, carrying Hung Sing Choy Lay Fut kung fu and Southern-style lion dancing forward by teaching the next generation.",
+   "foundingDate": "1974",
+   "founder": {
+    "@type": "Person",
+    "name": "Mak Hin Fai"
+   },
+   "nonprofitStatus": "https://schema.org/Nonprofit501c3",
+   "telephone": "+1-206-437-8131",
+   "email": "hello@makfai.org",
+   "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "606 Maynard Ave S, Ste 107",
+    "addressLocality": "Seattle",
+    "addressRegion": "WA",
+    "postalCode": "98104",
+    "addressCountry": "US"
+   },
+   "sameAs": [
     "https://www.instagram.com/makfaikungfu/",
     "https://www.facebook.com/makfaikungfuliondance",
     "https://www.youtube.com/@makfaikungfu"
-  ]
+   ],
+   "subOrganization": [
+    {
+     "@type": "SportsOrganization",
+     "name": "Mak Fai Kung Fu",
+     "url": "https://makfaikungfu.org/"
+    },
+    {
+     "@type": "DanceGroup",
+     "name": "Mak Fai Lion Dance",
+     "url": "https://www.makfailiondance.com/"
+    }
+   ]
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://makfai.org/#website",
+   "name": "Mak Fai Kung Fu Dragon & Lion Dance Association",
+   "alternateName": "Mak Fai",
+   "url": "https://makfai.org/",
+   "publisher": {
+    "@id": "https://makfai.org/#org"
+   }
+  }
+ ]
 }
 </script>
 </head>
@@ -221,8 +259,8 @@
       <div class="hero-word hero-word-kungfu" data-stagger="3" aria-hidden="true"><span class="hw-gold">Kung</span><span>Fu</span></div>
       <!-- Desktop only -- no room for these in the mobile hero. -->
       <!-- TODO: repoint to https://makfailiondance.org once live + 301 -->
-      <a class="hero-learn hero-learn-lion" href="https://www.makfailiondance.com" target="_blank" rel="noopener">Learn more</a>
-      <a class="hero-learn hero-learn-kungfu" href="https://makfaikungfu.org" target="_blank" rel="noopener">Learn more</a>
+      <a class="hero-learn hero-learn-lion" href="https://www.makfailiondance.com" target="_blank" rel="noopener">Learn more<span class="vis-hidden"> about Mak Fai Lion Dance</span></a>
+      <a class="hero-learn hero-learn-kungfu" href="https://makfaikungfu.org" target="_blank" rel="noopener">Learn more<span class="vis-hidden"> about Mak Fai Kung Fu</span></a>
     </div>
     <!-- .hero-cta: absolute overlay on desktop (unchanged), a plain solid
          band in normal flow below .hero-visual on mobile (Concept 2). -->
@@ -334,7 +372,7 @@
             <div class="stat"><b>1974</b><i>Established</i></div>
             <div class="stat"><b>50+</b><i>Years of tradition</i></div>
           </div>
-          <a class="cta" href="#community">Learn more
+          <a class="cta" href="#community">Learn more<span class="vis-hidden"> about our community</span>
             <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
         </div>
       </div>
@@ -666,8 +704,8 @@
           <span class="vthumb"><img src="assets/gallery-section/yt_yUPD6fRlr1A.jpg" alt="" loading="lazy" width="1280" height="720">
             <span class="play"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
           </span>
-          <span class="vmeta">
-            <span class="badge">★ Award-winning documentary</span>
+          <span class="vmeta"><span class="vis-hidden">Play video: </span>
+            <span class="badge"><span aria-hidden="true">★</span> Award-winning documentary</span>
             <span class="vtitle">The Golden 50: A Mak Fai Anniversary</span>
             <i>50 years of the association, on film</i>
           </span>
@@ -677,14 +715,14 @@
           <span class="vthumb"><img src="assets/gallery-section/yt_T9ix1H7Rz0Y.jpg" alt="" loading="lazy" width="1280" height="720">
             <span class="play"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
           </span>
-          <span class="vmeta"><span class="vtitle">Wholehearted: Behind Mak Fai&rsquo;s Lunar New Year Day</span><i>Behind the scenes</i></span>
+          <span class="vmeta"><span class="vis-hidden">Play video: </span><span class="vtitle">Wholehearted: Behind Mak Fai&rsquo;s Lunar New Year Day</span><i>Behind the scenes</i></span>
         </button>
 
         <button class="vcard m-half reveal d2" data-yt="8decypS9A00" type="button">
           <span class="vthumb"><img src="assets/gallery-section/yt_8decypS9A00.jpg" alt="" loading="lazy" width="1280" height="720">
             <span class="play"><svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M8 5v14l11-7z"/></svg></span>
           </span>
-          <span class="vmeta"><span class="vtitle">Hong Kong Lion Dance Tour</span><i>Representing Seattle abroad</i></span>
+          <span class="vmeta"><span class="vis-hidden">Play video: </span><span class="vtitle">Hong Kong Lion Dance Tour</span><i>Representing Seattle abroad</i></span>
         </button>
       </div>
     </div>

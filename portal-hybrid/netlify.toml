@@ -18,3 +18,23 @@
     # any edit. Tighten to 'self' once those move into .js files.
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
     Permissions-Policy = 'accelerometer=(), autoplay=(self "https://www.youtube-nocookie.com"), browsing-topics=(), camera=(), display-capture=(), encrypted-media=(self "https://www.youtube-nocookie.com"), fullscreen=(self "https://www.youtube-nocookie.com"), geolocation=(), gyroscope=(), hid=(), idle-detection=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(self "https://www.youtube-nocookie.com"), publickey-credentials-get=(), screen-wake-lock=(), serial=(), usb=(), xr-spatial-tracking=()'
+
+# Caching. Assets aren't fingerprinted, so they get a day fresh plus a week
+# of background refresh (a replaced image should get a new filename).
+# style.css and lion-dragon.js are always loaded with a ?v= query that is
+# bumped on every edit, so they can be cached for a week. HTML keeps
+# Netlify's default (always revalidate) so a deploy shows up immediately.
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=86400, stale-while-revalidate=604800"
+
+[[headers]]
+  for = "/style.css"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/lion-dragon.js"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

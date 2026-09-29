@@ -143,7 +143,7 @@ header{position:relative;z-index:60}
    z-index, is what actually wins that specific comparison. */
 .brand{position:relative;z-index:56;
   display:flex;align-items:center;gap:13px;margin-right:auto}
-/* height-locked, width auto -- the new mark (assets/branding/mk-logo.png) isn't a
+/* height-locked, width auto -- the crest (assets/branding/mak-fai-crest-3.png) isn't a
    perfect circle/square like the old crest, so a fixed square box would
    squash it. */
 .brand img{width:auto;height:70px}
