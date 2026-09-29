@@ -946,7 +946,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .dask{display:flex;justify-content:space-between;align-items:flex-end;
   gap:clamp(24px,4vw,60px);flex-wrap:wrap}
 .dask .lede{margin-top:0}
-.dask-links{display:flex;flex-direction:column;gap:10px;text-align:right}
+.dask-links{display:flex;flex-direction:column;gap:10px;text-align:left}
 .dask-links a{font-family:var(--sans);font-weight:700;
   font-size:clamp(17px,1.7vw,21px);color:var(--gold);text-decoration:none;
   border-bottom:1px solid rgba(242,180,65,.34);
