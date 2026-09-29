@@ -1518,6 +1518,26 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .book-ctas .btn{width:100%;justify-content:center}
   .story-photo{height:52vh}
 }
+/* The 720px bar only fits from ~390px up: at 375 MAK FAI ran 13px into the
+   Instagram icon, at 320 57px across Instagram and Facebook. Step the brand
+   block down on narrow phones; tap targets stay at 32px, above the minimum. */
+@media (max-width:400px){
+  .nav-in{padding-left:16px;padding-right:16px}
+  .brand{gap:7px}
+  .brand img{height:44px}
+  .brand-t b{font-size:15px;letter-spacing:.12em;margin-right:-.12em}
+  .brand .brand-calli{height:14px;margin-top:3px}
+}
+@media (max-width:350px){
+  .nav-in{gap:4px;padding-left:12px;padding-right:12px}
+  .brand{gap:6px}
+  .brand img{height:38px}
+  .brand-t b{font-size:13px;letter-spacing:.1em;margin-right:-.1em}
+  .brand .brand-calli{height:12px}
+  .nav-social a{width:32px;height:32px}
+  .ico-glyph{width:17px;height:17px}
+  .nav-donate{padding:8px 9px}
+}
 @media (max-width:420px){
   .f-cols{grid-template-columns:1fr}
   .stat b{font-size:26px}
