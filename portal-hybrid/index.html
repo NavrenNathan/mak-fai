@@ -144,7 +144,7 @@
 })();
 </script>
 <script src="lion-dragon.js?v=1" defer></script>
-<script src="assets/pw-gate.js?v=14" defer></script>
+<script src="assets/pw-gate.js?v=15" defer></script>
 
 <a class="skip" href="#about">Skip to content</a>
 
@@ -842,27 +842,8 @@
 (function(){
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* nav: transparent over the hero, paper once scrolled */
-  var nav = document.getElementById('nav');
-  var onScroll = function(){ nav.classList.toggle('scrolled', scrollY > 24); };
-  addEventListener('scroll', onScroll, {passive:true}); onScroll();
-
-  /* mobile menu */
-  var burger = document.getElementById('burger');
-  burger.addEventListener('click', function(){
-    var open = nav.classList.toggle('open');
-    burger.setAttribute('aria-expanded', open);
-    document.body.classList.toggle('menu-open', open);
-  });
-  document.getElementById('navlinks').addEventListener('click', function(e){
-    if (e.target.closest('a')) {
-      nav.classList.remove('open');
-      burger.setAttribute('aria-expanded','false');
-      document.body.classList.remove('menu-open');
-    }
-  });
-
-  /* reveal on scroll */
+  /* reveal on scroll -- first, so a failure anywhere below can never leave
+     the page sections stuck at opacity 0 */
   var toReveal = [].slice.call(document.querySelectorAll('.reveal'));
   if (reduced || !('IntersectionObserver' in window)) {
     toReveal.forEach(function(el){ el.classList.add('in'); });
@@ -873,6 +854,31 @@
       });
     }, {threshold:.12, rootMargin:'0px 0px -8% 0px'});
     toReveal.forEach(function(el){ io.observe(el); });
+  }
+
+  /* nav: transparent over the hero, paper once scrolled */
+  var nav = document.getElementById('nav');
+  if (nav) {
+    var onScroll = function(){ nav.classList.toggle('scrolled', scrollY > 24); };
+    addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  }
+
+  /* mobile menu */
+  var burger = document.getElementById('burger');
+  var navlinks = document.getElementById('navlinks');
+  if (nav && burger && navlinks) {
+    burger.addEventListener('click', function(){
+      var open = nav.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open);
+      document.body.classList.toggle('menu-open', open);
+    });
+    navlinks.addEventListener('click', function(e){
+      if (e.target.closest('a')) {
+        nav.classList.remove('open');
+        burger.setAttribute('aria-expanded','false');
+        document.body.classList.remove('menu-open');
+      }
+    });
   }
 
   /* The hero's one-shot entrance animation (rise/rise-tag) uses fill-mode
@@ -912,32 +918,44 @@
   /* video lightbox */
   var lb = document.getElementById('lb');
   var frame = document.getElementById('lbframe');
-  var lastFocus = null;
-  function openLb(id){
-    lastFocus = document.activeElement;
-    frame.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
-    lb.classList.add('on');
-    document.body.style.overflow = 'hidden';
-    document.getElementById('lbclose').focus();
+  var lbclose = document.getElementById('lbclose');
+  if (lb && frame && lbclose) {
+    var lastFocus = null, clearT = null;
+    var openLb = function(id){
+      // a close-then-reopen inside 350ms must not let the old timer blank the new video
+      clearTimeout(clearT);
+      lastFocus = document.activeElement;
+      frame.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+      lb.classList.add('on');
+      document.body.style.overflow = 'hidden';
+      lbclose.focus();
+    };
+    var closeLb = function(){
+      lb.classList.remove('on');
+      document.body.style.overflow = '';
+      clearT = setTimeout(function(){ frame.src = ''; }, 350);
+      if (lastFocus) lastFocus.focus();
+    };
+    [].slice.call(document.querySelectorAll('.vcard')).forEach(function(card){
+      card.addEventListener('click', function(){ openLb(card.dataset.yt); });
+    });
+    lbclose.addEventListener('click', closeLb);
+    lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
+    addEventListener('keydown', function(e){
+      if (e.key === 'Escape' && lb.classList.contains('on')) closeLb();
+    });
   }
-  function closeLb(){
-    lb.classList.remove('on');
-    document.body.style.overflow = '';
-    setTimeout(function(){ frame.src = ''; }, 350);
-    if (lastFocus) lastFocus.focus();
-  }
-  [].slice.call(document.querySelectorAll('.vcard')).forEach(function(card){
-    card.addEventListener('click', function(){ openLb(card.dataset.yt); });
-  });
-  document.getElementById('lbclose').addEventListener('click', closeLb);
-  lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
-  addEventListener('keydown', function(e){
-    if (e.key === 'Escape' && lb.classList.contains('on')) closeLb();
-  });
 
   /* contact form → opens the visitor's mail app, prefilled */
-  document.getElementById('bookform').addEventListener('submit', function(e){
+  var bookform = document.getElementById('bookform');
+  var lastSend = 0;
+  if (bookform) bookform.addEventListener('submit', function(e){
     e.preventDefault();
+    // a double-click would otherwise open two mail drafts; a deliberate
+    // retry a couple of seconds later still works
+    var now = Date.now();
+    if (now - lastSend < 2000) return;
+    lastSend = now;
     var f = e.target;
     var subject = 'Mak Fai inquiry — ' + f.name.value;
     var body = 'Name: ' + f.name.value + '\nEmail: ' + f.email.value +

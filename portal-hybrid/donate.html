@@ -121,7 +121,7 @@
 })();
 </script>
 <script src="lion-dragon.js?v=1" defer></script>
-<script src="assets/pw-gate.js?v=14" defer></script>
+<script src="assets/pw-gate.js?v=15" defer></script>
 
 <a class="skip" href="#give">Skip to content</a>
 
@@ -476,27 +476,8 @@
 (function(){
   var reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* nav: transparent at the top, paper once scrolled -- same as the home page */
-  var nav = document.getElementById('nav');
-  var onScroll = function(){ nav.classList.toggle('scrolled', scrollY > 24); };
-  addEventListener('scroll', onScroll, {passive:true}); onScroll();
-
-  /* mobile menu */
-  var burger = document.getElementById('burger');
-  burger.addEventListener('click', function(){
-    var open = nav.classList.toggle('open');
-    burger.setAttribute('aria-expanded', open);
-    document.body.classList.toggle('menu-open', open);
-  });
-  document.getElementById('navlinks').addEventListener('click', function(e){
-    if (e.target.closest('a')) {
-      nav.classList.remove('open');
-      burger.setAttribute('aria-expanded','false');
-      document.body.classList.remove('menu-open');
-    }
-  });
-
-  /* reveal on scroll */
+  /* reveal on scroll -- first, so a failure anywhere below can never leave
+     the page sections stuck at opacity 0 */
   var toReveal = [].slice.call(document.querySelectorAll('.reveal'));
   if (reduced || !('IntersectionObserver' in window)) {
     toReveal.forEach(function(el){ el.classList.add('in'); });
@@ -509,8 +490,34 @@
     toReveal.forEach(function(el){ io.observe(el); });
   }
 
+  /* nav: transparent at the top, paper once scrolled -- same as the home page */
+  var nav = document.getElementById('nav');
+  if (nav) {
+    var onScroll = function(){ nav.classList.toggle('scrolled', scrollY > 24); };
+    addEventListener('scroll', onScroll, {passive:true}); onScroll();
+  }
+
+  /* mobile menu */
+  var burger = document.getElementById('burger');
+  var navlinks = document.getElementById('navlinks');
+  if (nav && burger && navlinks) {
+    burger.addEventListener('click', function(){
+      var open = nav.classList.toggle('open');
+      burger.setAttribute('aria-expanded', open);
+      document.body.classList.toggle('menu-open', open);
+    });
+    navlinks.addEventListener('click', function(e){
+      if (e.target.closest('a')) {
+        nav.classList.remove('open');
+        burger.setAttribute('aria-expanded','false');
+        document.body.classList.remove('menu-open');
+      }
+    });
+  }
+
   /* ---- pledge fallback --------------------------------------------------- */
   var pledge = document.getElementById('pledgelink');
+  if (!pledge) return;
   var subject = 'Pledge: a gift to Mak Fai';
   /* The amount picker below calls this with the figure the donor chose
      (e.g. "$150"), or null when there isn't one yet. */
@@ -651,6 +658,16 @@
 
   if (custom) custom.addEventListener('input', render);
   render();
+
+  /* A double-click on the card button would open two Stripe checkout tabs.
+     Each still needs its own card confirmation, but one tab is the intent;
+     a deliberate click after 1.5s still goes through. */
+  var lastGive = 0;
+  cta.addEventListener('click', function (e) {
+    var now = Date.now();
+    if (now - lastGive < 1500) { e.preventDefault(); return; }
+    lastGive = now;
+  });
 })();
 </script>
 </body>

@@ -31,7 +31,8 @@
 
   // Dragon drawing lives in lion-dragon.js (window.LionDragon); this file
   // keeps the motion, the landscape and the effects around it.
-  var dragon = LionDragon.create({ dpr: window.devicePixelRatio || 1, realism: 1 });
+  // if lion-dragon.js failed to load, the gate still works -- just without the dragon
+  var dragon = window.LionDragon ? LionDragon.create({ dpr: window.devicePixelRatio || 1, realism: 1 }) : null;
 
   function resize() {
     W = window.innerWidth; H = window.innerHeight;
@@ -463,7 +464,7 @@
     blit(1);
     drawGlow();
     drawPearl();
-    dragon.draw(ctx, { segs: segs, head: head, pearl: pearl, t: t, roar: roar });
+    if (dragon) dragon.draw(ctx, { segs: segs, head: head, pearl: pearl, t: t, roar: roar });
     drawEmbers();
     if (bursting) {
       ctx.globalCompositeOperation = 'lighter';
@@ -530,7 +531,7 @@
   });
 
   resize(); seed();
-  dragon.prepare(21 * S); // 21*S = the largest value radius() returns
+  if (dragon) dragon.prepare(21 * S); // 21*S = the largest value radius() returns
   setTimeout(measureCard, 900);
   window.addEventListener('pointermove', onMove, { passive: true });
   window.addEventListener('pointerdown', onMove, { passive: true });
