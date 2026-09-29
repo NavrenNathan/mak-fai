@@ -979,6 +979,11 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .policy li{margin:0 0 10px;color:#453B33}
 .policy li b{color:var(--ink-l)}
 .policy a{color:var(--jade);text-decoration:underline;text-underline-offset:3px}
+/* ---------- 404 PAGE ------------------------------------------------------
+   Reuses .dhero; only the button row is new. */
+.nf-actions{display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;margin:34px 0 0}
+.nf-link{color:var(--gold);font-weight:600;text-decoration:underline;
+  text-underline-offset:4px}
 /* ---------- WHY DONATE ---------------------------------------------------
    Same problem .sec-awards solves one section down: this also sits between
    two dark sections (Community above, Awards below), so it borrows the
