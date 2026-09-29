@@ -790,8 +790,11 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 
 /* --- giving hero: dark, no photo. The home page hero already spends the
    visitor's attention on imagery; this page needs them reading. --- */
+/* The max() floor keeps the eyebrow clear of the 104px fixed nav's crest:
+   below ~1280px .78 of --sec is only 75-88px, which tucked SUPPORT US
+   under the logo. The 720px block sets its own floor for the 88px nav. */
 .dhero{position:relative;overflow:hidden;
-  padding-top:calc(var(--sec) * .78);padding-bottom:calc(var(--sec) * .5)}
+  padding-top:max(calc(var(--sec) * .78),110px);padding-bottom:calc(var(--sec) * .5)}
 .dhero-glow{position:absolute;left:50%;top:-28%;transform:translateX(-50%);
   width:min(1200px,100%);height:96%;pointer-events:none;
   background:radial-gradient(ellipse at 50% 0%,
@@ -1444,6 +1447,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   /* the bar is brand + social + donate here, so tighten the gap and the
      pill to keep everything off the brand at 390px */
   .nav-in{gap:8px;height:88px}
+  .dhero{padding-top:92px}
   .nav-donate{padding:9px 12px;font-size:10px;letter-spacing:.08em}
   .brand{gap:9px}
   .brand img{height:52px}
