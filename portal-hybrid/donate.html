@@ -199,12 +199,12 @@
              falls back to the flexible link, so no button is ever dead. -->
         <p class="give-label" id="amt-label">Choose an amount</p>
         <div class="amts" role="group" aria-labelledby="amt-label">
-          <button type="button" class="amt" data-amt="25">$25</button>
+          <button type="button" class="amt" data-amt="25" aria-pressed="false">$25</button>
           <button type="button" class="amt on" data-amt="50" aria-pressed="true">$50</button>
-          <button type="button" class="amt amt-member" data-amt="150">$150<span class="amt-badge" aria-hidden="true">Member</span><span class="vis-hidden">, Sponsorship Member level</span></button>
-          <button type="button" class="amt" data-amt="250">$250</button>
-          <button type="button" class="amt" data-amt="500">$500</button>
-          <button type="button" class="amt amt-other" data-amt="other">Other</button>
+          <button type="button" class="amt amt-member" data-amt="150" aria-pressed="false">$150<span class="amt-badge" aria-hidden="true">Member</span><span class="vis-hidden">, Sponsorship Member level</span></button>
+          <button type="button" class="amt" data-amt="250" aria-pressed="false">$250</button>
+          <button type="button" class="amt" data-amt="500" aria-pressed="false">$500</button>
+          <button type="button" class="amt amt-other" data-amt="other" aria-pressed="false">Other</button>
         </div>
         <div class="amt-custom" hidden id="customwrap">
           <label class="vis-hidden" for="customamt">Custom amount in US dollars</label>
