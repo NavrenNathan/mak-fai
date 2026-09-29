@@ -894,7 +894,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   border:1px solid rgba(30,90,68,.4);background:rgba(30,90,68,.14);
   color:var(--jade);font-weight:700;font-size:16px;letter-spacing:.01em}
 /* "or" travels with the second address so it can't dangle at a line end */
-.pay-alt{display:inline-flex;flex-wrap:wrap;align-items:center;gap:10px}
+.pay-alt{display:inline-flex;align-items:center;gap:10px}
 .pay-or{color:var(--muted-l);font-size:13px;font-style:italic}
 .pay-card{border-color:rgba(34,26,21,.16)}
 .pay-card:hover{border-color:rgba(34,26,21,.28);
@@ -1442,7 +1442,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .ways{grid-template-columns:1fr 1fr}
 }
 @media (max-width:960px){
-  .give-grid{grid-template-columns:minmax(0,1fr);gap:44px}
+  .give-grid{grid-template-columns:1fr;gap:44px}
   .contact-grid{grid-template-columns:1fr}
   /* Mobile order: heading/copy, then Learn more, then the photo (with its
      Chinatown-ID caption) at the very bottom -- different from desktop's
@@ -1602,6 +1602,16 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .nav-donate{padding:8px 9px}
   /* the feature title wraps to more lines here, pushing its badge up */
   .m-feature .play{top:22%}
+}
+/* Under 360px the give card's content (the Zelle email pill is one
+   unbreakable run) pushed the single column wider than the screen and got
+   clipped by up to 36px. Pin the column to the screen, and below 340px
+   let "or + email" break onto its own line. 360px and up are unchanged. */
+@media (max-width:359px){
+  .give-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:339px){
+  .pay-alt{flex-wrap:wrap}
 }
 @media (max-width:420px){
   .f-cols{grid-template-columns:1fr}
