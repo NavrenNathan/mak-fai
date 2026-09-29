@@ -1463,8 +1463,11 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
     transform:translate(-50%,-50%);text-align:center}
   .hero-cjk-lion{top:24%}
   .hero-cjk-kungfu{top:74%}
-  .hero-support{bottom:42px;padding:8px 14px;font-size:9px}
-  .hero-nonprofit{bottom:9px;font-size:10px}
+  .hero-support{bottom:50px;padding:8px 14px;font-size:9px}
+  /* the full "...to the extent allowed by law" line is ~410px on one line,
+     wider than a phone -- let it wrap to two centred lines */
+  .hero-nonprofit{bottom:9px;font-size:10px;white-space:normal;
+    width:calc(100% - 40px);max-width:300px;text-align:center;line-height:1.45}
   @keyframes rise{from{opacity:0;transform:translate(-50%,-46%)}
     to{opacity:1;transform:translate(-50%,-50%)}}
 
