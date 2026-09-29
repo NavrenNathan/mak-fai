@@ -23,7 +23,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=238">
+<link rel="stylesheet" href="style.css?v=240">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
@@ -87,7 +87,7 @@
       </button>
     </div>
     <button type="submit" class="btn pw-gate-btn">Enter</button>
-    <p id="pw-gate-error" class="pw-gate-error" hidden>Incorrect password — try again.</p>
+    <p id="pw-gate-error" class="pw-gate-error" role="alert" hidden>Incorrect password — try again.</p>
   </form>
   <p class="pwg-hint" aria-hidden="true"><span class="pwg-hint-fine">Move to guide the pearl</span><span class="pwg-hint-touch">Touch to guide the pearl</span></p>
   <p class="pwg-foot" aria-hidden="true">Mak Fai Kung Fu Dragon &amp; Lion Dance Association<span class="pwg-foot-x"> · Since 1974</span></p>
@@ -118,13 +118,16 @@
   var EYE = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/>';
   var EYE_OFF = '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a20.3 20.3 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a20.28 20.28 0 0 1-3.22 4.44M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/>';
 
-  toggle.addEventListener('click', function () {
+  toggle.addEventListener('click', function (e) {
     var showing = input.type === 'text';
     input.type = showing ? 'password' : 'text';
     eye.innerHTML = showing ? EYE : EYE_OFF;
+    // the name stays "Show password"; aria-pressed alone carries the state,
+    // so screen readers don't hear it twice
     toggle.setAttribute('aria-pressed', String(!showing));
-    toggle.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
-    input.focus();
+    // mouse/touch: hand focus back to the field. Keyboard (detail 0): stay on
+    // the button so the new pressed state is announced.
+    if (e.detail !== 0) input.focus();
   });
 
   document.getElementById('pw-gate-form').addEventListener('submit', function (ev) {
@@ -134,7 +137,9 @@
       document.documentElement.style.overflow = '';
       gate.classList.add('pw-gate-hide');
     } else {
-      document.getElementById('pw-gate-error').hidden = false;
+      var err = document.getElementById('pw-gate-error');
+      err.hidden = true;
+      requestAnimationFrame(function(){ err.hidden = false; }); // re-announced on every wrong try
       gate.classList.remove('shake');
       void gate.offsetWidth;
       gate.classList.add('shake');
@@ -147,7 +152,7 @@
 <script src="lion-dragon.js?v=1" defer></script>
 <script src="assets/pw-gate.js?v=15" defer></script>
 
-<a class="skip" href="#about">Skip to content</a>
+<a class="skip" href="#top">Skip to content</a>
 
 <!-- TODO: repoint every makfailiondance.com link to https://makfailiondance.org
      once the domain is live and the 301 from the .com is in place -->
@@ -188,7 +193,7 @@
   </nav>
 </header>
 
-<main id="top">
+<main id="top" tabindex="-1">
 
   <!-- ============ HERO — the split is the identity: lion dance left,
        the association crest on the seam, kung fu right. ============ -->
@@ -740,15 +745,17 @@
           </div>
         </div>
 
-        <form class="form reveal d2" id="bookform">
+        <form class="form reveal d2" id="bookform" novalidate>
           <div class="frow">
             <div class="field">
               <label for="f-name">Name</label>
-              <input id="f-name" name="name" type="text" autocomplete="name" maxlength="100" required>
+              <input id="f-name" name="name" type="text" autocomplete="name" maxlength="100" required aria-describedby="f-name-err">
+              <p class="field-err" id="f-name-err" hidden></p>
             </div>
             <div class="field">
               <label for="f-email">Email</label>
-              <input id="f-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+              <input id="f-email" name="email" type="email" autocomplete="email" maxlength="254" required aria-describedby="f-email-err">
+              <p class="field-err" id="f-email-err" hidden></p>
             </div>
           </div>
           <div class="field">
@@ -757,17 +764,20 @@
           </div>
           <div class="field">
             <label for="f-msg">Message</label>
-            <textarea id="f-msg" name="message" maxlength="1500" required placeholder="Tell us what you&rsquo;re reaching out about…"></textarea>
+            <textarea id="f-msg" name="message" maxlength="1500" required placeholder="Tell us what you&rsquo;re reaching out about…" aria-describedby="f-msg-err"></textarea>
+            <p class="field-err" id="f-msg-err" hidden></p>
           </div>
           <button class="btn btn-ink" type="submit">Send message
             <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></button>
           <!-- Shown after Send: a mailto hand-off gives no signal back, so
                without this a visitor with no mail app set up saw nothing
-               happen at all. -->
-          <p class="form-status" id="formstatus" role="status" hidden>Your email
+               happen at all. #formstatus stays in the page, empty, so screen
+               readers announce the note when the script adds it. -->
+          <div id="formstatus" role="status"></div>
+          <template id="formstatus-msg"><p class="form-status">Your email
             app should now open with your message ready to send. If it
             didn&rsquo;t, email us at
-            <a href="mailto:hello@makfai.org">hello@makfai.org</a>.</p>
+            <a href="mailto:hello@makfai.org">hello@makfai.org</a>.</p></template>
           <p class="form-note">This opens your email app with the message ready
             to send — or write us directly at
             <a href="mailto:hello@makfai.org">hello@makfai.org</a>.
@@ -929,18 +939,25 @@
   var lbclose = document.getElementById('lbclose');
   if (lb && frame && lbclose) {
     var lastFocus = null, clearT = null;
+    // everything behind the player: inert while it's open, so Tab and screen
+    // readers stay inside the dialog
+    var behind = [].slice.call(document.querySelectorAll('.skip, header, main, footer'));
+    var setBehind = function(on){ behind.forEach(function(el){ el.inert = on; }); };
     var openLb = function(id){
       // a close-then-reopen inside 350ms must not let the old timer blank the new video
       clearTimeout(clearT);
       lastFocus = document.activeElement;
       frame.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
       lb.classList.add('on');
-      document.body.style.overflow = 'hidden';
+      // html, not body: html carries overflow-x:clip, so a body lock doesn't hold
+      document.documentElement.style.overflow = 'hidden';
+      setBehind(true);
       lbclose.focus();
     };
     var closeLb = function(){
       lb.classList.remove('on');
-      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      setBehind(false); // before refocusing -- an inert element can't take focus
       clearT = setTimeout(function(){ frame.src = ''; }, 350);
       if (lastFocus) lastFocus.focus();
     };
@@ -957,8 +974,41 @@
   /* contact form → opens the visitor's mail app, prefilled */
   var bookform = document.getElementById('bookform');
   var lastSend = 0;
+  /* Inline errors: one plain sentence under each field that needs fixing,
+     wired to the field with aria-describedby; focus goes to the first one. */
+  var showErr = function(field, msg){
+    var p = document.getElementById(field.id + '-err');
+    if (msg) field.setAttribute('aria-invalid', 'true'); else field.removeAttribute('aria-invalid');
+    if (p) { p.textContent = msg || ''; p.hidden = !msg; }
+  };
+  var fieldErr = function(field){
+    var v = field.value.trim();
+    if (field.id === 'f-name') return v ? '' : 'Please enter your name.';
+    if (field.id === 'f-email') {
+      if (!v) return 'Please enter your email address.';
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v) ? '' : 'Please enter a full email address, like name@example.com.';
+    }
+    if (field.id === 'f-msg') return v ? '' : 'Please write a short message.';
+    return '';
+  };
+  if (bookform) {
+    var checked = [bookform.querySelector('#f-name'), bookform.querySelector('#f-email'), bookform.querySelector('#f-msg')].filter(Boolean);
+    // clear a field's error as soon as the visitor fixes it
+    checked.forEach(function(field){
+      field.addEventListener('input', function(){
+        if (field.getAttribute('aria-invalid') === 'true' && !fieldErr(field)) showErr(field, '');
+      });
+    });
+  }
   if (bookform) bookform.addEventListener('submit', function(e){
     e.preventDefault();
+    var firstBad = null;
+    checked.forEach(function(field){
+      var msg = fieldErr(field);
+      showErr(field, msg);
+      if (msg && !firstBad) firstBad = field;
+    });
+    if (firstBad) { firstBad.focus(); return; }
     // a double-click would otherwise open two mail drafts; a deliberate
     // retry a couple of seconds later still works
     var now = Date.now();
@@ -971,7 +1021,12 @@
       '\n\n' + f.message.value;
     location.href = 'mailto:hello@makfai.org?subject=' +
       encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
-    document.getElementById('formstatus').hidden = false;
+    var status = document.getElementById('formstatus');
+    var tpl = document.getElementById('formstatus-msg');
+    if (status && tpl) {
+      status.textContent = '';
+      setTimeout(function(){ status.appendChild(tpl.content.cloneNode(true)); }, 50);
+    }
   });
 })();
 </script>

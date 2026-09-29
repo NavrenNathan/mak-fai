@@ -23,7 +23,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=238">
+<link rel="stylesheet" href="style.css?v=240">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 </head>
 <body>
@@ -64,7 +64,7 @@
       </button>
     </div>
     <button type="submit" class="btn pw-gate-btn">Enter</button>
-    <p id="pw-gate-error" class="pw-gate-error" hidden>Incorrect password — try again.</p>
+    <p id="pw-gate-error" class="pw-gate-error" role="alert" hidden>Incorrect password — try again.</p>
   </form>
   <p class="pwg-hint" aria-hidden="true"><span class="pwg-hint-fine">Move to guide the pearl</span><span class="pwg-hint-touch">Touch to guide the pearl</span></p>
   <p class="pwg-foot" aria-hidden="true">Mak Fai Kung Fu Dragon &amp; Lion Dance Association<span class="pwg-foot-x"> · Since 1974</span></p>
@@ -95,13 +95,16 @@
   var EYE = '<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/>';
   var EYE_OFF = '<path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a20.3 20.3 0 0 1 5.06-5.94M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a20.28 20.28 0 0 1-3.22 4.44M14.12 14.12a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/>';
 
-  toggle.addEventListener('click', function () {
+  toggle.addEventListener('click', function (e) {
     var showing = input.type === 'text';
     input.type = showing ? 'password' : 'text';
     eye.innerHTML = showing ? EYE : EYE_OFF;
+    // the name stays "Show password"; aria-pressed alone carries the state,
+    // so screen readers don't hear it twice
     toggle.setAttribute('aria-pressed', String(!showing));
-    toggle.setAttribute('aria-label', showing ? 'Show password' : 'Hide password');
-    input.focus();
+    // mouse/touch: hand focus back to the field. Keyboard (detail 0): stay on
+    // the button so the new pressed state is announced.
+    if (e.detail !== 0) input.focus();
   });
 
   document.getElementById('pw-gate-form').addEventListener('submit', function (ev) {
@@ -111,7 +114,9 @@
       document.documentElement.style.overflow = '';
       gate.classList.add('pw-gate-hide');
     } else {
-      document.getElementById('pw-gate-error').hidden = false;
+      var err = document.getElementById('pw-gate-error');
+      err.hidden = true;
+      requestAnimationFrame(function(){ err.hidden = false; }); // re-announced on every wrong try
       gate.classList.remove('shake');
       void gate.offsetWidth;
       gate.classList.add('shake');
@@ -124,7 +129,7 @@
 <script src="lion-dragon.js?v=1" defer></script>
 <script src="assets/pw-gate.js?v=15" defer></script>
 
-<a class="skip" href="#give">Skip to content</a>
+<a class="skip" href="#donate-top">Skip to content</a>
 
 <!-- TODO: repoint every makfailiondance.com link to https://makfailiondance.org
      once the domain is live and the 301 from the .com is in place -->
@@ -167,7 +172,7 @@
   </nav>
 </header>
 
-<main id="donate-top">
+<main id="donate-top" tabindex="-1">
 
   <!-- ============ GIVING HERO ============ -->
   <section class="dhero" aria-labelledby="dhero-h">
@@ -214,10 +219,11 @@
         <div class="amt-custom" hidden id="customwrap">
           <label class="vis-hidden" for="customamt">Custom amount in US dollars</label>
           <span class="amt-cur" aria-hidden="true">$</span>
-          <input id="customamt" type="number" min="1" max="999999" step="1" inputmode="numeric"
-                 placeholder="Enter an amount">
+          <input id="customamt" type="number" min="1" max="999999" step="0.01" inputmode="decimal"
+                 placeholder="Enter an amount" aria-describedby="customamt-err">
         </div>
-        <p class="amt-impact" id="amtimpact"></p>
+        <p class="field-err" id="customamt-err" hidden></p>
+        <p class="amt-impact" id="amtimpact" aria-live="polite"></p>
 
         <p class="give-label">How to send it</p>
 
@@ -647,6 +653,16 @@
     var n = Number(amt);
     if (picked === 'other' && label && n >= MEMBER_MIN) lines.push(MEMBER_LINE);
     impact.textContent = lines.join(' ');
+
+    // "Other" with something typed that isn't a usable amount: say so, in
+    // words, next to the field (an empty box is fine -- nothing to fix yet)
+    var errEl = document.getElementById('customamt-err');
+    if (errEl && custom) {
+      var bad = picked === 'other' && !label && (custom.value !== '' || custom.validity.badInput);
+      errEl.textContent = bad ? 'Enter an amount between $1 and $999,999.' : '';
+      errEl.hidden = !bad;
+      if (bad) custom.setAttribute('aria-invalid', 'true'); else custom.removeAttribute('aria-invalid');
+    }
   }
 
   chips.forEach(function (chip) {

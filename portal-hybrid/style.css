@@ -84,6 +84,13 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible{
   color:#fff;padding:10px 18px;font-size:13px;letter-spacing:.08em;
   transition:top .25s var(--ease)}
 .skip:focus-visible{top:16px}
+/* <main tabindex="-1"> takes focus from the skip link (and Back to top);
+   it is a landing point, not a control, so no ring */
+main:focus{outline:none}
+/* keep a control reached by Tab clear of the fixed header (105px tall;
+   88px at 720 and under). Element-level, so section anchor offsets
+   (scroll-margin on the sections) aren't doubled. */
+:where(a,button,input,textarea,select,summary){scroll-margin-top:120px}
 /* invisible landing pads for the pre-redesign section ids */
 .anchor{display:block;position:relative;top:-96px;visibility:hidden;height:0}
 
@@ -887,7 +894,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   border:1px solid rgba(30,90,68,.4);background:rgba(30,90,68,.14);
   color:var(--jade);font-weight:700;font-size:16px;letter-spacing:.01em}
 /* "or" travels with the second address so it can't dangle at a line end */
-.pay-alt{display:inline-flex;align-items:center;gap:10px}
+.pay-alt{display:inline-flex;flex-wrap:wrap;align-items:center;gap:10px}
 .pay-or{color:var(--muted-l);font-size:13px;font-style:italic}
 .pay-card{border-color:rgba(34,26,21,.16)}
 .pay-card:hover{border-color:rgba(34,26,21,.28);
@@ -1218,6 +1225,9 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   color:var(--ink-l);background:rgba(30,90,68,.07);border-left:2px solid var(--jade)}
 .form-status a{color:var(--jade);text-decoration:underline;text-underline-offset:2px}
 .form-status[hidden]{display:none}
+/* inline field errors -- existing daylight red token; .field raises it
+   over .band-light p */
+.field .field-err,.give-card .field-err{margin:6px 0 0;font-size:13px;line-height:1.45;color:var(--red-l)}
 .form-note{font-size:13px;color:var(--muted-l);margin:16px 0 0}
 .form-note a{color:var(--jade);text-decoration:underline;
   text-underline-offset:3px}
@@ -1278,9 +1288,13 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   opacity:0;visibility:hidden;
   transition:opacity .35s var(--ease),visibility .35s var(--ease)}
-.lb.on{opacity:1;visibility:visible}
+/* visibility flips instantly on open (opacity still fades) so the Close
+   button can take focus the moment the player opens */
+.lb.on{opacity:1;visibility:visible;transition:opacity .35s var(--ease),visibility 0s}
+/* no overflow:hidden here -- it clipped the Close button, which sits above
+   the frame (top:-52px), out of view */
 .lb-frame{position:relative;width:min(1060px,100%);aspect-ratio:16/9;
-  overflow:hidden;background:#000;
+  background:#000;
   border:1px solid var(--line);box-shadow:0 40px 120px rgba(0,0,0,.7);
   transform:scale(.96) translateY(12px);transition:transform .35s var(--ease)}
 .lb.on .lb-frame{transform:none}
@@ -1428,7 +1442,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .ways{grid-template-columns:1fr 1fr}
 }
 @media (max-width:960px){
-  .give-grid{grid-template-columns:1fr;gap:44px}
+  .give-grid{grid-template-columns:minmax(0,1fr);gap:44px}
   .contact-grid{grid-template-columns:1fr}
   /* Mobile order: heading/copy, then Learn more, then the photo (with its
      Chinatown-ID caption) at the very bottom -- different from desktop's
@@ -1447,6 +1461,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .mimg{min-height:0}
 }
 @media (max-width:720px){
+  :where(a,button,input,textarea,select,summary){scroll-margin-top:104px}
   /* Concept 1: taller mobile hero (122svh, not the original 100svh) with
      .hero-cta overlaid on the photo -- plain flat horizontal seam, lion top
      / kung fu bottom, same identity rotated from the desktop left/right. */
