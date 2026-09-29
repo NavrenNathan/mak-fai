@@ -209,6 +209,14 @@ header{position:relative;z-index:60}
   transition:color .4s var(--ease),transform .3s var(--ease)}
 .nav-social a:hover,.nav-social a:focus-visible{transform:translateY(-2px)}
 .nav.scrolled .nav-social a,.nav.open .nav-social a{color:var(--ink-l)}
+/* Soft dark disc behind each glyph while the nav is transparent over the
+   hero photo -- at 1920 the icons sit on a white banner in the kung fu
+   shot and all but vanished. Fades out once the paper nav takes over. */
+.nav-social a::before{content:"";position:absolute;inset:8%;border-radius:50%;
+  pointer-events:none;
+  background:radial-gradient(circle,rgba(11,7,8,.5) 0,rgba(11,7,8,.3) 58%,rgba(11,7,8,0) 100%);
+  transition:opacity .4s var(--ease)}
+.nav.scrolled .nav-social a::before,.nav.open .nav-social a::before{opacity:0}
 .ico-ring{position:absolute;inset:0;pointer-events:none}
 .ico-ring::before{content:"";position:absolute;inset:4px;border-radius:50%;
   background:rgba(255,255,255,.12);
