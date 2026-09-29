@@ -1111,6 +1111,9 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   display:flex;align-items:center;justify-content:center;
   transition:transform .35s var(--ease),background .35s var(--ease),
              box-shadow .35s var(--ease)}
+/* The half-height cards are only ~170-200px tall, so a dead-centre button
+   sat on a two-line title. Same 32% the mobile rule uses. */
+.m-half .play{top:32%}
 .play svg{margin-left:3px}
 .vcard:hover .play{transform:translate(-50%,-50%) scale(1.1);
   background:var(--red);box-shadow:0 0 0 10px rgba(230,59,82,.15)}
@@ -1503,7 +1506,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
      two-line title, so a dead-centre button cannot clear it at any sane
      card height. Sitting it a third of the way down keeps it over open
      image and off the text. */
-  .play{top:32%}
+  .play{top:29%}
   .f-col a,.f-here{padding:9px 0}
   /* 9-9.5px uppercase is legible on a desktop monitor and squints on a
      phone. Only the two labels added in this build move; the hero sizes
