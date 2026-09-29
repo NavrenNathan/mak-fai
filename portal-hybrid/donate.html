@@ -21,7 +21,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=235">
+<link rel="stylesheet" href="style.css?v=236">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 </head>
 <body>
@@ -528,11 +528,16 @@
   /* ---- pledge fallback --------------------------------------------------- */
   var pledge = document.getElementById('pledgelink');
   var subject = 'Pledge: a gift to Mak Fai';
-  var body = "I'd like to make a gift to Mak Fai.\n\n" +
-             'Amount: $\nName:\nPhone (optional):\n\n' +
-             'Please send me a secure link to complete it.';
-  pledge.href = 'mailto:hello@makfai.org?subject=' +
-    encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  /* The amount picker below calls this with the figure the donor chose
+     (e.g. "$150"), or null when there isn't one yet. */
+  pledge.setAmount = function (label) {
+    var body = "I\u2019d like to make a gift to Mak Fai.\n\n" +
+               'Amount: ' + (label || '$') + '\nName:\nPhone (optional):\n\n' +
+               'Please send me a secure link to complete it.';
+    pledge.href = 'mailto:hello@makfai.org?subject=' +
+      encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+  };
+  pledge.setAmount(null);
 })();
 </script>
 
@@ -616,6 +621,9 @@
     var amt = amountNow();
     var label = money(amt);
     var link = (picked !== 'other' && PAY_LINKS[picked]) || null;
+
+    var pledgeEl = document.getElementById('pledgelink');
+    if (pledgeEl && pledgeEl.setAmount) pledgeEl.setAmount(label);
 
     // Zelle: the donor types the amount themselves, so this is only an echo
     if (zelle) zelle.textContent = label || 'your gift';
