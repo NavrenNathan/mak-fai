@@ -543,6 +543,14 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
    presentational height. That makes the box definite and cancels
    aspect-ratio outright -- the frame renders 457x544 instead of 16:8.5. */
 .intro-photo img{width:100%;height:auto;aspect-ratio:1024/544;object-fit:cover}
+/* Slightly larger photo on the two-column layout, without narrowing the copy
+   column (the one-line headline is sized to it): the figure grows the same
+   amount into the gap between the columns and into the page margin, ~8%.
+   Single-column layouts (<=960px) are unchanged. */
+@media (min-width:961px){
+  .intro-photo{--grow:clamp(0px,1.9vw,24px);
+    width:calc(100% + var(--grow) * 2);margin-left:calc(var(--grow) * -1);margin-right:calc(var(--grow) * -1)}
+}
 .intro-photo figcaption{margin-top:14px;font-size:11px;letter-spacing:.22em;
   text-transform:uppercase;color:var(--muted-l);
   display:flex;align-items:center;gap:8px}
