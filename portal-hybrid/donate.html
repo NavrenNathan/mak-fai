@@ -23,7 +23,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600;700;900&family=Poppins:ital,wght@0,600;0,700;1,700&display=swap" rel="stylesheet">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=244">
+<link rel="stylesheet" href="style.css?v=245">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 </head>
 <body>
@@ -208,13 +208,13 @@
         <div class="amts" role="group" aria-labelledby="amt-label">
           <button type="button" class="amt" data-amt="25" aria-pressed="false">$25</button>
           <button type="button" class="amt on" data-amt="50" aria-pressed="true">$50</button>
-          <button type="button" class="amt amt-member" data-amt="150" aria-pressed="false">$150<span class="amt-badge" aria-hidden="true">Member</span><span class="vis-hidden">, Sponsorship Member level</span></button>
+          <button type="button" class="amt amt-member" data-amt="150" aria-pressed="false">$150<span class="amt-badge" aria-hidden="true">Member</span><span class="sr-only">, Sponsorship Member level</span></button>
           <button type="button" class="amt" data-amt="250" aria-pressed="false">$250</button>
           <button type="button" class="amt" data-amt="500" aria-pressed="false">$500</button>
           <button type="button" class="amt amt-other" data-amt="other" aria-pressed="false">Other</button>
         </div>
         <div class="amt-custom" hidden id="customwrap">
-          <label class="vis-hidden" for="customamt">Custom amount in US dollars</label>
+          <label class="sr-only" for="customamt">Custom amount in US dollars</label>
           <span class="amt-cur" aria-hidden="true">$</span>
           <input id="customamt" type="number" min="1" max="999999" step="0.01" inputmode="decimal"
                  placeholder="Enter an amount" aria-describedby="customamt-err">
