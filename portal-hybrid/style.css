@@ -103,9 +103,9 @@ main,footer{position:relative;z-index:1}
 header{position:relative;z-index:60}
 
 /* ============================ NAV ============================
-   Transparent over the hero, ivory once scrolled (or when the mobile
-   menu is open). Every element that needs to swap colour gets an
-   explicit `.nav.scrolled X,.nav.open X{...}` rule -- this used to be
+   Transparent over the hero, ivory once scrolled. Every element that
+   needs to swap colour gets an explicit `.nav.scrolled X{...}` rule --
+   this used to be
    driven by two custom properties (--nav-ink/--nav-line) read via
    var(), which is the more elegant version of this, but it could not
    be made to reliably repaint in testing here, so it's written out
@@ -117,11 +117,6 @@ header{position:relative;z-index:60}
   transition:background .4s var(--ease),border-color .4s var(--ease),
              box-shadow .4s var(--ease);
 }
-/* backdrop-filter is .scrolled-only, deliberately not .open: it becomes
-   the containing block for a position:fixed descendant in Chromium, and
-   .nav.open's own fixed full-screen menu is exactly such a descendant --
-   having the filter fire here collapsed that menu down to the header
-   bar's own height instead of the full viewport. */
 .nav.scrolled{
   background:rgba(250,246,239,.92);
   -webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
@@ -130,17 +125,9 @@ header{position:relative;z-index:60}
 }
 .nav-in{display:flex;align-items:center;gap:30px;height:104px;
   max-width:1400px;margin:0 auto;padding:0 clamp(20px,2.4vw,36px)}
-/* .nav-links (id=navlinks) is a CHILD of .nav-in, not a sibling -- it sits
-   inside .nav-in alongside .brand and .burger so it can be a normal flex
-   item in the desktop layout, then breaks out to position:fixed;inset:0
-   for the full-screen mobile menu. That fixed positioning is what matters
-   here: a positioned element always paints above an unpositioned sibling
-   regardless of z-index value, so once .nav-links goes fixed (z-index:55),
-   it painted over .brand/.burger (both unpositioned) no matter what
-   z-index the ANCESTOR .nav or .header had -- that only governs stacking
-   against OTHER top-level elements like main, not paint order between
-   these three siblings. Making brand/burger positioned too, at a higher
-   z-index, is what actually wins that specific comparison. */
+/* .brand, .nav-social and .nav-donate are positioned with z-index:56, a
+   holdover from the retired full-screen mobile menu (it painted at z-55).
+   Kept as-is: harmless, and removing it is not worth re-testing stacking. */
 .brand{position:relative;z-index:56;
   display:flex;align-items:center;gap:13px;margin-right:auto}
 /* height-locked, width auto -- the crest (assets/branding/mak-fai-crest-3.png) isn't a
@@ -159,37 +146,22 @@ header{position:relative;z-index:60}
 .brand-t small{display:block;color:#fff;opacity:.72;font-size:9.5px;
   letter-spacing:.24em;text-transform:uppercase;margin-top:2px;
   transition:color .4s var(--ease)}
-.nav.scrolled .brand-t b,.nav.open .brand-t b,
-.nav.scrolled .brand-t small,.nav.open .brand-t small{color:var(--ink-l)}
+.nav.scrolled .brand-t b{color:var(--ink-l)}
 /* calligraphy.png is white artwork on transparency (same file the password
    gate uses) -- correct as-is against the dark hero nav, but the light
-   .nav.scrolled/.nav.open ivory bar needs it flattened dark instead, same
+   .nav.scrolled ivory bar needs it flattened dark instead, same
    fix used elsewhere in this project for the same asset. */
 .brand .brand-calli{display:block;width:auto;height:23px;margin-top:5px;
   transition:filter .4s var(--ease)}
-.nav.scrolled .brand-calli,.nav.open .brand-calli{filter:brightness(0)}
+.nav.scrolled .brand-calli{filter:brightness(0)}
 .nav-links{display:flex;align-items:center;gap:30px}
-.nav-menu{display:flex;align-items:center;gap:26px}
-.nav-menu a{
-  position:relative;font-size:12px;font-weight:600;letter-spacing:.14em;
-  text-transform:uppercase;color:#fff;padding:6px 1px;
-  transition:color .4s var(--ease),opacity .25s var(--ease)}
-.nav.scrolled .nav-menu a,.nav.open .nav-menu a{color:var(--ink-l)}
-.nav-menu a sup{opacity:.55}
-.nav-menu a::after{
-  content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;
-  background:currentColor;transition:right .5s var(--ease)}
-.nav-menu a:hover::after,.nav-menu a:focus-visible::after{right:0}
 /* Measured dead-centre on .nav-in (both at the exact same y as the crest),
    but a flat row of icons next to the taller brand block (crest + two lines
    of type) reads as sitting low regardless -- optical centring needs a
    small nudge up that mathematical centring doesn't. */
 /* Donate CTA -- the LION DANCE green from the hero. Ink text rather than
    white on it: #39B44A only carries ~2.4:1 against white, but ~8.9:1
-   against --ink-l. Ordered so it lands far right on desktop (after the
-   social icons) and just left of the burger on mobile. Positioned + z-56
-   for the same reason .brand and .burger are -- the mobile menu goes
-   position:fixed at z-55 and would otherwise paint straight over it. */
+   against --ink-l. Ordered so it lands far right, after the social icons. */
 .nav-donate{order:2;position:relative;z-index:56;transform:translateY(-5px);
   display:inline-flex;align-items:center;flex-shrink:0;
   padding:11px 20px;border-radius:999px;
@@ -204,7 +176,6 @@ header{position:relative;z-index:60}
 .nav-donate:active{transform:translateY(-5px) scale(.98)}
 .brand{order:0}
 .nav-links{order:1}
-.burger{order:3}
 .nav-social{display:flex;align-items:center;gap:5px;transform:translateY(-5px)}
 /* No circle, no fill by default -- just the skinny glyph. .ico-ring is a
    decorative ring that draws itself on hover/focus (an SVG circle whose
@@ -215,7 +186,7 @@ header{position:relative;z-index:60}
   width:46px;height:46px;color:#fff;
   transition:color .4s var(--ease),transform .3s var(--ease)}
 .nav-social a:hover,.nav-social a:focus-visible{transform:translateY(-2px)}
-.nav.scrolled .nav-social a,.nav.open .nav-social a{color:var(--ink-l)}
+.nav.scrolled .nav-social a{color:var(--ink-l)}
 /* Soft dark disc behind each glyph while the nav is transparent over the
    hero photo -- at 1920 the icons sit on a white banner in the kung fu
    shot and all but vanished. Fades out once the paper nav takes over. */
@@ -223,14 +194,14 @@ header{position:relative;z-index:60}
   pointer-events:none;
   background:radial-gradient(circle,rgba(11,7,8,.5) 0,rgba(11,7,8,.3) 58%,rgba(11,7,8,0) 100%);
   transition:opacity .4s var(--ease)}
-.nav.scrolled .nav-social a::before,.nav.open .nav-social a::before{opacity:0}
+.nav.scrolled .nav-social a::before{opacity:0}
 .ico-ring{position:absolute;inset:0;pointer-events:none}
 .ico-ring::before{content:"";position:absolute;inset:4px;border-radius:50%;
   background:rgba(255,255,255,.12);
   -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
   opacity:0;transform:scale(.5);
   transition:opacity .4s var(--ease),transform .4s var(--ease)}
-.nav.scrolled .ico-ring::before,.nav.open .ico-ring::before{
+.nav.scrolled .ico-ring::before{
   background:rgba(34,26,21,.08)}
 .ico-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
 .ico-ring circle{fill:none;stroke:currentColor;stroke-width:1.1;opacity:.9;
@@ -244,17 +215,6 @@ header{position:relative;z-index:60}
    so the thin (1.1 stroke) glyphs anti-alias cleanly instead of looking soft --
    a skinny line at a tiny pixel size is exactly what reads as "blurry". */
 .ico-glyph{position:relative;width:21px;height:21px;shape-rendering:geometricPrecision}
-/* Same reasoning as .brand above -- and this one had a second bug: z-index
-   only applies to positioned elements, so the z-index:5 it already had was
-   being silently ignored with no `position` set alongside it. */
-.burger{position:relative;z-index:56;
-  display:none;background:none;border:0;cursor:pointer;
-  padding:12px 6px;margin:-6px 0}
-.burger span{display:block;width:26px;height:2px;background:#fff;
-  margin:7px 0;transition:transform .35s var(--ease),background .4s var(--ease)}
-.nav.scrolled .burger span,.nav.open .burger span{background:var(--ink-l)}
-.nav.open .burger span:nth-child(1){transform:translateY(4.5px) rotate(45deg)}
-.nav.open .burger span:nth-child(2){transform:translateY(-4.5px) rotate(-45deg)}
 
 /* ========================= BUTTONS / CTAS =========================
    Two voices: .btn — filled, squared, uppercase; .cta — a bare text
@@ -1501,13 +1461,6 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   @keyframes rise{from{opacity:0;transform:translate(-50%,-46%)}
     to{opacity:1;transform:translate(-50%,-50%)}}
 
-  /* No burger on mobile. The full-screen menu it opened held nothing but
-     the three social icons, so the panel was a whole interaction standing
-     between the visitor and something that fits in the bar. The icons now
-     sit inline in the same order as desktop -- brand, social, Donate -- and
-     the button stays in the DOM (display:none, so out of the tab order too)
-     purely so the menu script has something to bind to. */
-  .burger{display:none}
   /* the bar is brand + social + donate here, so tighten the gap and the
      pill to keep everything off the brand at 390px */
   .nav-in{gap:8px;height:88px}
@@ -1517,10 +1470,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .brand img{height:52px}
   .brand-t b{font-size:17px;letter-spacing:.16em;margin-right:-.16em}
   .brand .brand-calli{height:16px;margin-top:4px}
-  /* Was position:fixed for the overlay -- now just a normal flex item. */
-  .nav-links{display:flex;align-items:center;gap:0;
-    position:static;padding:0;background:none;
-    opacity:1;visibility:visible;transform:none}
+  .nav-links{gap:0}
   /* Tap targets shrink from 46px to 36px: three of them plus the brand and
      the Donate pill will not fit a 390px bar otherwise. Still above the
      24px minimum, and the glyphs come down with them so they don't crowd. */
