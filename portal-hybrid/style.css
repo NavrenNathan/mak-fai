@@ -15,11 +15,15 @@
    contact → near-black footer. The neon flicker on "still
    shining" is the one surviving piece of C-ID sign language.
    ============================================================ */
-/* Fonts are self-hosted (assets/fonts/): the exact woff2 files and
-   @font-face rules Google Fonts served for Fraunces 400-600 (opsz),
-   Inter 400/500/600/700/900 and Poppins 600, so rendering is unchanged
-   while a slow fonts.googleapis.com can no longer hold the first paint.
-   All three are SIL Open Font License. */
+/* Fonts are self-hosted (assets/fonts/) so every visitor, on every device and
+   browser, gets the identical font files, and a slow fonts.googleapis.com can
+   no longer hold the first paint. They are the woff2 files and @font-face
+   rules Google Fonts served to macOS/Android/Linux Chrome and Firefox for
+   Fraunces 400-600 (opsz), Inter 400/500/600/700/900 and Poppins 600. Google
+   used to serve Windows Chrome/Edge a slightly different build of each file
+   (same design, different hinting data), so Windows small text may differ by
+   a hair from how it looked before; never checked on a real Windows machine.
+   All three families are SIL Open Font License (see assets/fonts/OFL.txt). */
 /* fraunces vietnamese */
 @font-face {
   font-family: 'Fraunces';
