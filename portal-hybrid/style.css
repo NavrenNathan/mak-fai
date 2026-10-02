@@ -4,13 +4,13 @@
 
    System: warm ivory + near-black carry the interface; deep jade,
    muted gold and a restrained red appear only as accents; the
-   photography supplies the colour. Fraunces (editorial serif)
-   carries display headings, Inter carries everything else —
-   including the split-hero LION DANCE / KUNG FU poster type,
-   which is the site's identity and is preserved as-is.
+   photography supplies the colour. Inter carries the site, headings
+   included (one .disp system) and the split-hero LION DANCE / KUNG FU
+   poster type, which is the site's identity; Fraunces is the serif for
+   numerals and the italic taglines.
 
-   Band rhythm kept from the original: dark hero → ivory intro /
-   traditions / values → dark community story + gallery (video
+   Band rhythm kept from the original: dark hero → dark values → ivory
+   intro / traditions → dark community story + gallery (video
    thumbnails want a dark ground) → dark booking band → ivory
    contact → near-black footer. The neon flicker on "still
    shining" is the one surviving piece of C-ID sign language.
@@ -410,7 +410,8 @@
   --muted-l:#6B5E55;    /*  5.6:1          */
   --jade:#1E5A44;       /*  7.3:1 on paper — the editorial accent   */
   /* The same green at display weight, for dark grounds only: --jade is
-     2.5:1 on --bg and disappears there. Hero LION DANCE + the Donate fill. */
+     2.5:1 on --bg and disappears there. Currently unreferenced: the hero
+     DANCE word and the Donate fills use #006837 (white text on it is 7.7:1). */
   --jade-bright:#39B44A;
   --red-l:#C8102E;      /*  5.0:1          */
   --bronze:#8A5E0C;     /*  4.9:1          */
@@ -510,7 +511,7 @@ header{position:relative;z-index:60}
   white-space:nowrap;
   transition:color .4s var(--ease)}
 .nav.scrolled .brand-t b{color:var(--ink-l)}
-/* calligraphy.png is white artwork on transparency (same file the password
+/* calligraphy-final.png is white artwork on transparency (same file the password
    gate uses) -- correct as-is against the dark hero nav, but the light
    .nav.scrolled ivory bar needs it flattened dark instead, same
    fix used elsewhere in this project for the same asset. */
@@ -522,9 +523,8 @@ header{position:relative;z-index:60}
    but a flat row of icons next to the taller brand block (crest + two lines
    of type) reads as sitting low regardless -- optical centring needs a
    small nudge up that mathematical centring doesn't. */
-/* Donate CTA -- the LION DANCE green from the hero. Ink text rather than
-   white on it: #39B44A only carries ~2.4:1 against white, but ~8.9:1
-   against --ink-l. Ordered so it lands far right, after the social icons. */
+/* Donate CTA -- the hero's DANCE green, #006837, with white text (7.7:1).
+   Ordered so it lands far right, after the social icons. */
 .nav-donate{order:2;position:relative;z-index:56;transform:translateY(-5px);
   display:inline-flex;align-items:center;flex-shrink:0;
   padding:11px 20px;border-radius:999px;
@@ -631,9 +631,8 @@ header{position:relative;z-index:60}
 .hero{position:relative;min-height:100svh;overflow:hidden;background:var(--bg)}
 /* Container for the split-photo identity moment (photos, crest, both
    wordmarks, the hanzi watermarks). On desktop this just fills .hero exactly
-   like its contents always did; on mobile (Concept 2) it gets pinned to its
-   own 100svh so .hero-cta can sit below it in a plain solid band instead of
-   overlaying the photo. */
+   like its contents always did; on mobile .hero grows to 136svh and .hero-cta
+   (Support us + the nonprofit line) overlays the bottom of the photo. */
 .hero-visual{position:absolute;inset:0}
 .hero-split{position:absolute;inset:0;z-index:0}
 .hero-split-panel{position:absolute;inset:0;z-index:1}
@@ -816,7 +815,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   letter-spacing:-.01em}
 .stat i{font-style:normal;display:block;margin-top:6px;font-size:11px;
   letter-spacing:.2em;text-transform:uppercase;color:var(--muted-l)}
-/* Bold uppercase grotesque instead of the section's usual serif .disp --
+/* Bold uppercase grotesque, a variant of the site's .disp heading --
    a plainer, more graphic heading voice for this one intro, closer to a
    wordmark than a headline. The short rule underneath stands in for the
    eyebrow label that used to sit above it. */
@@ -997,7 +996,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .value-tile{position:relative;aspect-ratio:3/4;overflow:hidden;
   display:flex;align-items:flex-end;justify-content:center;
   padding:clamp(20px,2.6vw,32px);text-align:center;
-  background:radial-gradient(140% 110% at 28% 6%,#241a12 0%,#0B0708 62%)}
+  background:radial-gradient(140% 110% at 28% 6%,#241a12 0%,var(--bg) 62%)}
 /* Photo fills the tile behind the text; the radial-gradient above stays as
    the fallback base layer under it. A bottom-weighted scrim (same idea as
    .vthumb::after in the gallery) keeps the gold h3 / muted p legible over
@@ -1146,9 +1145,8 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .sec-give{padding-top:calc(var(--sec) * .6);padding-bottom:calc(var(--sec) * .6)}
 .give-grid{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);
   gap:clamp(30px,4.6vw,74px);align-items:start}
-/* Larger and heavier than before -- with the amount picker gone, this card
-   IS just Zelle + Stripe, so it carries more visual weight to fill the
-   role a whole donation form used to. */
+/* The give card: amount picker, then Zelle + Stripe. Larger and heavier
+   than the side column so the ask carries the most visual weight. */
 .give-card{background:var(--card);border:1px solid var(--line-l);
   border-radius:16px;padding:clamp(28px,3.4vw,44px);
   box-shadow:0 26px 70px rgba(34,26,21,.11)}
@@ -1225,7 +1223,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .give-tierhint span{color:var(--bronze)}
 .give-tierhint a{color:var(--bronze);font-weight:700}
 
-/* --- scholarship members ------------------------------------------------ */
+/* --- sponsorship members ------------------------------------------------ */
 /* shared shell for the dark bands: members, other ways to give, why donate, awards */
 .sec-members,.sec-ways,.sec-why,.sec-awards{position:relative;overflow:hidden;
   border-top:1px solid rgba(242,180,65,.16);
@@ -1364,7 +1362,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
              box-shadow .3s var(--ease),background .3s var(--ease)}
 .award-top{display:flex;align-items:center;gap:12px;margin-bottom:15px}
 /* Vincent's own icon artwork, cut from one sheet and stored as alpha masks
-   (assets/award-*.png). Painted with currentColor through mask-image rather
+   (assets/awards-section/award-*.png). Painted with currentColor through mask-image rather
    than shipped pre-tinted, so the icons stay tied to --gold instead of a
    baked-in hex -- change the token and they follow. */
 .award-ico{flex-shrink:0;display:block;
@@ -1394,7 +1392,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 /* the one fact each card is actually about */
 .award p b{color:var(--gold);font-weight:600}
 
-/* Results strip: two horizontal panels for the back-to-back Can-Am
+/* Results strip: horizontal panels (four today) for the back-to-back Can-Am
    placements. A big place number carries the fact at a glance; the italic
    line underneath is the one bit of context that number can't say on its
    own (which years, that it was a second team). */
@@ -1421,7 +1419,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   margin-bottom:6px;font-weight:600;line-height:1.4}
 .honor i{font-style:normal;font-size:12px;color:var(--muted);
   letter-spacing:.06em}
-/* editorial mosaic — films (lightbox) + stills, uneven on purpose */
+/* editorial mosaic — films (lightbox), uneven on purpose */
 .mosaic{display:grid;grid-template-columns:repeat(12,1fr);
   grid-auto-rows:minmax(120px,auto);gap:clamp(14px,1.6vw,22px)}
 .m-feature{grid-column:1/9;grid-row:span 2}
@@ -1528,7 +1526,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 /* Was ".f-brand img", which also caught .f-calli below it and squashed the
    wide calligraphy banner into a distorted 58x58 square. Scoped to the
    crest specifically so .f-calli's own sizing rule actually wins. */
-/* Height-only, like the header's .brand img. The crest is 900x763 (1.18:1);
+/* Height-only, like the header's .brand img. The crest is 900x747 (1.20:1);
    the old 58x58 forced it square and squashed it ~15% horizontally -- the
    same defect the calligraphy had, fixed there but not here. */
 .f-logo{width:auto;height:58px}
@@ -1590,8 +1588,8 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 .lb-close:hover{color:var(--red)}
 
 /* ================= PASSWORD GATE (pre-launch only) =================
-   TODO: remove this block (and the matching markup/script in index.html)
-   once makfai.org is ready to launch publicly. */
+   TODO: remove at launch -- see the full checklist in the gate comment at
+   the top of index.html <body> (this whole block is one item on it). */
 /* Scene, back to front: night sky (.pwg-shade), then the canvas --
    clouds, mountains, the dragon and its pearl. The card is centred at
    every width. */
@@ -1611,7 +1609,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   radial-gradient(46% 26% at 50% 88%,rgba(242,180,65,.10),transparent 70%),
   radial-gradient(60% 40% at 50% 0,rgba(242,180,65,.05),transparent 70%),
   radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(0,0,0,.55) 100%),
-  linear-gradient(180deg,#0B0708 0,#120A0A 62%,#1A0E0C 100%)}
+  linear-gradient(180deg,var(--bg) 0,#120A0A 62%,#1A0E0C 100%)}
 .pwg-canvas{position:absolute;inset:0;width:100%;height:100%}
 
 /* The card: dark frosted panel so the dragon glows through as it passes
@@ -1741,7 +1739,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 }
 @media (max-width:720px){
   :where(a,button,input,textarea,select,summary){scroll-margin-top:104px}
-  /* Concept 1: taller mobile hero (122svh, not the original 100svh) with
+  /* Concept 1: taller mobile hero (136svh, not the original 100svh) with
      .hero-cta overlaid on the photo -- plain flat horizontal seam, lion top
      / kung fu bottom, same identity rotated from the desktop left/right. */
   .hero{min-height:136svh}

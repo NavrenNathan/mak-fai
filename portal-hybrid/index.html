@@ -20,7 +20,7 @@
 <link rel="apple-touch-icon" href="assets/branding/apple-touch-icon.png">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=246">
+<link rel="stylesheet" href="style.css?v=247">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 <script type="application/ld+json">
 {
@@ -87,12 +87,18 @@
 <body>
 
 <!-- Password gate: soft client-side lock for pre-launch preview access.
-     Not real security — the password lives in this file's source, so anyone
-     using View Source can read it. It only keeps casual visitors out while
-     the site isn't ready to announce; treat it the same as the Netlify
-     dashboard password protection it's meant to sit alongside.
-     TODO: remove this block (and the matching CSS in style.css) once
-     makfai.org is ready to launch publicly. -->
+     Not real security -- the password is in this page's source, so anyone
+     using View Source can read it. It only keeps casual visitors out.
+     TODO at launch, remove all of it in one commit:
+       1. this #pw-gate block and the inline <script> right after it
+          (index.html AND donate.html -- they are identical)
+       2. the lion-dragon.js and assets/pw-gate.js <script> tags (both pages)
+          and the two files themselves
+       3. the PASSWORD GATE block in style.css
+       4. the [[headers]] block for /lion-dragon.js in netlify.toml
+       5. the preview-password sentence in privacy.html (bump Last updated)
+     Then consider moving the remaining inline scripts into .js files and
+     dropping 'unsafe-inline' from script-src in netlify.toml. -->
 <div id="pw-gate" class="pw-gate">
   <!-- Scene: night sky, drifting clouds, an ink-landscape mountain range
        and the canvas dragon chasing the pearl (assets/pw-gate.js). -->
@@ -244,10 +250,8 @@
        the association crest on the seam, kung fu right. ============ -->
   <section class="hero" id="home" aria-label="Mak Fai — lion dance and kung fu">
     <h1 class="sr-only">Mak Fai Kung Fu Dragon &amp; Lion Dance Association — Seattle</h1>
-    <!-- .hero-visual is the split-photo identity moment -- fixed to its own
-         100svh on mobile (Concept 2) so .hero-cta below can sit in a plain
-         solid band instead of fighting for space on top of the photo. On
-         desktop .hero-visual just fills .hero exactly as it always did. -->
+    <!-- .hero-visual is the split-photo identity moment; it fills .hero.
+         On mobile .hero is 136svh and the photos stack lion over kung fu. -->
     <div class="hero-visual">
       <div class="hero-split" aria-hidden="true">
         <div class="hero-split-panel hero-split-lion">
@@ -269,8 +273,8 @@
       <a class="hero-learn hero-learn-lion" href="https://www.makfailiondance.com" target="_blank" rel="noopener" aria-label="Learn more about Mak Fai Lion Dance">Learn more</a>
       <a class="hero-learn hero-learn-kungfu" href="https://makfaikungfu.org" target="_blank" rel="noopener" aria-label="Learn more about Mak Fai Kung Fu">Learn more</a>
     </div>
-    <!-- .hero-cta: absolute overlay on desktop (unchanged), a plain solid
-         band in normal flow below .hero-visual on mobile (Concept 2). -->
+    <!-- .hero-cta: Support us + the nonprofit line, overlaid at the bottom
+         of the hero at every width. -->
     <div class="hero-cta">
       <a class="btn btn-paper hero-support" href="donate.html" data-stagger="5">Support us</a>
       <p class="hero-nonprofit" data-stagger="8">501(c)(3) nonprofit. Donations tax-deductible to the extent allowed by law.</p>
@@ -278,11 +282,8 @@
   </section>
 
   <!-- ============ VALUES ============
-       Ink-and-paper treatment: brush-drawn enso rings around each icon, a
-       seal medallion in the divider, and faint background scenery (seigaiha
-       corner, big enso watermark, bamboo, mountain wash). The brush edges
-       are one SVG filter (feTurbulence + feDisplacementMap) applied to plain
-       circles -- no extra image assets. ============ -->
+       Three photo tiles on the dark ground, a seal medallion in the divider,
+       and a faint seigaiha wave in the corner (.values-deco). ============ -->
   <section id="values" class="sec-values">
 
     <div class="values-deco" aria-hidden="true">
@@ -941,9 +942,6 @@
       el.style.animation = 'none';
     }, {once:true});
   });
-
-  /* scrollspy removed along with .nav-menu -- there's nothing left in the
-     header for it to highlight. Re-add if the nav links come back. */
 
   /* button ripple */
   document.addEventListener('click', function(e){

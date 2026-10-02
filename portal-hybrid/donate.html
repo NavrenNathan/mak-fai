@@ -20,18 +20,24 @@
 <link rel="apple-touch-icon" href="assets/branding/apple-touch-icon.png">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=246">
+<link rel="stylesheet" href="style.css?v=247">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 </head>
 <body>
 
 <!-- Password gate: soft client-side lock for pre-launch preview access.
-     Not real security — the password lives in this file's source, so anyone
-     using View Source can read it. It only keeps casual visitors out while
-     the site isn't ready to announce; treat it the same as the Netlify
-     dashboard password protection it's meant to sit alongside.
-     TODO: remove this block (and the matching CSS in style.css) once
-     makfai.org is ready to launch publicly. -->
+     Not real security -- the password is in this page's source, so anyone
+     using View Source can read it. It only keeps casual visitors out.
+     TODO at launch, remove all of it in one commit:
+       1. this #pw-gate block and the inline <script> right after it
+          (index.html AND donate.html -- they are identical)
+       2. the lion-dragon.js and assets/pw-gate.js <script> tags (both pages)
+          and the two files themselves
+       3. the PASSWORD GATE block in style.css
+       4. the [[headers]] block for /lion-dragon.js in netlify.toml
+       5. the preview-password sentence in privacy.html (bump Last updated)
+     Then consider moving the remaining inline scripts into .js files and
+     dropping 'unsafe-inline' from script-src in netlify.toml. -->
 <div id="pw-gate" class="pw-gate">
   <!-- Scene: night sky, drifting clouds, an ink-landscape mountain range
        and the canvas dragon chasing the pearl (assets/pw-gate.js). -->

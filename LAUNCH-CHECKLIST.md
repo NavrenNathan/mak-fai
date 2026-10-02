@@ -88,6 +88,10 @@ first inline `<script>`, and the `pw-gate.js` / `lion-dragon.js` tags) plus
 the PASSWORD GATE block in `style.css`. Each is marked with a TODO. When it
 goes:
 
+- Also delete the two script files themselves, `portal-hybrid/lion-dragon.js`
+  and `portal-hybrid/assets/pw-gate.js`, and the `[[headers]]` block for
+  `/lion-dragon.js` in `portal-hybrid/netlify.toml`. The full list is in the
+  comment above `#pw-gate` in `index.html`.
 - Also remove the "preview password" sentence in `privacy.html` (Other
   services this site uses) and bump its "Last updated" date.
 - Consider moving the remaining inline scripts into `.js` files, then drop
