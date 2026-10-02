@@ -20,8 +20,10 @@ Known Netlify site ID (the portal, from the old CLI link): `25109611-afc4-4e4b-a
 Confirm in the dashboard that this is the site on `makfai.org` before wiring it up.
 
 Every one of those folders is a **complete, self-contained deploy**: `index.html`,
-`style.css`, local `assets/`, plus `_redirects`, `netlify.toml`, `robots.txt`,
-`sitemap.xml`. Nothing references a path outside its own folder.
+`style.css`, local `assets/`, plus `netlify.toml`, `robots.txt`, `sitemap.xml`
+(and `_redirects` in the two placeholder sites; the portal has none, so Netlify
+serves its `404.html` for unknown paths). Nothing references a path outside its
+own folder.
 
 ---
 
@@ -55,9 +57,11 @@ each only ever publishes its own folder.
 
 ### Then, before launch
 
-All three `.org` domains currently return **401** — Netlify pre-launch password
+Status (checked Oct 1, 2026): `makfai.org` and `makfaikungfu.org` return 200;
+`makfailiondance.org` still returns **401** — Netlify pre-launch password
 protection. To go live: **Site configuration → Access & security → Visitor
-access → Password protection → Remove.**
+access → Password protection → Remove.** (The portal's own password screen is
+client-side; see `LAUNCH-CHECKLIST.md` → Removing the gate.)
 
 ---
 
@@ -127,15 +131,13 @@ Instant, no git revert needed.
 ## Before you push the portal live
 
 - [ ] `makfailiondance.com` links are still correct — the `.com` holds the SEO.
-      Three `TODO` markers in `portal-hybrid/index.html` (lines ~42, ~138, ~311)
-      mark the links to repoint once the `.org` is live with a 301.
+      Search `TODO: repoint` in `portal-hybrid/` for the links to change once the
+      `.org` is live with a 301 (header comment, cards and every footer).
 - [ ] `info@makfai.org` is a placeholder in the placeholder sites — search `TODO`.
-- [ ] The kung fu school card uses the 麥館 calligraphy (`assets/mak-kwoon.jpg`)
-      as a stand-in. Swap when a real kung fu photo exists.
 - [ ] No preview-only chrome (`.pv`, `.themepeek`) in the deploy folder.
       `portal-hybrid` is currently clean — verify after any edit.
-- [ ] `_redirects` sends every path to `/index.html`. Correct for a one-pager;
-      **delete it** when a real multi-page site ships, or deep links break.
+- [ ] The portal must not get a catch-all `_redirects` again: it would turn
+      every bad URL into a 200 copy of the home page instead of the 404 page.
 
 ---
 
