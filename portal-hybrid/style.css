@@ -1392,11 +1392,10 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 /* the one fact each card is actually about */
 .award p b{color:var(--gold);font-weight:600}
 
-/* Results strip: horizontal panels (four today) for the back-to-back Can-Am
-   placements. A big place number carries the fact at a glance; the italic
-   line underneath is the one bit of context that number can't say on its
-   own (which years, that it was a second team). */
-.results-strip{display:grid;grid-template-columns:1fr 1fr;
+/* Results strip: three panels in one row for the Can-Am placements. A big
+   place number carries the fact at a glance; the italic line underneath is
+   the one bit of context that number can't say on its own. */
+.results-strip{display:grid;grid-template-columns:repeat(3,1fr);
   gap:clamp(14px,1.5vw,20px);margin-top:clamp(14px,1.5vw,20px)}
 .result-panel{display:flex;align-items:center;gap:20px;
   padding:clamp(18px,1.8vw,24px) clamp(22px,2.2vw,28px);border-radius:10px;
