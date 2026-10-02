@@ -20,7 +20,6 @@
   /* dark ground */
   --bg:#0B0708;
   --panel:#171013;
-  --panel-2:#1E1418;
   --ink:#F6EFE8;
   --muted:#B3A69E;
   --line:rgba(242,180,65,.16);
@@ -28,7 +27,6 @@
 
   /* accents — used sparingly */
   --red:#E63B52;        /* dark-ground action        4.7:1 on --bg  */
-  --red-deep:#A4161A;
   --gold:#F2B441;       /* dark-ground highlight    10.4:1          */
 
   /* ivory ground */
@@ -67,7 +65,6 @@ body{
 }
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
-sup{font-size:.62em;margin-left:2px}
 /* "Opens in a new tab" mark. Was a bare U+2197; iOS gives that codepoint
    emoji presentation by default, so it rendered as a blue-and-white emoji
    tile in the footer instead of a hairline arrow. Drawn instead of typed,
@@ -94,11 +91,6 @@ main:focus{outline:none}
 /* invisible landing pads for the pre-redesign section ids */
 .anchor{display:block;position:relative;top:-96px;visibility:hidden;height:0}
 
-/* Ambient light field on the dark bands — kept from the original. */
-.glow{position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(ellipse 85% 50% at 50% -10%,rgba(230,59,82,.13),transparent 62%),
-    radial-gradient(ellipse 55% 40% at 10% 68%,rgba(242,180,65,.06),transparent 60%)}
 main,footer{position:relative;z-index:1}
 header{position:relative;z-index:60}
 
@@ -142,9 +134,6 @@ header{position:relative;z-index:60}
 .brand-t b{display:block;color:#fff;font-size:24px;font-weight:700;
   letter-spacing:.2em;text-transform:uppercase;line-height:1.2;
   white-space:nowrap;
-  transition:color .4s var(--ease)}
-.brand-t small{display:block;color:#fff;opacity:.72;font-size:9.5px;
-  letter-spacing:.24em;text-transform:uppercase;margin-top:2px;
   transition:color .4s var(--ease)}
 .nav.scrolled .brand-t b{color:var(--ink-l)}
 /* calligraphy.png is white artwork on transparency (same file the password
@@ -239,9 +228,6 @@ header{position:relative;z-index:60}
    dark band. White on #006837 is 7.7:1. */
 .btn-paper.btn-donate{background:#006837;color:#fff}
 .btn-paper.btn-donate:hover{background:#007A41;color:#fff}
-.btn-red{background:var(--red-deep);color:#fff;border-color:rgba(242,180,65,.35);
-  border-radius:8px}
-.btn-red:hover{background:#C01D26}
 .cta{
   position:relative;display:inline-flex;align-items:center;gap:10px;
   padding:4px 0 10px;font-size:13px;font-weight:600;letter-spacing:.16em;
@@ -376,13 +362,9 @@ header{position:relative;z-index:60}
 @keyframes rise-tag{from{opacity:0;transform:translate(-50%,10px)}
   to{opacity:1;transform:translate(-50%,0)}}
 @keyframes rise-word{from{opacity:0}to{opacity:1}}
-[data-stagger="1"]{animation-delay:.15s}
 [data-stagger="2"]{animation-delay:.35s}
 [data-stagger="3"]{animation-delay:.5s}
-[data-stagger="7"]{animation-delay:.62s}
-[data-stagger="4"]{animation-delay:.75s}
 [data-stagger="5"]{animation-delay:.95s}
-[data-stagger="6"]{animation-delay:1.15s}
 [data-stagger="8"]{animation-delay:1.05s}
 /* the words keep their own transforms, so they only fade */
 .hero-word[data-stagger]{animation-duration:1.1s}
@@ -461,8 +443,6 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   letter-spacing:-.01em}
 .stat i{font-style:normal;display:block;margin-top:6px;font-size:11px;
   letter-spacing:.2em;text-transform:uppercase;color:var(--muted-l)}
-.intro-sub{font-family:var(--serif);font-style:italic;font-weight:450;
-  font-size:clamp(18px,2vw,22px);color:var(--jade)!important;margin:0 0 26px}
 /* Bold uppercase grotesque instead of the section's usual serif .disp --
    a plainer, more graphic heading voice for this one intro, closer to a
    wordmark than a headline. The short rule underneath stands in for the
@@ -561,9 +541,6 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .trad-photo{position:relative;margin:0;overflow:hidden}
 .trad-photo > img{width:100%;height:auto;aspect-ratio:16/10.5;object-fit:cover}
 .trad-copy{position:relative}
-.trad-no{display:block;font-family:var(--serif);font-weight:400;
-  font-size:clamp(52px,5.4vw,76px);line-height:1;color:transparent;
-  -webkit-text-stroke:1px rgba(34,26,21,.3);margin-bottom:18px}
 .trad-kicker{font-size:11px;letter-spacing:.3em;text-transform:uppercase;
   color:var(--jade);font-weight:600;margin:0 0 10px}
 .trad-title{font-family:var(--sans);font-weight:700;text-transform:uppercase;
@@ -1052,10 +1029,6 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
   mask-image:url(assets/awards-section/award-milestone.png)}
 .ico-city{-webkit-mask-image:url(assets/awards-section/award-city.png);
   mask-image:url(assets/awards-section/award-city.png)}
-/* Vincent's own medal artwork, keyed and masked the same way as the rest so
-   it stays tied to --gold instead of shipping pre-tinted. */
-.ico-medal{-webkit-mask-image:url(assets/awards-section/award-medal.png);
-  mask-image:url(assets/awards-section/award-medal.png)}
 /* The "50" is a wide logotype, not a square badge -- letting it size to the
    same box makes it read small, so it gets a touch more room. */
 .ico-milestone{-webkit-mask-size:112%;mask-size:112%}
@@ -1101,12 +1074,7 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .mosaic{display:grid;grid-template-columns:repeat(12,1fr);
   grid-auto-rows:minmax(120px,auto);gap:clamp(14px,1.6vw,22px)}
 .m-feature{grid-column:1/9;grid-row:span 2}
-.m-tall{grid-column:9/13;grid-row:span 2}
 .m-half{grid-column:span 4}
-.m-wide{grid-column:span 4}
-.mimg{margin:0;overflow:hidden;position:relative}
-.mimg img{width:100%;height:100%;object-fit:cover}
-.m-tall img{object-position:center 30%}
 .vcard{position:relative;overflow:hidden;cursor:pointer;
   border:0;background:var(--panel);padding:0;text-align:left;display:block;
   width:100%}
@@ -1192,7 +1160,6 @@ section{padding:var(--sec) 0;scroll-margin-top:104px}
 .form-status{margin:18px 0 0;padding:12px 16px;font-size:14px;line-height:1.55;
   color:var(--ink-l);background:rgba(30,90,68,.07);border-left:2px solid var(--jade)}
 .form-status a{color:var(--jade);text-decoration:underline;text-underline-offset:2px}
-.form-status[hidden]{display:none}
 /* inline field errors -- existing daylight red token; .field raises it
    over .band-light p */
 .field .field-err,.give-card .field-err{margin:6px 0 0;font-size:13px;line-height:1.45;color:var(--red-l)}
@@ -1235,7 +1202,6 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   padding:5px 0;margin:0}
 .f-col a{transition:color .25s var(--ease)}
 .f-col a:hover{color:var(--gold)}
-.f-col a sup{opacity:.5}
 .f-here{color:var(--red)}
 .f-addr{line-height:1.6}
 .f-bottom{display:flex;align-items:center;justify-content:space-between;
@@ -1278,7 +1244,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
 /* Scene, back to front: night sky (.pwg-shade), then the canvas --
    clouds, mountains, the dragon and its pearl. The card is centred at
    every width. */
-.pw-gate{--ease-io:cubic-bezier(.77,0,.175,1);
+.pw-gate{
   position:fixed;inset:0;z-index:999;display:flex;align-items:center;
   justify-content:center;padding:24px clamp(24px,7vw,128px);
   background:var(--bg);overflow:hidden;color:var(--ink)}
@@ -1422,11 +1388,8 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .intro-photo{margin-top:24px}
   .mosaic{grid-template-columns:1fr 1fr}
   .m-feature{grid-column:1/-1;grid-row:auto}
-  .m-tall{grid-column:span 1;grid-row:auto}
-  .m-half,.m-wide{grid-column:span 1}
+  .m-half{grid-column:span 1}
   .vcard .vthumb{aspect-ratio:16/10;min-height:0}
-  .m-tall img{aspect-ratio:3/4}
-  .mimg{min-height:0}
 }
 @media (max-width:720px){
   :where(a,button,input,textarea,select,summary){scroll-margin-top:104px}
@@ -1502,7 +1465,7 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   .dask{flex-direction:column;align-items:flex-start}
   .dask-links{text-align:left}
   .mosaic{grid-template-columns:1fr}
-  .m-feature,.m-tall,.m-half,.m-wide{grid-column:1/-1}
+  .m-feature,.m-half{grid-column:1/-1}
   .g-head{align-items:flex-start;flex-direction:column}
   .f-cols{grid-template-columns:1fr 1fr}
   /* Footer links were ~20px tall -- under the 24px minimum and easy to
