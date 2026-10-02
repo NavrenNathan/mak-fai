@@ -62,8 +62,8 @@ each only ever publishes its own folder.
 Status (checked Oct 1, 2026): `makfai.org` and `makfaikungfu.org` return 200;
 `makfailiondance.org` still returns **401** — Netlify pre-launch password
 protection. To go live: **Site configuration → Access & security → Visitor
-access → Password protection → Remove.** (The portal's own password screen is
-client-side; see `LAUNCH-CHECKLIST.md` → Removing the gate.)
+access → Password protection → Remove.** (The portal's own client-side
+password screen has been removed.)
 
 ---
 

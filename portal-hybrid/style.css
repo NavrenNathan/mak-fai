@@ -515,8 +515,8 @@ header{position:relative;z-index:60}
   white-space:nowrap;
   transition:color .4s var(--ease)}
 .nav.scrolled .brand-t b{color:var(--ink-l)}
-/* calligraphy-final.png is white artwork on transparency (same file the password
-   gate uses) -- correct as-is against the dark hero nav, but the light
+/* calligraphy-final.png is white artwork on transparency -- correct as-is
+   against the dark hero nav, but the light
    .nav.scrolled ivory bar needs it flattened dark instead, same
    fix used elsewhere in this project for the same asset. */
 .brand .brand-calli{display:block;width:auto;height:23px;margin-top:5px;
@@ -1589,124 +1589,6 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   color:var(--ink);font-size:13px;letter-spacing:.18em;text-transform:uppercase;
   cursor:pointer;display:flex;align-items:center;gap:8px;padding:8px}
 .lb-close:hover{color:var(--red)}
-
-/* ================= PASSWORD GATE (pre-launch only) =================
-   TODO: remove at launch -- see the full checklist in the gate comment at
-   the top of index.html <body> (this whole block is one item on it). */
-/* Scene, back to front: night sky (.pwg-shade), then the canvas --
-   clouds, mountains, the dragon and its pearl. The card is centred at
-   every width. */
-.pw-gate{
-  position:fixed;inset:0;z-index:999;display:flex;align-items:center;
-  justify-content:center;padding:24px clamp(24px,7vw,128px);
-  background:var(--bg);overflow:hidden;color:var(--ink)}
-/* The card and the hint/footer lines sit above the canvas; the dragon
-   steers around both (see measureCard in pw-gate.js), so it is never
-   drawn under anything. */
-.pwg-scene{position:absolute;inset:0;pointer-events:none}
-/* Night sky behind the canvas: a low red-gold glow on the horizon that
-   the mountain range (drawn on the canvas) stands in silhouette against,
-   and a soft vignette. */
-.pwg-shade{position:absolute;inset:0;background:
-  radial-gradient(70% 42% at 50% 100%,rgba(230,59,82,.16),transparent 70%),
-  radial-gradient(46% 26% at 50% 88%,rgba(242,180,65,.10),transparent 70%),
-  radial-gradient(60% 40% at 50% 0,rgba(242,180,65,.05),transparent 70%),
-  radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(0,0,0,.55) 100%),
-  linear-gradient(180deg,var(--bg) 0,#120A0A 62%,#1A0E0C 100%)}
-.pwg-canvas{position:absolute;inset:0;width:100%;height:100%}
-
-/* The card: dark frosted panel so the dragon glows through as it passes
-   behind, framed with a double gold rule like a scroll mount. */
-.pw-gate-card{position:relative;z-index:2;width:min(400px,100%);text-align:center;
-  padding:40px 38px 34px;border-radius:3px;
-  border:1px solid rgba(242,180,65,.26);
-  background:rgba(11,7,8,.6);
-  -webkit-backdrop-filter:blur(14px) saturate(1.25);backdrop-filter:blur(14px) saturate(1.25);
-  box-shadow:0 34px 90px -24px rgba(0,0,0,.85);
-  animation:pw-gate-in .7s var(--ease) both}
-.pw-gate-card::before{content:"";position:absolute;inset:6px;pointer-events:none;
-  border:1px solid rgba(242,180,65,.09);border-radius:2px}
-.pw-gate-card.intro-done{animation:none}
-@keyframes pw-gate-in{from{opacity:0;transform:translateY(18px) scale(.97)}to{opacity:1;transform:none}}
-.pw-gate-card > *{animation:pwg-rise .6s var(--ease) both}
-.pw-gate-card > :nth-child(2){animation-delay:.06s}
-.pw-gate-card > :nth-child(3){animation-delay:.12s}
-.pw-gate-card > :nth-child(4){animation-delay:.18s}
-.pw-gate-card > :nth-child(5){animation-delay:.22s}
-.pw-gate-card > :nth-child(n+6){animation-delay:.26s}
-@keyframes pwg-rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.pw-gate-logo{display:block;width:auto;height:66px;margin:0 auto 18px;
-  filter:drop-shadow(0 8px 20px rgba(0,0,0,.6))}
-.pw-gate-calli{display:block;width:min(250px,82%);height:auto;margin:0 auto 20px;
-  filter:drop-shadow(0 0 14px rgba(242,180,65,.35))}
-.pwg-divide{display:flex;align-items:center;gap:14px;max-width:220px;margin:0 auto 24px}
-.pwg-divide span{flex:1;height:1px;
-  background:linear-gradient(90deg,transparent,rgba(242,180,65,.45))}
-.pwg-divide span:last-child{background:linear-gradient(270deg,transparent,rgba(242,180,65,.45))}
-.pwg-divide .v-seal{width:24px;height:24px}
-.pw-gate-title{font-family:var(--sans);font-weight:700;text-transform:uppercase;
-  font-size:clamp(24px,2.4vw,30px);line-height:1;letter-spacing:.02em;
-  margin:0 0 12px;color:#fff}
-.pwg-sub{font-size:14px;line-height:1.55;color:var(--muted);margin:0 auto 24px;max-width:32ch;text-wrap:balance}
-.pw-gate-field{position:relative;margin-bottom:14px}
-.pw-gate-input{width:100%;height:50px;padding:0 48px 0 16px;font-size:16px;
-  font-family:inherit;color:var(--ink);letter-spacing:.06em;
-  background:rgba(255,255,255,.045);caret-color:var(--gold);
-  border:1px solid rgba(242,180,65,.24);border-radius:3px;outline:none;
-  transition:border-color .2s var(--ease),box-shadow .2s var(--ease),background .2s var(--ease)}
-.pw-gate-input::placeholder{color:rgba(179,166,158,.7);letter-spacing:.04em}
-.pw-gate-input:focus{border-color:var(--gold);background:rgba(255,255,255,.06);
-  box-shadow:0 0 0 3px rgba(242,180,65,.16)}
-.pw-gate-toggle{position:absolute;right:8px;top:50%;transform:translateY(-50%);
-  display:flex;align-items:center;justify-content:center;width:34px;height:34px;
-  background:none;border:0;border-radius:3px;color:var(--muted);cursor:pointer;
-  transition:color .2s var(--ease),background .2s var(--ease)}
-@media (hover:hover) and (pointer:fine){
-  .pw-gate-toggle:hover{color:var(--gold);background:rgba(255,255,255,.06)}
-}
-.pw-gate-toggle:focus-visible,.pw-gate-btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
-/* Same deep green as the hero's DANCE and the nav Donate pill. */
-.pw-gate-btn{width:100%;height:50px;justify-content:center;border-radius:3px;
-  letter-spacing:.2em;background:#006837;color:#fff;border-color:rgba(242,180,65,.35);
-  transition:background .2s var(--ease),transform .16s var(--ease)}
-@media (hover:hover) and (pointer:fine){.pw-gate-btn:hover{background:#007A41}}
-.pw-gate-btn:active{transform:scale(.97)}
-.pw-gate-error{color:var(--red);font-size:13px;margin:14px 0 0}
-.pw-gate.shake .pw-gate-card{animation:pw-shake .4s var(--ease)}
-@keyframes pw-shake{
-  0%,100%{transform:translateX(0)}
-  20%{transform:translateX(-8px)}
-  40%{transform:translateX(8px)}
-  60%{transform:translateX(-5px)}
-  80%{transform:translateX(5px)}
-}
-/* Centred pair under the card's column: the hint, then the association
-   line beneath it. */
-.pwg-foot,.pwg-hint{position:absolute;z-index:2;left:0;right:0;margin:0;text-align:center;
-  font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:rgba(179,166,158,.7)}
-.pwg-hint{bottom:46px;color:rgba(242,180,65,.7)}
-.pwg-foot{bottom:22px}
-.pwg-hint-touch{display:none}
-@media (hover:none){.pwg-hint-fine{display:none}.pwg-hint-touch{display:inline}}
-
-/* Unlock: the canvas bursts the pearl first, the card lifts away, then
-   the whole gate dissolves into the site underneath. */
-.pw-gate.pw-gate-hide{opacity:0;visibility:hidden;pointer-events:none;
-  transition:opacity .8s var(--ease) .45s,visibility 0s linear 1.25s}
-.pw-gate.pw-gate-hide .pw-gate-card{opacity:0;transform:scale(.96) translateY(-8px);
-  transition:opacity .3s var(--ease),transform .3s var(--ease)}
-.pw-gate.pw-gate-hide .pwg-foot,.pw-gate.pw-gate-hide .pwg-hint{opacity:0;transition:opacity .25s var(--ease)}
-
-@media (max-width:900px){
-  .pw-gate{justify-content:center;padding:24px 18px 64px}
-  .pw-gate-card{padding:32px 24px 28px}
-  .pwg-foot{bottom:14px;font-size:9px;letter-spacing:.12em}
-  .pwg-foot-x{display:none}
-  .pwg-hint{bottom:34px;font-size:9.5px}
-}
-@media (prefers-reduced-motion:reduce){
-  .pw-gate.pw-gate-hide .pw-gate-card{transform:none}
-}
 
 /* ========================= RESPONSIVE ========================= */
 @media (max-width:1080px){

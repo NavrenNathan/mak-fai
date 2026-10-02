@@ -14,7 +14,7 @@ Three standalone, zero-dependency static sites in one repo.
 
 All three domains are registered at Netlify with DNS and HTTPS wired.
 Status (checked Oct 1, 2026): `makfai.org` and `makfaikungfu.org` are public
-(200); the portal still shows a client-side preview password gate.
+(200) and open to everyone.
 `makfailiondance.org` still returns 401 (Netlify Visitor access) — remove it
 under **Access & security → Visitor access** to go live.
 

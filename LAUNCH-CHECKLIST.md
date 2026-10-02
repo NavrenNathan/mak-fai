@@ -5,9 +5,8 @@ For whoever runs the launch. It lives at the repo root, so it is never deployed
 
 ## Before you start
 
-- [ ] Decide: remove the password gate now, or launch with it (see
-      "Removing the gate" below). While it is on, the public sees
-      "Enter the website" on the home and donate pages.
+- [x] The password gate has been removed: makfai.org is public and visitors
+      land straight on the site (see "The password gate was removed" below).
 - [ ] Stripe dashboard (Test mode **off**) → Payment Links: confirm these six
       are **Active** and show the right amount with no TEST MODE badge:
       - flexible amount: `donate.stripe.com/6oU00k85z2MraXBekfafS00`
@@ -81,22 +80,18 @@ For whoever runs the launch. It lives at the repo root, so it is never deployed
       TXT `_dmarc` `v=DMARC1; p=none; rua=mailto:hello@makfai.org`.
 - [ ] Remaining held items (see "Held back" below).
 
-## Removing the gate
+## The password gate was removed
 
-The gate is in `index.html` and `donate.html` (the `#pw-gate` markup, the
-first inline `<script>`, and the `pw-gate.js` / `lion-dragon.js` tags) plus
-the PASSWORD GATE block in `style.css`. Each is marked with a TODO. When it
-goes:
+The pre-launch password screen (the client-side gate on the home and donate
+pages) was removed when the site went public: its markup and inline script,
+`lion-dragon.js`, `assets/pw-gate.js`, the PASSWORD GATE block in `style.css`,
+the `/lion-dragon.js` cache rule in `netlify.toml`, and the preview-password
+sentence in `privacy.html`. It is still in git history if it is ever needed
+again (look for the commit "Remove the pre-launch password gate").
 
-- Also delete the two script files themselves, `portal-hybrid/lion-dragon.js`
-  and `portal-hybrid/assets/pw-gate.js`, and the `[[headers]]` block for
-  `/lion-dragon.js` in `portal-hybrid/netlify.toml`. The full list is in the
-  comment above `#pw-gate` in `index.html`.
-- Also remove the "preview password" sentence in `privacy.html` (Other
-  services this site uses) and bump its "Last updated" date.
-- Consider moving the remaining inline scripts into `.js` files, then drop
-  `'unsafe-inline'` from `script-src` in `portal-hybrid/netlify.toml`.
-- Preview on localhost and get Nathan's OK before pushing (CLAUDE.md Rule 3).
+Still to do, whenever convenient: the remaining inline scripts could move into
+`.js` files, which would let `script-src` drop `'unsafe-inline'` in
+`portal-hybrid/netlify.toml`.
 
 ## Security headers: keep them in step
 
