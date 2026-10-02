@@ -152,6 +152,6 @@ exactly as approved:
 - A "Get directions" link by the studio address.
 - A floating back-to-top button on long pages.
 - Copy buttons for the Zelle ID and email.
-- Real italic Fraunces (the font URL doesn't request the italic, so browsers fake it).
+- Real italic Fraunces (the site's Fraunces files have no italic, so browsers slant it themselves).
 - WebP images at display size (about 6 MB saved; re-encoding changes pixels slightly).
 - A print stylesheet.

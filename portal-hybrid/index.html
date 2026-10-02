@@ -90,9 +90,9 @@
      Not real security -- the password is in this page's source, so anyone
      using View Source can read it. It only keeps casual visitors out.
      TODO at launch, remove all of it in one commit:
-       1. this #pw-gate block and the inline <script> right after it
+       1. this #pw-gate block and the inline script right after it
           (index.html AND donate.html -- they are identical)
-       2. the lion-dragon.js and assets/pw-gate.js <script> tags (both pages)
+       2. the lion-dragon.js and assets/pw-gate.js script tags (both pages)
           and the two files themselves
        3. the PASSWORD GATE block in style.css
        4. the [[headers]] block for /lion-dragon.js in netlify.toml
@@ -148,14 +148,18 @@
 
   // Everything behind the gate is inert while it shows, so Tab and screen
   // readers can't wander into the page under the overlay. The rest of the
-  // page doesn't exist yet when this runs, hence DOMContentLoaded.
+  // page doesn't exist yet when this runs, so lock it the moment parsing ends
+  // ('interactive'). DOMContentLoaded would wait for the two deferred gate
+  // scripts to download first, leaving the page reachable on a slow connection.
   var locked = true;
   var setBehind = function (on) {
     [].slice.call(document.body.children).forEach(function (el) {
       if (el !== gate && el.tagName !== 'SCRIPT') el.inert = on;
     });
   };
-  document.addEventListener('DOMContentLoaded', function () { if (locked) setBehind(true); });
+  document.addEventListener('readystatechange', function () {
+    if (locked && document.readyState === 'interactive') setBehind(true);
+  });
 
   // Lock the intro animation off once it has played, so a later wrong-password
   // shake doesn't replay the whole card fade/scale-in (see the matching

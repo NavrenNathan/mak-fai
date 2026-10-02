@@ -19,11 +19,13 @@ There is no build step. Netlify publishes the folder as-is.
 Known Netlify site ID (the portal, from the old CLI link): `25109611-afc4-4e4b-a60f-3ede7f90ba05`.
 Confirm in the dashboard that this is the site on `makfai.org` before wiring it up.
 
-Every one of those folders is a **complete, self-contained deploy**: `index.html`,
-`style.css`, local `assets/`, plus `netlify.toml`, `robots.txt`, `sitemap.xml`
-(and `_redirects` in the two placeholder sites; the portal has none, so Netlify
-serves its `404.html` for unknown paths). Nothing references a path outside its
-own folder.
+Every one of those folders is a **complete, self-contained deploy** and nothing
+references a path outside its own folder. The portal (`portal-hybrid/`) holds
+its pages, one `style.css`, `assets/` (images, scripts, self-hosted fonts),
+`netlify.toml`, `robots.txt` and `sitemap.xml`; it has no `_redirects`, so
+Netlify serves its `404.html` for unknown paths. The two placeholder sites are
+a single `index.html` with inline CSS, plus `_redirects`, `netlify.toml`,
+`robots.txt` and `sitemap.xml`.
 
 ---
 
@@ -131,8 +133,11 @@ Instant, no git revert needed.
 ## Before you push the portal live
 
 - [ ] `makfailiondance.com` links are still correct — the `.com` holds the SEO.
-      Search `TODO: repoint` in `portal-hybrid/` for the links to change once the
-      `.org` is live with a 301 (header comment, cards and every footer).
+      Search `makfailiondance.com` in `portal-hybrid/` (not only `TODO: repoint`)
+      for everything to change once the `.org` is live with a 301: the header
+      links and cards, every footer, the visible domain text under the Lion Dance
+      card, and the JSON-LD `subOrganization` url in `index.html` (JSON can't
+      carry a comment, so it has no marker).
 - [ ] `info@makfai.org` is a placeholder in the placeholder sites — search `TODO`.
 - [ ] No preview-only chrome (`.pv`, `.themepeek`) in the deploy folder.
       `portal-hybrid` is currently clean — verify after any edit.
