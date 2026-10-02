@@ -3,8 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google Analytics 4 (gtag.js). Loads async, so it never blocks the
+     page. It needs three CSP origins to work on the live site -- see the
+     Content-Security-Policy in netlify.toml. Localhost sends no CSP, so it
+     will appear to work in preview even if those are missing. Every page
+     carries this same block; add it to any new page too.
+     privacy.html describes what this collects -- keep the two in step. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KV8CDTCXB6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-KV8CDTCXB6');
+</script>
 <title>Privacy Policy — Mak Fai Kung Fu Dragon &amp; Lion Dance Assn.</title>
-<meta name="description" content="How makfai.org handles what you send us: no accounts, no analytics or tracking tools, no cookies of its own, and we never sell, rent or trade your information.">
+<meta name="description" content="How makfai.org handles your information: no accounts, no advertising, anonymous Google Analytics statistics, and we never sell, rent or trade what you send us.">
 <link rel="canonical" href="https://makfai.org/privacy">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mak Fai Kung Fu Dragon &amp; Lion Dance Association">
@@ -66,19 +79,23 @@
 
 <main id="policy-top" tabindex="-1">
 
-  <!-- Written from what this site actually does (checked Sep 2026): no
-       accounts, no analytics, no cookies of its own; the contact and pledge
-       forms only open the visitor's mail app; card gifts happen on Stripe's
-       pages. If any of that changes -- analytics, a newsletter signup, an
-       embedded checkout -- update this page in the same change. -->
+  <!-- Written from what this site actually does (checked Oct 2026): no
+       accounts; Google Analytics 4 (G-KV8CDTCXB6) is the only analytics, and
+       its two cookies are the only ones this site sets; the contact and
+       pledge forms only open the visitor's mail app; card gifts happen on
+       Stripe's pages. The analytics section describes GA4 with Google
+       Signals and ad features OFF -- if either is switched on in the GA
+       admin, this page must change too. Same for a newsletter signup or an
+       embedded checkout: update this page in the same change. -->
   <section class="dhero" aria-labelledby="policy-h">
     <span class="dhero-glow" aria-hidden="true"></span>
     <div class="wrap dhero-in">
       <p class="eyebrow">Legal</p>
       <h1 id="policy-h" class="disp disp-xl">Privacy<br>policy</h1>
       <span class="disp-rule" aria-hidden="true"></span>
-      <p class="lede">The short version: we only know what you choose to send
-        us, we use it to reply and to keep our records, and we never sell it.</p>
+      <p class="lede">The short version: apart from anonymous statistics about
+        how the site is used, we only know what you choose to send us. We use it
+        to reply and to keep our records, and we never sell it.</p>
       <p class="policy-date">Last updated <time datetime="2026-10-02">October 2, 2026</time></p>
     </div>
   </section>
@@ -94,8 +111,9 @@
 
       <h2>What we collect</h2>
       <p>You can browse this site without an account, and we don&rsquo;t run
-        analytics, advertising, or tracking tools. We only receive information
-        you send us yourself:</p>
+        advertising. We use Google Analytics to understand how the site is used,
+        described below. Beyond that, we only receive information you send us
+        yourself:</p>
       <ul>
         <li><b>Messages and booking requests.</b> The contact form doesn&rsquo;t
           send anything to us directly. It opens your own email app with your
@@ -116,8 +134,24 @@
         nonprofit and Sponsorship Membership records, and send newsletters,
         updates, and event information. You may unsubscribe from emails at any
         time. We don&rsquo;t sell, rent, or trade your information. We share it
-        only with service providers that process your payments or when required
-        by law.</p>
+        only with service providers that host this site, measure how it&rsquo;s
+        used, or process your payments, or when required by law.</p>
+
+      <h2>Site analytics</h2>
+      <p>We use Google Analytics to see how people use this site, so we can
+        improve it. It collects:</p>
+      <ul>
+        <li>the pages you view and how you move between them</li>
+        <li>your device type, browser, and screen size</li>
+        <li>the website or link that brought you here</li>
+        <li>your approximate location, to the city or region</li>
+      </ul>
+      <p>Google Analytics uses your IP address only to estimate that location,
+        and doesn&rsquo;t store it. We don&rsquo;t use this data to identify you,
+        we don&rsquo;t combine it with anything you send us, and we don&rsquo;t
+        use it for advertising. Google processes it under
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">its
+        own privacy policy</a>.</p>
 
       <h2>Other services this site uses</h2>
       <ul>
@@ -131,7 +165,9 @@
           Links to these open their own sites, which follow their own privacy
           policies.</li>
       </ul>
-      <p>This site doesn&rsquo;t set cookies of its own.</p>
+      <p>The only cookies this site sets are Google Analytics&rsquo; two, named
+        <code>_ga</code> and <code>_ga_KV8CDTCXB6</code>. They tell a returning
+        visit apart from a new one. We don&rsquo;t use cookies for advertising.</p>
 
       <h2>Your choices</h2>
       <p>You can ask us what information we hold about you, ask us to correct
@@ -139,6 +175,10 @@
         tax and nonprofit records. Email
         <a href="mailto:hello@makfai.org">hello@makfai.org</a> and we&rsquo;ll
         take care of it.</p>
+      <p>You can also stop Google Analytics from measuring your visits, using
+        your browser&rsquo;s tracking protection or Google&rsquo;s
+        <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">opt-out
+        add-on</a>. The site works the same either way.</p>
 
       <h2>Young students</h2>
       <p>This site isn&rsquo;t designed to collect information from children.

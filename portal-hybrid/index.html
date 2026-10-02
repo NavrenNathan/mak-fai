@@ -3,6 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Google Analytics 4 (gtag.js). Loads async, so it never blocks the
+     page. It needs three CSP origins to work on the live site -- see the
+     Content-Security-Policy in netlify.toml. Localhost sends no CSP, so it
+     will appear to work in preview even if those are missing. Every page
+     carries this same block; add it to any new page too.
+     privacy.html describes what this collects -- keep the two in step. -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-KV8CDTCXB6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-KV8CDTCXB6');
+</script>
 <title>Mak Fai Kung Fu Dragon &amp; Lion Dance Assn. — Seattle</title>
 <meta name="description" content="Lion dance, dragon dance and Hung Sing Choy Lay Fut kung fu in Seattle's Chinatown-International District since 1974. A nonprofit teaching the next generation.">
 <link rel="canonical" href="https://makfai.org/">

@@ -17,7 +17,17 @@
     # blocks (nav/reveal/lightbox/form on index, picker on donate); hashes
     # would silently break on any edit. Tighten to 'self' once those move
     # into .js files.
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self'; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+    # Google Analytics 4 origins, from Google's own CSP guide for GA4 without
+    # ad features (developers.google.com/tag-platform/security/guides/csp):
+    #   script-src  www.googletagmanager.com           -- loads gtag.js
+    #   img-src     www.googletagmanager.com, *.google-analytics.com
+    #   connect-src www.googletagmanager.com, *.google-analytics.com, *.google.com
+    # connect-src is new here. Before this the policy had none, so it fell back
+    # to default-src 'self' -- which is precisely what would block GA's
+    # measurement beacons. Writing it out explicitly means 'self' has to be
+    # listed in it too, or same-origin requests would start failing.
+    # The inline gtag('config') snippet runs under the existing 'unsafe-inline'.
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' https://www.googletagmanager.com https://*.google-analytics.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com; frame-src https://www.youtube-nocookie.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
     Permissions-Policy = 'accelerometer=(), autoplay=(self "https://www.youtube-nocookie.com"), browsing-topics=(), camera=(), display-capture=(), encrypted-media=(self "https://www.youtube-nocookie.com"), fullscreen=(self "https://www.youtube-nocookie.com"), geolocation=(), gyroscope=(), hid=(), idle-detection=(), magnetometer=(), microphone=(), midi=(), payment=(), picture-in-picture=(self "https://www.youtube-nocookie.com"), publickey-credentials-get=(), screen-wake-lock=(), serial=(), usb=(), xr-spatial-tracking=()'
 
 # Caching. Assets aren't fingerprinted, so they get a day fresh plus a week
