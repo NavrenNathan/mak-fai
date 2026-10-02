@@ -82,6 +82,17 @@
   }
   document.documentElement.style.overflow = 'hidden';
 
+  // Everything behind the gate is inert while it shows, so Tab and screen
+  // readers can't wander into the page under the overlay. The rest of the
+  // page doesn't exist yet when this runs, hence DOMContentLoaded.
+  var locked = true;
+  var setBehind = function (on) {
+    [].slice.call(document.body.children).forEach(function (el) {
+      if (el !== gate && el.tagName !== 'SCRIPT') el.inert = on;
+    });
+  };
+  document.addEventListener('DOMContentLoaded', function () { if (locked) setBehind(true); });
+
   // Lock the intro animation off once it has played, so a later wrong-password
   // shake doesn't replay the whole card fade/scale-in (see the matching
   // .pw-gate-card.intro-done rule in style.css).
@@ -112,6 +123,8 @@
     if (input.value === PASSWORD) {
       try { sessionStorage.setItem(KEY, '1'); } catch (e) {}
       document.documentElement.style.overflow = '';
+      locked = false;
+      setBehind(false);
       gate.classList.add('pw-gate-hide');
     } else {
       var err = document.getElementById('pw-gate-error');
@@ -394,7 +407,7 @@
           <h3>Sponsor a performance</h3>
           <p>Sponsor a Lunar New Year or festival appearance so the
             neighborhood sees it for free.</p>
-          <a class="way-link" href="index.html#book" aria-label="Talk to us about sponsoring a performance">Talk to us about it</a>
+          <a class="way-link" href="index.html#contact" aria-label="Talk to us about it: sponsoring a performance">Talk to us about it</a>
         </article>
         <article class="way reveal d3">
           <h3>Give time or goods</h3>
@@ -444,7 +457,7 @@
       <a href="index.html#gallery">Gallery</a>
       <a href="index.html#community">Community</a>
       <a href="index.html#book">Bookings</a>
-      <a href="#give">Donate</a>
+      <a href="#give" aria-current="page">Donate</a>
       <a href="index.html#contact">Contact</a>
     </nav>
     <!-- Cross-site links stay absolute (three separate sites).
