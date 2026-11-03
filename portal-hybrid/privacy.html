@@ -33,7 +33,7 @@
 <link rel="apple-touch-icon" href="assets/branding/apple-touch-icon.png">
 <!-- Bump ?v= whenever style.css changes, so browsers can't serve a stale
      copy (same cache-buster convention used on the other Navren sites). -->
-<link rel="stylesheet" href="style.css?v=250">
+<link rel="stylesheet" href="style.css?v=251">
 <noscript><style>.reveal{opacity:1;transform:none}.hero [data-stagger]{opacity:1;transform:none;animation:none}</style></noscript>
 </head>
 <body>
@@ -85,8 +85,10 @@
        pledge forms only open the visitor's mail app; card gifts happen on
        Stripe's pages. The analytics section describes GA4 with Google
        Signals and ad features OFF -- if either is switched on in the GA
-       admin, this page must change too. Same for a newsletter signup or an
-       embedded checkout: update this page in the same change. -->
+       admin, this page must change too. The footer newsletter signup is a
+       Netlify Form: Netlify stores the email address in the site dashboard.
+       If signups move to Mailchimp or another mailing service, name it here.
+       Same for an embedded checkout: update this page in the same change. -->
   <section class="dhero" aria-labelledby="policy-h">
     <span class="dhero-glow" aria-hidden="true"></span>
     <div class="wrap dhero-in">
@@ -96,7 +98,7 @@
       <p class="lede">The short version: apart from anonymous statistics about
         how the site is used, we only know what you choose to send us. We use it
         to reply and to keep our records, and we never sell it.</p>
-      <p class="policy-date">Last updated <time datetime="2026-10-02">October 2, 2026</time></p>
+      <p class="policy-date">Last updated <time datetime="2026-11-02">November 2, 2026</time></p>
     </div>
   </section>
 
@@ -121,6 +123,9 @@
           usually your name, email address, and message.</li>
         <li><b>Pledges.</b> &ldquo;Email us your pledge&rdquo; works the same
           way. We receive what you write in that email.</li>
+        <li><b>Newsletter signups.</b> If you subscribe at the bottom of any
+          page, we receive your email address and use it only to send Mak Fai
+          news and event updates. You can unsubscribe at any time.</li>
         <li><b>Donations.</b> Card and digital-wallet gifts are processed by
           Stripe on Stripe&rsquo;s own secure pages. We never see or store
           your card number. Stripe shares details such as your name, email,
@@ -157,7 +162,7 @@
       <ul>
         <li><b>Netlify.</b> Our web host. Like any web server, it receives your
           IP address and basic request details, such as your browser type, to
-          deliver the pages.</li>
+          deliver the pages. It also stores newsletter signups for us.</li>
         <li><b>YouTube.</b> When you play one of our films, it plays in
           YouTube&rsquo;s privacy-enhanced player, which may store data in your
           browser.</li>
@@ -204,6 +209,33 @@
     </div>
     <a class="cta cta-light f-book" href="index.html#contact">Request a performance
       <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
+  </div>
+
+  <!-- Newsletter signup -- a Netlify Form. Netlify finds data-netlify in the
+       HTML at deploy time and stores each signup under Forms in the site
+       dashboard. Form detection has to be switched on there once, or signups
+       are silently dropped. It posts to this same site, so the CSP needs
+       nothing new. The same block is in every page's footer -- keep them in
+       step, and keep privacy.html's description of it in step too.
+       "company" is a honeypot: hidden from people, filled in by bots, and
+       Netlify discards any submission that has it. -->
+  <div class="wrap f-news" id="newsletter">
+    <div class="f-news-copy">
+      <p class="f-h">Newsletter</p>
+      <p class="f-news-h">Stay in the loop</p>
+      <p class="f-news-sub">Performances, events and news from Mak&nbsp;Fai, a few times a year.</p>
+    </div>
+    <form class="f-news-form" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
+      <input type="hidden" name="form-name" value="newsletter">
+      <p class="sr-only" aria-hidden="true"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
+      <div class="f-news-row">
+        <label class="sr-only" for="nl-email">Email address</label>
+        <input id="nl-email" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="Your email address">
+        <button class="f-news-btn" type="submit">Subscribe</button>
+      </div>
+      <p class="f-news-status" role="status" aria-live="polite"></p>
+      <p class="f-news-fine">Only Mak Fai updates. Unsubscribe anytime. <a href="privacy.html">Privacy Policy</a></p>
+    </form>
   </div>
 
   <div class="wrap f-cols">
@@ -254,5 +286,6 @@
   addEventListener('scroll', onScroll, {passive:true}); onScroll();
 })();
 </script>
+<script src="assets/newsletter.js?v=1" defer></script>
 </body>
 </html>

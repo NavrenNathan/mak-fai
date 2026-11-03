@@ -1568,6 +1568,55 @@ footer{background:#080506;border-top:1px solid var(--line-soft);
   transition:color .25s var(--ease)}
 .f-bottom .top:hover{color:var(--gold)}
 
+/* Newsletter signup: its own band between the brand row and the link
+   columns, ruled off the same way .f-top is. Dark ground, so the accent is
+   gold (the site's one-green-one-gold rule: gold on dark, jade on paper).
+   Behaviour is in assets/newsletter.js. */
+.f-news{display:grid;grid-template-columns:1fr minmax(0,1.15fr);
+  gap:clamp(24px,5vw,72px);align-items:center;
+  padding-bottom:clamp(32px,4vw,52px);
+  border-bottom:1px solid var(--line-soft);margin-bottom:clamp(32px,4vw,52px)}
+.f-news .f-h{margin-bottom:10px}
+.f-news-h{margin:0;font-family:var(--sans);font-weight:700;
+  font-size:clamp(22px,2.4vw,28px);letter-spacing:-.01em;line-height:1.15;
+  color:var(--ink)}
+.f-news-sub{margin:8px 0 0;color:var(--muted);font-size:14.5px;line-height:1.55}
+.f-news-form{margin:0}
+.f-news-row{display:flex;gap:10px}
+.f-news-row input{flex:1;min-width:0;padding:15px 16px;font-family:var(--sans);
+  font-size:15px;color:var(--ink);background:rgba(246,239,232,.04);
+  border:1px solid rgba(246,239,232,.18);border-radius:2px;
+  transition:border-color .25s var(--ease),background .25s var(--ease)}
+/* #8F8279 on the footer ground is ~5:1 -- readable as a hint, still clearly
+   quieter than typed text */
+.f-news-row input::placeholder{color:#8F8279}
+.f-news-row input:focus{outline:none;border-color:var(--gold);
+  background:rgba(246,239,232,.07)}
+.f-news-row input[aria-invalid=true]{border-color:#F08A8A}
+.f-news-btn{flex-shrink:0;padding:15px 24px;font-family:var(--sans);
+  font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:#1A1208;background:var(--gold);border:0;border-radius:2px;cursor:pointer;
+  transition:background .25s var(--ease),transform .2s var(--ease)}
+.f-news-btn:hover{background:#F7C462}
+.f-news-btn:active{transform:scale(.98)}
+.f-news-btn:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.f-news-btn:disabled{opacity:.6;cursor:default;transform:none}
+/* Reserves a line so a message appearing doesn't shift the layout */
+.f-news-status{margin:10px 0 0;min-height:1.45em;line-height:1.45;font-size:13.5px;color:var(--muted)}
+.f-news-status.is-ok{color:var(--jade-bright)}
+.f-news-status.is-err{color:#F08A8A}
+.f-news-fine{margin:2px 0 0;font-size:12px;color:var(--muted)}
+.f-news-fine a{color:var(--muted);text-decoration:underline;text-underline-offset:2px;
+  transition:color .25s var(--ease)}
+.f-news-fine a:hover{color:var(--gold)}
+@media (max-width:720px){
+  .f-news{grid-template-columns:1fr}
+}
+@media (max-width:420px){
+  .f-news-row{flex-direction:column}
+  .f-news-btn{width:100%}
+}
+
 /* ========================= LIGHTBOX ========================= */
 .lb{position:fixed;inset:0;z-index:90;display:flex;align-items:center;
   justify-content:center;padding:5vw;background:rgba(6,3,4,.92);
