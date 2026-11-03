@@ -741,33 +741,6 @@
       <span class="arr" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a1"><path d="M5 12h14M13 6l6 6-6 6"/></svg><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="a2"><path d="M7 17 17 7M8 7h9v9"/></svg></span></a>
   </div>
 
-  <!-- Newsletter signup -- a Netlify Form. Netlify finds data-netlify in the
-       HTML at deploy time and stores each signup under Forms in the site
-       dashboard. Form detection has to be switched on there once, or signups
-       are silently dropped. It posts to this same site, so the CSP needs
-       nothing new. The same block is in every page's footer -- keep them in
-       step, and keep privacy.html's description of it in step too.
-       "company" is a honeypot: hidden from people, filled in by bots, and
-       Netlify discards any submission that has it. -->
-  <div class="wrap f-news" id="newsletter">
-    <div class="f-news-copy">
-      <p class="f-h">Newsletter</p>
-      <p class="f-news-h">Stay in the loop</p>
-      <p class="f-news-sub">Performances, events and news from Mak&nbsp;Fai, a few times a year.</p>
-    </div>
-    <form class="f-news-form" name="newsletter" method="POST" data-netlify="true" netlify-honeypot="company" novalidate>
-      <input type="hidden" name="form-name" value="newsletter">
-      <p class="sr-only" aria-hidden="true"><label>Leave this empty <input name="company" tabindex="-1" autocomplete="off"></label></p>
-      <div class="f-news-row">
-        <label class="sr-only" for="nl-email">Email address</label>
-        <input id="nl-email" name="email" type="email" required autocomplete="email" inputmode="email" placeholder="Your email address">
-        <button class="f-news-btn" type="submit">Subscribe</button>
-      </div>
-      <p class="f-news-status" role="status" aria-live="polite"></p>
-      <p class="f-news-fine">Only Mak Fai updates. Unsubscribe anytime. <a href="privacy.html">Privacy Policy</a></p>
-    </form>
-  </div>
-
   <div class="wrap f-cols">
     <nav class="f-col" aria-label="Explore">
       <p class="f-h">Explore</p>
@@ -967,6 +940,5 @@
   });
 })();
 </script>
-<script src="assets/newsletter.js?v=1" defer></script>
 </body>
 </html>
