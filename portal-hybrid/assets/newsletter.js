@@ -4,8 +4,9 @@
    in the site dashboard. This script only submits it in the background so the
    visitor stays on the page; with JavaScript off the form still posts
    normally and Netlify shows its own confirmation page.
-   It posts to this same site, so the CSP needs nothing new (connect-src and
-   form-action are both 'self').
+   It also sends each signup to Mailchimp through /api/subscribe (see
+   netlify/functions/subscribe.mjs). Both are on this same site, so the CSP
+   needs nothing new (connect-src and form-action are both 'self').
    Loaded on every page with a ?v= query -- bump it when this file changes,
    because /assets/* is cached for a day (see netlify.toml). */
 (function () {
@@ -33,13 +34,22 @@
       button.disabled = true;
       say('Subscribing…');
 
-      fetch('/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(new FormData(form)).toString()
-      })
-        .then(function (res) {
-          if (!res.ok) throw new Error('HTTP ' + res.status);
+      // Two destinations, sent together: Netlify Forms keeps a copy in the
+      // dashboard, and /api/subscribe (netlify/functions/subscribe.mjs) adds
+      // the address to Mailchimp. Either one landing counts as a signup, so a
+      // Mailchimp hiccup never loses the address -- it's still in Netlify.
+      var body = new URLSearchParams(new FormData(form)).toString();
+      var post = function (url) {
+        return fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: body
+        }).then(function (res) { return res.ok; }, function () { return false; });
+      };
+
+      Promise.all([post('/'), post('/api/subscribe')])
+        .then(function (results) {
+          if (!results[0] && !results[1]) throw new Error('both failed');
           input.value = '';
           say('Thanks — you’re on the list.', 'ok');
           // Shows up in Google Analytics as a sign_up event.

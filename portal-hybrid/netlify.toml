@@ -44,3 +44,20 @@
   for = "/style.css"
   [headers.values]
     Cache-Control = "public, max-age=604800"
+
+# Netlify Functions. Relative to the base directory (portal-hybrid), so this
+# is portal-hybrid/netlify/functions. subscribe.mjs forwards newsletter
+# signups to Mailchimp and is served at /api/subscribe (its own config.path).
+[functions]
+  directory = "netlify/functions"
+
+# That folder sits inside the published directory ("."), so without this its
+# source would also be downloadable as a plain static file at /netlify/...
+# It holds no secrets (the Mailchimp key is an environment variable), but
+# there's no reason to serve it. Does not affect /api/subscribe or
+# /.netlify/functions/, which are different paths.
+[[redirects]]
+  from = "/netlify/*"
+  to = "/404.html"
+  status = 404
+  force = true

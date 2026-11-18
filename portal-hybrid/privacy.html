@@ -85,9 +85,10 @@
        pledge forms only open the visitor's mail app; card gifts happen on
        Stripe's pages. The analytics section describes GA4 with Google
        Signals and ad features OFF -- if either is switched on in the GA
-       admin, this page must change too. The footer newsletter signup is a
-       Netlify Form: Netlify stores the email address in the site dashboard.
-       If signups move to Mailchimp or another mailing service, name it here.
+       admin, this page must change too. The footer newsletter signup goes to
+       two places: Netlify Forms (a copy in the site dashboard) and Mailchimp
+       (the mailing list, single opt-in, via /api/subscribe). If either
+       changes, or another mailing service is added, name it here.
        Same for an embedded checkout: update this page in the same change. -->
   <section class="dhero" aria-labelledby="policy-h">
     <span class="dhero-glow" aria-hidden="true"></span>
@@ -98,7 +99,7 @@
       <p class="lede">The short version: apart from anonymous statistics about
         how the site is used, we only know what you choose to send us. We use it
         to reply and to keep our records, and we never sell it.</p>
-      <p class="policy-date">Last updated <time datetime="2026-11-02">November 2, 2026</time></p>
+      <p class="policy-date">Last updated <time datetime="2026-11-18">November 18, 2026</time></p>
     </div>
   </section>
 
@@ -125,7 +126,8 @@
           way. We receive what you write in that email.</li>
         <li><b>Newsletter signups.</b> If you subscribe at the bottom of any
           page, we receive your email address and use it only to send Mak Fai
-          news and event updates. You can unsubscribe at any time.</li>
+          news and event updates. Every email we send includes a link to
+          unsubscribe.</li>
         <li><b>Donations.</b> Card and digital-wallet gifts are processed by
           Stripe on Stripe&rsquo;s own secure pages. We never see or store
           your card number. Stripe shares details such as your name, email,
@@ -140,7 +142,8 @@
         updates, and event information. You may unsubscribe from emails at any
         time. We don&rsquo;t sell, rent, or trade your information. We share it
         only with service providers that host this site, measure how it&rsquo;s
-        used, or process your payments, or when required by law.</p>
+        used, send our newsletter, or process your payments, or when required
+        by law.</p>
 
       <h2>Site analytics</h2>
       <p>We use Google Analytics to see how people use this site, so we can
@@ -162,7 +165,13 @@
       <ul>
         <li><b>Netlify.</b> Our web host. Like any web server, it receives your
           IP address and basic request details, such as your browser type, to
-          deliver the pages. It also stores newsletter signups for us.</li>
+          deliver the pages. It also keeps a copy of newsletter signups for
+          us.</li>
+        <li><b>Mailchimp.</b> Our newsletter service. When you subscribe, your
+          email address is added to our Mailchimp mailing list, and Mailchimp
+          sends our newsletters. Mailchimp handles it under
+          <a href="https://www.intuit.com/privacy/statement/" target="_blank" rel="noopener">its
+          own privacy statement</a>.</li>
         <li><b>YouTube.</b> When you play one of our films, it plays in
           YouTube&rsquo;s privacy-enhanced player, which may store data in your
           browser.</li>
@@ -213,8 +222,8 @@
 
   <!-- Newsletter signup -- a Netlify Form. Netlify finds data-netlify in the
        HTML at deploy time and stores each signup under Forms in the site
-       dashboard. Form detection has to be switched on there once, or signups
-       are silently dropped. It posts to this same site, so the CSP needs
+       dashboard. assets/newsletter.js also sends each signup to Mailchimp
+       via /api/subscribe (netlify/functions/subscribe.mjs). It posts to this same site, so the CSP needs
        nothing new. The same block is in every page's footer -- keep them in
        step, and keep privacy.html's description of it in step too.
        "company" is a honeypot: hidden from people, filled in by bots, and
@@ -286,6 +295,6 @@
   addEventListener('scroll', onScroll, {passive:true}); onScroll();
 })();
 </script>
-<script src="assets/newsletter.js?v=1" defer></script>
+<script src="assets/newsletter.js?v=2" defer></script>
 </body>
 </html>

@@ -102,8 +102,8 @@
 
   <!-- Newsletter signup -- a Netlify Form. Netlify finds data-netlify in the
        HTML at deploy time and stores each signup under Forms in the site
-       dashboard. Form detection has to be switched on there once, or signups
-       are silently dropped. It posts to this same site, so the CSP needs
+       dashboard. assets/newsletter.js also sends each signup to Mailchimp
+       via /api/subscribe (netlify/functions/subscribe.mjs). It posts to this same site, so the CSP needs
        nothing new. The same block is in every page's footer -- keep them in
        step, and keep privacy.html's description of it in step too.
        "company" is a honeypot: hidden from people, filled in by bots, and
@@ -175,6 +175,6 @@
   addEventListener('scroll', onScroll, {passive:true}); onScroll();
 })();
 </script>
-<script src="/assets/newsletter.js?v=1" defer></script>
+<script src="/assets/newsletter.js?v=2" defer></script>
 </body>
 </html>
